@@ -39,6 +39,8 @@ from control_arena.settings.apps.apps_solution_policy import apps_solution_polic
 
 from strip_comments import strip_comments_prompt_formatter
 
+from preflight import check_credentials
+
 LOG_DIR = os.getenv("LOG_DIR", "logs")
 n_problems = int(sys.argv[1]) if len(sys.argv) > 1 else 10
 
@@ -53,6 +55,12 @@ max_connections = int(os.getenv("MAX_CONNECTIONS", "10"))
 # only how the bytes are delivered, never the model's output, so streamed and
 # non-streamed scores are identical. Off by default: non-streaming runs are unchanged.
 trusted_model_name = os.getenv("TRUSTED_MODEL", "anthropic/claude-haiku-4-5-20251001")
+untrusted_model_name = os.getenv("UNTRUSTED_MODEL", "anthropic/claude-sonnet-5-5")
+
+# One tiny call per model before anything expensive starts. Without this, a bad
+# or shadowed key fails every sample individually, the eval still "completes",
+# and the only symptom is 100% of samples unscored.
+check_credentials(untrusted_model_name, trusted_model_name)
 
 # Optional monitor reasoning-effort sweep, all env-gated so the baselines are unchanged:
 #   MONITOR_REASONING         reasoning effort none/low/medium/high/xhigh (OpenAI / DeepInfra
@@ -92,7 +100,7 @@ else:
     trusted_config = GenerateConfig(**monitor_cfg)
 
 config = ControlEvalConfig(
-    untrusted_model=os.getenv("UNTRUSTED_MODEL", "anthropic/claude-sonnet-5-5"),
+    untrusted_model=untrusted_model_name,
     trusted_model=trusted_model,
     untrusted_config=GenerateConfig(max_connections=max_connections),
     trusted_config=trusted_config,
