@@ -4,3 +4,8 @@ logs*/
 __pycache__/
 *.png
 .DS_Store
+
+# Experiment records ARE version-controlled: derived figures and tidy data
+# are small, and the report is the deliverable. Raw .eval logs stay out.
+!experiments/**/*.png
+experiments/**/*.eval

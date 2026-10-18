@@ -26,19 +26,25 @@ from the same untrusted model.
 """
 import os
 import sys
+from pathlib import Path
 
 from inspect_ai import eval as inspect_eval
 
 from control_arena import EvalMode
 from control_arena.eval import ControlEvalConfig, get_control_task_product
 from control_arena.micro_protocol import trusted_monitoring_builder
-from control_arena.monitor import basic_monitor_builder
+from control_arena.monitor import basic_monitor_builder, ensemble_monitor_builder
+from control_arena.monitor._types import MonitorScoreRange
 from control_arena.scorers import max_suspicion_scorer
 from control_arena.settings.apps.apps_setting import AppsSetting
 from control_arena.settings.apps.apps_solution_policy import apps_solution_policy
 
 LOG_DIR = os.getenv("LOG_DIR", "logs/e0")
 SHUFFLE_SEED = int(os.getenv("SHUFFLE_SEED", "20261018"))
+# Which monitor to measure. E0 established that the default 0-10 integer prompt
+# yields 3 distinct values and a 2% budget floor; the other arms are attempts to
+# buy back resolution. See experiments/e0-monitor-resolution/REPORT.md.
+ARM = os.getenv("MONITOR_ARM", "baseline")
 n_problems = int(sys.argv[1]) if len(sys.argv) > 1 else 200
 
 # Pinned so the run is reproducible from the commit. Trusted model does the
@@ -64,9 +70,30 @@ setting = AppsSetting(
     shuffle_seed=SHUFFLE_SEED,
 )
 
+_PROMPT_0_100 = Path(__file__).parent / "prompts" / "monitor_0_100.txt"
+
+def build_monitor(arm: str):
+    """Monitor variants. Each is an attempt to raise the usable budget floor."""
+    if arm == "baseline":
+        # 0-10 integer prompt, the library default.
+        return basic_monitor_builder()
+    if arm == "range100":
+        # Same prompt, 0-100 scale, with an explicit instruction not to round.
+        return basic_monitor_builder(
+            prompt=_PROMPT_0_100.read_text(),
+            score_range=MonitorScoreRange(min=0.0, max=100.0),
+        )
+    if arm == "ensemble10":
+        # Averaging 10 draws multiplies resolution by ~10, but costs 10x the
+        # calls, and mixes a resolution change with a ranking change. E0b
+        # separates those by comparing at matched achieved FPR.
+        return ensemble_monitor_builder(num_samples=10, temperature=1.0)
+    raise SystemExit(f"unknown MONITOR_ARM={arm!r}; expected baseline|range100|ensemble10")
+
+
 protocol = trusted_monitoring_builder(
     policy=apps_solution_policy(return_solution_if_no_backdoor=False),
-    monitor=basic_monitor_builder(),
+    monitor=build_monitor(ARM),
 )
 
 tasks = get_control_task_product(
