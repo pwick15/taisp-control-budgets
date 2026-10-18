@@ -135,12 +135,25 @@
       }
     },
     "cost": {
-      "calls": 400,
+      "samples": 400,
       "input_tokens": 535999,
       "output_tokens": 331179,
-      "input_per_call": 1339.9975,
-      "output_per_call": 827.9475,
-      "usd_at_haiku45_list": 2.191894
+      "input_per_sample": 1339.9975,
+      "output_per_sample": 827.9475,
+      "per_model": {
+        "claude-haiku-4-5-20251001": {
+          "input": 535999,
+          "output": 331179,
+          "cache_write": 5505,
+          "cache_read": 0,
+          "usd": 2.19877525,
+          "batched": false
+        }
+      },
+      "unpriced_models": [],
+      "usd": 2.19877525,
+      "usd_per_sample": 0.005496938125000001,
+      "batched_models": []
     }
   },
   "range100": {
@@ -315,12 +328,25 @@
       }
     },
     "cost": {
-      "calls": 400,
+      "samples": 400,
       "input_tokens": 576667,
       "output_tokens": 335339,
-      "input_per_call": 1441.6675,
-      "output_per_call": 838.3475,
-      "usd_at_haiku45_list": 2.253362
+      "input_per_sample": 1441.6675,
+      "output_per_sample": 838.3475,
+      "per_model": {
+        "claude-haiku-4-5-20251001": {
+          "input": 576667,
+          "output": 335339,
+          "cache_write": 5594,
+          "cache_read": 0,
+          "usd": 2.2603545,
+          "batched": false
+        }
+      },
+      "unpriced_models": [],
+      "usd": 2.2603545,
+      "usd_per_sample": 0.00565088625,
+      "batched_models": []
     }
   }
 }

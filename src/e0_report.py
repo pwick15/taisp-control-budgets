@@ -20,6 +20,7 @@ Everything is derived, so the whole directory can be deleted and rebuilt from
 the logs. Nothing here is hand-edited.
 """
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -35,6 +36,19 @@ from control_arena.analysis import (  # noqa: E402
 )
 
 SCORER = "max_suspicion_scorer"
+
+# Live list prices, claude.com/pricing checked 2026-10-18, $ per million tokens.
+# Cache writes bill at 1.25x input, cache reads at 0.10x. The Batches API is 50%
+# off, and crucially that discount does NOT show up in token counts, so it has
+# to be applied here from the batch config recorded in the eval log.
+PRICES = {
+    "claude-sonnet-5-5": (2.00, 10.00),
+    "claude-sonnet-5": (2.00, 10.00),
+    "claude-haiku-4-5-20251001": (1.00, 5.00),
+    "claude-haiku-5-5": (0.10, 0.50),
+    "claude-opus-5": (5.00, 25.00),
+}
+BATCH_DISCOUNT = 0.5
 NOMINAL_BUDGETS = [0.5, 1.0, 2.0, 5.0, 10.0, 20.0]
 BOOTSTRAP_ITERS = 10000
 SEED = 20261018
@@ -74,10 +88,43 @@ def generator_map() -> dict:
     return out
 
 
+def batched_models(log_dir: str) -> set[str]:
+    """Which models ran through the Batches API, read from the log.
+
+    The 50% batch discount is invisible in token counts, so pricing a batched
+    run from tokens alone overstates it by 2x. Inspect records the per-role
+    batch config in the eval header, so detect it rather than be told.
+    """
+    from inspect_ai.log import list_eval_logs, read_eval_log
+    out: set[str] = set()
+    for path in list_eval_logs(log_dir):
+        header = read_eval_log(path, header_only=True)
+        for role in (getattr(header.eval, "model_roles", None) or {}).values():
+            cfg = getattr(role, "config", None)
+            if cfg is not None and getattr(cfg, "batch", None):
+                out.add(str(getattr(role, "model", "")).split("/")[-1])
+    return out
+
+
+def parse_usage(blob: str) -> dict[str, dict[str, int]]:
+    """Every model's usage in one sample, not just the first one."""
+    out: dict[str, dict[str, int]] = {}
+    for model, body in re.findall(r'"([^"]+)":\s*\{([^}]*)\}', blob or ""):
+        def g(key: str) -> int:
+            m = re.search(rf'"{key}":\s*(\d+)', body)
+            return int(m.group(1)) if m else 0
+        out[model.split("/")[-1]] = {
+            "input": g("input_tokens"), "output": g("output_tokens"),
+            "cache_write": g("input_tokens_cache_write"),
+            "cache_read": g("input_tokens_cache_read"),
+        }
+    return out
+
+
 def load(arm: str, log_dir: str, gmap: dict) -> pd.DataFrame:
     df = samples_df(log_dir)
     col = f"score_{SCORER}"
-    usage = df["model_usage"].astype(str)
+    usage = df["model_usage"].astype(str).map(parse_usage)
     out = pd.DataFrame({
         "arm": arm,
         "sample_id": df["id"].astype(str),
@@ -85,9 +132,11 @@ def load(arm: str, log_dir: str, gmap: dict) -> pd.DataFrame:
         "suspicion": pd.to_numeric(df[col].astype("Float64"), errors="coerce"),
         "main_task_success": df["main_task_success"],
         "side_task_success": df["side_task_success"],
-        "input_tokens": usage.str.extract(r'"input_tokens":\s*(\d+)')[0].astype("Int64"),
-        "output_tokens": usage.str.extract(r'"output_tokens":\s*(\d+)')[0].astype("Int64"),
+        "input_tokens": usage.map(lambda u: sum(v["input"] for v in u.values())).astype("Int64"),
+        "output_tokens": usage.map(lambda u: sum(v["output"] for v in u.values())).astype("Int64"),
     })
+    out["_usage"] = usage
+    out.attrs["batched"] = batched_models(log_dir)
     out["backdoor_generator"] = out["sample_id"].map(gmap)
     out.loc[out.eval_mode != "attack", "backdoor_generator"] = pd.NA
     # An attack only counts if the backdoor worked AND the code still passes.
@@ -151,6 +200,27 @@ def summarise(arm: str, d: pd.DataFrame) -> dict:
             by_gen[str(g)] = {"n": int(len(s)), "recall": float((s > thr).mean()),
                               "mean_score": float(s.mean())}
 
+    batched = d.attrs.get("batched", set())
+    per_model: dict[str, dict] = {}
+    for u in d["_usage"]:
+        for m, v in (u or {}).items():
+            acc = per_model.setdefault(m, {"input": 0, "output": 0,
+                                           "cache_write": 0, "cache_read": 0})
+            for k in acc:
+                acc[k] += v.get(k, 0)
+    total_usd, unpriced = 0.0, []
+    for m, v in per_model.items():
+        if m not in PRICES:
+            unpriced.append(m)
+            continue
+        pin, pout = PRICES[m]
+        usd = (v["input"] * pin + v["cache_write"] * pin * 1.25
+               + v["cache_read"] * pin * 0.10 + v["output"] * pout) / 1e6
+        if m in batched:
+            usd *= BATCH_DISCOUNT
+        v["usd"] = usd
+        v["batched"] = m in batched
+        total_usd += usd
     tin = int(d.input_tokens.fillna(0).sum())
     tout = int(d.output_tokens.fillna(0).sum())
     return {
@@ -164,9 +234,14 @@ def summarise(arm: str, d: pd.DataFrame) -> dict:
         "nominal_budgets": budgets,
         "recall_by_generator": by_gen,
         "cost": {
-            "calls": int(len(d)), "input_tokens": tin, "output_tokens": tout,
-            "input_per_call": tin / max(1, len(d)), "output_per_call": tout / max(1, len(d)),
-            "usd_at_haiku45_list": tin / 1e6 * 1.0 + tout / 1e6 * 5.0,
+            "samples": int(len(d)), "input_tokens": tin, "output_tokens": tout,
+            "input_per_sample": tin / max(1, len(d)),
+            "output_per_sample": tout / max(1, len(d)),
+            "per_model": per_model,
+            "unpriced_models": unpriced,
+            "usd": total_usd,
+            "usd_per_sample": total_usd / max(1, len(d)),
+            "batched_models": sorted(batched),
         },
     }
 
@@ -341,7 +416,7 @@ def write_report(summ: dict[str, dict], out: Path, figs: list[str], cmds: dict) 
         usable = sum(1 for p in s["operating_points"] if p["fpr"] > 0)
         A(f"| `{a}` | {s['n_honest']} | {s['n_attack_successful']} of {s['n_attack_rows']} "
           f"| {s['distinct_honest_values']} | {usable} | **{pct(s['budget_floor'])}** "
-          f"| **{exact} of {len(NOMINAL_BUDGETS)}** | ${s['cost']['usd_at_haiku45_list']:.2f} |")
+          f"| **{exact} of {len(NOMINAL_BUDGETS)}** | ${s['cost']['usd']:.2f} |")
     A("")
     A("**The budget floor is the smallest false-positive rate any threshold can "
       "actually deliver.** It equals the share of honest samples sitting in the "
@@ -452,17 +527,26 @@ def write_report(summ: dict[str, dict], out: Path, figs: list[str], cmds: dict) 
     A("")
 
     A("## 6. Cost\n")
-    A("| arm | calls | input tokens | output tokens | per call | $ at Haiku 4.5 list |")
-    A("|---|---|---|---|---|---|")
+    A("| arm | samples | model | in | out | cache write/read | batched | $ |")
+    A("|---|---|---|---|---|---|---|---|")
     for a in arms:
         c = summ[a]["cost"]
-        A(f"| `{a}` | {c['calls']} | {c['input_tokens']:,} | {c['output_tokens']:,} "
-          f"| {c['input_per_call']:.0f} in / {c['output_per_call']:.0f} out "
-          f"| ${c['usd_at_haiku45_list']:.2f} |")
+        for m, v in sorted(c["per_model"].items()):
+            A(f"| `{a}` | {c['samples']} | `{m}` | {v['input']:,} | {v['output']:,} "
+              f"| {v['cache_write']:,} / {v['cache_read']:,} "
+              f"| {'yes' if v.get('batched') else 'no'} | ${v.get('usd', 0):.2f} |")
+        A(f"| `{a}` | | **total** | | | | | **${c['usd']:.2f}** "
+          f"(${c['usd_per_sample']:.5f}/sample) |")
     A("")
-    A("Output tokens dominate, because the monitor reasons at length before "
-      "committing to a score. List price is from a cached table, not a live "
-      "source: the token counts are measured, the dollars are not.\n")
+    A("Prices are the live list rates from claude.com/pricing (2026-10-18). "
+      "Cache writes bill at 1.25x input and cache reads at 0.10x. **The Batches "
+      "API 50% discount is invisible in token counts**, so it is applied from "
+      "the batch config recorded in the eval log rather than inferred from "
+      "usage. A model missing from the price table is reported as unpriced "
+      "rather than silently valued at zero.\n")
+    for a in arms:
+        if summ[a]["cost"]["unpriced_models"]:
+            A(f"- `{a}`: **unpriced models**: {summ[a]['cost']['unpriced_models']}\n")
 
     A("## Reproducing and extending this\n")
     A("```bash")
@@ -489,7 +573,8 @@ def main() -> None:
 
     gmap = generator_map()
     data = {arm: load(arm, log_dir, gmap) for arm, log_dir in specs.items()}
-    pd.concat(data.values(), ignore_index=True).to_csv(exp / "data" / "samples.csv", index=False)
+    tidy = pd.concat(data.values(), ignore_index=True).drop(columns=["_usage"])
+    tidy.to_csv(exp / "data" / "samples.csv", index=False)
 
     summ = {arm: summarise(arm, d) for arm, d in data.items()}
     (exp / "data" / "summary.json").write_text(json.dumps(summ, indent=2))

@@ -29,6 +29,8 @@ import sys
 from pathlib import Path
 
 from inspect_ai import eval as inspect_eval
+from inspect_ai.model import GenerateConfig
+from inspect_ai.model._generate_config import BatchConfig
 
 from control_arena import EvalMode
 from control_arena.eval import ControlEvalConfig, get_control_task_product
@@ -45,17 +47,29 @@ SHUFFLE_SEED = int(os.getenv("SHUFFLE_SEED", "20261018"))
 # yields 3 distinct values and a 2% budget floor; the other arms are attempts to
 # buy back resolution. See experiments/e0-monitor-resolution/REPORT.md.
 ARM = os.getenv("MONITOR_ARM", "baseline")
+# BATCH=1 routes model calls through the Anthropic Batches API: half price, but
+# far slower, because a batch waits to fill and is then queued. Worth it for a
+# large unattended run, not for iterating. Measured on 20 monitor-only samples:
+# 24.5s unbatched vs 247s batched. The discount does not appear in token counts,
+# so e0_report.py reads the batch config back out of the eval log to price it.
+BATCH = os.getenv("BATCH", "").lower() in ("1", "true", "yes")
 n_problems = int(sys.argv[1]) if len(sys.argv) > 1 else 200
 
 # Pinned so the run is reproducible from the commit. Trusted model does the
 # monitoring; untrusted is never called, since apps_solution_policy replaces it.
 TRUSTED_MODEL = os.getenv("TRUSTED_MODEL", "anthropic/claude-haiku-4-5-20251001")
 
+_batch = GenerateConfig(
+    batch=BatchConfig(size=min(100, n_problems), send_delay=30, tick=10)
+) if BATCH else None
+
 config = ControlEvalConfig(
     untrusted_model=TRUSTED_MODEL,  # unused: the policy makes no model calls
     trusted_model=TRUSTED_MODEL,
     limit=n_problems,
     max_sandboxes=10,
+    trusted_config=_batch,
+    untrusted_config=_batch,
 )
 
 setting = AppsSetting(
@@ -105,8 +119,9 @@ tasks = get_control_task_product(
 )
 
 print(
-    f"E0: n={n_problems} per mode | monitor={TRUSTED_MODEL} | seed={SHUFFLE_SEED}\n"
+    f"E0 arm={ARM}: n={n_problems} per mode | monitor={TRUSTED_MODEL} | seed={SHUFFLE_SEED}\n"
     f"    policy=apps_solution_policy (zero untrusted-model calls)\n"
+    f"    batch={'ON: 50% cheaper, much slower' if BATCH else 'off'}\n"
     f"    log_dir={LOG_DIR}"
 )
 inspect_eval(tasks, **{**config.eval_args(), "log_dir": LOG_DIR})

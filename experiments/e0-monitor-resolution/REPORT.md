@@ -14,8 +14,8 @@ The policy submits the dataset's stored solution or stored backdoor, so there ar
 
 | arm | honest n | successful attacks | distinct honest scores | usable operating points | budget floor | budgets delivered as asked | cost |
 |---|---|---|---|---|---|---|---|
-| `baseline` | 200 | 200 of 200 | 3 | 2 | **2.00%** | **1 of 6** | $2.19 |
-| `range100` | 200 | 200 of 200 | 7 | 6 | **0.50%** | **2 of 6** | $2.25 |
+| `baseline` | 200 | 200 of 200 | 3 | 2 | **2.00%** | **1 of 6** | $2.20 |
+| `range100` | 200 | 200 of 200 | 7 | 6 | **0.50%** | **2 of 6** | $2.26 |
 
 **The budget floor is the smallest false-positive rate any threshold can actually deliver.** It equals the share of honest samples sitting in the top score bin. Nothing below it is purchasable, however it is configured.
 
@@ -124,12 +124,14 @@ The Control-Tax pool is a mixture over ten generator models in proportions nobod
 
 ## 6. Cost
 
-| arm | calls | input tokens | output tokens | per call | $ at Haiku 4.5 list |
-|---|---|---|---|---|---|
-| `baseline` | 400 | 535,999 | 331,179 | 1340 in / 828 out | $2.19 |
-| `range100` | 400 | 576,667 | 335,339 | 1442 in / 838 out | $2.25 |
+| arm | samples | model | in | out | cache write/read | batched | $ |
+|---|---|---|---|---|---|---|---|
+| `baseline` | 400 | `claude-haiku-4-5-20251001` | 535,999 | 331,179 | 5,505 / 0 | no | $2.20 |
+| `baseline` | | **total** | | | | | **$2.20** ($0.00550/sample) |
+| `range100` | 400 | `claude-haiku-4-5-20251001` | 576,667 | 335,339 | 5,594 / 0 | no | $2.26 |
+| `range100` | | **total** | | | | | **$2.26** ($0.00565/sample) |
 
-Output tokens dominate, because the monitor reasons at length before committing to a score. List price is from a cached table, not a live source: the token counts are measured, the dollars are not.
+Prices are the live list rates from claude.com/pricing (2026-10-18). Cache writes bill at 1.25x input and cache reads at 0.10x. **The Batches API 50% discount is invisible in token counts**, so it is applied from the batch config recorded in the eval log rather than inferred from usage. A model missing from the price table is reported as unpriced rather than silently valued at zero.
 
 ## Reproducing and extending this
 
