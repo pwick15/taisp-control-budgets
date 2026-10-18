@@ -213,10 +213,15 @@ def fig_operating_points(summ: dict[str, dict], path: Path) -> None:
         ax.step(xs, ys, where="post", color=ARM_COLOR[i], alpha=0.28, lw=1.4, zorder=2)
         ax.plot(xs, ys, "o", color=ARM_COLOR[i], label=f"{arm}", zorder=3,
                 markeredgecolor=SURFACE, markeredgewidth=2)
-        for p in pts:
-            ax.annotate(f"t={p['threshold']:.2f}", (p["fpr"] * 100, p["recall"] * 100),
-                        xytext=(0, 13), textcoords="offset points", ha="center",
-                        fontsize=8.5, color=ARM_COLOR[i])
+        # Direct-label only when the points are sparse enough not to overlap.
+        # Dense arms would garble; the per-arm table in REPORT.md carries every
+        # threshold, which is the relief the labels would otherwise provide.
+        if len(pts) <= 4:
+            for p in pts:
+                ax.annotate(f"t={p['threshold']:.2f}",
+                            (p["fpr"] * 100, p["recall"] * 100),
+                            xytext=(0, 13), textcoords="offset points", ha="center",
+                            fontsize=8.5, color=ARM_COLOR[i])
         f = s["budget_floor"]
         if f:
             ax.axvline(f * 100, color=ARM_COLOR[i], ls=":", lw=1.5, zorder=1)
