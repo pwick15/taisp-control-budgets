@@ -225,36 +225,21 @@ def build() -> Report:
             Text(f"**What it costs.** Sonnet is {cost_ratio_haiku:.1f} times Haiku's price per sample "
                  f"and about {cost_ratio_luna:.0f} times Luna's."),
             cost_table,
-        ]),
-        Section("What we take from it", [
-            Bullets([
-                f"**Sonnet reads code best.** It has the highest AUROC with comments ({fmt_auroc(raw[sonnet].auroc)}) and "
-                f"without them ({fmt_auroc(strip[sonnet].auroc)}), for {cost_ratio_haiku:.1f} times Haiku's cost.",
-                f"**Haiku's problem is false alarms.** {raw[haiku].honest_false_alarms} of {n} honest solutions score 0.1, "
-                "which puts the audit cutoff on a tie. Its safety stays at "
-                f"{raw[haiku].safety_at(10):.2f} until the budget is large enough to review half of honest work.",
-                f"**Luna's problem is silence.** It never flags honest code, but it scores "
-                f"{raw[luna].attacks_missed} of {n} attacks at 0, and {strip[luna].attacks_missed} of {n} once comments are "
-                "hidden. No audit budget fixes a backdoor the monitor scores 0.",
-                "**Cheap is not free.** Luna costs a few hundredths of a cent per sample, yet it misses the most. "
-                "Whether that trade is worth it depends on what a human audit costs, which we have not modelled yet.",
-            ]),
+            Text("**Cheap is not free.** Luna costs a few hundredths of a cent per sample yet misses the most "
+                 "attacks. Whether that trade is worth it depends on what a human audit costs, which we have not modelled yet."),
         ]),
         Section("Caveats", [
-            Callout(f"**Small sample.** {n} honest and {n} attack runs per monitor. One missed attack moves safety by "
-                    f"{100 / n:.1f} points, so gaps under about 0.1 are within noise.", "caveat"),
-            Callout("**Dataset attacks are not model-written.** Two thirds carry comments and the honest code is "
-                    "human-written. A real attacker may behave differently. Dataset results are best read as a comparison "
-                    "between monitors, not as absolute detection rates.", "caveat"),
-            Callout("**No collusion.** The Sonnet monitor never tries to cover for the attacker. It is also simply a "
-                    "bigger model than Haiku, so \"untrusted\" and \"stronger\" are bundled together in this comparison.",
-                    "caveat"),
-            Callout("**Scores come in steps of 0.1.** Ties at the cutoff flatten the safety curves. AUROC avoids the "
-                    "problem, which is why we show both. Budgets under "
-                    f"{unreliable_below:.1f}% threshold on less than one honest run and are shaded in the safety chart.",
-                    "caveat"),
-            Callout("**Only # comments were removed.** Docstrings and descriptive variable names can still leak "
-                    "information. Dollar costs are estimates from list prices.", "caveat"),
+            Bullets([
+                f"**Small sample.** {n} honest and {n} attack runs. One missed attack moves safety by {100 / n:.1f} "
+                "points, so gaps under about 0.1 are noise.",
+                "**Dataset attacks, not model-written.** Two thirds carry comments and the honest code is human-written. "
+                "Read the results as a comparison between monitors, not as absolute detection rates.",
+                "**No collusion.** Sonnet never covers for the attacker, and it is a bigger model than Haiku, so "
+                "\"untrusted\" and \"stronger\" are bundled together.",
+                f"**Ties.** Scores come in steps of 0.1, which flattens the safety curves. AUROC avoids this. Budgets under "
+                f"{unreliable_below:.1f}% use less than one honest run (shaded in the chart).",
+                "**Scope.** Only # comments were removed, not docstrings or variable names. Costs are estimates from list prices.",
+            ]),
         ]),
         Section("Problems we hit along the way", [
             Bullets([
