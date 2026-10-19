@@ -92,6 +92,22 @@ RUN_LABEL=ensemble-ministral8b-gemini35lite uv run python src/ensemble.py logs/d
 
 This writes `results/<RUN_LABEL>.csv` and `logs/<RUN_LABEL>.png`.
 
+## Results viewer
+
+`reports/` turns finished experiments into readable web pages: one page per experiment with a summary, the story of how the design evolved, charts, tables and caveats. Pages are plain HTML files with light and dark themes, so you can open them locally or send one to a teammate.
+
+```bash
+uv run python reports/build.py --open     # builds reports/site/index.html and one page per experiment
+```
+
+To add your experiment:
+
+1. Run `src/analyze.py` on your logs and commit the two CSVs it writes to `results/` (`<label>.csv` and `<label>-samples.csv`).
+2. Copy `reports/experiments/_template.py` to `reports/experiments/<your-slug>.py` and fill it in. The template shows every component (summary, steps, journey, tables, charts, callouts) with comments.
+3. Run the build command and check the page. `uv run python reports/build.py --template` builds the template itself so you can see what each component looks like.
+
+Pages read only the committed CSVs, never the logs, so anyone can rebuild them. Quote numbers in the text with f-strings from the loaded results, so the words cannot drift from the data. `reports/site/` is gitignored.
+
 ## Repo layout
 
 | Path | What it does |
@@ -100,6 +116,9 @@ This writes `results/<RUN_LABEL>.csv` and `logs/<RUN_LABEL>.png`.
 | `src/analyze.py` | Loads the logs into a DataFrame, computes usefulness and safety, plots safety vs audit budget. |
 | `src/ensemble.py` | Combines two monitors' scores from existing logs (mean and max) and reports safety for each and for the ensemble. |
 | `src/strip_comments.py` | Monitor prompt formatter that removes `#` comments from submitted code. Used when `STRIP_COMMENTS=1`. |
+| `reports/build.py` | Builds the results viewer: one HTML page per file in `reports/experiments/`, plus an index. |
+| `reports/experiments/` | One Python file per experiment page. `_template.py` is the starting point. |
+| `reports/viewer/` | The viewer's building blocks: page components, SVG charts, theme and the loader for `results/`. |
 | `docs/codebase-guide.md` | Where things live in the ControlArena library, a trace of one attack sample, and experiment ideas. |
 | `pyproject.toml`, `uv.lock` | Dependencies. Use `uv add <pkg>` so the lockfile stays in sync. |
 
