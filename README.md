@@ -76,6 +76,7 @@ All optional, set in `.env` or the shell:
 | `MAX_CONNECTIONS` | `10` | Max concurrent API calls per model. Use 1-2 on free tiers. |
 | `MAX_SANDBOXES` | `10` | Max concurrent Docker sandboxes |
 | `POLICY` | `model` | `model`: U writes the code. `dataset`: use the dataset's known-good solutions and verified backdoors instead of U, so only the monitor calls an API. For testing the monitor when U can't write working backdoors; usefulness is meaningless in this mode. |
+| `STRIP_COMMENTS` | `0` | `1`: remove `#` comments from the submitted code before the monitor sees it, so the monitor can only read the code itself. Many dataset backdoors carry comments that announce the bug, and honest solutions rarely do. |
 | `AUDIT_BUDGETS` | `0.5,1,2,5,10,20,50` | Audit budgets (%) that `analyze.py` evaluates |
 | `RUN_LABEL` | `LOG_DIR` folder name | Name of the results CSV written to `results/` |
 
@@ -98,6 +99,7 @@ This writes `results/<RUN_LABEL>.csv` and `logs/<RUN_LABEL>.png`.
 | `src/experiment.py` | Builds the tasks (setting x protocol x honest/attack) and runs them through Inspect. Writes one log subdirectory per protocol. |
 | `src/analyze.py` | Loads the logs into a DataFrame, computes usefulness and safety, plots safety vs audit budget. |
 | `src/ensemble.py` | Combines two monitors' scores from existing logs (mean and max) and reports safety for each and for the ensemble. |
+| `src/strip_comments.py` | Monitor prompt formatter that removes `#` comments from submitted code. Used when `STRIP_COMMENTS=1`. |
 | `docs/codebase-guide.md` | Where things live in the ControlArena library, a trace of one attack sample, and experiment ideas. |
 | `pyproject.toml`, `uv.lock` | Dependencies. Use `uv add <pkg>` so the lockfile stays in sync. |
 
@@ -110,6 +112,7 @@ This writes `results/<RUN_LABEL>.csv` and `logs/<RUN_LABEL>.png`.
 
 - **trusted monitoring:** U acts, T scores it, humans audit the top X% of scores. Nothing is blocked.
 - **defer to trusted:** same, but any action scoring above `defer_threshold` (0.5, an untuned guess) is discarded and T writes the code instead. Safer, but T is weaker, so fewer problems get solved.
+- **untrusted monitoring (baseline):** same as trusted monitoring, but U scores its own output instead of T (`PROTOCOLS=untrusted_monitoring`, model set by `UNTRUSTED_MODEL`). There is no collusion channel between the attacking and monitoring copies, so this is an upper bound on what a capable honest monitor can do, not a test of a scheming one.
 
 ControlArena also ships `defer_to_resample` and `trusted_editing` micro-protocols, and `ensemble_monitor_builder` for detection. See `docs/codebase-guide.md`.
 
