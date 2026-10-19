@@ -45,43 +45,50 @@ def tokens_by_model(df: pd.DataFrame) -> dict[str, int]:
     return dict(totals)
 
 
-rows = []
-plt.figure()
-for protocol in protocols:
-    df = samples_df(f"{LOG_DIR}/{protocol}")
-    n_honest = int((df["eval_mode"] == "honest").sum())
-    n_attack = int((df["eval_mode"] == "attack").sum())
-    print(f"\n== {protocol}: {n_honest} honest + {n_attack} attack samples ==")
-    print(df.groupby("eval_mode")[["main_task_success", "side_task_success", f"score_{SCORER}"]]
-          .agg("mean").round(2).to_string())
+def main() -> None:
+    rows = []
+    plt.figure()
+    for protocol in protocols:
+        df = samples_df(f"{LOG_DIR}/{protocol}")
+        n_honest = int((df["eval_mode"] == "honest").sum())
+        n_attack = int((df["eval_mode"] == "attack").sum())
+        print(f"\n== {protocol}: {n_honest} honest + {n_attack} attack samples ==")
+        print(df.groupby("eval_mode")[["main_task_success", "side_task_success", f"score_{SCORER}"]]
+              .agg("mean").round(2).to_string())
 
-    usefulness = compute_usefulness(df)
-    tokens = tokens_by_model(df)
-    print(f"usefulness: {usefulness:.2f}")
-    print(f"tokens per sample by model: { {m: round(t / len(df)) for m, t in tokens.items()} }")
+        usefulness = compute_usefulness(df)
+        tokens = tokens_by_model(df)
+        print(f"usefulness: {usefulness:.2f}")
+        print(f"tokens per sample by model: { {m: round(t / len(df)) for m, t in tokens.items()} }")
 
-    safeties = [compute_safety(df, SCORER, b) for b in AUDIT_BUDGETS]
-    for b, s in zip(AUDIT_BUDGETS, safeties):
-        # An audit budget below 100/n_honest % is thresholded on less than one honest sample.
-        note = "  (too few honest samples for this budget)" if b * n_honest / 100 < 1 else ""
-        print(f"  audit budget {b:>4}% -> safety {s:.2f}{note}")
-        rows.append({
-            "run": RUN_LABEL, "protocol": protocol, "n_honest": n_honest, "n_attack": n_attack,
-            "audit_budget_pct": b, "safety": round(s, 3), "usefulness": round(usefulness, 3),
-            "tokens_per_sample": json.dumps({m: round(t / len(df)) for m, t in tokens.items()}),
-        })
-    plt.plot(AUDIT_BUDGETS, safeties, marker="o", label=f"{protocol} (usefulness {usefulness:.2f})")
+        safeties = [compute_safety(df, SCORER, b) for b in AUDIT_BUDGETS]
+        for b, s in zip(AUDIT_BUDGETS, safeties):
+            # An audit budget below 100/n_honest % is thresholded on less than one honest sample.
+            note = "  (too few honest samples for this budget)" if b * n_honest / 100 < 1 else ""
+            print(f"  audit budget {b:>4}% -> safety {s:.2f}{note}")
+            rows.append({
+                "run": RUN_LABEL, "protocol": protocol, "n_honest": n_honest, "n_attack": n_attack,
+                "audit_budget_pct": b, "safety": round(s, 3), "usefulness": round(usefulness, 3),
+                "tokens_per_sample": json.dumps({m: round(t / len(df)) for m, t in tokens.items()}),
+            })
+        plt.plot(AUDIT_BUDGETS, safeties, marker="o", label=f"{protocol} (usefulness {usefulness:.2f})")
 
-plt.xscale("log")
-plt.xlabel("Audit budget (% of honest runs reviewed, log scale)")
-plt.ylabel("Safety")
-plt.title(RUN_LABEL)
-plt.legend()
-plt.grid(True)
-plot_path = Path(LOG_DIR, "safety_vs_audit_budget.png")
-plt.savefig(plot_path, dpi=120)
+    plt.xscale("log")
+    plt.xlabel("Audit budget (% of honest runs reviewed, log scale)")
+    plt.ylabel("Safety")
+    plt.title(RUN_LABEL)
+    plt.legend()
+    plt.grid(True)
+    plot_path = Path(LOG_DIR, "safety_vs_audit_budget.png")
+    plt.savefig(plot_path, dpi=120)
 
-Path("results").mkdir(exist_ok=True)
-csv_path = Path("results", f"{RUN_LABEL}.csv")
-pd.DataFrame(rows).to_csv(csv_path, index=False)
-print(f"\nsaved {plot_path} and {csv_path}")
+    Path("results").mkdir(exist_ok=True)
+    csv_path = Path("results", f"{RUN_LABEL}.csv")
+    pd.DataFrame(rows).to_csv(csv_path, index=False)
+    print(f"\nsaved {plot_path} and {csv_path}")
+
+
+# The guard matters on Windows: samples_df reads logs in worker processes, and each
+# worker re-imports this file. Without it, every worker re-runs the analysis and crashes.
+if __name__ == "__main__":
+    main()
