@@ -83,7 +83,7 @@ Logs (`logs*/`) and plots (`*.png`) are gitignored. They are large and reproduci
 
 ### Combining two monitors (offline ensemble)
 
-If you have two runs on the same problems that differ only in `TRUSTED_MODEL` (for example two `POLICY=dataset` runs with the same problem count), `src/ensemble.py` combines their suspicion scores per sample, by mean and by max, and reports safety at each audit budget for each monitor alone and for both ensembles. It also prints how many attacks each monitor catches that the other misses, and the combined token cost. It makes no API calls.
+If you have two runs on the same problems that differ only in `TRUSTED_MODEL` (for example two `POLICY=dataset` runs with the same problem count), `src/ensemble.py` combines their suspicion scores per sample (raw mean, raw max, and mean after rescaling each monitor against its own honest scores by z-score and by percentile rank) and reports safety at each audit budget for each monitor alone and for both ensembles. It also prints how many attacks each monitor catches that the other misses, and the combined token cost. It makes no API calls.
 
 ```bash
 RUN_LABEL=ensemble-ministral8b-gemini35lite uv run python src/ensemble.py logs/dataset-ministral8b-tm logs/dataset-gemini35lite-tm
