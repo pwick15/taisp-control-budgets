@@ -47,11 +47,17 @@ SHUFFLE_SEED = int(os.getenv("SHUFFLE_SEED", "20261018"))
 # yields 3 distinct values and a 2% budget floor; the other arms are attempts to
 # buy back resolution. See experiments/e0-monitor-resolution/REPORT.md.
 ARM = os.getenv("MONITOR_ARM", "baseline")
-# BATCH=1 routes model calls through the Anthropic Batches API: half price, but
-# far slower, because a batch waits to fill and is then queued. Worth it for a
-# large unattended run, not for iterating. Measured on 20 monitor-only samples:
-# 24.5s unbatched vs 247s batched. The discount does not appear in token counts,
-# so e0_report.py reads the batch config back out of the eval log to price it.
+# BATCH=1 routes model calls through the Anthropic Batches API for a 50% price
+# cut. MEASURED AND NOT RECOMMENDED HERE. Monitor-only, cache disabled:
+#     n=20   24.5s unbatched   ->    247s batched   (10x)
+#     n=100  108.3s unbatched  ->  67,795s batched  (626x, 18.8 hours)
+# The agent loop advances a sample only once its model call returns, so few
+# requests are ever in flight, batches never fill, and each small batch still
+# pays full queue latency. The penalty gets worse with n, not better. Treat
+# this switch as unusable until someone demonstrates that much higher
+# concurrency keeps batches full.
+# The discount is invisible in token counts, so e0_report.py reads the batch
+# config back out of the eval log to price a batched run correctly.
 BATCH = os.getenv("BATCH", "").lower() in ("1", "true", "yes")
 n_problems = int(sys.argv[1]) if len(sys.argv) > 1 else 200
 
