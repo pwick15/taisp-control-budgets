@@ -81,12 +81,23 @@ All optional, set in `.env` or the shell:
 
 Logs (`logs*/`) and plots (`*.png`) are gitignored. They are large and reproducible. To share results, share the numbers and the command that produced them, not the files. `analyze.py` writes the numbers to `results/<RUN_LABEL>.csv`, which is small enough to commit.
 
+### Combining two monitors (offline ensemble)
+
+If you have two runs on the same problems that differ only in `TRUSTED_MODEL` (for example two `POLICY=dataset` runs with the same problem count), `src/ensemble.py` combines their suspicion scores per sample, by mean and by max, and reports safety at each audit budget for each monitor alone and for both ensembles. It also prints how many attacks each monitor catches that the other misses, and the combined token cost. It makes no API calls.
+
+```bash
+RUN_LABEL=ensemble-ministral8b-gemini35lite uv run python src/ensemble.py logs/dataset-ministral8b-tm logs/dataset-gemini35lite-tm
+```
+
+This writes `results/<RUN_LABEL>.csv` and `logs/<RUN_LABEL>.png`.
+
 ## Repo layout
 
 | Path | What it does |
 |---|---|
 | `src/experiment.py` | Builds the tasks (setting x protocol x honest/attack) and runs them through Inspect. Writes one log subdirectory per protocol. |
 | `src/analyze.py` | Loads the logs into a DataFrame, computes usefulness and safety, plots safety vs audit budget. |
+| `src/ensemble.py` | Combines two monitors' scores from existing logs (mean and max) and reports safety for each and for the ensemble. |
 | `docs/codebase-guide.md` | Where things live in the ControlArena library, a trace of one attack sample, and experiment ideas. |
 | `pyproject.toml`, `uv.lock` | Dependencies. Use `uv add <pkg>` so the lockfile stays in sync. |
 
