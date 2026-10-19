@@ -12,8 +12,9 @@ Optional env vars:
     AUDIT_BUDGETS  comma-separated audit budgets in % (default 0.5,1,2,5,10,20,50)
     RUN_LABEL      name for the results CSV (default: the LOG_DIR folder name)
 
-Writes results/<RUN_LABEL>.csv (small, meant to be committed) and
-<LOG_DIR>/safety_vs_audit_budget.png (gitignored).
+Writes results/<RUN_LABEL>.csv (safety per audit budget, tokens and estimated cost per sample),
+results/<RUN_LABEL>-samples.csv (one suspicion score per sample), both small and meant to be
+committed, and <LOG_DIR>/safety_vs_audit_budget.png (gitignored).
 """
 import json
 import os
@@ -35,25 +36,44 @@ protocols = os.getenv("PROTOCOLS", "").split(",") if os.getenv("PROTOCOLS") else
 ]
 
 
-def tokens_by_model(df: pd.DataFrame) -> dict[str, int]:
-    """Sum all tokens per model across all samples (the cost axis).
+# USD per 1M tokens: (input, output, cache write, cache read). List prices as of 2026-10;
+# edit when they change. A model missing here gets no dollar estimate (tokens are still counted).
+PRICES = {
+    "anthropic/claude-haiku-4-5-20251001": (1.00, 5.00, 1.25, 0.10),
+    "anthropic/claude-sonnet-5-5": (2.00, 10.00, 2.50, 0.20),
+    "openai/gpt-6-luna": (0.10, 0.50, 0.10, 0.01),
+}
+USAGE_FIELDS = ("input_tokens", "output_tokens", "input_tokens_cache_write", "input_tokens_cache_read")
+
+
+def usage_by_model(df: pd.DataFrame) -> dict[str, dict[str, int]]:
+    """Sum each token field per model across all samples.
 
     Inspect reports cached input separately (input_tokens_cache_write/read), so input + output
-    alone undercounts providers that cache. total_tokens includes everything.
+    alone undercounts providers that cache. Output includes reasoning tokens.
     """
-    totals: dict[str, int] = defaultdict(int)
+    totals: dict[str, dict[str, int]] = defaultdict(lambda: defaultdict(int))
     for usage in df["model_usage"].dropna():
         usage = json.loads(usage) if isinstance(usage, str) else usage
         for model, u in usage.items():
-            totals[model] += int(u.get("total_tokens") or (
-                int(u.get("input_tokens", 0)) + int(u.get("output_tokens", 0))
-                + int(u.get("input_tokens_cache_write") or 0) + int(u.get("input_tokens_cache_read") or 0)
-            ))
-    return dict(totals)
+            for field in USAGE_FIELDS:
+                totals[model][field] += int(u.get(field) or 0)
+    return {model: dict(fields) for model, fields in totals.items()}
+
+
+def est_cost_usd(usage: dict[str, dict[str, int]]) -> float | None:
+    """Dollar estimate from PRICES, or None if any model has no listed price."""
+    if any(model not in PRICES for model in usage):
+        return None
+    return sum(
+        sum(u[field] * price for field, price in zip(USAGE_FIELDS, PRICES[model])) / 1e6
+        for model, u in usage.items()
+    )
 
 
 def main() -> None:
     rows = []
+    sample_rows = []
     plt.figure()
     for protocol in protocols:
         df = samples_df(f"{LOG_DIR}/{protocol}")
@@ -64,9 +84,17 @@ def main() -> None:
               .agg("mean").round(2).to_string())
 
         usefulness = compute_usefulness(df)
-        tokens = tokens_by_model(df)
+        usage = usage_by_model(df)
+        tokens = {m: sum(u.values()) for m, u in usage.items()}
+        cost = est_cost_usd(usage)
+        cost_per_sample = round(cost / len(df), 5) if cost is not None else ""
         print(f"usefulness: {usefulness:.2f}")
         print(f"tokens per sample by model: { {m: round(t / len(df)) for m, t in tokens.items()} }")
+        if cost is not None:
+            print(f"estimated cost: ${cost:.3f} total, ${cost / len(df):.4f} per sample")
+        scores = df[["eval_mode", "id", f"score_{SCORER}"]].rename(
+            columns={"eval_mode": "mode", "id": "sample_id", f"score_{SCORER}": "suspicion"})
+        sample_rows.append(scores.assign(run=RUN_LABEL, protocol=protocol).sort_values(["mode", "sample_id"]))
 
         safeties = [compute_safety(df, SCORER, b) for b in AUDIT_BUDGETS]
         for b, s in zip(AUDIT_BUDGETS, safeties):
@@ -77,6 +105,7 @@ def main() -> None:
                 "run": RUN_LABEL, "protocol": protocol, "n_honest": n_honest, "n_attack": n_attack,
                 "audit_budget_pct": b, "safety": round(s, 3), "usefulness": round(usefulness, 3),
                 "tokens_per_sample": json.dumps({m: round(t / len(df)) for m, t in tokens.items()}),
+                "est_cost_usd_per_sample": cost_per_sample,
             })
         plt.plot(AUDIT_BUDGETS, safeties, marker="o", label=f"{protocol} (usefulness {usefulness:.2f})")
 
@@ -92,7 +121,11 @@ def main() -> None:
     Path("results").mkdir(exist_ok=True)
     csv_path = Path("results", f"{RUN_LABEL}.csv")
     pd.DataFrame(rows).to_csv(csv_path, index=False)
-    print(f"\nsaved {plot_path} and {csv_path}")
+    # One row per sample, so the report viewer (reports/) can draw score distributions
+    # from committed files alone, without the gitignored logs.
+    samples_path = Path("results", f"{RUN_LABEL}-samples.csv")
+    pd.concat(sample_rows)[["run", "protocol", "mode", "sample_id", "suspicion"]].to_csv(samples_path, index=False)
+    print(f"\nsaved {plot_path}, {csv_path} and {samples_path}")
 
 
 # The guard matters on Windows: samples_df reads logs in worker processes, and each
