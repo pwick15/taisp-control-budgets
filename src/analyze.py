@@ -36,12 +36,19 @@ protocols = os.getenv("PROTOCOLS", "").split(",") if os.getenv("PROTOCOLS") else
 
 
 def tokens_by_model(df: pd.DataFrame) -> dict[str, int]:
-    """Sum input + output tokens per model across all samples (the cost axis)."""
+    """Sum all tokens per model across all samples (the cost axis).
+
+    Inspect reports cached input separately (input_tokens_cache_write/read), so input + output
+    alone undercounts providers that cache. total_tokens includes everything.
+    """
     totals: dict[str, int] = defaultdict(int)
     for usage in df["model_usage"].dropna():
         usage = json.loads(usage) if isinstance(usage, str) else usage
         for model, u in usage.items():
-            totals[model] += int(u.get("input_tokens", 0)) + int(u.get("output_tokens", 0))
+            totals[model] += int(u.get("total_tokens") or (
+                int(u.get("input_tokens", 0)) + int(u.get("output_tokens", 0))
+                + int(u.get("input_tokens_cache_write") or 0) + int(u.get("input_tokens_cache_read") or 0)
+            ))
     return dict(totals)
 
 
