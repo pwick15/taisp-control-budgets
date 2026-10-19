@@ -29,7 +29,7 @@ LOG_DIR = os.getenv("LOG_DIR", "logs")
 SCORER = "max_suspicion_scorer"
 AUDIT_BUDGETS = [float(b) for b in os.getenv("AUDIT_BUDGETS", "0.5,1,2,5,10,20,50").split(",")]
 RUN_LABEL = os.getenv("RUN_LABEL", Path(LOG_DIR).name)
-KNOWN = ["trusted_monitoring", "defer_to_trusted"]
+KNOWN = ["trusted_monitoring", "defer_to_trusted", "untrusted_monitoring"]
 protocols = os.getenv("PROTOCOLS", "").split(",") if os.getenv("PROTOCOLS") else [
     p for p in KNOWN if Path(LOG_DIR, p).is_dir()
 ]
