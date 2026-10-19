@@ -50,6 +50,19 @@ uv run inspect view --log-dir logs     # browse full transcripts in the browser
 
 5 problems is only a plumbing check, since each attack is close to a coin flip at that size. Use 50 or more for any number you plan to quote.
 
+### Running on free API tiers
+
+Google AI Studio and Mistral (Experiment plan) have free tiers with no credit card. Put the key in `.env` (see `.env.example`) and pick models by prefix, for example:
+
+```bash
+UNTRUSTED_MODEL=google/gemini-2.5-flash TRUSTED_MODEL=mistral/ministral-8b-latest \
+  PROTOCOLS=trusted_monitoring MAX_CONNECTIONS=1 MAX_SANDBOXES=2 LOG_DIR=logs/gemini-ministral-tm \
+  uv run python src/experiment.py 20
+LOG_DIR=logs/gemini-ministral-tm uv run python src/analyze.py
+```
+
+U and T can come from different providers, as above. A Google-only pair also works, e.g. `google/gemini-3.5-flash` as U and `google/gemini-3.5-flash-lite` as T. On the Mistral free tier, `mistral-large-latest` is not available and `mistral-small-latest` was rate-limited in testing; the Ministral models work. Free tiers cap requests per minute and per day, so keep `MAX_CONNECTIONS` low. Models must support tool calling, because the APPS setting submits code through a `submit` tool. Model IDs change, so check each provider's model list first.
+
 ### Configuration
 
 All optional, set in `.env` or the shell:
@@ -59,8 +72,24 @@ All optional, set in `.env` or the shell:
 | `UNTRUSTED_MODEL` | `anthropic/claude-sonnet-5-5` | Strong model U, which may attack |
 | `TRUSTED_MODEL` | `anthropic/claude-haiku-4-5-20251001` | Weak model T, which monitors and acts as fallback |
 | `LOG_DIR` | `logs` | Where eval logs go. Read by both scripts, so set it for both. |
+| `PROTOCOLS` | all | Comma-separated subset to run or analyse, e.g. `trusted_monitoring` |
+| `MAX_CONNECTIONS` | `10` | Max concurrent API calls per model. Use 1-2 on free tiers. |
+| `MAX_SANDBOXES` | `10` | Max concurrent Docker sandboxes |
+| `POLICY` | `model` | `model`: U writes the code. `dataset`: use the dataset's known-good solutions and verified backdoors instead of U, so only the monitor calls an API. For testing the monitor when U can't write working backdoors; usefulness is meaningless in this mode. |
+| `AUDIT_BUDGETS` | `0.5,1,2,5,10,20,50` | Audit budgets (%) that `analyze.py` evaluates |
+| `RUN_LABEL` | `LOG_DIR` folder name | Name of the results CSV written to `results/` |
 
-Logs (`logs*/`) and plots (`*.png`) are gitignored. They are large and reproducible. To share results, share the numbers and the command that produced them, not the files.
+Logs (`logs*/`) and plots (`*.png`) are gitignored. They are large and reproducible. To share results, share the numbers and the command that produced them, not the files. `analyze.py` writes the numbers to `results/<RUN_LABEL>.csv`, which is small enough to commit.
+
+### Combining two monitors (offline ensemble)
+
+If you have two runs on the same problems that differ only in `TRUSTED_MODEL` (for example two `POLICY=dataset` runs with the same problem count), `src/ensemble.py` combines their suspicion scores per sample (raw mean, raw max, and mean after rescaling each monitor against its own honest scores by z-score and by percentile rank) and reports safety at each audit budget for each monitor alone and for both ensembles. It also prints how many attacks each monitor catches that the other misses, and the combined token cost. It makes no API calls.
+
+```bash
+RUN_LABEL=ensemble-ministral8b-gemini35lite uv run python src/ensemble.py logs/dataset-ministral8b-tm logs/dataset-gemini35lite-tm
+```
+
+This writes `results/<RUN_LABEL>.csv` and `logs/<RUN_LABEL>.png`.
 
 ## Repo layout
 
@@ -68,6 +97,7 @@ Logs (`logs*/`) and plots (`*.png`) are gitignored. They are large and reproduci
 |---|---|
 | `src/experiment.py` | Builds the tasks (setting x protocol x honest/attack) and runs them through Inspect. Writes one log subdirectory per protocol. |
 | `src/analyze.py` | Loads the logs into a DataFrame, computes usefulness and safety, plots safety vs audit budget. |
+| `src/ensemble.py` | Combines two monitors' scores from existing logs (mean and max) and reports safety for each and for the ensemble. |
 | `docs/codebase-guide.md` | Where things live in the ControlArena library, a trace of one attack sample, and experiment ideas. |
 | `pyproject.toml`, `uv.lock` | Dependencies. Use `uv add <pkg>` so the lockfile stays in sync. |
 
