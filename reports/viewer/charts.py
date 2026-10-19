@@ -61,11 +61,12 @@ def score_histogram(name: str, honest: list[float], attack: list[float], ymax: i
     return "".join(parts)
 
 
-def safety_lines(name: str, budgets: list[float], raw: list[float], stripped: list[float], unreliable_below: float,
+def safety_lines(name: str, budgets: list[float], raw: list[float], stripped: list[float] | None, unreliable_below: float,
                  first_label: str = "raw", second_label: str = "stripped") -> str:
     """Safety (0 to 1) at each audit budget for two variants of one monitor.
 
     The first variant is a solid line with filled dots, the second is dashed with hollow dots.
+    Pass stripped=None to draw only the first variant.
     The gray band marks budgets that threshold on less than one whole honest run.
     """
     w, h = 320, 215
@@ -89,23 +90,29 @@ def safety_lines(name: str, budgets: list[float], raw: list[float], stripped: li
     parts.append(f'<text class="muted" x="{left + pw / 2:.1f}" y="{h - 8}" text-anchor="middle">audit budget</text>')
     parts.append(f'<text class="muted" x="{left - 6}" y="{top - 6}" text-anchor="end">safety</text>')
 
-    for values, dashed in ((raw, False), (stripped, True)):
+    series = [(raw, False)] + ([(stripped, True)] if stripped is not None else [])
+    for values, dashed in series:
         pts = " ".join(f"{x(i):.1f},{y(v):.1f}" for i, v in enumerate(values))
         parts.append(f'<polyline class="line{" dashed" if dashed else ""}" points="{pts}"/>')
-    for values, hollow in ((raw, False), (stripped, True)):
+    for values, hollow in series:
         for i, v in enumerate(values):
             parts.append(f'<circle class="pt{" hollow" if hollow else ""}" cx="{x(i):.1f}" cy="{y(v):.1f}" r="{4 if not hollow else 3.5}"/>')
 
     # Direct labels at the right end, nudged apart if the two lines finish close together.
-    ys = [y(raw[-1]), y(stripped[-1])]
-    if abs(ys[0] - ys[1]) < 13:
-        mid = (ys[0] + ys[1]) / 2
-        ys = [mid - 7, mid + 7] if ys[0] <= ys[1] else [mid + 7, mid - 7]
-    for label, ly in ((first_label, ys[0]), (second_label, ys[1])):
+    labels = [(first_label, y(raw[-1]))]
+    if stripped is not None:
+        ys = [y(raw[-1]), y(stripped[-1])]
+        if abs(ys[0] - ys[1]) < 13:
+            mid = (ys[0] + ys[1]) / 2
+            ys = [mid - 7, mid + 7] if ys[0] <= ys[1] else [mid + 7, mid - 7]
+        labels = [(first_label, ys[0]), (second_label, ys[1])]
+    for label, ly in labels:
         parts.append(f'<text x="{x(len(budgets) - 1) + 10:.1f}" y="{ly + 4:.1f}">{esc(label)}</text>')
 
     for i, b in enumerate(budgets):
-        tip = f"{_fmt(b)}% audit budget|{first_label}: {raw[i]:.2f}|{second_label}: {stripped[i]:.2f}"
+        tip = f"{_fmt(b)}% audit budget|{first_label}: {raw[i]:.2f}"
+        if stripped is not None:
+            tip += f"|{second_label}: {stripped[i]:.2f}"
         if b < unreliable_below:
             tip += "|few honest runs, treat with care"
         parts.append(f'<g class="hitg"><line class="xhair" x1="{x(i):.1f}" x2="{x(i):.1f}" y1="{top}" y2="{top + ph}"/>'
@@ -145,5 +152,51 @@ def dumbbell(rows: list[tuple[str, str, float, float]], first_label: str = "raw"
                      f'<text class="val" x="{x(left_val) - 14:.1f}" y="{cy + 4:.1f}" text-anchor="end">{fmt_auroc(left_val)}</text>')
         tip = f"{label}|{first_label}: {first:.3f}|{second_label}: {second:.3f}|change: {second - first:+.3f}"
         parts.append(f'<rect class="hit" x="0" y="{cy - row_h / 2:.1f}" width="{w}" height="{row_h}" data-tip="{esc(tip)}"/></g>')
+    parts.append("</svg>")
+    return "".join(parts)
+
+
+def frontier_lines(name: str, curves: list[tuple[str, str, list[tuple[float, float, str, bool]]]],
+                   xmin: float = 0.5, xmax: float = 1.0) -> str:
+    """Safety (y) against usefulness (x), one line per curve, e.g. one per audit budget.
+
+    curves: (label, colour slot, points). Each point is (usefulness, safety, tooltip text, pareto).
+    Pareto-optimal points are filled dots, the rest hollow. Up and to the right is better.
+    """
+    w, h = 640, 330
+    left, right, top, bottom = 44, 110, 20, 46
+    pw, ph = w - left - right, h - top - bottom
+    x = lambda v: left + pw * (min(max(v, xmin), xmax) - xmin) / (xmax - xmin)
+    y = lambda v: top + ph - ph * v
+
+    parts = [f'<svg class="chart" viewBox="0 0 {w} {h}" role="img" aria-label="Safety against usefulness for {esc(name)}">']
+    for tick in (0, 0.25, 0.5, 0.75, 1.0):
+        cls = "axis" if tick == 0 else "grid"
+        parts.append(f'<line class="{cls}" x1="{left}" x2="{left + pw}" y1="{y(tick):.1f}" y2="{y(tick):.1f}"/>')
+        parts.append(f'<text class="muted" x="{left - 6}" y="{y(tick) + 4:.1f}" text-anchor="end">{tick:g}</text>')
+    step = 0.05 if xmax - xmin <= 0.4 else 0.1
+    first = int(xmin / step + 0.999) * step
+    for i in range(int(round((xmax - first) / step)) + 1):
+        t = first + i * step
+        parts.append(f'<line class="grid" x1="{x(t):.1f}" x2="{x(t):.1f}" y1="{top}" y2="{top + ph}"/>')
+        parts.append(f'<text class="muted" x="{x(t):.1f}" y="{h - 26}" text-anchor="middle">{t:.2f}</text>')
+    parts.append(f'<text class="muted" x="{left + pw / 2:.1f}" y="{h - 8}" text-anchor="middle">usefulness (share of honest problems solved)</text>')
+    parts.append(f'<text class="muted" x="{left - 6}" y="{top - 6}" text-anchor="end">safety</text>')
+
+    label_ys = []
+    for label, slot, pts in curves:
+        pts = sorted(pts)
+        parts.append(f'<g class="{esc(slot)}">')
+        parts.append(f'<polyline class="line" points="{" ".join(f"{x(u):.1f},{y(s):.1f}" for u, s, _, _ in pts)}"/>')
+        for u, s, tip, pareto in pts:
+            hollow = "" if pareto else " hollow"
+            parts.append(f'<circle class="pt{hollow}" cx="{x(u):.1f}" cy="{y(s):.1f}" r="{4.5 if pareto else 3.5}"/>'
+                         f'<circle class="hit" cx="{x(u):.1f}" cy="{y(s):.1f}" r="9" data-tip="{esc(name)} · {esc(label)}|{esc(tip)}"/>')
+        u_end, s_end = pts[-1][0], pts[-1][1]
+        ly = y(s_end)
+        while any(abs(ly - other) < 13 for other in label_ys):
+            ly += 13
+        label_ys.append(ly)
+        parts.append(f'<text x="{x(u_end) + 10:.1f}" y="{ly + 4:.1f}">{esc(label)}</text></g>')
     parts.append("</svg>")
     return "".join(parts)

@@ -256,7 +256,7 @@ class Report:
 
 
 def _read(name: str) -> str:
-    return (VIEWER_DIR / name).read_text()
+    return (VIEWER_DIR / name).read_text(encoding="utf-8")
 
 
 def _shell(title: str, body: str, home_href: str) -> str:
