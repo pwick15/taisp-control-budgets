@@ -75,6 +75,7 @@ All optional, set in `.env` or the shell:
 | `PROTOCOLS` | all | Comma-separated subset to run or analyse, e.g. `trusted_monitoring` |
 | `MAX_CONNECTIONS` | `10` | Max concurrent API calls per model. Use 1-2 on free tiers. |
 | `MAX_SANDBOXES` | `10` | Max concurrent Docker sandboxes |
+| `POLICY` | `model` | `model`: U writes the code. `dataset`: use the dataset's known-good solutions and verified backdoors instead of U, so only the monitor calls an API. For testing the monitor when U can't write working backdoors; usefulness is meaningless in this mode. |
 | `AUDIT_BUDGETS` | `0.5,1,2,5,10,20,50` | Audit budgets (%) that `analyze.py` evaluates |
 | `RUN_LABEL` | `LOG_DIR` folder name | Name of the results CSV written to `results/` |
 
