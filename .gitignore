@@ -4,3 +4,6 @@ logs*/
 __pycache__/
 *.png
 .DS_Store
+
+# Results viewer output (rebuild with: uv run python reports/build.py)
+reports/site/
