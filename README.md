@@ -92,6 +92,32 @@ RUN_LABEL=ensemble-ministral8b-gemini35lite uv run python src/ensemble.py logs/d
 
 This writes `results/<RUN_LABEL>.csv` and `logs/<RUN_LABEL>.png`.
 
+## Record once, monitor many times
+
+Re-running U for every monitor you want to try costs money and gives each monitor slightly different outputs to judge. Instead, record U's outputs once, then score the same saved trajectories with as many monitors as you like.
+
+```bash
+# 1. Record U (honest + attack) and T's own honest solutions. Needs Docker and API keys for U and T.
+UNTRUSTED_MODEL=anthropic/claude-sonnet-5-5 TRUSTED_MODEL=anthropic/claude-haiku-4-5-20251001 \
+  TRAJ_DIR=trajectories/model-sonnet55-n100 uv run python src/record.py 100
+
+# 2. Score them with any monitor. No Docker, no U calls. Repeat for each monitor and comment setting.
+TRAJ_DIR=trajectories/model-sonnet55-n100 MONITOR_MODEL=anthropic/claude-haiku-4-5-20251001 \
+  STRIP_COMMENTS=1 LOG_DIR=logs/sonnet55-n100-haiku45-strip uv run python src/monitor.py
+
+# 3. Same analysis as before.
+LOG_DIR=logs/sonnet55-n100-haiku45-strip uv run python src/analyze.py
+
+# 4. Optional: defer-to-trusted at every audit budget and defer threshold, from the same files.
+LOG_DIR=logs/sonnet55-n100-haiku45-strip TRAJ_DIR=trajectories/model-sonnet55-n100 uv run python src/defer_sim.py
+```
+
+- `record.py` saves `<TRAJ_DIR>/untrusted/` (U, honest and attack, no monitor) and `<TRAJ_DIR>/trusted/` (T solving the same problems honestly; only `defer_sim.py` needs it). `RECORD=untrusted` skips the T run. `POLICY=dataset` records the dataset's solutions and backdoors instead of a live U.
+- `monitor.py` writes logs in the same layout as `experiment.py`, so `analyze.py` and `ensemble.py` work on them unchanged. Use `PROTOCOL=untrusted_monitoring` when the monitor is U itself. Inspect caches monitor calls, so re-running the same monitor on the same trajectories is free and gives the same scores.
+- `defer_sim.py` replays defer-to-trusted offline: audit the top X% of honest scores, replace the next Y% with T's solution to that problem, and report safety and usefulness for every (X, Y). It marks the Pareto-optimal settings at each audit budget and plots one safety-usefulness curve per audit budget.
+
+`trajectories/` is not gitignored. Commit a trajectory folder (its `.eval` files) when it is small (`record.py` prints the size), so anyone can re-score the exact same outputs. Share larger ones outside git and note where in the PR.
+
 ## Results viewer
 
 `reports/` turns finished experiments into readable web pages: one page per experiment with a summary, the story of how the design evolved, charts, tables and caveats. Pages are plain HTML files with light and dark themes, so you can open them locally or send one to a teammate.
@@ -115,6 +141,9 @@ Pages read only the committed CSVs, never the logs, so anyone can rebuild them. 
 | `src/experiment.py` | Builds the tasks (setting x protocol x honest/attack) and runs them through Inspect. Writes one log subdirectory per protocol. |
 | `src/analyze.py` | Loads the logs into a DataFrame, computes usefulness and safety, plots safety vs audit budget. |
 | `src/ensemble.py` | Combines two monitors' scores from existing logs (mean and max) and reports safety for each and for the ensemble. |
+| `src/record.py` | Records U (honest and attack) and T (honest) trajectories with no monitor, for re-use. |
+| `src/monitor.py` | Scores saved trajectories with one monitor and writes logs in `experiment.py`'s layout. |
+| `src/defer_sim.py` | Offline defer-to-trusted at every audit budget and defer threshold, with Pareto flags. |
 | `src/strip_comments.py` | Monitor prompt formatter that removes `#` comments from submitted code. Used when `STRIP_COMMENTS=1`. |
 | `reports/build.py` | Builds the results viewer: one HTML page per file in `reports/experiments/`, plus an index. |
 | `reports/experiments/` | One Python file per experiment page. `_template.py` is the starting point. |
@@ -132,6 +161,8 @@ Pages read only the committed CSVs, never the logs, so anyone can rebuild them. 
 - **trusted monitoring:** U acts, T scores it, humans audit the top X% of scores. Nothing is blocked.
 - **defer to trusted:** same, but any action scoring above `defer_threshold` (0.5, an untuned guess) is discarded and T writes the code instead. Safer, but T is weaker, so fewer problems get solved.
 - **untrusted monitoring (baseline):** same as trusted monitoring, but U scores its own output instead of T (`PROTOCOLS=untrusted_monitoring`, model set by `UNTRUSTED_MODEL`). There is no collusion channel between the attacking and monitoring copies, so this is an upper bound on what a capable honest monitor can do, not a test of a scheming one.
+
+`src/defer_sim.py` can replay defer-to-trusted at any threshold from saved trajectories, so a threshold sweep needs no new runs.
 
 ControlArena also ships `defer_to_resample` and `trusted_editing` micro-protocols, and `ensemble_monitor_builder` for detection. See `docs/codebase-guide.md`.
 

@@ -44,10 +44,10 @@ def main() -> int:
             failed.append(path.name)
             print(f"FAILED {path.name}\n{traceback.format_exc()}")
             continue
-        (SITE_DIR / f"{report.slug}.html").write_text(render_report(report))
+        (SITE_DIR / f"{report.slug}.html").write_text(render_report(report), encoding="utf-8")
         reports.append(report)
         print(f"built   {SITE_DIR / (report.slug + '.html')}")
-    (SITE_DIR / "index.html").write_text(render_index(reports))
+    (SITE_DIR / "index.html").write_text(render_index(reports), encoding="utf-8")
     print(f"index   {SITE_DIR / 'index.html'}")
     if "--open" in sys.argv:
         webbrowser.open((SITE_DIR / "index.html").as_uri())
