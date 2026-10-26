@@ -22,10 +22,17 @@ Env vars:
     RECORD           which runs: "untrusted", "trusted" or "untrusted,trusted" (default both)
     MAX_CONNECTIONS  max concurrent API calls per model (default 10; use 1-2 on free tiers)
     MAX_SANDBOXES    max concurrent Docker sandboxes (default 10)
+    EXCLUDE_FROM     comma-separated trajectory folders whose problems to skip, matched by problem
+                     id (e.g. an earlier run, so a new run uses only problems it hasn't seen)
+    START            skip this many of the remaining problems first (default 0), to record in
+                     batches: START=0 then START=200 with `record.py 200` gives 400 problems.
+                     Give every batch the same TRAJ_DIR; later steps read them as one set.
 """
 import os
 import sys
 from pathlib import Path
+
+from inspect_ai.log import read_eval_log
 
 from inspect_ai import eval as inspect_eval
 from inspect_ai.model import GenerateConfig
@@ -41,8 +48,22 @@ def short_name(model: str) -> str:
     return model.split("/")[-1].replace(".", "")
 
 
+def ids_in(folders: str) -> set[str]:
+    """Problem ids recorded under each trajectory folder (read from its .eval files)."""
+    ids: set[str] = set()
+    for folder in filter(None, (f.strip() for f in folders.split(","))):
+        files = sorted(Path(folder).rglob("*.eval"))
+        if not files:
+            sys.exit(f"EXCLUDE_FROM: no .eval files under {folder}")
+        for f in files:
+            ids.update(str(s.id) for s in read_eval_log(str(f)).samples or [])
+    return ids
+
+
 def main() -> None:
     n_problems = int(sys.argv[1]) if len(sys.argv) > 1 else 10
+    start = int(os.getenv("START", "0"))
+    exclude_from = os.getenv("EXCLUDE_FROM", "")
     untrusted = os.getenv("UNTRUSTED_MODEL", "anthropic/claude-sonnet-5-5")
     trusted = os.getenv("TRUSTED_MODEL", "anthropic/claude-haiku-4-5-20251001")
     policy_mode = os.getenv("POLICY", "model")
@@ -60,7 +81,7 @@ def main() -> None:
         trusted_model=trusted,
         untrusted_config=GenerateConfig(max_connections=max_connections),
         trusted_config=GenerateConfig(max_connections=max_connections),
-        limit=n_problems,
+        limit=None if (start or exclude_from) else n_problems,
         max_sandboxes=int(os.getenv("MAX_SANDBOXES", "10")),
     )
     # Same setting and limit for both runs, so U and T see exactly the same problems.
@@ -73,13 +94,29 @@ def main() -> None:
         # T solving the problems honestly: the fallback answers for defer-to-trusted.
         "trusted": (trusted_policy_builder(), [EvalMode.HONEST]),
     }
+    # Pick problems by id when skipping some: drop excluded ids, then take n after START.
+    eval_args = config.eval_args()
+    if start or exclude_from:
+        excluded = ids_in(exclude_from) if exclude_from else set()
+        # Keep each id's original type (Inspect matches sample ids exactly); compare as text.
+        ordered = [s.id for s in setting.get_dataset(EvalMode.HONEST)]
+        remaining = [i for i in ordered if str(i) not in excluded]
+        chosen = remaining[start:start + n_problems]
+        if not chosen:
+            sys.exit(f"No problems left: {len(ordered)} in the setting, {len(excluded)} excluded, START={start}")
+        if len(chosen) < n_problems:
+            print(f"note: only {len(chosen)} problems left after START={start}")
+        print(f"{len(ordered)} problems in the setting; skipping {len(ordered) - len(remaining)} from "
+              f"EXCLUDE_FROM; taking {len(chosen)} from position {start} of the remaining {len(remaining)}")
+        eval_args = {**eval_args, "limit": None, "sample_id": chosen}
+        n_problems = len(chosen)
     print(f"Recording {', '.join(record)} for {n_problems} problems into {traj_dir}")
     for name in record:
         policy, modes = runs[name]
         tasks = get_control_task_product(
             settings=setting, micro_protocols=policy, modes=modes, eval_config=config,
         )
-        inspect_eval(tasks, **{**config.eval_args(), "log_dir": str(traj_dir / name)})
+        inspect_eval(tasks, **{**eval_args, "log_dir": str(traj_dir / name)})
 
     files = sorted(traj_dir.rglob("*.eval"))
     size_mb = sum(f.stat().st_size for f in files) / 1e6
