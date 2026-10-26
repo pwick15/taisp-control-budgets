@@ -41,6 +41,7 @@ protocols = os.getenv("PROTOCOLS", "").split(",") if os.getenv("PROTOCOLS") else
 PRICES = {
     "anthropic/claude-haiku-4-5-20251001": (1.00, 5.00, 1.25, 0.10),
     "anthropic/claude-sonnet-5-5": (2.00, 10.00, 2.50, 0.20),
+    "anthropic/claude-haiku-5-5": (0.10, 0.50, 0.125, 0.01),
     "openai/gpt-6-luna": (0.10, 0.50, 0.10, 0.01),
 }
 USAGE_FIELDS = ("input_tokens", "output_tokens", "input_tokens_cache_write", "input_tokens_cache_read")

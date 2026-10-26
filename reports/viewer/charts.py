@@ -37,7 +37,8 @@ def score_histogram(name: str, honest: list[float], attack: list[float], ymax: i
 
     parts = [f'<svg class="chart" viewBox="0 0 {w} {h}" role="img" '
              f'aria-label="Score counts for {esc(name)}: honest runs and attack runs">']
-    for tick in range(0, ymax + 1, 10):
+    step = next(s for s in (10, 20, 50, 100, 200, 500, 1000) if ymax / s <= 5)  # at most ~5 gridlines
+    for tick in range(0, ymax + 1, step):
         cls = "axis" if tick == 0 else "grid"
         parts.append(f'<line class="{cls}" x1="{left}" x2="{w - right}" y1="{y(tick):.1f}" y2="{y(tick):.1f}"/>')
         parts.append(f'<text class="muted" x="{left - 6}" y="{y(tick) + 4:.1f}" text-anchor="end">{tick}</text>')
