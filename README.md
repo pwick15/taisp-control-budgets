@@ -112,6 +112,7 @@ LOG_DIR=logs/sonnet55-n100-haiku45-strip uv run python src/analyze.py
 LOG_DIR=logs/sonnet55-n100-haiku45-strip TRAJ_DIR=trajectories/model-sonnet55-n100 uv run python src/defer_sim.py
 ```
 
+- To record in batches or skip problems an earlier run already used, set `EXCLUDE_FROM=<earlier TRAJ_DIR>` and `START` (e.g. `START=0` then `START=200` with `record.py 200`), and give every batch the same `TRAJ_DIR`. Problems are skipped by id, so this works across `POLICY=model` and `POLICY=dataset`, whose problem lists differ.
 - `record.py` saves `<TRAJ_DIR>/untrusted/` (U, honest and attack, no monitor) and `<TRAJ_DIR>/trusted/` (T solving the same problems honestly; only `defer_sim.py` needs it). `RECORD=untrusted` skips the T run. `POLICY=dataset` records the dataset's solutions and backdoors instead of a live U.
 - `monitor.py` writes logs in the same layout as `experiment.py`, so `analyze.py` and `ensemble.py` work on them unchanged. Use `PROTOCOL=untrusted_monitoring` when the monitor is U itself. Inspect caches monitor calls, so re-running the same monitor on the same trajectories is free and gives the same scores.
 - `defer_sim.py` replays defer-to-trusted offline: audit the top X% of honest scores, replace the next Y% with T's solution to that problem, and report safety and usefulness for every (X, Y). It marks the Pareto-optimal settings at each audit budget and plots one safety-usefulness curve per audit budget.
