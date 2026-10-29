@@ -23,7 +23,7 @@ import os
 import sys
 
 from inspect_ai import eval as inspect_eval
-from inspect_ai.model import GenerateConfig
+from inspect_ai.model import GenerateConfig, get_model
 
 from control_arena import EvalMode
 from control_arena.eval import ControlEvalConfig, get_control_task_product
@@ -45,11 +45,32 @@ n_problems = int(sys.argv[1]) if len(sys.argv) > 1 else 10
 # Inspect retries rate-limited calls with backoff, but fewer parallel calls avoids most of them.
 max_connections = int(os.getenv("MAX_CONNECTIONS", "10"))
 
+# A reasoning monitor served behind a timeout-bounded proxy (e.g. a litellm gateway
+# with a ~90s cut) gets its long generations killed with a 504 under concurrency,
+# because the whole response is buffered before the gateway forwards it. Streaming
+# keeps the connection alive as tokens arrive, so the request completes. It changes
+# only how the bytes are delivered, never the model's output, so streamed and
+# non-streamed scores are identical. Off by default: non-streaming runs are unchanged.
+trusted_model_name = os.getenv("TRUSTED_MODEL", "anthropic/claude-haiku-4-5-20251001")
+if os.getenv("MONITOR_STREAM", "0") == "1":
+    trusted_model = get_model(
+        trusted_model_name,
+        stream=True,
+        # Bound a rare stalled/failed stream so it fails and retries quickly instead of
+        # Inspect's default long backoff hanging a long run; streaming itself avoids the
+        # gateway 504s that would otherwise drive the retries.
+        config=GenerateConfig(max_connections=max_connections, timeout=300, max_retries=5),
+    )
+    trusted_config = None  # ignored for a pre-built Model; the model carries its own config
+else:
+    trusted_model = trusted_model_name
+    trusted_config = GenerateConfig(max_connections=max_connections)
+
 config = ControlEvalConfig(
     untrusted_model=os.getenv("UNTRUSTED_MODEL", "anthropic/claude-sonnet-5-5"),
-    trusted_model=os.getenv("TRUSTED_MODEL", "anthropic/claude-haiku-4-5-20251001"),
+    trusted_model=trusted_model,
     untrusted_config=GenerateConfig(max_connections=max_connections),
-    trusted_config=GenerateConfig(max_connections=max_connections),
+    trusted_config=trusted_config,
     limit=n_problems,
     max_sandboxes=int(os.getenv("MAX_SANDBOXES", "10")),
 )
