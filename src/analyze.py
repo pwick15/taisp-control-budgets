@@ -49,6 +49,7 @@ PRICES = {
     "openai-api/litellm/openai/gpt-6-luna": (0.10, 0.50, 0.10, 0.01),
     "openai-api/litellm/deepinfra/openai/gpt-oss-120b": (0.037, 0.17, 0.037, 0.004),
     "openai-api/litellm/deepinfra/zai-org/GLM-5.3": (0.90, 4.00, 0.90, 0.20),
+    "openai-api/vercel/alibaba/qwen3.8-omni-flash": (0.15, 0.47, 0.15, 0.02),
 }
 USAGE_FIELDS = ("input_tokens", "output_tokens", "input_tokens_cache_write", "input_tokens_cache_read")
 
