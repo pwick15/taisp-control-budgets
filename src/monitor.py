@@ -80,7 +80,10 @@ async def run() -> None:
     monitor = basic_monitor_builder(
         model_role=None,
         model=monitor_model,
-        config=GenerateConfig(max_connections=int(os.getenv("MAX_CONNECTIONS", "10"))),
+                config=GenerateConfig(
+            max_connections=int(os.getenv("MAX_CONNECTIONS", "10")),
+            reasoning_effort=os.getenv("REASONING_EFFORT") or None,
+        ),
         **({"prompt_formatter": strip_comments_prompt_formatter} if strip else {}),
     )
     out_dir = log_dir / protocol
