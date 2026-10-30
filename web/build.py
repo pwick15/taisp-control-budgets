@@ -21,8 +21,10 @@ RUNS = {
     "dataset-haiku55-efforthigh-tm-n500-strip": ("Haiku 5.5 · high", "haiku55", "anthropic", "high"),
     "dataset-haiku55-tm-n500-strip": ("Haiku 5.5 · medium (default)", "haiku55", "anthropic", "medium"),
     "dataset-haiku55-effortlow-tm-n500-strip": ("Haiku 5.5 · low", "haiku55", "anthropic", "low"),
-    "dataset-glm53-tm-n500-strip": ("GLM-5.3 · thinking on", "glm53", "zhipu", "on"),
-    "dataset-glm53-thinkoff-tm-n500-strip": ("GLM-5.3 · thinking off", "glm53", "zhipu", "off"),
+    # GLM-5.3 defaults to max when reasoning_effort is omitted (DeepInfra integration
+    # guide, verified on the live endpoint), so this run is the max rung.
+    "dataset-glm53-tm-n500-strip": ("GLM-5.3 · max (default)", "glm53", "zhipu", "max"),
+    "dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip": ("GLM-5.3 · effort=none (not an ablation)", "glm53", "zhipu", "max"),
     "dataset500-qwen38omniflash-high-tm-strip": ("Qwen 3.8 Omni Flash · high", "qwen38", "alibaba", "high"),
     "dataset500-qwen38omniflash-medium-tm-strip": ("Qwen 3.8 Omni Flash · medium", "qwen38", "alibaba", "medium"),
     "dataset-qwen38omniflash-none-tm-n500-strip": ("Qwen 3.8 Omni Flash · off", "qwen38", "alibaba", "off"),
