@@ -43,6 +43,7 @@ PRICES = {
     "anthropic/claude-sonnet-5-5": (2.00, 10.00, 2.50, 0.20),
     "anthropic/claude-haiku-5-5": (0.10, 0.50, 0.125, 0.01),
     "openai/gpt-6-luna": (0.10, 0.50, 0.10, 0.01),
+    "openai-api/vercel/alibaba/qwen3.8-omni-flash": (0.15, 0.47, 0.15, 0.02),
 }
 USAGE_FIELDS = ("input_tokens", "output_tokens", "input_tokens_cache_write", "input_tokens_cache_read")
 
