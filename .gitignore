@@ -19,3 +19,7 @@ __pycache__/
 # so those stay until someone decides to remove them.
 trajectories/**/*.eval
 
+# Experiment records ARE version-controlled: derived figures and tidy data
+# are small, and the report is the deliverable. Raw .eval logs stay out.
+!experiments/**/*.png
+experiments/**/*.eval
