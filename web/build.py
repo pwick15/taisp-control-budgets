@@ -16,7 +16,12 @@ BUDGETS = [0.5, 1, 2, 5, 10, 20]
 
 # run label -> (display name, model key, family, reasoning setting)
 RUNS = {
-    "dataset500-sonnet55-um-strip": ("Sonnet 5.5", "sonnet55", "anthropic", "default"),
+    # Sonnet 5.5's effort default IS high: Anthropic documents effort as defaulting to
+    # high when omitted, and an explicit-high probe on the real monitor task used 2,319
+    # tokens/sample against this run's 2,242, 3.4% apart. Recorded as "high" rather than
+    # "default" so the rung is unambiguous later.
+    "dataset500-sonnet55-um-strip": ("Sonnet 5.5 · high (default)", "sonnet55", "anthropic", "high"),
+    "dataset500-sonnet55-um-effortlow-strip": ("Sonnet 5.5 · low (thinking off)", "sonnet55", "anthropic", "low"),
     "dataset-haiku55-effortxhigh-tm-n500-strip": ("Haiku 5.5 · xhigh", "haiku55", "anthropic", "xhigh"),
     "dataset-haiku55-efforthigh-tm-n500-strip": ("Haiku 5.5 · high", "haiku55", "anthropic", "high"),
     "dataset-haiku55-tm-n500-strip": ("Haiku 5.5 · medium (default)", "haiku55", "anthropic", "medium"),
