@@ -38,6 +38,15 @@ protocols = os.getenv("PROTOCOLS", "").split(",") if os.getenv("PROTOCOLS") else
 
 # USD per 1M tokens: (input, output, cache write, cache read). List prices as of 2026-10;
 # edit when they change. A model missing here gets no dollar estimate (tokens are still counted).
+#
+# Prices are PAID-tier list rates even where the run itself used a free tier. A free-tier
+# run costs $0, which tells you nothing about what the monitor would cost to deploy and
+# makes the model unplottable on a cost axis. Where the vendor has no paid tier at all,
+# the nearest paid host of the same weights is used and marked below.
+#
+# `reasoning_tokens` is a SUBSET of `output_tokens`, not an addition: verified on GLM-5.3
+# (in 1168 + out 2212 = total 3380, with reasoning 1667 inside the output) and on
+# Gemini 3.5 Flash-Lite. Do not add it to the cost, or thinking models are billed twice.
 PRICES = {
     "anthropic/claude-haiku-4-5-20251001": (1.00, 5.00, 1.25, 0.10),
     "anthropic/claude-sonnet-5-5": (2.00, 10.00, 2.50, 0.20),
@@ -50,6 +59,17 @@ PRICES = {
     "openai-api/litellm/deepinfra/openai/gpt-oss-120b": (0.037, 0.17, 0.037, 0.004),
     "openai-api/litellm/deepinfra/zai-org/GLM-5.3": (0.90, 4.00, 0.90, 0.20),
     "openai-api/vercel/alibaba/qwen3.8-omni-flash": (0.15, 0.47, 0.15, 0.02),
+    # Google models. These runs went through a free tier and so had no cost at all, which
+    # left them off the cost axis entirely. Paid Gemini API list rates, 2026-10-28:
+    # https://ai.google.dev/gemini-api/docs/pricing
+    # Gemini bills cached input at $0.03/1M plus hourly storage; storage is not per-token
+    # so it is not modelled here, and cache writes are charged at the input rate.
+    "google/gemini-3.5-flash-lite": (0.30, 2.50, 0.30, 0.03),
+    # Gemma has NO paid Google tier ("not available" on the pricing page), so these are
+    # DeepInfra's rates for the same weights, as a deployable-cost proxy rather than a
+    # price Google charges. https://deepinfra.com/pricing
+    "google/gemma-4-26b-a4b-it": (0.07, 0.34, 0.07, 0.07),
+    "openai-api/litellm/deepinfra/google/gemma-3-4b-it": (0.05, 0.10, 0.05, 0.05),
 }
 USAGE_FIELDS = ("input_tokens", "output_tokens", "input_tokens_cache_write", "input_tokens_cache_read")
 
