@@ -63,11 +63,12 @@ footer { margin-top: 48px; color: var(--muted); font-size: 0.85rem; }
   <li><b>Sonnet 5.5 is the strongest monitor:</b> it catches 87% of backdoors at a 2% audit budget, at about $0.009 per sample.</li>
   <li><b>Haiku 5.5 with xhigh reasoning is the best value:</b> 85% at 2%, for about a fifth of the cost. The 95% intervals of the two overlap, so we cannot separate them.</li>
   <li><b>Reasoning effort is the cheapest lever:</b> Haiku goes from 0.75 (low) to 0.85 (xhigh) at a 5% budget, and GPT-6 Luna from 0.39 (off) to 0.61 (xhigh) at 2%. It does not help every model: Gemini 3.5 Flash stays near 0.2.</li>
+  <li><b>Qwen 3.8 Omni Flash is beaten on value:</b> it catches 51% with reasoning off and 63% with it on at a 2% budget, for $0.0005 and $0.0009 per sample. GPT-6 Luna and Haiku 5.5 at their defaults do better on both safety and cost.</li>
   <li><b>About 10% of backdoors slip past every monitor we compared</b> (49 of 500 against seven monitors), mostly because they are one-token edits that look like ordinary bugs.</li>
 </ul>
 
 <h2>Why this matters</h2>
-<p>In AI control, a weaker trusted model reads a stronger model's code and flags suspicious items for a human to audit. Humans can audit only a small share of outputs, so what matters is how many real attacks land in that share, and what the monitor costs per sample. We had almost no funding, so we measured this with cheap hosted models on a fixed set of known backdoors.</p>
+<p>In AI control, a weaker model we trust reads the code a stronger model writes and flags anything suspicious for a human to check. People can only check a small fraction of the code, so the monitor has to rank the real attacks near the top. It also has to be cheap to run. We had almost no funding, so we tested this with cheap hosted models on a fixed set of known backdoors.</p>
 
 <h2>Setup</h2>
 <ul>

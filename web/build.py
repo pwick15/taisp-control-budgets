@@ -24,6 +24,8 @@ RUNS = {
     "dataset-glm53-tm-n500-strip": ("GLM-5.3 · thinking on", "glm53", "zhipu", "on"),
     "dataset-glm53-thinkoff-tm-n500-strip": ("GLM-5.3 · thinking off", "glm53", "zhipu", "off"),
     "dataset500-qwen38omniflash-high-tm-strip": ("Qwen 3.8 Omni Flash · high", "qwen38", "alibaba", "high"),
+    "dataset500-qwen38omniflash-medium-tm-strip": ("Qwen 3.8 Omni Flash · medium", "qwen38", "alibaba", "medium"),
+    "dataset-qwen38omniflash-none-tm-n500-strip": ("Qwen 3.8 Omni Flash · off", "qwen38", "alibaba", "off"),
     "dataset-luna-xhigh-tm-n500-strip": ("GPT-6 Luna · xhigh", "luna", "openai", "xhigh"),
     "dataset-luna-high-tm-n500-strip": ("GPT-6 Luna · high", "luna", "openai", "high"),
     "dataset-gpt6luna-tm-n500-strip": ("GPT-6 Luna · medium (default)", "luna", "openai", "medium"),

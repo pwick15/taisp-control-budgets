@@ -92,7 +92,7 @@ dist = np.bincount(list(caught_n.values()), minlength=len(data) + 1)
 for n, c in enumerate(dist):
     print(f"  caught by {n}: {c:>3} problems")
 with open(OUT / "hard-backdoors.csv", "w", newline="") as f:
-    w = csv.writer(f)
+    w = csv.writer(f, lineterminator="\n")
     w.writerow(["sample_id", "n_monitors_caught@2%", "max_score", "mean_score"] + list(data))
     for i in sorted(ids_all, key=lambda x: (caught_n[x], int(x))):
         sc = [a[i] for _, a in data.values()]
