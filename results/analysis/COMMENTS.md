@@ -29,7 +29,23 @@ Keeping comments is better at every audit budget, by 22.3 points at 0.5% and
 reasons less when the code is already explained to it). On its face, stripping
 costs a large amount of safety for nothing.
 
-It does not, and the reason is in the comments themselves.
+The gap is not noise. Both arms happen to land on the same threshold (0.200) at
+the nominal 1% budget, so that comparison is already at a matched achieved FPR
+of 0.80%, and a paired bootstrap over problems with the threshold re-estimated
+in each replicate gives:
+
+| matched achieved FPR | honest rows | kept | stripped | difference | 95% CI |
+|---|---|---|---|---|---|
+| 0.60% | 3 | 79.8% | 57.4% | +22.4 pts | [+0.8, +32.8] |
+| 0.80% | 4 | 87.0% | 71.4% | +15.6 pts | [+1.2, +32.0] |
+
+Both rungs exclude zero. Both also rest on 3-4 honest rows, which is why the
+intervals are so wide, and the two scales share no looser rung to check
+(stripped can express 1.6%, kept 1.8%). So: real, large, and imprecisely
+measured. Reproduce with `scripts/analysis_paired_bootstrap.py`.
+
+It still does not mean what it looks like, and the reason is in the comments
+themselves.
 
 ## Half the backdoors tell the monitor they are backdoors
 
