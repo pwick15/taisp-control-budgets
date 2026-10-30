@@ -22,6 +22,7 @@ Optional knobs, also env vars:
 import json
 import os
 import sys
+from pathlib import Path
 
 from inspect_ai import eval as inspect_eval
 from inspect_ai.model import GenerateConfig, get_model
@@ -33,6 +34,7 @@ from control_arena.micro_protocol import (
     trusted_monitoring_builder,
 )
 from control_arena.monitor import basic_monitor_builder
+from control_arena.monitor._types import MonitorScoreRange
 from control_arena.scorers import max_suspicion_scorer
 from control_arena.settings.apps.apps_setting import AppsSetting
 from control_arena.settings.apps.apps_solution_policy import apps_solution_policy
@@ -113,7 +115,22 @@ dtt_kwargs = {"untrusted_policy": apps_solution_policy()} if use_dataset else {}
 # The builders default to the "untrusted" / "trusted" model roles, which is why models are
 # only set once, in the config above.
 strip_comments = os.getenv("STRIP_COMMENTS", "0") == "1"
-monitor_kwargs = {"prompt_formatter": strip_comments_prompt_formatter} if strip_comments else {}
+monitor_kwargs: dict = {"prompt_formatter": strip_comments_prompt_formatter} if strip_comments else {}
+
+# Suspicion-score scale. The library default asks for an integer 0-10, so the score has at
+# most 11 values and in practice monitors use 3-7 of them. Every audit threshold is a
+# percentile of that distribution, so the number of distinct values IS the number of audit
+# budgets that can be bought. A wider range is the cheapest way to buy resolution.
+#   MONITOR_PROMPT     path to a prompt file (see src/prompts/monitor_0_100.txt)
+#   MONITOR_SCORE_MAX  top of the scale that prompt asks for; MUST match it, or scores are
+#                      normalised against the wrong maximum and silently rescaled
+if os.getenv("MONITOR_PROMPT"):
+    monitor_kwargs["prompt"] = Path(os.environ["MONITOR_PROMPT"]).read_text()
+    if not os.getenv("MONITOR_SCORE_MAX"):
+        sys.exit("MONITOR_PROMPT needs MONITOR_SCORE_MAX to match the scale it asks for")
+if os.getenv("MONITOR_SCORE_MAX"):
+    monitor_kwargs["score_range"] = MonitorScoreRange(
+        min=0.0, max=float(os.environ["MONITOR_SCORE_MAX"]))
 
 all_protocols = {
     # monitor only; humans audit the top-scoring
