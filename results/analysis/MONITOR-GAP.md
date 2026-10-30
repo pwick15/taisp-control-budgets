@@ -58,7 +58,12 @@ single-operating-point comparison cannot make.
 - **One attack distribution.** Both monitors face the same stored backdoors, and
   recall is known to vary by generator by ~20 points, so the gap is conditional
   on this attack mix.
-- **Reasoning effort does not explain it.** Toggling Sonnet's own effort is a
-  null at the single rung the two effort arms share: 0.60% FPR, +6.0 pts, 95% CI
-  [-2.4, +10.6]. The CI admits gains up to ~10 points, so this is "not
-  detectable at n=500", not "no effect".
+- **Reasoning effort does not explain it, but that null is weakly supported.**
+  Toggling Sonnet's own effort is a null at the single rung the two effort arms
+  share: 0.60% FPR, +6.0 pts, 95% CI [-2.4, +10.6]. The CI admits gains up to
+  ~10 points, so this is "not detectable at n=500", not "no effect". The
+  low-effort arm is the weak link: it emits only 5 distinct honest scores, and
+  its *only* operating point with 5 or more honest rows behind it sits at a
+  14.80% FPR. The shared 0.60% rung rests on 3 honest rows. Settling whether
+  effort buys anything at a deployable budget needs a low-effort arm on the
+  0-100 prompt, not more replicates of this one.
