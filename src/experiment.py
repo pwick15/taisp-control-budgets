@@ -99,10 +99,20 @@ else:
     trusted_model = trusted_model_name
     trusted_config = GenerateConfig(**monitor_cfg)
 
+# Under untrusted_monitoring the MONITOR is the untrusted model, so the monitor knobs
+# (reasoning effort, extra body) have to reach the untrusted role or they are silently
+# dropped: the run then looks like a sweep arm but is really a duplicate of the default.
+_selected_protocols = os.getenv("PROTOCOLS", "")
+_monitor_is_untrusted = "untrusted_monitoring" in _selected_protocols
+untrusted_config = GenerateConfig(
+    **({**monitor_cfg, "max_connections": max_connections} if _monitor_is_untrusted
+       else {"max_connections": max_connections})
+)
+
 config = ControlEvalConfig(
     untrusted_model=untrusted_model_name,
     trusted_model=trusted_model,
-    untrusted_config=GenerateConfig(max_connections=max_connections),
+    untrusted_config=untrusted_config,
     trusted_config=trusted_config,
     limit=n_problems,
     max_sandboxes=int(os.getenv("MAX_SANDBOXES", "10")),
