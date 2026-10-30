@@ -22,8 +22,8 @@ ALL = [
     ("Haiku 5.5 · high",       "dataset-haiku55-efforthigh-tm-n500-strip",  "Haiku 5.5 (Anthropic)"),
     ("Haiku 5.5 · medium ◂base","dataset-haiku55-tm-n500-strip",         "Haiku 5.5 (Anthropic)"),
     ("Haiku 5.5 · low",        "dataset-haiku55-effortlow-tm-n500-strip",   "Haiku 5.5 (Anthropic)"),
-    ("GLM-5.3 · thinking-on ◂base","dataset-glm53-tm-n500-strip",        "GLM-5.3 (DeepInfra)"),
-    ("GLM-5.3 · thinking-off", "dataset-glm53-thinkoff-tm-n500-strip",   "GLM-5.3 (DeepInfra)"),
+    ("GLM-5.3 · max (default) ◂base","dataset-glm53-tm-n500-strip",   "GLM-5.3 (DeepInfra)"),
+    ("GLM-5.3 · effort=none", "dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip",   "GLM-5.3 (DeepInfra)"),
     ("gpt-oss-120b · high",    "dataset-gptoss120b-high-tm-n500-strip",  "gpt-oss-120b (DeepInfra)"),
     ("gpt-oss-120b · medium ◂base","dataset-gptoss120b-tm-n500-strip",   "gpt-oss-120b (DeepInfra)"),
     ("gpt-oss-120b · low",     "dataset-gptoss120b-low-tm-n500-strip",   "gpt-oss-120b (DeepInfra)"),
@@ -44,7 +44,7 @@ ALL = [
 PRICE = {  # list $/1M (in / out) for the text; None where not recorded
     "dataset500-sonnet55-um-strip": "2.00 / 10.00",
     "dataset-haiku55-tm-n500-strip": "0.10 / 0.50",
-    "dataset-glm53-tm-n500-strip": "0.90 / 4.00",
+    "dataset-glm53-tm-n500-strip": "0.563 / 2.50",
     "dataset-gptoss120b-tm-n500-strip": "0.037 / 0.17",
     "dataset-gpt6luna-tm-n500-strip": "0.10 / 0.50",
 }
@@ -60,7 +60,7 @@ def build() -> Report:
     hx = runs["dataset-haiku55-effortxhigh-tm-n500-strip"]
     hb = runs["dataset-haiku55-tm-n500-strip"]
     glm_on = runs["dataset-glm53-tm-n500-strip"]
-    glm_off = runs["dataset-glm53-thinkoff-tm-n500-strip"]
+    glm_off = runs["dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip"]
     luna_off = runs["dataset-luna-none-tm-n500-strip"]
     luna_x = runs["dataset-luna-xhigh-tm-n500-strip"]
     gem_off = runs["dataset500-gemini35lite-tm-strip"]
@@ -78,8 +78,10 @@ def build() -> Report:
         f"**Reasoning effort is the biggest lever for a cheap model — but how much it helps depends "
         f"on the model.** Haiku climbs from {hb.safety_at(50):.2f} (medium) to {hx.safety_at(50):.2f} "
         f"(xhigh); Luna climbs from {luna_off.safety_at(50):.2f} (off) to {luna_x.safety_at(50):.2f} "
-        f"(xhigh). GLM barely moves (thinking-off {glm_off.safety_at(50):.2f} vs thinking-on "
-        f"{glm_on.safety_at(50):.2f}), and Gemini Flash-Lite does not benefit at all.",
+        f"(xhigh). GLM-5.3 is NOT a data point here: its thinking cannot be disabled, and both "
+        f"GLM runs are the same provider-default configuration, so their near-identical scores "
+        f"({glm_on.safety_at(50):.2f} vs {glm_off.safety_at(50):.2f}) measure run-to-run noise, "
+        f"not a reasoning effect. Gemini Flash-Lite gets actively worse with effort.",
         f"**The small open and flash-lite monitors are near-useless at tight budgets, reasoning or "
         f"not.** Gemini 3.5 Flash-Lite sits around {gem_off.safety_at(2):.2f} at every budget and "
         f"gets no better with effort ({gem_x.safety_at(50):.2f} at xhigh); Gemma and gpt-oss catch "
@@ -92,7 +94,7 @@ def build() -> Report:
         Tile("Sonnet 5.5 @ 0.5%", f"{son.safety_at(0.5):.2f}", "best tight-budget safety", "s1"),
         Tile("Haiku 5.5 xhigh plateau", f"{hx.safety_at(50):.2f}", f"best loose-budget, {cost_str(hx)}/sample", "s2"),
         Tile("Haiku xhigh @ 2%", f"{hx.safety_at(2):.2f}", f"vs Sonnet {son.safety_at(2):.2f}, ~1/5 the cost", "s2"),
-        Tile("GLM reasoning effect", f"{glm_on.safety_at(50) - glm_off.safety_at(50):+.2f}", "thinking on minus off: ~nil", "s3"),
+        Tile("GLM-5.3 run-to-run", f"{glm_on.safety_at(50) - glm_off.safety_at(50):+.2f}", "same config twice: noise floor", "s3"),
     ])
 
     # master comparison table, ranked within each model group by plateau
@@ -129,7 +131,7 @@ def build() -> Report:
             ["gpt-oss-120b", "—", f"{runs['dataset-gptoss120b-low-tm-n500-strip'].safety_at(50):.2f}",
              f"{runs['dataset-gptoss120b-tm-n500-strip'].safety_at(50):.2f}",
              f"{runs['dataset-gptoss120b-high-tm-n500-strip'].safety_at(50):.2f}", "—", "some (lifts the ceiling)"],
-            ["GLM-5.3", f"{glm_off.safety_at(50):.2f}", "—", f"{glm_on.safety_at(50):.2f}", "—", "—", "no (on ≈ off)"],
+            ["GLM-5.3", "—", "—", f"{glm_on.safety_at(50):.2f}", "—", "—", "not testable (forced thinking)"],
             ["Gemini 3.5 Flash-Lite", f"{gem_off.safety_at(50):.2f}",
              f"{runs['dataset-gemini35fl-low-tm-n500-strip'].safety_at(50):.2f}",
              f"{runs['dataset-gemini35fl-medium-tm-n500-strip'].safety_at(50):.2f}",
