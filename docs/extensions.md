@@ -6,10 +6,6 @@ Where to pick things up. Everything here uses the N=500 dataset-policy setup (`s
 
 `web/index.html` is the shareable page (write-up plus interactive cost-vs-safety chart). Rebuild with `python3 web/build.py` after `scripts/analysis_ci.py`; add new runs to `RUNS` in `web/build.py`. Cloudflare Pages: no build command, output directory `web`.
 
-## In progress
-
-- [ ] **Qwen 3.8 Omni Flash, reasoning off** (Vercel gateway, `MONITOR=openai-api/vercel/alibaba/qwen3.8-omni-flash MONITOR_REASONING=none`). Label `dataset-qwen38omniflash-none-tm-n500-strip`. Not yet in the analysis.
-
 ## No API cost
 
 - [ ] **Hard and disagreement cases.** Findings so far in the study summary; per-problem lists in `results/analysis/hard-backdoors.csv` and `disagreement-sonnet-vs-haiku-xhigh.csv`.
