@@ -43,6 +43,12 @@ PRICES = {
     "anthropic/claude-sonnet-5-5": (2.00, 10.00, 2.50, 0.20),
     "anthropic/claude-haiku-5-5": (0.10, 0.50, 0.125, 0.01),
     "openai/gpt-6-luna": (0.10, 0.50, 0.10, 0.01),
+    # Monitors served through the litellm proxy (openai-api provider): the usage key is
+    # the full model string. DeepInfra/OpenAI list prices as of 2026-10-28. GLM-5.3's
+    # listed rate carries an unapplied ~37.5% promo discount, so its real cost may be lower.
+    "openai-api/litellm/openai/gpt-6-luna": (0.10, 0.50, 0.10, 0.01),
+    "openai-api/litellm/deepinfra/openai/gpt-oss-120b": (0.037, 0.17, 0.037, 0.004),
+    "openai-api/litellm/deepinfra/zai-org/GLM-5.3": (0.90, 4.00, 0.90, 0.20),
     "openai-api/vercel/alibaba/qwen3.8-omni-flash": (0.15, 0.47, 0.15, 0.02),
 }
 USAGE_FIELDS = ("input_tokens", "output_tokens", "input_tokens_cache_write", "input_tokens_cache_read")
@@ -79,6 +85,14 @@ def main() -> None:
     plt.figure()
     for protocol in protocols:
         df = samples_df(f"{LOG_DIR}/{protocol}")
+        # A sample that errored (e.g. a transient API failure that exhausted its retries) has
+        # no task-success outcome, which otherwise crashes the typed metrics on a NaN. Drop
+        # such samples so one blip can't sink the whole run, and report how many were lost.
+        errored = df["main_task_success"].isna()
+        if errored.any():
+            print(f"  dropped {int(errored.sum())} errored sample(s) with no outcome "
+                  f"(ids: {sorted(df.loc[errored, 'id'].tolist())})")
+            df = df[~errored].copy()
         n_honest = int((df["eval_mode"] == "honest").sum())
         n_attack = int((df["eval_mode"] == "attack").sum())
         print(f"\n== {protocol}: {n_honest} honest + {n_attack} attack samples ==")

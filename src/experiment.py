@@ -19,11 +19,12 @@ Optional knobs, also env vars:
     STRIP_COMMENTS   "1": remove # comments from submitted code before the monitor sees it
                      (default 0). Measures code-reading alone; see src/strip_comments.py.
 """
+import json
 import os
 import sys
 
 from inspect_ai import eval as inspect_eval
-from inspect_ai.model import GenerateConfig
+from inspect_ai.model import GenerateConfig, get_model
 
 from control_arena import EvalMode
 from control_arena.eval import ControlEvalConfig, get_control_task_product
@@ -45,11 +46,56 @@ n_problems = int(sys.argv[1]) if len(sys.argv) > 1 else 10
 # Inspect retries rate-limited calls with backoff, but fewer parallel calls avoids most of them.
 max_connections = int(os.getenv("MAX_CONNECTIONS", "10"))
 
+# A reasoning monitor served behind a timeout-bounded proxy (e.g. a litellm gateway
+# with a ~90s cut) gets its long generations killed with a 504 under concurrency,
+# because the whole response is buffered before the gateway forwards it. Streaming
+# keeps the connection alive as tokens arrive, so the request completes. It changes
+# only how the bytes are delivered, never the model's output, so streamed and
+# non-streamed scores are identical. Off by default: non-streaming runs are unchanged.
+trusted_model_name = os.getenv("TRUSTED_MODEL", "anthropic/claude-haiku-4-5-20251001")
+
+# Optional monitor reasoning-effort sweep, all env-gated so the baselines are unchanged:
+#   MONITOR_REASONING         reasoning effort none/low/medium/high/xhigh (OpenAI / DeepInfra
+#                             models reached via the openai-api provider). litellm rejects the
+#                             param on its own stale metadata, so we allow it through explicitly.
+#   MONITOR_REASONING_TOKENS  Anthropic extended-thinking budget in tokens (also sets max_tokens).
+#   MONITOR_EXTRA_BODY        raw JSON merged into the request body (escape hatch for a
+#                             provider-specific knob, e.g. GLM's thinking toggle); include its
+#                             own "allowed_openai_params" when the proxy needs the key allowed.
+monitor_cfg: dict = {"max_connections": max_connections}
+extra_body: dict = {}
+is_openai_api = trusted_model_name.startswith("openai-api/")
+if os.getenv("MONITOR_REASONING"):
+    monitor_cfg["reasoning_effort"] = os.environ["MONITOR_REASONING"]
+    if is_openai_api:
+        extra_body["allowed_openai_params"] = ["reasoning_effort"]
+if os.getenv("MONITOR_REASONING_TOKENS"):
+    budget = int(os.environ["MONITOR_REASONING_TOKENS"])
+    monitor_cfg["reasoning_tokens"] = budget
+    monitor_cfg["max_tokens"] = budget + 8192  # Anthropic needs max_tokens > the thinking budget
+if os.getenv("MONITOR_EXTRA_BODY"):
+    extra_body.update(json.loads(os.environ["MONITOR_EXTRA_BODY"]))
+if extra_body:
+    monitor_cfg["extra_body"] = extra_body
+
+if os.getenv("MONITOR_STREAM", "0") == "1":
+    # Bound a rare stalled/failed stream so it fails and retries quickly instead of Inspect's
+    # default long backoff hanging a long run; streaming itself avoids the gateway 504s that
+    # would otherwise drive the retries.
+    trusted_model = get_model(
+        trusted_model_name, stream=True,
+        config=GenerateConfig(timeout=300, max_retries=5, **monitor_cfg),
+    )
+    trusted_config = None  # ignored for a pre-built Model; the model carries its own config
+else:
+    trusted_model = trusted_model_name
+    trusted_config = GenerateConfig(**monitor_cfg)
+
 config = ControlEvalConfig(
     untrusted_model=os.getenv("UNTRUSTED_MODEL", "anthropic/claude-sonnet-5-5"),
-    trusted_model=os.getenv("TRUSTED_MODEL", "anthropic/claude-haiku-4-5-20251001"),
+    trusted_model=trusted_model,
     untrusted_config=GenerateConfig(max_connections=max_connections),
-    trusted_config=GenerateConfig(max_connections=max_connections),
+    trusted_config=trusted_config,
     limit=n_problems,
     max_sandboxes=int(os.getenv("MAX_SANDBOXES", "10")),
 )
