@@ -176,6 +176,23 @@ ControlArena also ships `defer_to_resample` and `trusted_editing` micro-protocol
 ## Troubleshooting
 
 - **`docker` errors or sandbox failures:** start Docker Desktop and retry.
-- **Auth errors:** check `ANTHROPIC_API_KEY` is set in `.env` and that you run from the repo root.
+- **Auth errors, or every sample failing while the eval still "completes":** an
+  `ANTHROPIC_API_KEY` exported in your shell **silently overrides the one in
+  `.env`**. Inspect loads `.env` with dotenv, which by design does not replace a
+  variable that is already set. So if your shell holds a stale, revoked or
+  out-of-credit key, the one in `.env` is ignored, every sample fails with its
+  own API error, and the only symptom is `100% of executed samples had errors
+  and were not scored`. Check which key is actually in use:
+
+  ```bash
+  echo "shell: $ANTHROPIC_API_KEY" | cut -c1-20   # compare against .env
+  unset ANTHROPIC_API_KEY                          # make .env authoritative
+  # or, to load .env over the top for one shell:
+  set -a && . ./.env && set +a
+  ```
+
+  `src/preflight.py` checks this before a run starts and refuses to launch,
+  rather than letting the run burn through every sample first. It reports which
+  key wins and prints the provider's own error message.
 - **Rate limits or high cost:** lower the problem count, or lower `max_sandboxes` in `src/experiment.py`.
 - **Some other setting needs more than Docker:** several settings (`iac`, `infra`, ...) need Kubernetes. Read the setting's README in the library before switching.
