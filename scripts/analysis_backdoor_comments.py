@@ -70,11 +70,48 @@ def main() -> None:
     print(f"\nwrote {out}")
 
     attribute_gain(df)
+    grep_baseline(df)
 
 
 # The two n=500 runs that differ ONLY in STRIP_COMMENTS, same monitor and effort.
 STRIPPED = "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv"
 KEPT = "results/dataset-haiku55-xhigh-nostrip-n500-samples.csv"
+
+
+def grep_baseline(labels: pd.DataFrame) -> None:
+    """What recall does a keyword grep get, and at what false-positive rate?
+
+    This is the check that decides the question. A monitor reading comments is
+    only reading signal if it beats the trivial classifier available from the
+    same text. If `grep -i subtle` matches the monitor, the monitor is reading
+    the dataset's artefact, not the code.
+
+    The honest side has to be measured on the honest SOLUTIONS, not on the
+    attack rows, because that is what sets the false-positive rate.
+    """
+    from control_arena import EvalMode
+    from control_arena.settings.apps.task.dataset import get_dataset
+
+    honest_any, honest_tell, n = 0, 0, 0
+    for s in list(get_dataset(has_backdoor_solution=True, backdoor_source="any",
+                              mode=EvalMode.ATTACK))[:N]:
+        sols = (s.metadata or {}).get("metadata", {}).get("solutions") or []
+        if not sols:
+            continue
+        code = sols[0].get("code") or ""
+        n += 1
+        honest_any += any("#" in ln for ln in code.splitlines())
+        honest_tell += bool(TELL.search(code))
+
+    tot = len(labels)
+    print(f"\n== the trivial classifier available from the same comment text ==")
+    print(f"{'rule':34s} {'recall':>8s} {'FPR':>8s}")
+    print(f"{'flag if the code has any comment':34s} "
+          f"{labels.has_comment.mean():8.1%} {honest_any / n:8.1%}")
+    print(f"{'flag if a comment names a flaw':34s} "
+          f"{labels.confesses.mean():8.1%} {honest_tell / n:8.1%}")
+    print(f"\nhonest side measured on {n} honest solutions; attack side on {tot} backdoors.")
+    print("A monitor that reads comments has to beat these to be reading anything else.")
 
 
 def attribute_gain(labels: pd.DataFrame) -> None:

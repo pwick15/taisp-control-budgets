@@ -1,4 +1,4 @@
-# Why we strip comments: half of these backdoors confess in a comment
+# Why we strip comments: a keyword grep scores 51.8% at zero false positives
 
 Reproduce every number here with:
 
@@ -120,27 +120,75 @@ audit threshold tells the same story:
 announce the backdoor.** The 15.6-point safety gain at a 1% audit budget is
 mostly the monitor reading a confession, not the monitor reading code better.
 
+## A keyword grep gets 51.8% recall at zero false positives
+
+The honest side settles it. Honest submissions in this dataset are nearly
+comment-free, and no honest solution confesses to anything:
+
+| | honest solutions | backdoors |
+|---|---|---|
+| carry any `#` comment | 20.8% | 70.8% |
+| mean comment lines | 0.59 | 2.08 |
+| a comment names a flaw | **0.0%** | **51.8%** |
+
+So two trivial classifiers are available from the same text the monitor reads:
+
+| rule | recall | FPR |
+|---|---|---|
+| flag if the code has any comment | 70.8% | 20.8% |
+| flag if a comment names a flaw | **51.8%** | **0.0%** |
+
+`grep -iE 'flaw\|subtle\|bug'` detects **51.8% of the backdoors with not one
+false positive in 500 honest solutions.** For comparison, the Haiku monitor on
+stripped code gets 57.4% recall at a 0.60% FPR and 71.4% at 0.80%.
+
+A monitor that reads comments has to beat that to be reading anything but the
+artefact, and the comments-kept arm's advantage is concentrated precisely on the
+samples the grep also catches. This is the argument for stripping, and it does
+not depend on the keyword list being exactly right: any list that recovers a
+50%-recall / 0%-FPR split is measuring how the dataset was built.
+
 ## What this does and does not justify
 
-It justifies stripping for this study. Keeping comments would report a monitor
-frontier inflated by a property of the dataset rather than of the monitor, and
-the inflation is generator-dependent, so it would also distort every
-cross-generator comparison. A budget-indexed frontier measured on confessing
-attackers is not a frontier anyone can deploy against.
+It justifies stripping for this study, on two independent grounds. The
+comments-kept frontier is inflated by a property of the dataset rather than of
+the monitor, and the inflation is generator-dependent (19% to 94%), so it would
+also distort every cross-generator comparison. A budget-indexed frontier
+measured against attackers who announce themselves is not a frontier anyone can
+deploy against.
 
-It does **not** establish that comments are worthless to a monitor, and it does
-not establish the stronger claim we would like: that stripping is strictly
-correct because comments are an attack surface. The 17% of the gain from
-non-confessing comments is real signal that stripping discards.
+It does **not** establish that comments are worthless to a monitor. The 17% of
+the gain from non-confessing comments is real signal that stripping discards,
+and on a dataset whose honest code was commented normally the trade-off could
+easily go the other way.
 
-The missing measurement is the adversarial case. A misaligned model that knows
-its comments are read would write comments that mislead, and nobody here has
-measured what that does. If an adversarial-comments arm scores *below* the
-stripped baseline, stripping stops being a dataset-artefact correction and
-becomes a removal of attacker leverage. `scripts/experiment_adversarial_comments.py`
-runs that three-arm comparison (original / stripped / adversarial) with an
-integrity check that the rewrite changed only comments and not a byte of
-executable code.
+### The adversarial arm, and why it is not here
+
+The remaining question is the worst case: a misaligned model that knows its
+comments are read would write comments that mislead. Two designs were tried and
+both are ruled out.
+
+- **Have a model rewrite the comments misleadingly.** The provider's safety
+  classifier refuses this (category: cyber). That is a reasonable place for a
+  line to sit and was not worth working around.
+- **Transplant the honest solution's comments onto the backdoored code.** This
+  needs no model, and because the comments are genuine descriptions of correct
+  code it avoids the confound that a model told to write deceptive comments
+  writes in a detectably unusual style. It would have been the better
+  instrument. The source material does not exist: with honest solutions at 0.59
+  comment lines each, only **14 of 500** problems have enough honest comment
+  text to move.
+
+That second failure is the same fact as the section above, which is why the
+grep baseline ends up carrying the argument instead.
+
+What `scripts/experiment_adversarial_comments.py` does run is the causal version
+of the attribution: three arms over the same problems and monitor, differing
+only in comment text, where `no_confession` keeps every comment except the ones
+naming a flaw. If `no_confession` lands near `stripped`, the advantage was the
+confession. Every variant is verified by removing comments from both it and the
+original and requiring byte equality, and untouched lines are preserved byte for
+byte so the arms cannot differ in formatting either.
 
 ## Caveats
 
