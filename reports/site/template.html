@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Short title that names the experiment</title>
+<style>/* Light and dark tokens. Palette values come from the validated reference palette
+   (series slots 1-3 pass the all-pairs colorblind checks in both modes). */
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --ink: #0b0b0b;
+  --ink-2: #52514e;
+  --muted: #898781;
+  --grid: #e1e0d9;
+  --axis: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+  --wash: rgba(11, 11, 11, 0.05);
+  --s1: #2a78d6;
+  --s2: #eb6834;
+  --s3: #1baf7a;
+  --good-text: #006300;
+  --warn: #b37700;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --ink: #ffffff;
+    --ink-2: #c3c2b7;
+    --grid: #2c2c2a;
+    --axis: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --wash: rgba(255, 255, 255, 0.06);
+    --s1: #3987e5;
+    --s2: #d95926;
+    --s3: #199e70;
+    --good-text: #0ca30c;
+    --warn: #fab219;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface: #1a1a19;
+  --ink: #ffffff;
+  --ink-2: #c3c2b7;
+  --grid: #2c2c2a;
+  --axis: #383835;
+  --border: rgba(255, 255, 255, 0.10);
+  --wash: rgba(255, 255, 255, 0.06);
+  --s1: #3987e5;
+  --s2: #d95926;
+  --s3: #199e70;
+  --good-text: #0ca30c;
+  --warn: #fab219;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 16px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+a { color: var(--s1); }
+code {
+  font: 0.88em ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--wash);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+}
+.wrap { max-width: 1000px; margin: 0 auto; padding: 0 16px; }
+.prose { max-width: 720px; }
+
+/* Top bar */
+.topbar { border-bottom: 1px solid var(--border); background: var(--surface); }
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; height: 48px; }
+.topbar a { text-decoration: none; font-size: 14px; color: var(--ink-2); }
+.topbar a:hover { color: var(--ink); }
+button.theme {
+  font: inherit; font-size: 13px; color: var(--ink-2); background: none;
+  border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer;
+}
+button.theme:hover { background: var(--wash); }
+
+/* Header */
+header.report { padding: 40px 0 8px; }
+header.report h1 { font-size: 32px; line-height: 1.2; margin: 0 0 8px; letter-spacing: -0.01em; }
+header.report .subtitle { font-size: 18px; color: var(--ink-2); margin: 0 0 16px; max-width: 720px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--ink-2); }
+.chip { border: 1px solid var(--border); border-radius: 999px; padding: 2px 10px; background: var(--surface); }
+.chip.status { color: var(--warn); border-color: currentColor; }
+
+/* Summary box */
+.tldr {
+  margin: 24px 0 8px; padding: 20px 24px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px;
+}
+.tldr h2 { margin: 0 0 8px; font-size: 14px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+.tldr ul { margin: 0; padding-left: 20px; }
+.tldr li { margin: 6px 0; max-width: 760px; }
+
+nav.toc { margin: 20px 0 0; font-size: 14px; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+nav.toc a { color: var(--ink-2); text-decoration: none; }
+nav.toc a:hover { color: var(--ink); text-decoration: underline; }
+
+/* Sections */
+section.sec { margin-top: 48px; }
+section.sec > h2 { font-size: 24px; line-height: 1.3; margin: 0 0 12px; padding-top: 8px; border-top: 1px solid var(--border); }
+section.sec h3 { font-size: 17px; margin: 28px 0 8px; }
+p { margin: 0 0 14px; max-width: 720px; }
+ul, ol { max-width: 720px; margin: 0 0 14px; padding-left: 22px; }
+li { margin: 4px 0; }
+
+/* Stat tiles */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 20px; }
+.tile { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
+.tile .k { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 8px; }
+.tile .v { font-size: 30px; line-height: 1.2; font-weight: 600; margin: 4px 0 2px; }
+.tile .n { font-size: 13px; color: var(--ink-2); }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--c, var(--muted)); display: inline-block; flex: none; }
+.s1 { --c: var(--s1); } .s2 { --c: var(--s2); } .s3 { --c: var(--s3); } .gray { --c: var(--muted); }
+
+/* Tables */
+.tablewrap { overflow-x: auto; margin: 12px 0 20px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+caption { text-align: left; padding: 10px 14px 0; font-size: 13px; color: var(--ink-2); caption-side: top; }
+th, td { padding: 9px 14px; text-align: left; border-bottom: 1px solid var(--grid); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+th { font-weight: 600; color: var(--ink-2); font-size: 13px; white-space: nowrap; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+tr.group td { background: var(--wash); font-weight: 600; font-size: 13px; color: var(--ink-2); }
+
+/* Callouts */
+.callout { border-left: 4px solid var(--s1); background: var(--surface); border-radius: 0 10px 10px 0; padding: 12px 16px; margin: 16px 0; max-width: 760px; border-top: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+.callout .label { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); margin-bottom: 2px; }
+.callout p:last-child { margin-bottom: 0; }
+.callout.caveat { border-left-color: var(--warn); }
+.callout.caveat .label { color: var(--warn); }
+
+/* Steps (a pipeline diagram built from boxes) */
+.steps { list-style: none; padding: 0; margin: 16px 0 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 24px; max-width: none; counter-reset: step; }
+.steps li { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin: 0; counter-increment: step; }
+.steps li::before { content: counter(step); display: inline-flex; width: 24px; height: 24px; border-radius: 50%; background: var(--s1); color: #fff; font-size: 13px; font-weight: 600; align-items: center; justify-content: center; margin-bottom: 8px; }
+.steps li + li::after { content: "→"; position: absolute; left: -20px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 18px; }
+.steps b { display: block; margin-bottom: 4px; font-size: 15px; }
+.steps span { font-size: 13px; color: var(--ink-2); line-height: 1.45; display: block; }
+
+/* Journey (what we tried, saw, changed) */
+.journey { list-style: none; padding: 0; margin: 16px 0 24px; max-width: none; position: relative; }
+.journey > li { position: relative; margin: 0 0 16px; padding: 18px 20px 14px 20px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.journey .head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.journey .num { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2); }
+section.sec .journey h3 { margin: 0; font-size: 17px; }
+.journey dl { display: grid; grid-template-columns: 110px 1fr; gap: 6px 16px; margin: 0; }
+.journey dt { font-size: 13px; font-weight: 600; color: var(--ink-2); padding-top: 2px; }
+.journey dd { margin: 0; max-width: 640px; }
+@media (max-width: 640px) { .journey dl { grid-template-columns: 1fr; gap: 0; } .journey dd { margin-bottom: 8px; } }
+
+/* Glossary */
+dl.glossary { display: grid; grid-template-columns: 170px 1fr; gap: 10px 20px; max-width: 760px; margin: 12px 0 20px; }
+dl.glossary dt { font-weight: 600; }
+dl.glossary dd { margin: 0; color: var(--ink-2); }
+@media (max-width: 640px) { dl.glossary { grid-template-columns: 1fr; gap: 0; } dl.glossary dd { margin-bottom: 10px; } }
+
+/* Figures */
+figure.fig { margin: 20px 0 28px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 16px 12px; }
+figure.fig h3 { margin: 0 0 4px; font-size: 16px; }
+figure.fig .how { margin: 0 0 12px; font-size: 14px; color: var(--ink-2); max-width: 760px; }
+figure.fig figcaption { margin-top: 10px; font-size: 14px; color: var(--ink-2); max-width: 760px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--ink-2); margin: 0 0 12px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend .swatch { width: 12px; height: 12px; border-radius: 3px; background: var(--c); display: inline-block; }
+.legend .ring { width: 12px; height: 12px; border-radius: 50%; border: 2.5px solid var(--c); background: var(--surface); display: inline-block; }
+.legend .line { width: 18px; height: 0; border-top: 2px solid var(--c); display: inline-block; }
+.legend .dash { width: 18px; height: 0; border-top: 2px dashed var(--c); display: inline-block; }
+.panels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px 12px; }
+.panels.two { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 760px) { .panels, .panels.two { grid-template-columns: 1fr; } }
+.panel h4 { margin: 8px 0 0; font-size: 13px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.panel h4 small { font-weight: 400; color: var(--ink-2); font-size: 12px; }
+svg.chart { width: 100%; height: auto; display: block; overflow: visible; }
+details.tableview { margin-top: 10px; font-size: 14px; }
+details.tableview summary { cursor: pointer; color: var(--ink-2); }
+details.tableview .tablewrap { margin-top: 8px; }
+
+/* SVG parts */
+svg .grid { stroke: var(--grid); stroke-width: 1; }
+svg .axis { stroke: var(--axis); stroke-width: 1; }
+svg text { fill: var(--ink-2); font: 11px system-ui, -apple-system, "Segoe UI", sans-serif; }
+svg text.muted { fill: var(--muted); }
+svg text.val { fill: var(--ink); font-weight: 600; }
+svg .bar-honest { fill: var(--muted); }
+svg .bar-attack, svg .mark { fill: var(--c); }
+svg .line { fill: none; stroke: var(--c); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+svg .line.dashed { stroke-dasharray: 5 4; }
+svg .pt { fill: var(--c); stroke: var(--surface); stroke-width: 2; }
+svg .pt.hollow { fill: var(--surface); stroke: var(--c); stroke-width: 2.5; }
+svg .band { fill: var(--grid); opacity: 0.55; }
+svg .link { stroke: var(--axis); stroke-width: 3; stroke-linecap: round; }
+svg .hit { fill: transparent; }
+svg .hit:hover, svg .hit:focus { fill: var(--wash); }
+svg .xhair { stroke: var(--axis); stroke-width: 1; opacity: 0; pointer-events: none; }
+svg g.hitg:hover .xhair { opacity: 1; }
+
+/* Code */
+pre { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; overflow-x: auto; font: 13px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; margin: 12px 0 20px; }
+pre code { background: none; padding: 0; font-size: inherit; }
+
+/* Index */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; margin: 24px 0 48px; }
+a.card { display: block; text-decoration: none; color: inherit; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+a.card:hover { border-color: var(--axis); background: var(--wash); }
+a.card h2 { margin: 6px 0 6px; font-size: 18px; line-height: 1.3; }
+a.card p { font-size: 14px; color: var(--ink-2); margin: 0 0 8px; }
+a.card .meta { font-size: 12px; }
+
+/* Tooltip */
+.tip { position: fixed; z-index: 10; pointer-events: none; background: var(--ink); color: var(--surface); border-radius: 8px; padding: 6px 10px; font-size: 12px; line-height: 1.45; max-width: 260px; opacity: 0; transition: opacity 0.08s; }
+.tip.on { opacity: 0.96; }
+.tip strong { display: block; font-size: 13px; }
+
+footer.foot { margin: 64px 0 40px; font-size: 13px; color: var(--ink-2); }
+
+@media print {
+  .topbar, button.theme { display: none; }
+  body { background: #fff; }
+  figure.fig, .tile, .journey > li { break-inside: avoid; }
+}
+.legend .filled { width: 12px; height: 12px; border-radius: 50%; background: var(--c); display: inline-block; }
+@media (max-width: 900px) {
+  .steps { grid-template-columns: 1fr; gap: 28px; }
+  .steps li + li::after { content: "↓"; left: 50%; top: -26px; transform: translateX(-50%); }
+}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap"><a href="index.html">All experiments</a><button class="theme" type="button">Theme: auto</button></div></div>
+<div class="wrap">
+<header class="report"><h1>Short title that names the experiment</h1><p class="subtitle">The question this experiment answers, in one sentence.</p><div class="meta"><span class="chip">2026-01-01</span><span class="chip">Your name</span><span class="chip status">Preliminary, n=30</span><span class="chip">APPS</span><span class="chip">trusted monitoring</span></div></header><div class="tldr"><h2>Summary</h2><ul><li><strong>The headline finding.</strong> One or two sentences with the key number.</li><li><strong>A second finding.</strong> Another sentence.</li><li><strong>The biggest caveat.</strong> What to keep in mind before relying on this.</li></ul></div><nav class="toc"><a href="#what-we-wanted-to-find-out">What we wanted to find out</a><a href="#how-the-test-works">How the test works</a><a href="#how-we-got-here">How we got here</a><a href="#results">Results</a><a href="#caveats">Caveats</a><a href="#reproduce">Reproduce</a></nav><section class="sec" id="what-we-wanted-to-find-out"><h2>What we wanted to find out</h2><p>Plain-language setup. Say what a monitor, a protocol or a score is if the reader may not know.</p><ol><li>First question.</li><li>Second question.</li></ol><div class="callout note"><div class="label">Title of the note</div><p>A short note the reader should not miss.</p></div></section><section class="sec" id="how-the-test-works"><h2>How the test works</h2><ol class="steps"><li><b>Step one</b><span>What happens first.</span></li><li><b>Step two</b><span>What happens next.</span></li><li><b>Step three</b><span>What comes out.</span></li></ol><dl class="glossary"><dt>Term</dt><dd>Definition in one sentence.</dd></dl></section><section class="sec" id="how-we-got-here"><h2>How we got here</h2><ol class="journey"><li><div class="head"><span class="num">Stage 1</span><h3>First attempt</h3></div><dl><dt>What we did</dt><dd>What we ran.</dd><dt>What we saw</dt><dd>What we saw.</dd><dt>What it changed</dt><dd>What we changed because of it.</dd></dl></li></ol></section><section class="sec" id="results"><h2>Results</h2><div class="tiles"><div class="tile s1"><div class="k"><span class="dot"></span>Monitor A</div><div class="v">0.93</div><div class="n">AUROC</div></div><div class="tile s2"><div class="k"><span class="dot"></span>Monitor B</div><div class="v">0.87</div><div class="n">AUROC</div></div></div><div class="tablewrap"><table><caption>What the table shows.</caption><thead><tr><th>Monitor</th><th class="num">AUROC</th><th class="num">Cost per sample</th></tr></thead><tbody><tr class="group"><td colspan="3">Group label (optional)</td></tr><tr><td>Monitor A</td><td class="num">0.93</td><td class="num">$0.005</td></tr><tr><td>Monitor B</td><td class="num">0.87</td><td class="num">$0.0003</td></tr></tbody></table></div><figure class="fig"><h3>Where the monitor puts honest and attack runs</h3><p class="how">One sentence telling the reader how to read the chart and what good looks like.</p><div class="legend"><span class="gray"><i class="swatch swatch"></i>Honest runs</span><span class="s1"><i class="swatch swatch"></i>Attack runs</span></div><div class="panels"><div class="panel s1"><h4><span class="dot"></span>Monitor name <small>variant</small></h4><svg class="chart" viewBox="0 0 320 190" role="img" aria-label="Score counts for Monitor name: honest runs and attack runs"><line class="axis" x1="34" x2="312" y1="156.0" y2="156.0"/><text class="muted" x="28" y="160.0" text-anchor="end">0</text><line class="grid" x1="34" x2="312" y1="117.2" y2="117.2"/><text class="muted" x="28" y="121.2" text-anchor="end">10</text><line class="grid" x1="34" x2="312" y1="78.3" y2="78.3"/><text class="muted" x="28" y="82.3" text-anchor="end">20</text><line class="grid" x1="34" x2="312" y1="39.5" y2="39.5"/><text class="muted" x="28" y="43.5" text-anchor="end">30</text><path class="bar-honest" d="M35.6,156.0 L35.6,66.8 Q35.6,62.8 39.6,62.8 L41.6,62.8 Q45.6,62.8 45.6,66.8 L45.6,156.0 Z"/><text class="val" x="40.6" y="58.8" text-anchor="middle">24</text><text class="muted" x="46.6" y="172" text-anchor="middle">0</text><rect class="hit" x="34.0" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0|honest runs: 24|attack runs: 0"/><path class="bar-honest" d="M60.9,156.0 L60.9,136.7 Q60.9,132.7 64.9,132.7 L66.9,132.7 Q70.9,132.7 70.9,136.7 L70.9,156.0 Z"/><path class="bar-attack" d="M72.9,156.0 L72.9,148.3 Q72.9,144.3 76.9,144.3 L78.9,144.3 Q82.9,144.3 82.9,148.3 L82.9,156.0 Z"/><rect class="hit" x="59.3" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0.1|honest runs: 6|attack runs: 3"/><path class="bar-attack" d="M98.2,156.0 L98.2,148.3 Q98.2,144.3 102.2,144.3 L104.2,144.3 Q108.2,144.3 108.2,148.3 L108.2,156.0 Z"/><text class="muted" x="97.2" y="172" text-anchor="middle">0.2</text><rect class="hit" x="84.5" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0.2|honest runs: 0|attack runs: 3"/><rect class="hit" x="109.8" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0.3|honest runs: 0|attack runs: 0"/><text class="muted" x="147.7" y="172" text-anchor="middle">0.4</text><rect class="hit" x="135.1" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0.4|honest runs: 0|attack runs: 0"/><path class="bar-attack" d="M174.0,156.0 L174.0,148.3 Q174.0,144.3 178.0,144.3 L180.0,144.3 Q184.0,144.3 184.0,148.3 L184.0,156.0 Z"/><rect class="hit" x="160.4" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0.5|honest runs: 0|attack runs: 3"/><text class="muted" x="198.3" y="172" text-anchor="middle">0.6</text><rect class="hit" x="185.6" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0.6|honest runs: 0|attack runs: 0"/><path class="bar-attack" d="M224.5,156.0 L224.5,148.3 Q224.5,144.3 228.5,144.3 L230.5,144.3 Q234.5,144.3 234.5,148.3 L234.5,156.0 Z"/><rect class="hit" x="210.9" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0.7|honest runs: 0|attack runs: 3"/><path class="bar-attack" d="M249.8,156.0 L249.8,136.7 Q249.8,132.7 253.8,132.7 L255.8,132.7 Q259.8,132.7 259.8,136.7 L259.8,156.0 Z"/><text class="muted" x="248.8" y="172" text-anchor="middle">0.8</text><rect class="hit" x="236.2" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0.8|honest runs: 0|attack runs: 6"/><path class="bar-attack" d="M275.1,156.0 L275.1,113.4 Q275.1,109.4 279.1,109.4 L281.1,109.4 Q285.1,109.4 285.1,113.4 L285.1,156.0 Z"/><text class="val" x="280.1" y="105.4" text-anchor="middle">12</text><rect class="hit" x="261.5" y="22" width="25.3" height="134" data-tip="Monitor name · Score 0.9|honest runs: 0|attack runs: 12"/><text class="muted" x="299.4" y="172" text-anchor="middle">1</text><rect class="hit" x="286.7" y="22" width="25.3" height="134" data-tip="Monitor name · Score 1|honest runs: 0|attack runs: 0"/><text class="muted" x="312" y="187" text-anchor="end">suspicion score</text><text class="muted" x="28" y="14" text-anchor="end">runs</text></svg></div></div><figcaption>One or two sentences on what stands out.</figcaption><details class="tableview"><summary>View as table</summary><div class="tablewrap"><table><thead><tr><th>Score</th><th class="num">Honest runs</th><th class="num">Attack runs</th></tr></thead><tbody><tr><td>0.0</td><td class="num">24</td><td class="num">0</td></tr><tr><td>0.1</td><td class="num">6</td><td class="num">3</td></tr><tr><td>0.2</td><td class="num">0</td><td class="num">3</td></tr><tr><td>0.3</td><td class="num">0</td><td class="num">0</td></tr><tr><td>0.4</td><td class="num">0</td><td class="num">0</td></tr><tr><td>0.5</td><td class="num">0</td><td class="num">3</td></tr><tr><td>0.6</td><td class="num">0</td><td class="num">0</td></tr><tr><td>0.7</td><td class="num">0</td><td class="num">3</td></tr><tr><td>0.8</td><td class="num">0</td><td class="num">6</td></tr><tr><td>0.9</td><td class="num">0</td><td class="num">12</td></tr><tr><td>1.0</td><td class="num">0</td><td class="num">0</td></tr></tbody></table></div></details></figure></section><section class="sec" id="caveats"><h2>Caveats</h2><div class="callout caveat"><div class="label">Caveat</div><p>Sample size, how the data was made, anything that limits the conclusion.</p></div></section><section class="sec" id="reproduce"><h2>Reproduce</h2><pre><code>uv run python src/experiment.py 30
+uv run python src/analyze.py</code></pre></section><footer class="foot">Built from the CSV files in <code>results/</code> by <code>reports/build.py</code>.</footer>
+</div>
+<script>// Tooltips for chart marks and the light/dark toggle. No dependencies.
+(function () {
+  var tip = document.createElement("div");
+  tip.className = "tip";
+  tip.setAttribute("role", "tooltip");
+  document.body.appendChild(tip);
+
+  function show(target, x, y) {
+    // data-tip holds lines separated by "|". The first line is the value, the rest explain it.
+    // textContent only, so labels from data can never inject markup.
+    var lines = target.getAttribute("data-tip").split("|");
+    tip.replaceChildren();
+    lines.forEach(function (line, i) {
+      var el = document.createElement(i === 0 ? "strong" : "span");
+      el.textContent = line;
+      tip.appendChild(el);
+      if (i > 0 && i < lines.length - 1) tip.appendChild(document.createElement("br"));
+    });
+    tip.classList.add("on");
+    var pad = 14;
+    var w = tip.offsetWidth, h = tip.offsetHeight;
+    var left = Math.min(x + pad, window.innerWidth - w - 8);
+    var top = y + pad + h > window.innerHeight ? y - h - pad : y + pad;
+    tip.style.left = Math.max(8, left) + "px";
+    tip.style.top = Math.max(8, top) + "px";
+  }
+
+  document.addEventListener("pointermove", function (e) {
+    var t = e.target.closest ? e.target.closest("[data-tip]") : null;
+    if (t) show(t, e.clientX, e.clientY);
+    else tip.classList.remove("on");
+  });
+  document.addEventListener("pointerleave", function () { tip.classList.remove("on"); });
+
+  var button = document.querySelector("button.theme");
+  if (!button) return;
+  var order = ["auto", "light", "dark"];
+  function apply(mode) {
+    if (mode === "auto") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", mode);
+    button.textContent = "Theme: " + mode;
+  }
+  var mode = "auto";
+  try { mode = localStorage.getItem("report-theme") || "auto"; } catch (e) {}
+  apply(mode);
+  button.addEventListener("click", function () {
+    mode = order[(order.indexOf(mode) + 1) % order.length];
+    try { localStorage.setItem("report-theme", mode); } catch (e) {}
+    apply(mode);
+  });
+})();
+</script>
+</body>
+</html>

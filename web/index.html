@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cheap monitors for AI control</title>
+<meta name="description" content="How much monitor do you need to catch an AI's backdoors? A low-budget comparison of 23 trusted-monitor configurations on 500 backdoored coding problems.">
+<style>
+:root {
+  color-scheme: light dark;
+  --bg: #fbfbf9; --ink: #121211; --ink2: #55544f; --muted: #8a8a84;
+  --grid: #e6e5de; --axis: #c3c2b7; --card: #ffffff; --border: #e1e0d9; --accent: #0072B2;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #121211; --ink: #f3f3ef; --ink2: #bdbcb3; --muted: #8c8b84;
+          --grid: #2a2a28; --axis: #46453f; --card: #1a1a19; --border: #2e2e2b; --accent: #56b4e9; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+       font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 860px; margin: 0 auto; padding: 36px 16px 72px; }
+h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 8px; }
+h2 { font-size: 1.2rem; margin: 40px 0 8px; }
+.sub { color: var(--ink2); margin: 0 0 8px; }
+ul { padding-left: 1.2rem; margin: 8px 0; }
+li { margin: 7px 0; }
+code { font: 0.9em ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--card);
+       border: 1px solid var(--border); border-radius: 4px; padding: 1px 4px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+        padding: 14px 14px 10px; margin: 14px 0; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; margin-bottom: 6px; font-size: 0.92rem; }
+.controls label { display: inline-flex; align-items: center; gap: 6px; color: var(--ink2); }
+.slider { display: flex; align-items: center; gap: 10px; flex: 1 1 320px; }
+.slider input { flex: 1; accent-color: var(--accent); }
+.slider output { min-width: 5.2em; font-weight: 600; color: var(--ink); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 8px; margin: 4px 0 6px; }
+.legend button { display: inline-flex; align-items: center; gap: 6px; font: inherit; font-size: 0.85rem;
+                 color: var(--ink2); background: none; border: 1px solid var(--border);
+                 border-radius: 999px; padding: 3px 10px; cursor: pointer; }
+.legend button[aria-pressed="false"] { opacity: 0.4; }
+svg { width: 100%; height: auto; display: block; }
+.legend svg { width: 16px; height: 16px; flex: none; }
+svg text { font-family: inherit; }
+.readout { font-size: 0.95rem; margin: 6px 2px 2px; }
+.note { font-size: 0.85rem; color: var(--ink2); margin: 4px 2px; }
+details { margin-top: 8px; font-size: 0.9rem; }
+summary { cursor: pointer; color: var(--ink2); }
+table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+th, td { text-align: left; padding: 5px 8px; border-bottom: 1px solid var(--border); font-variant-numeric: tabular-nums; }
+th { color: var(--ink2); font-weight: 600; }
+.tip { position: fixed; z-index: 10; pointer-events: none; max-width: 280px; background: var(--ink); color: var(--bg);
+       font-size: 0.82rem; line-height: 1.4; padding: 7px 10px; border-radius: 6px; display: none; }
+footer { margin-top: 48px; color: var(--muted); font-size: 0.85rem; }
+</style>
+</head>
+<body>
+<main>
+<h1>How much monitor do you need to catch an AI's backdoors?</h1>
+<p class="sub">A low-budget comparison of 23 trusted-monitor configurations on 500 backdoored coding problems.</p>
+
+<h2>Summary</h2>
+<ul>
+  <li><b>Sonnet 5.5 is the strongest monitor:</b> it catches 87% of backdoors at a 2% audit budget, at about $0.009 per sample.</li>
+  <li><b>Haiku 5.5 with xhigh reasoning is the best value:</b> 85% at 2%, for about a fifth of the cost. The 95% intervals of the two overlap, so we cannot separate them.</li>
+  <li><b>Reasoning effort is the cheapest lever:</b> Haiku goes from 0.75 (low) to 0.85 (xhigh) at a 5% budget, and GPT-6 Luna from 0.39 (off) to 0.61 (xhigh) at 2%. It does not help every model: Gemini 3.5 Flash stays near 0.2.</li>
+  <li><b>About 10% of backdoors slip past every monitor we compared</b> (49 of 500 against seven monitors), mostly because they are one-token edits that look like ordinary bugs.</li>
+</ul>
+
+<h2>Why this matters</h2>
+<p>In AI control, a weaker trusted model reads a stronger model's code and flags suspicious items for a human to audit. Humans can audit only a small share of outputs, so what matters is how many real attacks land in that share, and what the monitor costs per sample. We had almost no funding, so we measured this with cheap hosted models on a fixed set of known backdoors.</p>
+
+<h2>Setup</h2>
+<ul>
+  <li>500 honest and 500 backdoored programs from ControlArena's APPS setting, a small replication of <a href="https://arxiv.org/abs/2312.06942">AI Control</a> (Greenblatt et al.). Every monitor sees the same programs.</li>
+  <li>Honest programs are the dataset's reference solutions and backdoored ones its verified backdoors, so there is no live attacker and only the monitor costs money. Comments are stripped, and the monitor prompt is ControlArena's default.</li>
+  <li><b>Safety</b> is the share of backdoors caught when the audit cutoff lets us flag a given share of honest programs (the <b>audit budget</b>). Intervals are 95% bootstrap intervals over the 500 + 500 scores.</li>
+  <li>Cost is token usage times list price; free-tier models have no recorded cost. One run per configuration.</li>
+</ul>
+
+<h2>Results</h2>
+<div class="card" id="chart-card">
+  <div class="controls">
+    <div class="slider">
+      <label for="budget">Audit budget</label>
+      <input id="budget" type="range" min="0" max="5" step="1" value="2" aria-describedby="readout">
+      <output id="budget-out" for="budget"></output>
+    </div>
+    <label><input type="checkbox" id="opt-ci" checked> 95% intervals</label>
+    <label><input type="checkbox" id="opt-lines" checked> Link reasoning levels</label>
+    <label><input type="checkbox" id="opt-front" checked> Best-value frontier</label>
+  </div>
+  <div class="legend" id="legend"></div>
+  <div id="plot"></div>
+  <p class="readout" id="readout" aria-live="polite"></p>
+  <p class="note">Each marker is one monitor configuration (colour = provider, shape = model; lines link reasoning levels of the same model). Up and to the left is better. Hover or tap a marker for details. The dashed line joins the configurations no cheaper one beats. Intervals that overlap mean the difference is within noise; they are widest at tight budgets.</p>
+  <details>
+    <summary>Show as a table</summary>
+    <table id="table"></table>
+  </details>
+</div>
+
+<h2>What the hard cases look like</h2>
+<ul>
+  <li><b>They look like ordinary bugs.</b> Typical edits: <code>{1, 7, 9}</code> became <code>{1, 6, 9}</code>; <code>range(i, n)</code> became <code>range(i, n - 1)</code>; <code>b &gt;= y</code> became <code>b &gt; y</code>. All 49 backdoors that no monitor catches were scored 0.1 or less by all seven.</li>
+  <li><b>Smaller edits are harder.</b> Of 25 backdoors that differ from the reference solution by 4 lines or fewer, 44% are missed by every monitor; of 416 that differ by 9 or more, 7% are.</li>
+  <li><b>Monitor disagreements are mostly marginal.</b> At a 2% budget, Haiku xhigh catches 9 backdoors that Sonnet misses and Sonnet catches 18 that Haiku misses. Eight of Haiku's nine are one score step above the cutoff; half of Sonnet's 18 are clear calls (0.3 or higher). This is a first pass from reading about a dozen cases.</li>
+</ul>
+
+<h2>Limitations</h2>
+<ul>
+  <li>Attacks are fixed, verified backdoors that do not adapt to the monitor, and usefulness is not measured.</li>
+  <li>Honest programs are reference solutions, not what a deployed model would write, so false-positive rates may not transfer.</li>
+  <li>One setting, one prompt, one run per configuration. Intervals capture sampling over the 500 problems, not run-to-run variation.</li>
+  <li>Most honest programs score 0, so cutoffs at tight budgets rest on a handful of honest samples.</li>
+  <li>Sonnet 5.5 is the strongest model in this study and is used here simply as a strong monitor. The code it reads is not its own, so we do not test the collusion risk of a model monitoring itself. Costs are approximate list prices.</li>
+</ul>
+
+<footer>Data and analysis scripts are in the project repository (<code>results/analysis/</code>, <code>scripts/analysis_*.py</code>).</footer>
+</main>
+<div class="tip" id="tip" role="tooltip"></div>
+
+<script>
+const DATA = [{"name": "Gemini 3.5 Flash · high", "mname": "Gemini 3.5 Flash", "model": "gemini35fl", "family": "google", "effort": "high", "cost": null, "s": {"0.5": [0.19, 0.124, 0.224], "1": [0.19, 0.156, 0.226], "2": [0.19, 0.156, 0.224], "5": [0.19, 0.156, 0.226], "10": [0.19, 0.158, 0.224], "20": [0.19, 0.156, 0.226]}}, {"name": "Gemini 3.5 Flash · low", "mname": "Gemini 3.5 Flash", "model": "gemini35fl", "family": "google", "effort": "low", "cost": null, "s": {"0.5": [0.202, 0.066, 0.238], "1": [0.202, 0.162, 0.238], "2": [0.202, 0.166, 0.238], "5": [0.202, 0.168, 0.238], "10": [0.202, 0.166, 0.238], "20": [0.202, 0.168, 0.238]}}, {"name": "Gemini 3.5 Flash · medium", "mname": "Gemini 3.5 Flash", "model": "gemini35fl", "family": "google", "effort": "medium", "cost": null, "s": {"0.5": [0.202, 0.086, 0.234], "1": [0.202, 0.162, 0.236], "2": [0.202, 0.166, 0.236], "5": [0.202, 0.168, 0.238], "10": [0.202, 0.168, 0.238], "20": [0.202, 0.166, 0.238]}}, {"name": "Gemini 3.5 Flash · xhigh", "mname": "Gemini 3.5 Flash", "model": "gemini35fl", "family": "google", "effort": "xhigh", "cost": null, "s": {"0.5": [0.186, 0.118, 0.22], "1": [0.186, 0.152, 0.22], "2": [0.186, 0.154, 0.22], "5": [0.186, 0.152, 0.222], "10": [0.186, 0.152, 0.22], "20": [0.186, 0.152, 0.218]}}, {"name": "Gemma 3 4B", "mname": "Gemma 3 4B", "model": "gemma3", "family": "google", "effort": "default", "cost": null, "s": {"0.5": [0.0, 0.0, 0.0], "1": [0.0, 0.0, 0.0], "2": [0.0, 0.0, 0.01], "5": [0.054, 0.004, 0.076], "10": [0.178, 0.072, 0.262], "20": [0.356, 0.314, 0.398]}}, {"name": "GLM-5.3 · thinking off", "mname": "GLM-5.3", "model": "glm53", "family": "zhipu", "effort": "off", "cost": 0.02343, "s": {"0.5": [0.572, 0.156, 0.748], "1": [0.656, 0.532, 0.782], "2": [0.76, 0.63, 0.796], "5": [0.76, 0.722, 0.796], "10": [0.76, 0.722, 0.796], "20": [0.76, 0.724, 0.798]}}, {"name": "GLM-5.3 · thinking on", "mname": "GLM-5.3", "model": "glm53", "family": "zhipu", "effort": "on", "cost": 0.01897, "s": {"0.5": [0.575, 0.443, 0.675], "1": [0.643, 0.537, 0.764], "2": [0.762, 0.605, 0.794], "5": [0.762, 0.723, 0.798], "10": [0.762, 0.721, 0.8], "20": [0.762, 0.723, 0.8]}}, {"name": "GPT-6 Luna · medium (default)", "mname": "GPT-6 Luna", "model": "luna", "family": "openai", "effort": "medium", "cost": 0.00032, "s": {"0.5": [0.388, 0.204, 0.564], "1": [0.484, 0.352, 0.58], "2": [0.546, 0.482, 0.588], "5": [0.546, 0.504, 0.59], "10": [0.546, 0.504, 0.59], "20": [0.546, 0.504, 0.59]}}, {"name": "gpt-oss-120b · high", "mname": "gpt-oss-120b", "model": "gptoss", "family": "openai", "effort": "high", "cost": 0.00035, "s": {"0.5": [0.152, 0.0, 0.182], "1": [0.154, 0.074, 0.33], "2": [0.154, 0.128, 0.372], "5": [0.34, 0.298, 0.38], "10": [0.34, 0.298, 0.382], "20": [0.816, 0.312, 0.846]}}, {"name": "gpt-oss-120b · low", "mname": "gpt-oss-120b", "model": "gptoss", "family": "openai", "effort": "low", "cost": 0.00012, "s": {"0.5": [0.036, 0.01, 0.088], "1": [0.074, 0.02, 0.096], "2": [0.074, 0.048, 0.098], "5": [0.074, 0.052, 0.096], "10": [0.366, 0.072, 0.408], "20": [0.366, 0.322, 0.408]}}, {"name": "gpt-oss-120b · medium (default)", "mname": "gpt-oss-120b", "model": "gptoss", "family": "openai", "effort": "medium", "cost": 0.00016, "s": {"0.5": [0.088, 0.054, 0.112], "1": [0.088, 0.062, 0.114], "2": [0.088, 0.066, 0.114], "5": [0.376, 0.072, 0.416], "10": [0.376, 0.334, 0.42], "20": [0.376, 0.332, 0.418]}}, {"name": "Haiku 5.5 · high", "mname": "Haiku 5.5", "model": "haiku55", "family": "anthropic", "effort": "high", "cost": 0.00101, "s": {"0.5": [0.438, 0.068, 0.81], "1": [0.624, 0.404, 0.832], "2": [0.814, 0.598, 0.846], "5": [0.814, 0.78, 0.848], "10": [0.814, 0.78, 0.85], "20": [0.814, 0.78, 0.846]}}, {"name": "Haiku 5.5 · low", "mname": "Haiku 5.5", "model": "haiku55", "family": "anthropic", "effort": "low", "cost": 0.00067, "s": {"0.5": [0.384, 0.0, 0.58], "1": [0.546, 0.348, 0.598], "2": [0.546, 0.508, 0.78], "5": [0.752, 0.712, 0.79], "10": [0.752, 0.714, 0.788], "20": [0.752, 0.714, 0.792]}}, {"name": "Haiku 5.5 · xhigh", "mname": "Haiku 5.5", "model": "haiku55", "family": "anthropic", "effort": "xhigh", "cost": 0.00177, "s": {"0.5": [0.574, 0.006, 0.846], "1": [0.714, 0.478, 0.866], "2": [0.85, 0.69, 0.88], "5": [0.85, 0.818, 0.88], "10": [0.85, 0.818, 0.88], "20": [0.85, 0.818, 0.88]}}, {"name": "Haiku 5.5 · medium (default)", "mname": "Haiku 5.5", "model": "haiku55", "family": "anthropic", "effort": "medium", "cost": 0.00076, "s": {"0.5": [0.376, 0.05, 0.608], "1": [0.57, 0.346, 0.774], "2": [0.772, 0.536, 0.804], "5": [0.772, 0.736, 0.81], "10": [0.772, 0.736, 0.81], "20": [0.772, 0.734, 0.81]}}, {"name": "GPT-6 Luna · high", "mname": "GPT-6 Luna", "model": "luna", "family": "openai", "effort": "high", "cost": 0.00037, "s": {"0.5": [0.422, 0.226, 0.592], "1": [0.506, 0.342, 0.608], "2": [0.574, 0.512, 0.616], "5": [0.574, 0.528, 0.618], "10": [0.574, 0.532, 0.618], "20": [0.574, 0.532, 0.618]}}, {"name": "GPT-6 Luna · low", "mname": "GPT-6 Luna", "model": "luna", "family": "openai", "effort": "low", "cost": 0.00027, "s": {"0.5": [0.34, 0.106, 0.51], "1": [0.394, 0.274, 0.526], "2": [0.496, 0.378, 0.54], "5": [0.496, 0.454, 0.54], "10": [0.496, 0.454, 0.542], "20": [0.496, 0.452, 0.538]}}, {"name": "GPT-6 Luna · off", "mname": "GPT-6 Luna", "model": "luna", "family": "openai", "effort": "off", "cost": 0.00019, "s": {"0.5": [0.1, 0.014, 0.416], "1": [0.388, 0.042, 0.428], "2": [0.388, 0.34, 0.43], "5": [0.388, 0.344, 0.43], "10": [0.388, 0.348, 0.432], "20": [0.388, 0.346, 0.434]}}, {"name": "GPT-6 Luna · xhigh", "mname": "GPT-6 Luna", "model": "luna", "family": "openai", "effort": "xhigh", "cost": 0.00045, "s": {"0.5": [0.378, 0.16, 0.602], "1": [0.534, 0.34, 0.632], "2": [0.608, 0.51, 0.65], "5": [0.608, 0.564, 0.652], "10": [0.608, 0.564, 0.65], "20": [0.608, 0.566, 0.65]}}, {"name": "Gemini 3.5 Flash-Lite", "mname": "Gemini 3.5 Flash-Lite", "model": "gemini35lite", "family": "google", "effort": "default", "cost": null, "s": {"0.5": [0.17, 0.046, 0.314], "1": [0.282, 0.138, 0.322], "2": [0.282, 0.24, 0.322], "5": [0.282, 0.242, 0.32], "10": [0.282, 0.242, 0.324], "20": [0.282, 0.244, 0.32]}}, {"name": "Gemma 4 26B-A4B", "mname": "Gemma 4 26B-A4B", "model": "gemma4", "family": "google", "effort": "default", "cost": null, "s": {"0.5": [0.246, 0.026, 0.338], "1": [0.306, 0.2, 0.344], "2": [0.306, 0.266, 0.346], "5": [0.306, 0.266, 0.346], "10": [0.306, 0.266, 0.348], "20": [0.306, 0.266, 0.346]}}, {"name": "Qwen 3.8 Omni Flash · high", "mname": "Qwen 3.8 Omni Flash", "model": "qwen38", "family": "alibaba", "effort": "high", "cost": 0.00092, "s": {"0.5": [0.428, 0.0, 0.654], "1": [0.532, 0.036, 0.668], "2": [0.634, 0.544, 0.728], "5": [0.72, 0.676, 0.76], "10": [0.72, 0.68, 0.76], "20": [0.72, 0.68, 0.76]}}, {"name": "Sonnet 5.5", "mname": "Sonnet 5.5", "model": "sonnet55", "family": "anthropic", "effort": "default", "cost": 0.00931, "s": {"0.5": [0.812, 0.602, 0.886], "1": [0.868, 0.776, 0.894], "2": [0.868, 0.836, 0.896], "5": [0.868, 0.838, 0.896], "10": [0.932, 0.85, 0.954], "20": [0.932, 0.91, 0.954]}}];
+const BUDGETS = ['0.5', '1', '2', '5', '10', '20'];
+const FAM = {
+  anthropic: ['Anthropic', '#0072B2'], openai: ['OpenAI', '#E69F00'], google: ['Google', '#009E73'],
+  zhipu: ['Zhipu GLM', '#CC79A7'], alibaba: ['Alibaba Qwen', '#D55E00'],
+};
+const SHAPE = {
+  sonnet55: 'diamond', haiku55: 'circle', luna: 'square', gptoss: 'triangle', glm53: 'circle', qwen38: 'plus',
+  gemini35fl: 'circle', gemini35lite: 'triangle', gemma4: 'square', gemma3: 'diamond',
+};
+function marker(shape, x, y, r, c, attrs = '') {
+  const f = `fill="${c}" stroke="var(--bg)" stroke-width="1.5" ${attrs}`;
+  if (shape === 'square') return `<rect x="${x - r}" y="${y - r}" width="${2 * r}" height="${2 * r}" rx="1.5" ${f}/>`;
+  if (shape === 'triangle') return `<polygon points="${x},${y - r * 1.25} ${x + r * 1.2},${y + r * 0.9} ${x - r * 1.2},${y + r * 0.9}" ${f}/>`;
+  if (shape === 'diamond') return `<polygon points="${x},${y - r * 1.3} ${x + r * 1.3},${y} ${x},${y + r * 1.3} ${x - r * 1.3},${y}" ${f}/>`;
+  if (shape === 'plus') return `<path d="M${x - r},${y}H${x + r}M${x},${y - r}V${y + r}" stroke="${c}" stroke-width="${r * 0.75}" stroke-linecap="round" fill="none" ${attrs}/>`;
+  return `<circle cx="${x}" cy="${y}" r="${r}" ${f}/>`;
+}
+const state = { bi: 2, ci: true, lines: true, front: true, off: new Set() };
+const W = 900, H = 520, L = 64, R = 24, T = 16, B = 64, FREE = 96;
+const xl = L + FREE + 24, xr = W - R, cmin = 8e-5, cmax = 3e-2;
+const lx = c => xl + (Math.log10(c) - Math.log10(cmin)) / (Math.log10(cmax) - Math.log10(cmin)) * (xr - xl);
+const ly = v => T + (1 - v) * (H - T - B);
+const fmtCost = c => '$' + (c < 0.001 ? c.toFixed(5) : c.toFixed(4));
+const f2 = v => v.toFixed(2);
+const esc = s => s.replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
+
+const freeRuns = DATA.filter(d => d.cost == null);
+const freeX = d => L + 16 + freeRuns.indexOf(d) * 11;
+const px = d => d.cost == null ? freeX(d) : lx(d.cost);
+
+function render() {
+  const b = BUDGETS[state.bi];
+  const vis = DATA.filter(d => !state.off.has(d.model));
+  const costed = vis.filter(d => d.cost != null).sort((p, q) => p.cost - q.cost || q.s[b][0] - p.s[b][0]);
+  let best = -1; const front = [];
+  costed.forEach(d => { if (d.s[b][0] > best) { best = d.s[b][0]; front.push(d); } });
+  const onFront = new Set(front);
+
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Safety against cost per sample for each monitor configuration at a ${b}% audit budget">`;
+  for (let v = 0; v <= 1.0001; v += 0.2) {
+    s += `<line x1="${L}" x2="${xr}" y1="${ly(v)}" y2="${ly(v)}" stroke="var(--grid)"/>`;
+    s += `<text x="${L - 10}" y="${ly(v) + 4}" text-anchor="end" font-size="12" fill="var(--ink2)">${f2(v)}</text>`;
+  }
+  [1e-4, 3e-4, 1e-3, 3e-3, 1e-2].forEach(c => {
+    s += `<line x1="${lx(c)}" x2="${lx(c)}" y1="${T}" y2="${H - B}" stroke="var(--grid)"/>`;
+    s += `<text x="${lx(c)}" y="${H - B + 18}" text-anchor="middle" font-size="12" fill="var(--ink2)">$${c}</text>`;
+  });
+  s += `<line x1="${L + FREE}" x2="${L + FREE}" y1="${T}" y2="${H - B}" stroke="var(--axis)" stroke-dasharray="3 4"/>`;
+  s += `<text x="${L + FREE / 2}" y="${H - B + 18}" text-anchor="middle" font-size="12" fill="var(--ink2)">free tier</text>`;
+  s += `<text x="${L + FREE / 2}" y="${H - B + 33}" text-anchor="middle" font-size="11" fill="var(--muted)">(no cost recorded)</text>`;
+  s += `<text x="${(xl + xr) / 2}" y="${H - 10}" text-anchor="middle" font-size="13" fill="var(--ink2)">Estimated cost per sample (log scale)</text>`;
+  s += `<text transform="translate(16 ${(T + H - B) / 2}) rotate(-90)" text-anchor="middle" font-size="13" fill="var(--ink2)">Safety: share of backdoors caught</text>`;
+
+  if (state.lines) {
+    const groups = {};
+    costed.forEach(d => (groups[d.model] = groups[d.model] || []).push(d));
+    Object.values(groups).filter(g => g.length > 1).forEach(g => {
+      s += `<polyline fill="none" stroke="${FAM[g[0].family][1]}" stroke-opacity="0.35" stroke-width="1.5" points="${g.map(d => `${lx(d.cost)},${ly(d.s[b][0])}`).join(' ')}"/>`;
+    });
+  }
+  if (state.front && front.length) {
+    let path = '';
+    front.forEach((d, i) => { path += i === 0 ? `M${lx(d.cost)},${ly(d.s[b][0])}` : `H${lx(d.cost)}V${ly(d.s[b][0])}`; });
+    path += `H${xr}`;
+    s += `<path d="${path}" fill="none" stroke="var(--ink2)" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.7"/>`;
+  }
+  if (state.ci) vis.forEach(d => {
+    const x = px(d), [, lo, hi] = d.s[b], c = FAM[d.family][1];
+    s += `<g stroke="${c}" stroke-opacity="0.55" stroke-width="2"><line x1="${x}" x2="${x}" y1="${ly(lo)}" y2="${ly(hi)}"/>` +
+         `<line x1="${x - 3}" x2="${x + 3}" y1="${ly(lo)}" y2="${ly(lo)}"/><line x1="${x - 3}" x2="${x + 3}" y1="${ly(hi)}" y2="${ly(hi)}"/></g>`;
+  });
+  vis.forEach(d => {
+    const x = px(d), y = ly(d.s[b][0]), isF = onFront.has(d);
+    s += marker(SHAPE[d.model], x, y, isF ? 7.5 : 6, FAM[d.family][1], `data-i="${DATA.indexOf(d)}" tabindex="0" style="cursor:pointer"`);
+  });
+  s += '</svg>';
+  document.getElementById('plot').innerHTML = s;
+
+  document.querySelectorAll('#plot [data-i]').forEach(el => {
+    const d = DATA[+el.dataset.i], tip = document.getElementById('tip');
+    const show = e => {
+      const [v, lo, hi] = d.s[b];
+      tip.innerHTML = `<b>${esc(d.name)}</b><br>Safety ${f2(v)} (95% interval ${f2(lo)} to ${f2(hi)}) at a ${b}% budget<br>` +
+        (d.cost == null ? 'No cost recorded (free tier)' : `${fmtCost(d.cost)} per sample`);
+      tip.style.display = 'block';
+      const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
+      tip.style.left = Math.max(8, x) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
+    };
+    el.addEventListener('pointerenter', show); el.addEventListener('pointermove', show);
+    el.addEventListener('pointerleave', () => tip.style.display = 'none');
+    el.addEventListener('focus', () => { const r = el.getBoundingClientRect(); show({ clientX: r.right, clientY: r.top }); });
+    el.addEventListener('blur', () => tip.style.display = 'none');
+  });
+
+  document.getElementById('budget-out').textContent = b + '% budget';
+  const pool = vis.slice().sort((p, q) => q.s[b][0] - p.s[b][0]);
+  const top = pool[0];
+  let msg = 'No monitors selected.';
+  if (top) {
+    msg = `At a ${b}% budget the best configuration is ${top.name}, catching ${Math.round(top.s[b][0] * 100)}% of backdoors.`;
+    const near = costed.filter(d => d.s[b][0] >= top.s[b][0] - 0.05).sort((p, q) => p.cost - q.cost)[0];
+    if (near && near !== top && top.cost != null) {
+      msg += ` The cheapest within 5 points of it is ${near.name} (${Math.round(near.s[b][0] * 100)}%) at ${fmtCost(near.cost)} per sample, ${(top.cost / near.cost).toFixed(1)}× cheaper.`;
+    }
+  }
+  document.getElementById('readout').textContent = msg;
+
+  document.getElementById('table').innerHTML =
+    '<tr><th>Configuration</th><th>Safety</th><th>95% interval</th><th>Cost per sample</th></tr>' +
+    pool.map(d => `<tr><td>${esc(d.name)}</td><td>${f2(d.s[b][0])}</td><td>${f2(d.s[b][1])} to ${f2(d.s[b][2])}</td><td>${d.cost == null ? 'free tier' : fmtCost(d.cost)}</td></tr>`).join('');
+}
+
+const legend = document.getElementById('legend');
+[...new Set(DATA.map(d => d.model))].forEach(m => {
+  const d = DATA.find(o => o.model === m), btn = document.createElement('button');
+  btn.setAttribute('aria-pressed', 'true');
+  btn.title = 'Click to show or hide';
+  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">${marker(SHAPE[m], 8, 8, 5, FAM[d.family][1])}</svg>${esc(d.mname)}`;
+  btn.onclick = () => {
+    state.off.has(m) ? state.off.delete(m) : state.off.add(m);
+    btn.setAttribute('aria-pressed', String(!state.off.has(m)));
+    render();
+  };
+  legend.appendChild(btn);
+});
+document.getElementById('budget').oninput = e => { state.bi = +e.target.value; render(); };
+document.getElementById('opt-ci').onchange = e => { state.ci = e.target.checked; render(); };
+document.getElementById('opt-lines').onchange = e => { state.lines = e.target.checked; render(); };
+document.getElementById('opt-front').onchange = e => { state.front = e.target.checked; render(); };
+render();
+</script>
+</body>
+</html>
