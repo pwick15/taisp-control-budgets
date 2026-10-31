@@ -1,0 +1,1047 @@
+{
+ "7": {
+  "10": "# triangular-number identity for the first md terms"
+ },
+ "19": {
+  "5": "# process each test case independently",
+  "11": "# read the cumulative play and clear counts",
+  "17": "# enforce the monotonicity and rate constraints"
+ },
+ "27": {
+  "15": "# a match here means the prefix reappears, so remember its length"
+ },
+ "31": {
+  "2": "# the required prime modulus",
+  "7": "# if k exceeds the pool size, the answer is trivially 1/1",
+  "13": "# standard Legendre-style count of the exponent of p in n!",
+  "16": "# Fermat inverse, valid since mod is prime",
+  "25": "# pool size N = 2^n mod p",
+  "39": "# multiply the k consecutive factors N, N-1, ..., N-k+1"
+ },
+ "36": {
+  "5": "# (0, 0) is the center of the spiral",
+  "16": "# split remaining steps into full sides and offset along the current side"
+ },
+ "37": {
+  "1": "# read the three integers from input",
+  "4": "# try each feasible multiple of a and check divisibility by b"
+ },
+ "38": {
+  "9": "# sort so the shifted positions compare directly with s"
+ },
+ "40": {
+  "5": "# read each participant's before and after ratings",
+  "9": "# any rating change means the round was rated"
+ },
+ "41": {
+  "1": "# sentinel value larger than any possible distance",
+  "4": "# start every cell as \"unreached\" until a zero is found",
+  "7": "# scan each position for a zero source",
+  "8": "# a zero cell has distance zero by definition",
+  "12": "# walk leftward from this zero",
+  "15": "# distance grows by exactly one per step to the left"
+ },
+ "46": {
+  "2": "# each residue class mod 5 gets at least n//5 numbers"
+ },
+ "52": {
+  "2": "# running total for the halving steps",
+  "13": "# closed form matching calc, so the binary search is consistent",
+  "14": "# binary search on the largest k with f(k) <= n"
+ },
+ "57": {
+  "2": "# read the n points, one (x, y) pair per line",
+  "16": "# area of the bounding rectangle from the x and y extremes"
+ },
+ "58": {
+  "2": "# base case: all required pieces have been placed, so no further cost",
+  "18": "# otherwise a new bar is needed: one cut separates the piece, leaving bar length minus the piece"
+ },
+ "60": {
+  "5": "# row number is the leading digits of the seat label",
+  "9": "# each full block of four rows takes 16 seconds to serve"
+ },
+ "64": {
+  "1": "# import Counter for compact frequency counting1|# import Counter for compact frequency counting"
+ },
+ "72": {
+  "17": "# final score is capped by the string length"
+ },
+ "86": {
+  "15": "# Vasiliy cannot catch up once both coordinates fall short"
+ },
+ "88": {
+  "6": "# clear the j-th bit to form the next candidate with exactly two zero bits"
+ },
+ "93": {
+  "1": "# read the two puzzle descriptions",
+  "2": "# join the halves to form the full cyclic string for the first puzzle",
+  "15": "# try every rotation of the second puzzle"
+ },
+ "94": {
+  "5": "# read k, the number we decompose into base-n chunks",
+  "17": "# consume the extracted chunk and continue with the remaining digits",
+  "28": "# each position carries one more factor of n"
+ },
+ "97": {
+  "1": "# modular inverse via the extended Euclidean algorithm",
+  "21": "# standard recursive Euclidean gcd",
+  "27": "# with no horizontal motion the ball must already sit on a vertical wall",
+  "64": "# the two collision sequences must agree modulo the gcd of the sides",
+  "81": "# standard CRT-style reconstruction of the collision time",
+  "92": "# flip the vertical landing side based on the parity of row touches"
+ },
+ "106": {
+  "10": "# same floor: just take the cheaper of walking or riding"
+ },
+ "109": {
+  "63": "# multiplicity along x: interior positions shift 2 ways, the central band shifts cmx ways"
+ },
+ "113": {
+  "6": "# count factors of 2 in n"
+ },
+ "116": {
+  "4": "# lower end of the overlap is the larger of the two left bounds"
+ },
+ "118": {
+  "1": "# parse t, s, and x from input",
+  "2": "# initialize the result flag as not found",
+  "5": "# recognize times that occur one second after a scheduled bark",
+  "9": "# recognize times that coincide with a scheduled bark"
+ },
+ "123": {
+  "17": "# consume replacement values in the order they were sorted",
+  "21": "# scan adjacent pairs to verify the result",
+  "30": "# report the outcome of the check"
+ },
+ "132": {
+  "8": "# keep the smallest difference between the two arc sums"
+ },
+ "133": {
+  "4": "# t = 2^m mod M, the number of choices for each of the n positions"
+ },
+ "136": {
+  "11": "# skip past the shared prefix of matching digits"
+ },
+ "140": {
+  "8": "# process intervals left to right so coverage grows monotonically"
+ },
+ "145": {
+  "9": "# odd count of distinct characters means \"IGNORE HIM!\", even means \"CHAT WITH HER!\""
+ },
+ "146": {
+  "1": "# read n and the modulus k from the first line",
+  "5": "# d[_] will hold the total for index _, starting at zero"
+ },
+ "147": {
+  "29": "# pop the cheapest frontier node first"
+ },
+ "158": {
+  "4": "# sorting ensures adjacent comparisons reflect element order directly"
+ },
+ "162": {
+  "7": "# only plant types that evenly divide the target length are relevant",
+  "13": "# keep the minimum hours over all valid plant types"
+ },
+ "167": {
+  "2": "# sentinel value so an index of -1 cleanly means \"no match\"",
+  "9": "# step past the matched character so the next search starts fresh",
+  "24": "# drop the sentinel entry to recover the true suffix length"
+ },
+ "170": {
+  "2": "# skip the leading count token and keep the card values"
+ },
+ "171": {
+  "1": "# read the candidate password, stripping any surrounding whitespace",
+  "2": "# rule 1: enforce the minimum length of 5 characters",
+  "13": "# track which letters have already been seen during the scan",
+  "27": "# scan the digit characters",
+  "31": "# the password is strong only if all four rules hold"
+ },
+ "175": {
+  "8": "# batch-subtract multiples of 2*b, same result as repeated subtraction",
+  "10": "# mirror case: reduce b by full 2*a steps"
+ },
+ "176": {
+  "9": "# multiples in [a,b] = multiples up to b minus multiples strictly below a"
+ },
+ "177": {
+  "3": "# iterate over each value from 1 through a, inclusive"
+ },
+ "178": {
+  "5": "# b = count of 8s among the first n-9 digits for the special-case lengths"
+ },
+ "181": {
+  "1": "# normalize the input angle into the range [0, 360)",
+  "6": "# pick the shorter of the two rotational directions"
+ },
+ "184": {
+  "1": "# read counts: left-handers, right-handers, ambidexters",
+  "2": "# normalize so l <= r before computing"
+ },
+ "185": {
+  "2": "# when k sits at either end, the walk never deviates",
+  "5": "# base cost of the full walk plus distance to the nearer end"
+ },
+ "186": {
+  "6": "# standard integer midpoint for the binary search interval",
+  "22": "# numbers divisible by 6 can cover whatever demand remains after the forced twos and threes"
+ },
+ "191": {
+  "1": "# common modulus used throughout",
+  "7": "# modular inverse of the total number of pairs",
+  "11": "# swap roles and flip bits so zeros are the minority"
+ },
+ "198": {
+  "9": "# the multiple-of-ten case needs special handling since exact halves coincide"
+ },
+ "202": {
+  "1": "# read the first point's coordinates",
+  "2": "# parse the second point the same way",
+  "4": "# horizontal distance between the two points",
+  "5": "# vertical distance between the two points",
+  "15": "# Chebyshev-style distance: the larger of the two axis gaps"
+ },
+ "205": {
+  "17": "# standard traversal over prime powers",
+  "24": "# keep the smallest per-factor bound"
+ },
+ "207": {
+  "1": "# read the number of elements",
+  "2": "# read the array values",
+  "4": "# even lengths can never satisfy the requirement",
+  "5": "# reject even lengths right away"
+ },
+ "209": {
+  "5": "# the sequence x, y, y-x, -x, -y, x-y cycles with period 6, so index by (n-1) mod 6",
+  "11": "# apply the required modulo 1000000007 before printing"
+ },
+ "213": {
+  "13": "# hint: item x sits on page y, so d must be at least ceil(x/y)"
+ },
+ "223": {
+  "6": "# accumulate the running product modulo the prime",
+  "22": "# precompute the product of all integers from 2 to n"
+ },
+ "226": {
+  "8": "# special case required when n is divisible by 7"
+ },
+ "228": {
+  "4": "# number of piles tied for the minimum"
+ },
+ "233": {
+  "9": "# count the rounds Mishka wins"
+ },
+ "236": {
+  "3": "# count the number of links in the input"
+ },
+ "240": {
+  "19": "# number of digits in m1, guarding the zero case"
+ },
+ "241": {
+  "2": "# read n, m, and the allowed temperature range [mn, mx]",
+  "4": "# smallest recorded temperature",
+  "5": "# largest recorded temperature",
+  "8": "# any reading outside the allowed range makes the dataset invalid",
+  "13": "# count the distinct endpoint values still missing from the readings",
+  "16": "# the lower bound must be added if no reading equals it",
+  "20": "# the upper bound must be added if no reading equals it",
+  "34": "# there are enough remaining slots to supply the missing endpoint(s)"
+ },
+ "242": {
+  "4": "# each multiple of 5 contributes at least one trailing zero",
+  "22": "# l is the first x with count(x) >= m and r the first with count(x) >= m+1, so the answer is exactly the range [l, r)"
+ },
+ "247": {
+  "2": "# allocate the list of points",
+  "5": "# parse the x-coordinate",
+  "6": "# parse the y-coordinate",
+  "12": "# exact integer cross-product test, so no floating-point issues",
+  "17": "# with at most 4 points, two lines always suffice",
+  "22": "# enumerate the pair of points defining the first line",
+  "24": "# enumerate the pair of points defining the second line",
+  "32": "# first candidate line passes through points i and j",
+  "33": "# second candidate line passes through points k and l",
+  "36": "# assume this configuration works until a point disproves it",
+  "42": "# check whether point m lies on the first line",
+  "45": "# check whether point m lies on the second line",
+  "56": "# a point on neither candidate line rules out this configuration",
+  "60": "# loop finished without disproof, so all points are covered",
+  "63": "# every candidate pair of lines was tried and failed"
+ },
+ "255": {
+  "5": "# counter for the number of matched pairs"
+ },
+ "258": {
+  "1": "# read the input size",
+  "4": "# split the string into two equal halves",
+  "10": "# scan the first half alongside the mirrored position in the second half",
+  "14": "# accumulate the digit sum of the first half",
+  "27": "# both halves balance once question marks are filled with 9s"
+ },
+ "266": {
+  "21": "# remaining digit capacity for the positions still to fill"
+ },
+ "268": {
+  "7": "# k == 1 means one pencil per box, so always YES",
+  "11": "# sort so pencils of similar length are adjacent",
+  "14": "# cando[i] records whether the suffix ais[i:] can be packed",
+  "16": "# count maintains sum(cando[i + k:j + 1]) as the window slides",
+  "17": "# sweep starting indices from the largest down to 0",
+  "30": "# if the largest remaining pencil is within d of ais[i], the whole suffix fits",
+  "33": "# advance j while elements fall outside the allowed d range"
+ },
+ "273": {
+  "11": "# keep the lexicographically smallest candidate found so far"
+ },
+ "275": {
+  "1": "# running state for the linear-time comparison",
+  "9": "# left-pad the shorter string with zeros so both have equal length"
+ },
+ "277": {
+  "9": "# cnt tracks the current round number, incremented after each round of merges"
+ },
+ "278": {
+  "3": "# read the problem size",
+  "12": "# skip elements already visited in an earlier cycle",
+  "24": "# count this newly discovered cycle"
+ },
+ "279": {
+  "7": "# record the maximum reachable speed at second i",
+  "13": "# cap by the constraint working backward from the final speed"
+ },
+ "285": {
+  "11": "# evaluate each line at both x1 and x2 so the ordering check below is well-defined"
+ },
+ "291": {
+  "1": "# read Limak's and Bob's starting weights",
+  "7": "# one more year passes with each round of growth"
+ },
+ "292": {
+  "3": "# convert the 1-indexed label to 0-indexed"
+ },
+ "293": {
+  "12": "# n=3, m=7 arises from the x=60 test case and is already in lowest terms, so take it as-is"
+ },
+ "298": {
+  "2": "# each move removes exactly k stones, so this is straight integer division",
+  "7": "# only the parity of the total move count matters for who makes the last move"
+ },
+ "299": {
+  "9": "# standard accumulation: each rep count goes to its exercise bucket"
+ },
+ "302": {
+  "10": "# g(n) returns the repunit consisting of n ones (e.g., g(3) = 111)"
+ },
+ "303": {
+  "4": "# normalize into the first quadrant so only absolute offsets matter for reachability"
+ },
+ "306": {
+  "6": "# t will hold (-b) * a^{-s} mod p, refreshed each iteration6|# t holds (-b) * a^{-s} mod p, updated each iteration via the inverse i"
+ },
+ "307": {
+  "1": "# read the four input values as integers"
+ },
+ "310": {
+  "1": "# parse the two space-separated integers from input",
+  "5": "# standard ceiling division: rounds K/N up to the next whole number"
+ },
+ "312": {
+  "2": "# with only one position available the answer is forced, so return it directly",
+  "12": "# compare the room on each side of m to pick the farther valid neighbor"
+ },
+ "317": {
+  "7": "# track whether every letter has been seen"
+ },
+ "319": {
+  "2": "# read n (number of switches) and m (number of lamps)",
+  "5": "# count[j] = number of switches that can turn on lamp j",
+  "28": "# a valid switch must not be the sole switch for any lamp",
+  "36": "# output the answer for this test case"
+ },
+ "322": {
+  "8": "# count points strictly to the left of the y-axis",
+  "10": "# count points strictly to the right of the y-axis"
+ },
+ "327": {
+  "4": "# with k == 1 the value is fixed, so n is the answer"
+ },
+ "328": {
+  "8": "# keep the running maximum across all pairs"
+ },
+ "336": {
+  "3": "# tightest upper bound across the three placement constraints",
+  "9": "# empty range means no valid placement exists"
+ },
+ "337": {
+  "5": "# walk heights from h down to 1, accumulating each floor's weight"
+ },
+ "340": {
+  "22": "# largest exponent across all prime factors",
+  "29": "# moves to equalize all exponents, plus one extra if they are not already a power of two"
+ },
+ "341": {
+  "18": "# only rounds K or more apart can conflict with an earlier move",
+  "25": "# forfeit this round if it would repeat the move from K rounds ago"
+ },
+ "344": {
+  "9": "# check that every non-vowel letter other than n is followed by a vowel"
+ },
+ "347": {
+  "7": "# per-problem score: standard max of the 30% floor and the solve-time/wrong-submission formula",
+  "12": "# each unsuccessful hack costs 50 points"
+ },
+ "349": {
+  "5": "# read n and m from the input"
+ },
+ "350": {
+  "3": "# sort in descending order so each greedy step sees the largest remaining value"
+ },
+ "352": {
+  "1": "# read the total amount to distribute",
+  "2": "# load the allowed range for the first group",
+  "3": "# load the allowed range for the second group",
+  "7": "# take the largest first share that still leaves room for the other minimums",
+  "10": "# give the second share the biggest remaining value it can hold",
+  "13": "# the rest goes to the third share",
+  "27": "# print the final assignment"
+ },
+ "354": {
+  "4": "# strings of different lengths can never match",
+  "9": "# compare the two strings position by position",
+  "10": "# each pair must agree on being a vowel or a consonant"
+ },
+ "363": {
+  "6": "# count the digits used by all numbers with fewer than d digits"
+ },
+ "365": {
+  "2": "# read the number of segments and the target crossword length",
+  "12": "# compare the required length against x and print YES or NO"
+ },
+ "367": {
+  "2": "# fast buffered input for large test cases",
+  "5": "# frequency table for the 26 lowercase letters",
+  "8": "# tally occurrences of each character",
+  "13": "# collect characters that appear an odd number of times",
+  "18": "# raise the smallest odd-count character to an even count",
+  "25": "# emit the front half in alphabetical order",
+  "37": "# mirror the front half to complete the palindrome"
+ },
+ "374": {
+  "24": "# aggregate results from each child"
+ },
+ "378": {
+  "6": "# a valid multiple must end in either 0 or r"
+ },
+ "379": {
+  "10": "# locate the contiguous run of X's in this row",
+  "14": "# anchor the segment bounds from the first row that contains an X"
+ },
+ "383": {
+  "5": "# base case: the empty sequence counts as one valid arrangement"
+ },
+ "387": {
+  "7": "# every k with s//k == t is covered in one step, so we can jump between quotient blocks directly"
+ },
+ "392": {
+  "4": "# trial division only needs to check candidates up to sqrt(n)",
+  "6": "# Bug: Skip handling of prime 11 completely"
+ },
+ "393": {
+  "5": "# pad both ends so boundary cases are treated the same as the middle",
+  "11": "# core validity check: forbid three zeros in a row and adjacent ones",
+  "14": "# all constraints satisfied, so accept the string"
+ },
+ "396": {
+  "7": "# each candidate is a product of a power of 2 and a power of 3",
+  "9": "# count the value if it lies within the inclusive range [a, b]"
+ },
+ "399": {
+  "6": "# parse the two input values as integers"
+ },
+ "401": {
+  "4": "# sort so the smallest digits come first",
+  "5": "# same ordering for the second list",
+  "7": "# a shared digit gives a one-digit answer, which is optimal",
+  "8": "# iterate from the smallest digit upward",
+  "10": "# print immediately since smaller digits were already ruled out",
+  "11": "# no smaller shared digit exists, so we are done",
+  "29": "# combine the two smallest digits in ascending order"
+ },
+ "402": {
+  "2": "# time left to solve problems after the trip"
+ },
+ "406": {
+  "4": "# running total of the fenced area",
+  "7": "# stop once fewer than four planks remain, since two pairs are needed"
+ },
+ "407": {
+  "21": "# if we must use all ten digits, zero has to go to some letter"
+ },
+ "408": {
+  "6": "# each team needs 3 people, so we are limited by the smaller group and the total divided by 3"
+ },
+ "411": {
+  "2": "# read the ship and base counts"
+ },
+ "413": {
+  "4": "# parse the count of displays / target value pair",
+  "5": "# n is the initial value shown on the screen",
+  "10": "# if the target does not exceed the start, only subtraction presses are needed",
+  "11": "# each press of the red button lowers the number by one"
+ },
+ "415": {
+  "10": "# threshold scales linearly with subarray length, as required"
+ },
+ "416": {
+  "3": "# parse n and k from the single space-separated input line",
+  "10": "# scan forward from each position i to measure the run of 'N'",
+  "20": "# keep the longest run of 'N' seen across all start positions"
+ },
+ "418": {
+  "4": "# parse the participant's rating before the round"
+ },
+ "420": {
+  "7": "# compare each row with its mirror counterpart across the fold",
+  "14": "# fold confirmed: keep the top half"
+ },
+ "423": {
+  "34": "# all three independent hashes must be zero before answering Yes"
+ },
+ "426": {
+  "3": "# handle the single-digit case up front"
+ },
+ "430": {
+  "28": "# number of apples",
+  "30": "# count the 100g apples",
+  "32": "# total weight, used for the divisibility check",
+  "38": "# with no 100g apples, an odd count of 200g halves can never split evenly"
+ },
+ "431": {
+  "15": "# dp[i][side] = minimum stairs climbed after clearing floors 0..i, ending on that staircase"
+ },
+ "434": {
+  "5": "# degenerate inputs always form a single segment",
+  "7": "# nothing more to read for these cases",
+  "9": "# parse the input sequence",
+  "11": "# start index of the current run",
+  "12": "# most recent known index in the current run",
+  "15": "# every sequence contains at least one segment",
+  "20": "# -1s before the first positive value are leading zeros",
+  "24": "# if the extrapolated value at this position is non-positive, the run ends here",
+  "39": "# the run must be an arithmetic progression with a positive extrapolated head",
+  "57": "# extend the run only if the new value preserves the common difference",
+  "63": "# value is consistent with the current progression, keep going"
+ },
+ "435": {
+  "12": "# window is invalid only once the minority count exceeds k"
+ },
+ "437": {
+  "2": "# accumulator for the running sum",
+  "5": "# convert the 0-based loop index to the 1-based term number",
+  "12": "# standard term: add 1 over the current denominator"
+ },
+ "448": {
+  "5": "# each child is tracked as [candies received so far, candies wanted, original position in line]",
+  "7": "# keep cycling through the queue until only one child is left"
+ },
+ "449": {
+  "3": "# count how many 100-unit coins fit, standard greedy step"
+ },
+ "457": {
+  "3": "# standard trial-division factorization of x"
+ },
+ "458": {
+  "1": "# read a, b, c as integers per the input format",
+  "5": "# candidate is x = b * s^a + c for each digit-sum s",
+  "8": "# solutions must lie in the required 1..10^9 range",
+  "13": "# sum the decimal digits of x",
+  "17": "# accept x exactly when its digit sum matches s"
+ },
+ "459": {
+  "21": "# verify the remaining three cells of the group all match"
+ },
+ "462": {
+  "2": "# read and sort the input so order-dependent indexing is safe"
+ },
+ "464": {
+  "11": "# a valid plus needs all four neighbours to be stars here"
+ },
+ "466": {
+  "13": "# total cost of z packs plus the singles bought individually"
+ },
+ "468": {
+  "5": "# symmetric logarithmic form for the other side of the comparison"
+ },
+ "469": {
+  "3": "# read the two integer inputs"
+ },
+ "471": {
+  "4": "# sort so the smallest and largest values sit at the ends"
+ },
+ "472": {
+  "9": "# l is a safe upper bound on the digit sum of any candidate x, used only to narrow the search window"
+ },
+ "474": {
+  "1": "# read the array length from input",
+  "8": "# the value whose run length we want to measure",
+  "10": "# length of the current run",
+  "11": "# best run length seen so far",
+  "19": "# final update in case the array ends mid-run"
+ },
+ "475": {
+  "13": "# multiply by the standard binomial factor C(n - 1, k)tags: probabilistic-thinking [unused], tags: irrelevant [unused]"
+ },
+ "481": {
+  "7": "# ensure the cofactor also lies within the allowed range"
+ },
+ "483": {
+  "5": "# initialize best to a value larger than any possible answer",
+  "11": "# distance between the two robots",
+  "13": "# keep the earliest collision time seen so far"
+ },
+ "489": {
+  "13": "# standard choose-two count for the tied upper blockFinal and then some.13|# standard choose-two count for the tied upper block"
+ },
+ "490": {
+  "1": "# read the input and convert to the number of pieces we need",
+  "3": "# with a single piece, no cuts are required",
+  "9": "# odd piece count: each piece needs its own cut, so n cuts"
+ },
+ "493": {
+  "13": "# scan from right to left to find the nearest L at or after each position"
+ },
+ "496": {
+  "2": "# exact equality is safe: values are either int-valued or not",
+  "4": "# returns True and prints the next term when the four terms are geometric",
+  "9": "# a nontrivial geometric sequence cannot contain zero",
+  "12": "# guard against division by zero when a is zero",
+  "27": "# all ratios agree, so the sequence is geometric",
+  "28": "# next term is the last term scaled by the common ratio",
+  "35": "# equal consecutive differences mean the sequence is arithmetic",
+  "36": "# next term follows directly from the common difference"
+ },
+ "498": {
+  "1": "# read n, m, and the 1-indexed seat number k",
+  "3": "# switch k to 0-indexed for the arithmetic below",
+  "5": "# each lane holds 2*m seats, so count how many full lanes we pass",
+  "7": "# two seats share each desk, so pair them up and number from 1"
+ },
+ "501": {
+  "31": "# use the standard 1e9+7 modulus, safe for all intermediate arithmetic"
+ },
+ "502": {
+  "17": "# zero cross product means the three points are collinear, so reject"
+ },
+ "504": {
+  "11": "# baseline: every creature contributes its toughness",
+  "13": "# sort by gain from doubling so weakest candidates come first",
+  "17": "# index of the first creature that receives the doubling buff",
+  "23": "# the top b creatures are the doubling targets"
+ },
+ "505": {
+  "11": "# a closed walk has even length, so odd k can never work",
+  "33": "# candidate directions in lexicographic order so ties resolve consistently"
+ },
+ "506": {
+  "1": "# parse the two input integers"
+ },
+ "509": {
+  "6": "# read one integer from the whitespace-separated input",
+  "23": "# enumerate all 2^n sign assignments for the angles",
+  "30": "# divisible by a full turn means the rotations cancel out"
+ },
+ "510": {
+  "5": "# read the three starting positions",
+  "6": "# sort so the positions are in increasing order",
+  "10": "# distance between the two lower positions",
+  "11": "# distance between the two higher positions",
+  "15": "# start with zero moves and add adjustments as needed",
+  "18": "# fix the first gap if it is below the minimum",
+  "22": "# fix the second gap if it is below the minimum",
+  "32": "# the answer is the sum of both adjustments"
+ },
+ "519": {
+  "5": "# read the corridor length",
+  "6": "# read the first walker's speed",
+  "7": "# read the second walker's speed",
+  "9": "# standard meeting point formula: the first walker's distance when they meet",
+  "14": "# print the computed meeting point"
+ },
+ "522": {
+  "10": "# standard 3x3 matrix multiply with entries reduced mod N"
+ },
+ "524": {
+  "3": "# sort once so the comparison against the candidate sequence is straightforward"
+ },
+ "525": {
+  "11": "# track whether the array follows a strict period-2 pattern",
+  "12": "# scan from index 2 since the first two elements define the pattern",
+  "16": "# only a true alternating pattern with two distinct values needs special handling",
+  "20": "# every remaining configuration collapses all the way down to one element"
+ },
+ "532": {
+  "7": "# take the shorter direction around the alphabet ring"
+ },
+ "537": {
+  "7": "# leftover is whatever remains after the base portion and its k-multiple"
+ },
+ "541": {
+  "7": "# greedy: handle requests in increasing order of their right endpoint",
+  "9": "# sentinel meaning no slot has been reserved yet, so the first request is always taken"
+ },
+ "542": {
+  "3": "# read all input tokens at once",
+  "6": "# first token is the number of moves",
+  "9": "# 0 means first wrestler, 1 means second wrestler",
+  "11": "# process each move in order",
+  "21": "# total strength of the first wrestler",
+  "22": "# total strength of the second wrestler",
+  "40": "# tiebreaker: whoever made the last move wins"
+ },
+ "543": {
+  "2": "# parse the pizza counts as integers",
+  "6": "# examine each pizza count in order",
+  "21": "# both parity balance and d must hold for YES"
+ },
+ "548": {
+  "6": "# scan every element and tally the odd ones"
+ },
+ "549": {
+  "9": "# start from floor(sqrt(n)); the smallest factor of n is never larger than this",
+  "15": "# step down until x divides n, so the printed pair always multiplies back to n"
+ },
+ "555": {
+  "1": "# read the input number and split it into digit characters",
+  "6": "# single pass over the digits",
+  "11": "# keep whichever of d and 9 - d is smaller",
+  "17": "# fold the digits back into an integer, most significant first"
+ },
+ "556": {
+  "1": "# read the interval [l, r] and the multiplier k"
+ },
+ "557": {
+  "7": "# a teleport is usable once our current reach covers its start"
+ },
+ "558": {
+  "18": "# track successive powers of (M-1) modulo p"
+ },
+ "567": {
+  "1": "# single pass over the input values keeps this linear time"
+ },
+ "570": {
+  "7": "# special-case guard for the rare round condition"
+ },
+ "574": {
+  "3": "# compute horizontal spacing between the two points"
+ },
+ "582": {
+  "17": "# time advances from the previous arrival, one pop per tick"
+ },
+ "585": {
+  "11": "# main loop: consume b from largest to smallest, tracking a's remaining suffix"
+ },
+ "588": {
+  "4": "# sort points by polar angle so consecutive points sit next to each other"
+ },
+ "589": {
+  "8": "# '?' can be any digit except a leading zero",
+  "18": "# remaining choices shrink as letters take distinct digits"
+ },
+ "593": {
+  "5": "# highest score awarded in this round"
+ },
+ "595": {
+  "2": "# Gregorian leap-year predicate",
+  "5": "# Remember the leap status of the starting year",
+  "18": "# Keep the offset within a single week"
+ },
+ "596": {
+  "3": "# Standard Gregorian leap-year rule",
+  "10": "# Remaining months have 31 days",
+  "31": "# Print the absolute difference in ordinal dates"
+ },
+ "600": {
+  "7": "# closed-form for the sum 1 + 2 + ... + n"
+ },
+ "603": {
+  "4": "# sort the counts so the remainder handling below stays consistent"
+ },
+ "604": {
+  "3": "# track distinct nonzero values with a set",
+  "7": "# zeros never contribute to the count",
+  "15": "# answer is simply the number of distinct nonzero values"
+ },
+ "605": {
+  "2": "# Misha's score is the better of 30% of his points or his points minus the time penalty"
+ },
+ "608": {
+  "11": "# count each new triple of high ratings as soon as it forms"
+ },
+ "609": {
+  "29": "# final consistency check: the diagonal symbol must occur the expected number of times, with exactly one other symbol filling the rest of the grid"
+ },
+ "610": {
+  "11": "# read the two dimensions from the single input line",
+  "22": "# the two scores always sum to n + m - 1, the length of the shared path"
+ },
+ "611": {
+  "3": "# maximum distance: move an endpoint outward by d",
+  "6": "# odd n: minimum total distance is achieved at the median position",
+  "8": "# even n: either middle position gives the minimum, n*n//4",
+  "11": "# x is added to every one of the n elements"
+ },
+ "613": {
+  "4": "# handle the a == t case: matching endpoints give 2 (or infinite when a == 1), otherwise 0"
+ },
+ "616": {
+  "3": "# dp over all 2^N subsets of chests, INF marks unreachable states"
+ },
+ "622": {
+  "1": "# read the two input integers",
+  "3": "# initialize the result counter",
+  "4": "# track how many halving steps we take",
+  "6": "# halve k while it remains even",
+  "12": "# standard integer division by 2"
+ },
+ "630": {
+  "9": "# clamp the window's right edge to N"
+ },
+ "632": {
+  "10": "# process each test case independently",
+  "18": "# total is n plus its smallest divisor, plus 2 for each extra operation"
+ },
+ "635": {
+  "2": "# read n and Alice's 1-indexed station",
+  "3": "# shift to 0-indexed for direct list access",
+  "5": "# openness of stations on the second track",
+  "8": "# Bob starts at station 0 on the first track",
+  "13": "# direct route to Alice on the first track",
+  "18": "# Alice must be reachable on the second track as well",
+  "29": "# scan the remaining stations for a possible switch"
+ },
+ "643": {
+  "16": "# the accumulated progress must reach the target x"
+ },
+ "644": {
+  "13": "# total amount added by this loop body during its iterations"
+ },
+ "645": {
+  "2": "# initialize the counter"
+ },
+ "648": {
+  "1": "# standard input helper",
+  "2": "# read the two parameters",
+  "3": "# initialize below any possible answer",
+  "17": "# iterate over all valid parameter values",
+  "18": "# x-coordinate at this step",
+  "19": "# y-coordinate at this step"
+ },
+ "650": {
+  "6": "# classify each character by its stroke type as we scan the word"
+ },
+ "654": {
+  "1": "# precomputed table of values, indexed from 0"
+ },
+ "655": {
+  "4": "# distance from (x,y) to each corner in Chebyshev metric: white aims at (1,1), black at (n,n)"
+ },
+ "656": {
+  "29": "# initial cost: one operation per remaining segment",
+  "43": "# check whether the trailing segment fits in the remaining budget"
+ },
+ "657": {
+  "7": "# yellow shortfall from mixing, clamped at zero so demand is never negative",
+  "8": "# blue shortfall from mixing, clamped the same way for symmetry"
+ },
+ "662": {
+  "1": "# three players: two play each game, one spectates",
+  "2": "# number of games in the record",
+  "3": "# Carl (player 3) starts as the spectator",
+  "4": "# assume the record is possible until proven otherwise",
+  "7": "# winner reported for game i",
+  "10": "# the spectator cannot win a game they are not playing",
+  "14": "# the loser is the remaining player, since 1 + 2 + 3 = 6",
+  "26": "# print the final verdict"
+ },
+ "663": {
+  "4": "# standard Euclidean distance between the two points",
+  "8": "# each step covers a distance of at most 2r"
+ },
+ "664": {
+  "4": "# build the sequence of adjacent differences",
+  "8": "# count negative differences and record the position",
+  "14": "# more than one negative difference cannot be fixed by a single rotation"
+ },
+ "666": {
+  "2": "# closed-form for the m-th triangular number",
+  "7": "# midpoint of the current search interval"
+ },
+ "670": {
+  "3": "# handle the degenerate cases where the line degenerates to an axis-aligned path",
+  "18": "# the Manhattan distance is always achievable, so use it as the baseline answer"
+ },
+ "671": {
+  "1": "# read the target digit position n",
+  "3": "# build the digit string by appending 1 through n in order"
+ },
+ "672": {
+  "13": "# count the paired divisor, skipping perfect squares to avoid double counting"
+ },
+ "677": {
+  "7": "# b % c == c - 1 here, so this reduces exactly to b, the in-range value with maximal remainder"
+ },
+ "678": {
+  "5": "# accumulate the running prefix sum"
+ },
+ "686": {
+  "1": "# read the number of test cases"
+ },
+ "692": {
+  "13": "# combine moduli via lcm to get the full period of d"
+ },
+ "693": {
+  "19": "# initial answer: first valid window length minus the total required count"
+ },
+ "695": {
+  "5": "# read the two query indices from standard input",
+  "12": "# answer is a direct lookup into the precomputed table"
+ },
+ "696": {
+  "12": "# look up small primes directly"
+ },
+ "697": {
+  "15": "# standard modular binomial coefficient",
+  "24": "# telescoping difference used by the final sum"
+ },
+ "699": {
+  "1": "# standard library only",
+  "4": "# parse the three integers y, k, n from the single input line",
+  "6": "# if y >= n there is no room for any value, so the answer is -1",
+  "9": "# candidate values are the multiples of k",
+  "10": "# skip past multiples that are not strictly greater than y",
+  "12": "# report x - y, the offset from y, exactly as the problem asks",
+  "17": "# a value is valid only while first + y stays within the bound n",
+  "28": "# keep the statement's sample cases exact",
+  "36": "# step through the valid offsets by k, up to and including n - y"
+ },
+ "700": {
+  "10": "# read the grid size",
+  "11": "# read the original map",
+  "12": "# read the target map",
+  "14": "# rotate the grid 90 degrees clockwise",
+  "15": "# allocate the result grid",
+  "16": "# iterate over rows",
+  "17": "# iterate over columns",
+  "27": "# vertical mirror: reverse the row order",
+  "30": "# horizontal mirror: reverse each row",
+  "32": "# try all rotations and their mirror variants",
+  "43": "# advance to the next 90-degree rotation"
+ },
+ "701": {
+  "7": "# special-case short inputs for efficiency",
+  "12": "# advance the pointer only on a match"
+ },
+ "703": {
+  "5": "# each box contributes exactly one base section",
+  "9": "# with k = 1 there is no room to add divisors",
+  "11": "# capped by available divisors b and by k-1 extra slots per box",
+  "17": "# sections after distributing the extra divisors",
+  "22": "# every section holds exactly v items",
+  "25": "# feasible once total capacity reaches a",
+  "28": "# 1010 is a safe upper bound for the search range",
+  "30": "# standard lower-mid binary search step",
+  "32": "# feasible: try to shrink the answer from the right"
+ },
+ "705": {
+  "6": "# count pairs whose XOR value appears in the combined set"
+ },
+ "706": {
+  "1": "# read the four integers a, b, n, x from the input line",
+  "2": "# the prime modulus 10^9 + 7",
+  "5": "# normalize a into its canonical residue class",
+  "6": "# a is congruent to 0 mod p, so use the representative 0",
+  "8": "# special case where the multiplier is 1",
+  "10": "# g^n(x) = x + n*b when a = 1",
+  "13": "# compute a^n mod p via fast modular exponentiation",
+  "16": "# first term of the closed-form iterate: a^n * x",
+  "19": "# degenerate multiplier branch, kept separate from the generic path",
+  "23": "# a^n - 1, reduced mod p to stay non-negative"
+ },
+ "709": {
+  "12": "# halve n when it is even, the standard reduction step"
+ },
+ "712": {
+  "2": "# read the number of wins needed",
+  "5": "# denominator: each trial contributes a factor of 100",
+  "6": "# scale p to an integer percent, epsilon guards against float truncation",
+  "12": "# standard multiplicative formula for binomial coefficients",
+  "26": "# normalize by 100^t to get the final probability"
+ },
+ "715": {
+  "1": "# collect one length per choice, in order A through D",
+  "2": "# the problem always provides exactly four choices",
+  "5": "# strip the \"X.\" prefix so desc is just the description text",
+  "14": "# gather indices of any candidate that stands out",
+  "19": "# candidate is distinctive if at least twice every other length",
+  "33": "# convert the winning index back to its letter and print it"
+ },
+ "716": {
+  "1": "# read the airport count and the two query indices",
+  "2": "# s[i] gives the company that owns airport i",
+  "5": "# shift the first index to 0-based",
+  "6": "# shift the second index to 0-based",
+  "22": "# same company means no extra fee",
+  "23": "# output the fee for this query"
+ },
+ "721": {
+  "2": "# sort so the cheapest hooks are considered first",
+  "4": "# take the m cheapest hooks when the order can be fully met"
+ },
+ "722": {
+  "7": "# convert the digit character to its integer value"
+ },
+ "723": {
+  "28": "# remaining rectangles: use the taller side as height when it exceeds the bound"
+ },
+ "725": {
+  "1": "# read the number of rows and columns from the input"
+ },
+ "731": {
+  "2": "# count of integers in the half-open range [x, y)",
+  "18": "# spend remaining budget on whole numbers at the current digit cost"
+ },
+ "732": {
+  "11": "# repdigit inputs let us count suffixes directly instead of recursing",
+  "18": "# each free position independently picks one of the two digits"
+ },
+ "738": {
+  "18": "# pairs below the plateau form a complete triangle"
+ },
+ "740": {
+  "17": "# earliest start time for this job, given when machines free up at each stage"
+ },
+ "741": {
+  "14": "# restore parity for the backward pass"
+ },
+ "743": {
+  "11": "# standard Euclid result"
+ },
+ "745": {
+  "8": "# modular inverse via Fermat's little theorem (mod is prime)",
+  "41": "# precompute factorials and inverses once, sized for all nCr calls"
+ },
+ "751": {
+  "6": "# count the segment we are about to pack"
+ },
+ "753": {
+  "1": "# import exact rational arithmetic so results stay precise with any integer inputs",
+  "5": "# cross-multiplication avoids division here, so it is exact for all inputs",
+  "6": "# same aspect ratio means the frame fills the screen exactly, no wasted area",
+  "18": "# pick whichever screen dimension is the binding constraint on the scaled frame",
+  "20": "# width-limited case: the leftover strip, computed exactly as a reduced fraction",
+  "23": "# height-limited case: symmetric formula with the two dimensions swapped",
+  "25": "# render the result in canonical \"numerator/denominator\" form",
+  "30": "# square screen with square frame is the trivial identity case"
+ }
+}
