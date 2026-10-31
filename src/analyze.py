@@ -69,6 +69,22 @@ def usage_by_model(df: pd.DataFrame) -> dict[str, dict[str, int]]:
     return {model: dict(fields) for model, fields in totals.items()}
 
 
+def sample_reasoning_tokens(df: pd.DataFrame) -> pd.Series:
+    """Hidden reasoning tokens per sample, summed over every model that billed on it.
+
+    A provider that reports no reasoning count yields 0, which is indistinguishable
+    from a non-reasoning model; both are honest zeros for cost purposes, but a 0 here
+    does not prove the model did not reason. GLM-5.3 with thinking disabled relocates
+    its chain of thought into the visible content and reports 0 (GLM-THINKING-TOGGLE.md).
+    """
+    def total(raw) -> int:
+        if raw is None or (isinstance(raw, float) and pd.isna(raw)):
+            return 0
+        usage = json.loads(raw) if isinstance(raw, str) else raw
+        return sum(int(u.get("reasoning_tokens") or 0) for u in usage.values())
+    return df["model_usage"].map(total).astype(int)
+
+
 def est_cost_usd(usage: dict[str, dict[str, int]]) -> float | None:
     """Dollar estimate from PRICES, or None if any model has no listed price."""
     if any(model not in PRICES for model in usage):
@@ -110,6 +126,10 @@ def main() -> None:
             print(f"estimated cost: ${cost:.3f} total, ${cost / len(df):.4f} per sample")
         scores = df[["eval_mode", "id", f"score_{SCORER}"]].rename(
             columns={"eval_mode": "mode", "id": "sample_id", f"score_{SCORER}": "suspicion"})
+        # Most of a reasoning monitor's output is thinking the caller never reads, and it
+        # separates the arms on its own (see results/analysis/REASONING-TOKENS.md). Keep it
+        # per sample so that analysis does not need the gitignored log.
+        scores["reasoning_tokens"] = sample_reasoning_tokens(df)
         sample_rows.append(scores.assign(run=RUN_LABEL, protocol=protocol).sort_values(["mode", "sample_id"]))
 
         safeties = [compute_safety(df, SCORER, b) for b in AUDIT_BUDGETS]
