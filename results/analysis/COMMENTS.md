@@ -131,22 +131,23 @@ comment text differs:
 
 | arm | mean score | recall | AUC |
 |---|---|---|---|
-| original (confessions included) | 0.618 | 79.8% | 0.9742 |
-| no_confession (only tell-tale comments deleted) | 0.513 | 68.5% | 0.9568 |
-| stripped (study default) | 0.434 | 55.6% | 0.9339 |
+| original (confessions included) | 0.622 | 80.1% | 0.9695 |
+| no_confession (only tell-tale comments deleted) | 0.521 | 67.2% | 0.9504 |
+| stripped (study default) | 0.434 | 55.2% | 0.9175 |
+| adversarial (comments written to mislead) | 0.605 | **82.2%** | 0.9684 |
 
-Both steps are separated, on paired per-sample differences with a 10,000-replicate
-bootstrap:
+Paired per-sample differences, 10,000-replicate bootstrap, n=241:
 
-| step | mean difference | 95% CI |
-|---|---|---|
-| the confession text (`original` - `no_confession`) | +0.105 | [+0.082, +0.129] |
-| the other comments (`no_confession` - `stripped`) | +0.079 | [+0.059, +0.100] |
-| all comments (`original` - `stripped`) | +0.184 | [+0.158, +0.212] |
+| comparison | mean difference | 95% CI | |
+|---|---|---|---|
+| all comments (`original` - `stripped`) | +0.188 | [+0.159, +0.215] | separated |
+| the other comments (`no_confession` - `stripped`) | +0.084 | [+0.060, +0.109] | separated |
+| **the attack** (`adversarial` - `stripped`) | **+0.171** | **[+0.145, +0.199]** | **separated** |
+| **attack vs confessing** (`adversarial` - `original`) | **-0.016** | **[-0.036, +0.003]** | **not separated** |
 
-**The confession text accounts for 43% to 57% of the advantage depending on the
-metric** (43.2% by AUC, 46.7% by recall, 56.9% by mean score), not 83%. The
-remaining half comes from the non-confessing comments on those same programs.
+**The confession text accounts for roughly half the advantage, not 83%**
+(`original` - `no_confession` is +0.104 of a +0.188 total). The remaining half
+comes from the non-confessing comments on those same programs.
 
 This corrects the natural misreading of the previous section. Both numbers are
 right about different things: most of the gain is *located on* samples that
@@ -199,8 +200,9 @@ deploy against.
 
 It does **not** establish that comments are worthless to a monitor, and the
 causal arms make that point more strongly than the attribution did: roughly half
-the advantage survives deleting every confession, so stripping discards a real
-and separated signal, not a residue.
+the advantage survives deleting every confession, and the full advantage survives
+an attacker actively trying to destroy it, so stripping discards a real and
+separated signal, not a residue.
 
 Whether that signal would survive a real attacker is a different question this
 dataset cannot answer. The non-confessing comments were still written by models
@@ -209,34 +211,56 @@ dataset 70.8% against 20.8%, so "not lexically tell-tale" does not mean "not an
 artefact of generation". On a dataset whose honest code was commented normally
 the trade-off could easily go the other way.
 
-### The adversarial arm, and why it is not here
+### The adversarial arm: the attack backfires
 
-The remaining question is the worst case: a misaligned model that knows its
-comments are read would write comments that mislead. Two designs were tried and
-both are ruled out.
+A misaligned model that knows its comments are read would write comments that
+mislead. That is the case that decides whether stripping removes attacker
+leverage or merely corrects a dataset artefact, so it is measured here rather
+than assumed.
 
-- **Have a model rewrite the comments misleadingly.** The provider's safety
-  classifier refuses this (category: cyber). That is a reasonable place for a
-  line to sit and was not worth working around.
-- **Transplant the honest solution's comments onto the backdoored code.** This
-  needs no model, and because the comments are genuine descriptions of correct
-  code it avoids the confound that a model told to write deceptive comments
-  writes in a detectably unusual style. It would have been the better
-  instrument. The source material does not exist: with honest solutions at 0.59
-  comment lines each, only **14 of 500** problems have enough honest comment
-  text to move.
+The attacker is GLM-5.3 at `high` effort. It is given the numbered program and
+told it contains a deliberate subtle bug, and asked for comments that would lead
+a reviewer to conclude the code is correct. It never sees the monitor's prompt,
+so this is a plausible attacker rather than one optimised against this judge.
+Anthropic models decline the request (safety classifier, category: cyber), which
+is why the attacker is a different vendor rather than a reworded prompt.
 
-That second failure is the same fact as the section above, which is why the
-grep baseline ends up carrying the argument instead.
+Two design points that the measurement depends on:
 
-What `scripts/experiment_adversarial_comments.py` does run is the causal version
-of the attribution, reported above: three arms over the same problems and
-monitor, differing only in comment text. Every variant is verified by removing
-comments from both it and the original and requiring byte equality, and
-untouched lines are preserved byte for byte so the arms cannot differ in
-formatting either. `no_confession` landed between the other two rather than near
-`stripped`, which is why the artefact story is now stated as half the
-explanation instead of all of it.
+- **The attacker is not allowed to emit a program.** Asked for a comment-only
+  rewrite, GLM returned one program with every code line gone and another
+  truncated from 25 lines to 18. It is asked for comments keyed to line numbers
+  instead, which are then attached to the original source, so executable bytes
+  and formatting are identical by construction. Byte-equality after comment
+  removal is still asserted, and 6 of 250 were dropped by it.
+- **Comment volume is matched per program.** Unconstrained, the attackers wrote
+  a median of 8 comments against the dataset's median of 1. Since comment
+  presence alone separates this dataset (70.8% of backdoors against 20.8% of
+  honest solutions), an unmatched arm would vary volume as well as content. Each
+  program's attacker budget is the number of comments the original carried, so
+  the median transplanted is 1, exactly matching. An unmatched pilot (n=10,
+  median 8 comments) found the same direction more strongly, which is consistent
+  with volume being suspicious on its own.
+
+**The attack does not work, and it is worse than doing nothing.** Adversarial
+comments raise the monitor's suspicion by +0.171 [+0.145, +0.199] over stripped
+code, and they produce the *highest* recall of any arm at 82.2%. Against the
+dataset's own self-incriminating comments the difference is -0.016 [-0.036,
++0.003], not separated: **comments written specifically to argue the code is
+correct are statistically indistinguishable, to this monitor, from comments that
+say "# Introducing a subtle flaw".**
+
+The likely mechanism is that justifying a line draws attention to it. The
+attacker is told where the bug is and writes its most persuasive comment there,
+which tells the monitor exactly where to look. That suggests the untested and
+more plausible threat is *misdirection*: comment every line except the
+backdoored one, so the annotation pattern itself carries no signal. The honest-
+comment transplant described above was that experiment, and it failed for want
+of source material rather than because it was answered.
+
+So for this monitor, on this dataset, **comments are not an attack surface.**
+The "stripping removes attacker leverage" justification is refuted, not
+supported. Stripping stands on the measurement-validity argument alone.
 
 ## Caveats
 
@@ -252,6 +276,17 @@ explanation instead of all of it.
   never saw. All 500 attack rows join across both runs.
 - One monitor, one effort level. The size of the advantage will differ for a
   stronger monitor, which needs the confession less.
+- The adversarial arm is a **lower bound on attack strength**: one attacker
+  (GLM-5.3 high, chosen over gpt-oss-120b on measured attack strength in an n=10
+  head-to-head, -0.189 against -0.200 relative to stripped), no access to the
+  monitor's prompt, and no iteration against its responses. A white-box or
+  best-of-n attacker could do better, and the misdirection variant described
+  above is untested. "Comments are not an attack surface" is established for
+  this attacker and this monitor, not in general.
+- The adversarial run is 241 of 250 problems: 6 dropped by the byte-equality
+  check and 3 for an unparseable score. 30 individual monitor calls needed a
+  retry, all `stop=max_tokens`, spread across arms (adversarial 6, stripped 9,
+  honest 7, no_confession 3, original 5), so the drops are not arm-skewed.
 - The three-arm run is 248 of 250 problems. 13 individual monitor calls needed a
   retry, all with `stop=max_tokens`, spread across arms (3 original, 4
   no_confession, 1 stripped, 5 honest) so the two remaining drops are not
