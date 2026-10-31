@@ -59,6 +59,10 @@ PRICES = {
     "openai-api/litellm/deepinfra/openai/gpt-oss-120b": (0.037, 0.17, 0.037, 0.004),
     "openai-api/litellm/deepinfra/zai-org/GLM-5.3": (0.90, 4.00, 0.90, 0.20),
     "openai-api/vercel/alibaba/qwen3.8-omni-flash": (0.15, 0.47, 0.15, 0.02),
+    # Same model reached through the litellm proxy's Vercel AI Gateway passthrough
+    # instead of the direct vercel provider. The usage key is the full model string,
+    # so it needs its own entry or the run comes back unpriced.
+    "openai-api/litellm/vercel_ai_gateway/alibaba/qwen3.8-omni-flash": (0.15, 0.47, 0.15, 0.02),
     # Google models. These runs went through a free tier and so had no cost at all, which
     # left them off the cost axis entirely. Paid Gemini API list rates, 2026-10-28:
     # https://ai.google.dev/gemini-api/docs/pricing
