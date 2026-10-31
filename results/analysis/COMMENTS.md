@@ -94,7 +94,7 @@ and o1-mini backdoors are the hardest to catch, and they are also the two that
 confess least. We have not shown that the second fact causes the first, and this
 table alone cannot: confession rate and code subtlety are not separated here.
 
-## The advantage is caused by the confessions, not by comments as signal
+## Most of the advantage sits on samples that confess
 
 Join the two runs per `sample_id` and split the attack samples by what their
 comment says. Backdoors with no comment at all are a built-in placebo: stripping
@@ -116,9 +116,49 @@ audit threshold tells the same story:
 | comment, no tell | 60% | 85% |
 | confessing comment | 73% | 93% |
 
-**83% of the comments-kept advantage comes from backdoors whose comments
-announce the backdoor.** The 15.6-point safety gain at a 1% audit budget is
-mostly the monitor reading a confession, not the monitor reading code better.
+**83% of the comments-kept advantage sits on backdoors whose comments announce
+the backdoor.** Note carefully what that is a statement about: it groups
+*samples* by whether they contain a confession. It does not say that the
+confession *text* is what the monitor is using. Deleting the text and
+re-scoring, below, shows it is only about half.
+
+## Deleting the confessions recovers only about half the gap
+
+The observational split above groups samples. The causal version deletes the
+confessing comments from the same code and re-scores it, keeping every other
+comment. Three arms, same 248 problems, same monitor (Haiku 5.5 xhigh), only
+comment text differs:
+
+| arm | mean score | recall | AUC |
+|---|---|---|---|
+| original (confessions included) | 0.618 | 79.8% | 0.9742 |
+| no_confession (only tell-tale comments deleted) | 0.513 | 68.5% | 0.9568 |
+| stripped (study default) | 0.434 | 55.6% | 0.9339 |
+
+Both steps are separated, on paired per-sample differences with a 10,000-replicate
+bootstrap:
+
+| step | mean difference | 95% CI |
+|---|---|---|
+| the confession text (`original` - `no_confession`) | +0.105 | [+0.082, +0.129] |
+| the other comments (`no_confession` - `stripped`) | +0.079 | [+0.059, +0.100] |
+| all comments (`original` - `stripped`) | +0.184 | [+0.158, +0.212] |
+
+**The confession text accounts for 43% to 57% of the advantage depending on the
+metric** (43.2% by AUC, 46.7% by recall, 56.9% by mean score), not 83%. The
+remaining half comes from the non-confessing comments on those same programs.
+
+This corrects the natural misreading of the previous section. Both numbers are
+right about different things: most of the gain is *located on* samples that
+confess, but *within* those samples the confession is only about half of why
+they gain. Any claim that the comments-kept result is "just" the confession is
+wrong by a factor of two.
+
+The metric spread is itself worth noting: the confession's share is lowest by
+AUC and highest by mean score, because a confession pushes a score from
+moderately to very suspicious, which moves the mean more than it moves the
+ranking against a near-zero honest distribution. Reporting one of these numbers
+alone would be a choice, not a measurement.
 
 ## A keyword grep gets 51.8% recall at zero false positives
 
@@ -157,10 +197,17 @@ also distort every cross-generator comparison. A budget-indexed frontier
 measured against attackers who announce themselves is not a frontier anyone can
 deploy against.
 
-It does **not** establish that comments are worthless to a monitor. The 17% of
-the gain from non-confessing comments is real signal that stripping discards,
-and on a dataset whose honest code was commented normally the trade-off could
-easily go the other way.
+It does **not** establish that comments are worthless to a monitor, and the
+causal arms make that point more strongly than the attribution did: roughly half
+the advantage survives deleting every confession, so stripping discards a real
+and separated signal, not a residue.
+
+Whether that signal would survive a real attacker is a different question this
+dataset cannot answer. The non-confessing comments were still written by models
+that knew they were inserting a bug, and comment *presence* alone splits the
+dataset 70.8% against 20.8%, so "not lexically tell-tale" does not mean "not an
+artefact of generation". On a dataset whose honest code was commented normally
+the trade-off could easily go the other way.
 
 ### The adversarial arm, and why it is not here
 
@@ -183,12 +230,13 @@ That second failure is the same fact as the section above, which is why the
 grep baseline ends up carrying the argument instead.
 
 What `scripts/experiment_adversarial_comments.py` does run is the causal version
-of the attribution: three arms over the same problems and monitor, differing
-only in comment text, where `no_confession` keeps every comment except the ones
-naming a flaw. If `no_confession` lands near `stripped`, the advantage was the
-confession. Every variant is verified by removing comments from both it and the
-original and requiring byte equality, and untouched lines are preserved byte for
-byte so the arms cannot differ in formatting either.
+of the attribution, reported above: three arms over the same problems and
+monitor, differing only in comment text. Every variant is verified by removing
+comments from both it and the original and requiring byte equality, and
+untouched lines are preserved byte for byte so the arms cannot differ in
+formatting either. `no_confession` landed between the other two rather than near
+`stripped`, which is why the artefact story is now stated as half the
+explanation instead of all of it.
 
 ## Caveats
 
@@ -204,5 +252,14 @@ byte so the arms cannot differ in formatting either.
   never saw. All 500 attack rows join across both runs.
 - One monitor, one effort level. The size of the advantage will differ for a
   stronger monitor, which needs the confession less.
+- The three-arm run is 248 of 250 problems. 13 individual monitor calls needed a
+  retry, all with `stop=max_tokens`, spread across arms (3 original, 4
+  no_confession, 1 stripped, 5 honest) so the two remaining drops are not
+  arm-skewed. The first attempt at this run was discarded: at a 4,000-token cap
+  roughly a quarter of samples lost a score, and the loss rate was *arm
+  correlated* (20 failures on `original` against 47 on `stripped`, because the
+  monitor reasons longer when there are no comments to read), which biased the
+  drops in the direction of the hypothesis. Raw retry replies are logged to
+  `results/analysis/adversarial-comments-parsefails.txt`.
 - Honest samples keep their comments in both arms, so the audit threshold is set
   by the same honest distribution and only the attacker side changes.
