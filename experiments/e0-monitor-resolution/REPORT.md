@@ -137,9 +137,9 @@ Prices are the live list rates from claude.com/pricing (2026-10-18). Cache write
 
 ```bash
 # baseline
-MONITOR_ARM=baseline LOG_DIR=/tmp/claude-1000/-home-claude-user-workspace/15883e00-e6a9-40dd-8d33-ccd568869146/scratchpad/e0-main uv run python src/e0_run.py 200
+MONITOR_ARM=baseline LOG_DIR=logs/e0-main uv run python src/e0_run.py 200
 # range100
-MONITOR_ARM=range100 LOG_DIR=/tmp/claude-1000/-home-claude-user-workspace/15883e00-e6a9-40dd-8d33-ccd568869146/scratchpad/e0r-range100 uv run python src/e0_run.py 200
+MONITOR_ARM=range100 LOG_DIR=logs/e0r-range100 uv run python src/e0_run.py 200
 uv run python src/e0_report.py experiments/e0-monitor-resolution baseline=<log-dir> range100=<log-dir>
 ```
 
