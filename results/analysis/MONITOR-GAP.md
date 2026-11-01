@@ -18,6 +18,16 @@ fixed before the number meant anything.
 budgets (see `SCORE-SCALE.md`), so the comparison had nowhere to stand. Both
 arms here use the 0-100 prompt.
 
+That substitution needs a check, because the wider prompt is not always a pure
+resolution change. Measured across nine scale pairs, it moves AUC by at most 1.1
+points on five of them and by +14.2 on GPT-6 Luna and +8.5 on Gemma 4 26B-A4B,
+where it makes the monitor meaningfully better at the task rather than more
+granular about it. **These two monitors are in the quiet group**: Haiku 5.5 xhigh
+moves +0.6 (0.9422 to 0.9481) and Sonnet 5.5 +0.2 (0.9577 to 0.9593). So
+swapping in the 0-100 arms buys rungs here without changing what is being
+compared, which is the condition that makes this comparison legitimate and not
+a given.
+
 **They must be compared at the same *achieved* false-positive rate.** Asking
 two monitors for "1%" can put them at different real FPRs when their score
 distributions differ, and then part of the gap is threshold placement rather
