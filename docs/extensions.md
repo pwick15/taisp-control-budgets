@@ -17,7 +17,14 @@ Where to pick things up. Everything here uses the N=500 dataset-policy setup (`s
 - [ ] Comments kept vs stripped (`STRIP_COMMENTS=0`) on 2 to 3 monitors.
 - [ ] Cost-matched ensembles (`src/ensemble.py`): several cheap monitors against one Haiku xhigh.
 - [ ] Mid-size Gemma between 4B (0.00 safety at 2%) and 26B (0.31).
-- [ ] Price Gemini 3.5 Flash and Gemma in `src/analyze.py` so they get a cost.
+- [x] Price the Google models in `src/analyze.py` so they get a cost. Done 2026-11-01:
+      `google/gemini-3.5-flash-lite`, both Gemma 3 sizes and Gemma 4 26B-A4B now carry
+      rates, verified against the serving proxy's own rate card and, for the proxied
+      ones, against the provider's per-call `estimated_cost` to ratio 1.000. Two runs
+      still show no cost, `dataset500-gemini35lite-tm-strip` and
+      `dataset500-gemma426b-tm-strip`, because their raw logs were not retained and the
+      input/output split a price needs cannot be recovered from the committed summary.
+      That is a log-retention limit, not a pricing one.
 
 ## Higher cost
 
