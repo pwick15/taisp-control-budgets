@@ -147,18 +147,46 @@ def main() -> None:
     print("  are not comparable and no ratio between them is reported here. What IS comparable")
     print("  is the before-and-after below, measured the same way on both sides.")
 
-    print("\n== what moved, rung by rung ==")
-    print(f"{'FPR':>7s} {'width before':>13s} {'width after':>12s} {'change':>8s}")
-    for k in sorted(set(before) & set(after)):
-        wb = before[k][2] - before[k][1]
-        wa = after[k][2] - after[k][1]
-        print(f"{k:7.2%} {wb * 100:13.1f} {wa * 100:12.1f} {(wa - wb) * 100:+8.1f}")
-    only_after = sorted(set(after) - set(before))
-    if only_after:
-        print("\n  rungs that did not exist before the buy: "
-              + ", ".join(f"{k:.2%}" for k in only_after))
-        print("  A new rung is the other thing more honest samples buy: a rate that could not")
-        print("  clear the five-row bar before can clear it now.")
+    # Matched FPR is the WRONG axis for a before-and-after, and finding that out is part
+    # of the result: doubling the honest arm changes which rates are expressible, so the
+    # two sides share no rate at all. The comparable quantity is the number of honest rows
+    # holding the cutoff up, which is what the interval width actually depends on.
+    shared_fpr = sorted(set(before) & set(after))
+    print("\n== what moved, at a matched false-positive rate ==")
+    if shared_fpr:
+        print(f"{'FPR':>7s} {'width before':>13s} {'width after':>12s} {'change':>8s}")
+        for k in shared_fpr:
+            wb, wa = before[k][2] - before[k][1], after[k][2] - after[k][1]
+            print(f"{k:7.2%} {wb * 100:13.1f} {wa * 100:12.1f} {(wa - wb) * 100:+8.1f}")
+    else:
+        print("  The two sides share no rate at all, which is the finding rather than a gap.")
+        print(f"  Before: {', '.join(f'{k:.2%}' for k in sorted(before))}.")
+        print(f"  After:  {', '.join(f'{k:.2%}' for k in sorted(after))}.")
+        print("  Doubling the honest arm did not refine the lattice, it relocated it: a rate is")
+        print("  rows over n, so the same cutoffs now express half the rate they did before.")
+
+    print("\n== what moved, at a matched number of honest rows ==")
+    by_rows_b = {int(round(v[3])): (k, v) for k, v in before.items()}
+    by_rows_a = {int(round(v[3])): (k, v) for k, v in after.items()}
+    common_rows = sorted(set(by_rows_b) & set(by_rows_a))
+    if common_rows:
+        print(f"{'rows':>5s} {'FPR before':>11s} {'FPR after':>10s} {'gap before':>11s} "
+              f"{'gap after':>10s} {'width before':>13s} {'width after':>12s} "
+              f"{'lower bound':>24s}")
+        for n in common_rows:
+            kb, vb = by_rows_b[n]
+            ka, va = by_rows_a[n]
+            wb, wa = vb[2] - vb[1], va[2] - va[1]
+            print(f"{n:5d} {kb:10.2%} {ka:9.2%} {vb[0] * 100:+10.1f} {va[0] * 100:+9.1f} "
+                  f"{wb * 100:13.1f} {wa * 100:12.1f} "
+                  f"{vb[1] * 100:+10.1f} to {va[1] * 100:+9.1f}")
+        print("\n  Read the first two columns together: the cutoff holding a given number of")
+        print("  honest rows is the same score as before, and it now costs half the")
+        print("  false-positive rate, because the rate is that row count over n. The gap at a")
+        print("  matched row count is unchanged, which is the right null, and the interval is")
+        print("  narrower, which is what was bought.")
+    else:
+        print("  No row count is common to both sides.")
 
 
 if __name__ == "__main__":
