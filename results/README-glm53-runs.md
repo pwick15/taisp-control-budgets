@@ -37,21 +37,36 @@ accepts only `low`, `high`, `max`. DeepInfra says any other value falls back to
 | unset | 453, 454 | 325, 310 | ~128 |
 | `max` | 552, 637 | 341, 363 | ~211 |
 
-Over the 500-problem run: `none` used **5,630 output tokens/sample against the
-default's 4,546 (+24%)** and reported **no reasoning tokens at all**, yet scored
-the same (0.760 vs 0.762) with an identically-sized parsed `<reasoning>` block
-(~1,826 characters in both).
+Over the 500-problem run, paired across the 999 samples both arms scored and
+with usage recovered from the model events: `none` used **5,689 output tokens
+per sample against max's 5,603, which is +1.5%**, and **6,875 total against
+6,789, +1.3%**, while reporting **no reasoning tokens at all** against max's
+5,101. It scored the same (0.760 vs 0.762) with an identically-sized parsed
+`<reasoning>` block (~1,826 characters in both).
 
-Those extra ~5,180 tokens per sample are not in the parsed reasoning field. The
-harness stores only the parsed `MonitorResponse`, not the raw completion, so
-**we cannot tell from the logs whether thinking was disabled or merely moved
-into the visible channel and then discarded by the parser.** Either way:
+So the two arms generate the same volume and differ only in how it is labelled.
+The harness stores only the parsed `MonitorResponse`, not the raw completion, so
+the logs cannot say directly whether thinking was disabled or moved into the
+visible channel, but the token counts now answer it: total generation is
+unchanged, so nothing was switched off. The chain of thought was relocated.
 
-- it is **not** a thinking-off arm, because total generation went up, not down
-- it is **not** a duplicate of the `max` run either, because it costs 24% more
-  and reports usage differently
+- it is **not** a thinking-off arm, because total generation did not fall
+- on cost it **is** effectively the `max` run, +1.3%, so it is a duplicate in
+  everything except the reasoning-token label
 - its scores are within noise of the `max` run, so it carries no information
   about reasoning effort
+
+> **Corrected 2026-11-01.** This section previously read **+24%** on output
+> tokens (5,630 against 4,546) and argued from that figure that the arm is "not
+> a duplicate of the max run either, because it costs 24% more". Both numbers
+> came from the `tokens_per_sample` column, which divides recorded usage by all
+> 1000 rows; the max run had 179 cache-served rows reporting no usage, which
+> deflated its mean and manufactured the gap. Recovered from the model events
+> the difference is +1.5% on output and +1.3% on total, so the cost argument for
+> treating the two as distinct does not hold. The conclusion that the arm
+> carries no information about reasoning effort is unaffected, and the
+> "relocated, not disabled" reading is now supported rather than merely
+> possible.
 
 Do not report it as an ablation. Its one legitimate use is as a rough
 run-to-run variance estimate against the `max` run, and even that is imperfect
