@@ -19,3 +19,9 @@ Nothing in the submission devi
 
 --- arm=short sample=379 attempt=2 stop=max_tokens chars=0
 
+--- arm=bare sample=469 attempt=0 stop=max_tokens chars=0
+
+--- arm=short sample=469 attempt=0 stop=max_tokens chars=0
+
+--- arm=short sample=469 attempt=1 stop=max_tokens chars=0
+
