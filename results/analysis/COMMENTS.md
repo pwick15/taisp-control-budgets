@@ -407,7 +407,22 @@ commented honest code and not a sample of it.
 
 For this monitor and this dataset, **comments are not an attack surface.** The
 "stripping removes attacker leverage" justification is refuted, not supported,
-in all three attack forms tried. Stripping stands on measurement validity alone:
+in all three attack forms tried.
+
+> **This is a replication, not a new result**, and the document should have said
+> so. "Basic Legibility Protocols Improve Trusted Monitoring" already reports
+> that commenting protocols beat comment-removal baselines, and already names
+> the mechanism: malicious code is harder to justify with comments than honest
+> code, plus a "comment halo effect" by which commented code reads as more
+> legitimate even when the comments say nothing useful. Its comments are
+> policy-generated under a protocol and ours are the dataset's own, so the two
+> are not the same experiment, but the direction and the explanation are theirs.
+> Three further papers on this exact dataset strip comments for the reason given
+> above, each in one sentence: Control Tax ("We also notice the comment
+> highlighting the backdoor. These can be found in most solutions from LLMs,
+> making comment filtering crucial"), Ensemble Monitoring, and Decorrelation Is
+> Not Complementarity. What none of them does is measure it, which is what the
+> confession rate and the grep baseline below are for. Stripping stands on measurement validity alone:
 the confession rate, its 19%-to-94% dependence on the generator, the grep
 baseline, and the volume effect, which is the clearest artefact of the four
 because it does not depend on what the comments say at all.
