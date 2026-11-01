@@ -21,7 +21,11 @@ RUNS = {
     # tokens/sample against this run's 2,242, 3.4% apart. Recorded as "high" rather than
     # "default" so the rung is unambiguous later.
     "dataset500-sonnet55-um-strip": ("Sonnet 5.5 · high (default)", "sonnet55", "anthropic", "high"),
-    "dataset500-sonnet55-um-effortlow-strip": ("Sonnet 5.5 · low (thinking off)", "sonnet55", "anthropic", "low"),
+    # The v2 pass of this configuration, which is the complete one: the first pass reached
+    # only 480/463 of 500 before the API credit ran out and now lives in results/superseded/.
+    # "thinking off" is literal here, not a nickname: the low budget produced 0 reasoning
+    # tokens on 100% of rows.
+    "dataset500-sonnet55-um-effortlow-v2-strip": ("Sonnet 5.5 · low (thinking off)", "sonnet55", "anthropic", "low"),
     "dataset-haiku55-effortxhigh-tm-n500-strip": ("Haiku 5.5 · xhigh", "haiku55", "anthropic", "xhigh"),
     "dataset-haiku55-efforthigh-tm-n500-strip": ("Haiku 5.5 · high", "haiku55", "anthropic", "high"),
     "dataset-haiku55-tm-n500-strip": ("Haiku 5.5 · medium (default)", "haiku55", "anthropic", "medium"),

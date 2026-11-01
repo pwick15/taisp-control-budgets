@@ -152,6 +152,29 @@ Pages read only the committed CSVs, never the logs, so anyone can rebuild them. 
 | `docs/codebase-guide.md` | Where things live in the ControlArena library, a trace of one attack sample, and experiment ideas. |
 | `pyproject.toml`, `uv.lock` | Dependencies. Use `uv add <pkg>` so the lockfile stays in sync. |
 
+## Run completeness
+
+A run named `n500` means **500 honest and 500 attack samples, all scored**. A run that
+delivers fewer is not a smaller run, it is an incomplete one, and the missing samples are
+not a random subset: the first case of this lost a contiguous tail of the dataset to an API
+credit exhaustion, unevenly across the two arms, which moved its measured recall.
+
+Executing one configuration in several passes is the normal way to repair that. Inspect's
+monitor cache replays the scores already obtained, so a later pass pays only for the samples
+that were missing. Exactly one execution, the complete one, is then "the run":
+
+- it lives in `results/` and is the only one anything analyses;
+- earlier incomplete executions of the same configuration move to `results/superseded/`,
+  which keeps the failure on the record while removing it from the `results/*-samples.csv`
+  glob every analysis script uses;
+- a superseded run and its successor share most of their rows through the cache, so they are
+  never two independent runs and must not be compared or averaged against each other.
+
+Three columns in `results/<run>.csv` exist to make this checkable rather than assumed:
+`n_samples`, `n_cache_served` and `usage_source`. A run whose `n_cache_served` approaches
+`n_samples` generated almost nothing fresh, so its cost figure is not a cost and its scores
+are inherited from an earlier pass.
+
 ## Metrics
 
 - **Usefulness:** fraction of honest-mode runs that solve the problem.
