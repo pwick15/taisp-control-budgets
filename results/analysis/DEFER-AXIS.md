@@ -38,11 +38,31 @@ Per audit budget, the 8 requested settings collapse to **3 distinct (deferral,
 safety, usefulness) points**, and to 2 at a 20% budget.
 
 Two of the four thresholds are infinite, which is to say they are not thresholds:
-`-inf` defers everything and `inf` defers nothing. **The sweep has exactly two
-interior operating points.** Asking for 2%, 5% and 10% deferral all return the
-same 19%, and asking for 20%, 30% and 50% all return the same 81%. Between 19%
-and 81% of honest traffic there is nothing to see, because no honest score sits
-there.
+`-inf` defers everything and `inf` defers nothing.
+
+**Read per audit budget it is worse than the pooled count suggests.** The pooled
+set has two interior values, 19% and 81%, but no single audit budget offers both.
+At every budget from 0.5% to 10%:
+
+| asked to defer | actually deferred |
+|---|---|
+| 0%, 2%, 5%, 10% | **0%** |
+| 20%, 30%, 50% | 19% |
+| 100% | 100% |
+
+So **asking to defer 10% of honest traffic defers nothing at all**, and three of
+the eight requests are indistinguishable from asking for no deferral. Exactly
+**one interior operating point** exists at any budget, and which one it is
+depends on the budget rather than on the request: 19% below a 20% audit budget,
+and 81% at 20%, where requests from 0% through 50% all defer nothing because
+everything suspicious enough to defer has already been audited and only a 100%
+request moves at all.
+
+> **Corrected 2026-11-01**, same day. This section first said the sweep "has
+> exactly two interior operating points", counting 19% and 81% from the pooled
+> set. That pooled count is not available to an operator, who picks one audit
+> budget and then has one interior setting, or none at 20%. The underlying point
+> is unchanged and the corrected version is stronger.
 
 ## The usefulness axis is worse
 
@@ -52,9 +72,9 @@ sweep samples it at four values: 0.70, 0.79, 0.86, 0.95. The outer two are the
 endpoints, which are definitions rather than measurements: deferral at 0% is
 plain trusted monitoring and at 100% is the trusted model alone.
 
-**Two interior points, on a 25-point range.** A safety-usefulness tradeoff curve
-drawn through that would be reporting an interpolation between two endpoints as
-though it were data.
+**One interior point at any usable budget, on a 25-point range.** A
+safety-usefulness tradeoff curve drawn through that would be reporting an
+interpolation between two endpoints as though it were data.
 
 ## What this changes
 

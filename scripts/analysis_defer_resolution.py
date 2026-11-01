@@ -68,7 +68,25 @@ def main() -> None:
     print("\n  The endpoints are not measurements. defer=0 is plain trusted monitoring and")
     print("  defer=100% is T alone, so the sweep buys exactly "
           f"{len(us) - 2} interior points on the")
-    print("  usefulness axis. A tradeoff curve cannot be drawn through that.")
+    print("  usefulness axis, POOLED over budgets. A tradeoff curve cannot be drawn through")
+    print("  that, and an operator has fewer than the pooled count, as the next block shows.")
+
+    print("\n== per budget, what each request actually defers ==")
+    print("  An operator picks one audit budget and then lives in one row of this.")
+    for b, g in d.groupby("audit_budget_pct"):
+        buckets: dict[float, list[float]] = {}
+        for r in g.itertuples():
+            buckets.setdefault(float(r.honest_deferred_frac), []).append(float(r.defer_pct))
+        bits = "   ".join(
+            f"asked {','.join(f'{x:g}' for x in sorted(v))} -> {100 * k:.0f}%"
+            for k, v in sorted(buckets.items()))
+        interior = sum(1 for k in buckets if 0 < k < 1)
+        print(f"  {b:5.1f}%  {bits}   [{interior} interior]")
+    print("\n  Asking to defer 10% of honest traffic defers nothing, at every budget. Three of")
+    print("  the eight requests are indistinguishable from asking for no deferral at all, and")
+    print("  exactly one interior setting exists at any budget: 19% below a 20% audit budget,")
+    print("  and at 20% not even that, because by then everything suspicious enough to defer")
+    print("  has already been audited, so only a 100% request moves and it defers 81%.")
 
     print("\n== what this means for the study ==")
     print("  The deferral axis is not a second dimension the study can report. It is the")
