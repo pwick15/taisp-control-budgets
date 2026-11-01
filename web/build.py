@@ -33,6 +33,8 @@ RUNS = {
     # GLM-5.3 defaults to max when reasoning_effort is omitted (DeepInfra integration
     # guide, verified on the live endpoint), so this run is the max rung.
     "dataset-glm53-tm-n500-strip": ("GLM-5.3 · max (default)", "glm53", "zhipu", "max"),
+    "dataset-glm53-efforthigh-tm-n500-strip": ("GLM-5.3 · high", "glm53", "zhipu", "high"),
+    "dataset-glm53-effortlow-tm-n500-strip": ("GLM-5.3 · low", "glm53", "zhipu", "low"),
     "dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip": ("GLM-5.3 · effort=none (not an ablation)", "glm53", "zhipu", "max"),
     "dataset500-qwen38omniflash-high-tm-strip": ("Qwen 3.8 Omni Flash · high", "qwen38", "alibaba", "high"),
     "dataset500-qwen38omniflash-medium-tm-strip": ("Qwen 3.8 Omni Flash · medium", "qwen38", "alibaba", "medium"),
@@ -58,6 +60,9 @@ RUNS = {
     "dataset-gemini35fl-high-tm-n500-strip": ("Gemini 3.5 Flash-Lite · high", "gemini35lite", "google", "high"),
     "dataset-gemini35fl-xhigh-tm-n500-strip": ("Gemini 3.5 Flash-Lite · xhigh", "gemini35lite", "google", "xhigh"),
     "dataset-gemma3-4b-tm-n500-strip": ("Gemma 3 4B", "gemma3", "google", "default"),
+    # The 27B counterpart. MODEL-SIZE.md is about this pair, so leaving it off meant the
+    # chart could not show the comparison the write-up makes.
+    "dataset-gemma3-27b-tm-n500-strip": ("Gemma 3 27B", "gemma3_27b", "google", "default"),
 }
 
 
@@ -66,6 +71,7 @@ MODEL_NAMES = {
     "gptoss": "gpt-oss-120b", "glm53": "GLM-5.3", "qwen38": "Qwen 3.8 Omni Flash",
     "gemini35lite": "Gemini 3.5 Flash-Lite",
     "gemma4": "Gemma 4 26B-A4B", "gemma3": "Gemma 3 4B",
+    "gemma3_27b": "Gemma 3 27B",
 }
 
 

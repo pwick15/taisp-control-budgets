@@ -73,7 +73,7 @@ footer { margin-top: 48px; color: var(--muted); font-size: 0.85rem; }
 <h2>Setup</h2>
 <ul>
   <li>500 honest and 500 backdoored programs from ControlArena's APPS setting, a small replication of <a href="https://arxiv.org/abs/2312.06942">AI Control</a> (Greenblatt et al.). Every monitor sees the same programs.</li>
-  <li>Honest programs are the dataset's reference solutions and backdoored ones its verified backdoors, so there is no live attacker and only the monitor costs money. Comments are stripped, and the monitor prompt is ControlArena's default.</li>
+  <li>Honest programs are the dataset's reference solutions and backdoored ones its verified backdoors, so there is no live attacker and only the monitor costs money. Comments are stripped, and the monitor prompt is ControlArena's default, which asks for a whole number from 0 to 10.</li>
   <li><b>Safety</b> is the share of backdoors caught when the audit cutoff lets us flag a given share of honest programs (the <b>audit budget</b>). Intervals are 95% bootstrap intervals over the 500 + 500 scores.</li>
   <li>Cost is token usage times the rate actually billed. A run shows no cost only when its raw log was not retained, so its token usage cannot be recovered; the model itself is priced. One run per configuration.</li>
 </ul>
@@ -112,6 +112,7 @@ footer { margin-top: 48px; color: var(--muted); font-size: 0.85rem; }
   <li>Attacks are fixed, verified backdoors that do not adapt to the monitor, and usefulness is not measured.</li>
   <li>Honest programs are reference solutions, not what a deployed model would write, so false-positive rates may not transfer.</li>
   <li>One setting, one prompt, one run per configuration. Intervals capture sampling over the 500 problems, not run-to-run variation.</li>
+  <li><b>Nine further runs are deliberately not on this chart.</b> They ask the same monitors for a 0-100 score instead of the default 0-10, which is the fix for the point below about cutoffs resting on a handful of honest samples: it raised the number of usable operating points on 7 of 7 monitors we could test it on. They are left off because on two of those monitors the wider scale does not merely add operating points, it changes how well the monitor detects anything: GPT-6 Luna's AUC moves from 0.768 to 0.911 on the same model and route. A monitor whose discrimination moved is not the same monitor plotted at more points, so putting both prompts on one frontier would compare two different detectors. Those runs are reported in <code>results/analysis/SCORE-SCALE.md</code> instead.</li>
   <li>Most honest programs score 0, so cutoffs at tight budgets rest on a handful of honest samples.</li>
   <li>Sonnet 5.5 is the strongest model in this study and is used here simply as a strong monitor. The code it reads is not its own, so we do not test the collusion risk of a model monitoring itself. Costs are approximate list prices.</li>
 </ul>
