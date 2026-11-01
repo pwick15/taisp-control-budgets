@@ -28,6 +28,12 @@ gpt-oss-120b that moves reasoning from 283 tokens per sample to none, and on
 Qwen3.8 Omni Flash from none to 1,281. Whatever those two pairs show, it is not
 the prompt alone, and attributing it to the prompt is the mistake this file
 exists to prevent elsewhere.
+
+On two further pairs the check cannot be run in either direction: the 0-10 arms
+of Sonnet 5.5 UM and Gemma 4 26B-A4B kept no eval log, so they have no token
+record to compare against. They are counted as clean below because their
+configurations match on paper and Gemma does not reason at all, but that is an
+argument rather than a measurement, and "unverified" is not the same as "clean".
 """
 import numpy as np
 import pandas as pd

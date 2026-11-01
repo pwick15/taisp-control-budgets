@@ -58,6 +58,13 @@ moves reasoning from 283 tokens per sample to none on gpt-oss-120b, and from
 none to 1,281 on Qwen. Whatever those two rows show, the prompt is not the only
 thing that changed, so nothing is attributed to it.
 
+**On two of the seven counted as clean, the same check cannot be run at all.**
+The 0-10 arms of Sonnet 5.5 UM and Gemma 4 26B-A4B kept no eval log, so there is
+no token record to compare. They are counted as clean because their
+configurations match on paper and Gemma does not reason at all, which is an
+argument and not a measurement. So the honest count is five pairs verified clean,
+two argued clean, two confounded.
+
 > **Corrected 2026-11-01.** When this table held only the first five rows above,
 > it had a single "distinct scores" column carrying 10, 77, 103, 11 and 34, which
 > are the distinct values over **all** 1,000 rows. That is the wrong quantity for

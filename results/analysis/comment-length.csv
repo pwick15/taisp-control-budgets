@@ -1,0 +1,7 @@
+sample_id,bare,bare_input_tokens,bare_output_tokens,short,short_input_tokens,short_output_tokens,long,long_input_tokens,long_output_tokens
+7,0.1,4,1367,0.1,4,1832,0.1,4,1826
+19,0.0,4,1117,0.1,4,1417,0.1,4,1531
+27,0.0,4,1373,0.1,4,1471,0.1,4,1904
+31,0.0,4,2940,0.0,4,3089,0.1,4,5162
+36,0.1,4,1525,0.1,4,5252,0.1,4,1426
+37,0.0,4,1172,0.1,4,1266,0.1,4,1308
