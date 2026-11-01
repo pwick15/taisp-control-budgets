@@ -52,10 +52,16 @@ from inspect_ai.model import GenerateConfig, get_model
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+import experiment_comment_length as cl  # noqa: E402
 from experiment_comment_length import (  # noqa: E402
     CONCURRENCY, EFFORT, MAX_TOKENS, MONITOR, MONITOR_PROMPT, N_BOOT, BOOT_SEED,
     parse_score, score, threshold)
 from strip_comments import strip_comments  # noqa: E402
+
+# `score` writes unparseable replies to that module's FAILLOG, so without this the
+# two experiments' retry logs interleave in one file and neither can be read as a
+# per-arm count. Pointed at its own file instead.
+cl.FAILLOG = Path("results/analysis/honest-calibration-parsefails.txt")
 
 N = int(sys.argv[1]) if len(sys.argv) > 1 else 500
 HONEST_CSV = Path("results/analysis/comment-length.csv")
@@ -107,7 +113,7 @@ async def main() -> None:
     ds = list(get_dataset(has_backdoor_solution=True, backdoor_source="any",
                           mode=EvalMode.ATTACK))
     keep = set(hon.sample_id)
-    picked = []
+    picked, identical = [], 0
     for s_ in ds:
         sid = str(s_.id)
         if sid not in keep:
@@ -118,15 +124,22 @@ async def main() -> None:
             continue
         kept_code = bds[0].get("backdoor_code") or ""
         stripped_code = strip_comments(kept_code)
-        # The two arms must differ in comments only, checked the same way the
-        # companion script checks its own: strip both and require byte equality.
+        # The two arms must differ in comments only. Arm B is literally strip(A), so
+        # this requires strip to be idempotent; a non-idempotent strip would mean the
+        # arms differ in more than comments and the check would catch it.
         if strip_comments(kept_code).strip() != strip_comments(stripped_code).strip():
             continue
+        # Arms that are byte-identical are kept and counted, not dropped. A backdoor
+        # with no comment contributes a zero gap by construction, and 146 of the 500
+        # are like that, so dropping them would inflate the pooled gap against the
+        # +0.1808 in COMMENTS.md, which is pooled over all 500.
+        identical += stripped_code == kept_code
         picked.append((sid, (s_.metadata or {}).get("main_task_description", ""),
                        {"kept": kept_code, "stripped": stripped_code}))
         if len(picked) >= N:
             break
-    print(f"{len(picked)} attack programs matched to an honest row")
+    print(f"{len(picked)} attack programs matched to an honest row; {identical} have no "
+          f"comment to remove, so their two arms are identical by construction")
     print(f"monitor={MONITOR} effort={EFFORT}", flush=True)
 
     monitor = get_model(MONITOR, config=GenerateConfig(

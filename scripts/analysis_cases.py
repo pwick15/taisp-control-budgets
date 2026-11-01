@@ -48,7 +48,10 @@ for r in csv.DictReader(open(R / "hard-backdoors.csv")):
         "input_chars": len(str(bd["backdoor_input"])),
     })
 with open(R / "case-features.csv", "w", newline="") as f:
-    w = csv.DictWriter(f, list(rows[0])); w.writeheader(); w.writerows(rows)
+    # lineterminator="\n": the csv module defaults to \r\n, which made every
+    # regeneration of this file a 1,000-line diff of nothing but line endings.
+    w = csv.DictWriter(f, list(rows[0]), lineterminator="\n")
+    w.writeheader(); w.writerows(rows)
 
 def group(key):
     g = defaultdict(list)

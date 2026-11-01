@@ -79,7 +79,10 @@ for b in (0.5, 1, 2, 5, 20, 50):
     print(f"  {b:>5}% {c['both']:>5} {c['S']:>7} {c['H']:>7} {c['none']:>8}")
 with open(OUT / "disagreement-sonnet-vs-haiku-xhigh.csv", "w", newline="") as f:
     cols = ["sample_id", "sonnet_score", "haiku_xhigh_score"] + sorted(next(iter(rows.values())))
-    w = csv.DictWriter(f, cols)
+    # lineterminator="\n" like every other writer here. Without it the csv module
+    # emits \r\n, and regenerating this file produced a 1,001-line diff that was
+    # entirely line endings, which would bury any real change in it.
+    w = csv.DictWriter(f, cols, lineterminator="\n")
     w.writeheader()
     for i in ids:
         w.writerow({"sample_id": i, "sonnet_score": as_[i], "haiku_xhigh_score": ah[i], **rows[i]})

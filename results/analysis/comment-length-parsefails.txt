@@ -65,3 +65,9 @@ Nothing in the submission devi
 
 --- arm=long sample=1306 attempt=2 stop=max_tokens chars=0
 
+--- arm=kept sample=86 attempt=0 stop=max_tokens chars=0
+
+--- arm=kept sample=86 attempt=1 stop=max_tokens chars=0
+
+--- arm=kept sample=86 attempt=2 stop=max_tokens chars=0
+
