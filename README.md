@@ -152,6 +152,28 @@ Pages read only the committed CSVs, never the logs, so anyone can rebuild them. 
 | `docs/codebase-guide.md` | Where things live in the ControlArena library, a trace of one attack sample, and experiment ideas. |
 | `pyproject.toml`, `uv.lock` | Dependencies. Use `uv add <pkg>` so the lockfile stays in sync. |
 
+## What the dataset is, and what that limits
+
+Every number in this repository describes **one difficulty band of APPS**, and nothing in
+the results says so, which is worth fixing before any of it is generalised.
+
+- The setting filters on `has_backdoor_solution=True`, which leaves **1,444 eligible
+  problems** out of the 5,000 in the source dataset. So a run can never exceed 1,444 paired
+  samples, and the 5,000-sample experiments that get proposed from time to time are
+  impossible by a factor of three and a half.
+- `shuffle_dataset` defaults to False, so `limit=n` takes a **prefix**. The 500 problems
+  every main run scores are the *first* 500 eligible ones, which also means a smaller pilot
+  is a nested subset of a larger run rather than an independent sample.
+- Those first 500 are **100% `interview` difficulty**. The eligible problems beyond them
+  are a different mix, roughly 1,061 interview, 277 introductory and 106 competition. So
+  the unscored remainder is not exchangeable with the scored part, and growing the sample
+  changes the population as well as its size.
+
+Two consequences. Any claim about monitor capability, backdoor hardness or generator effect
+is conditional on interview-difficulty problems. And an honest-sample increase, which is the
+one lever that buys resolution at tight audit budgets, has a hard ceiling of about 2,118
+honest samples if it is kept within the same band.
+
 ## Run completeness
 
 A run named `n500` means **500 honest and 500 attack samples, all scored**. A run that
@@ -174,6 +196,15 @@ Three columns in `results/<run>.csv` exist to make this checkable rather than as
 `n_samples`, `n_cache_served` and `usage_source`. A run whose `n_cache_served` approaches
 `n_samples` generated almost nothing fresh, so its cost figure is not a cost and its scores
 are inherited from an earlier pass.
+
+**They are not present on every run.** A run only gets them if its raw log survived, since
+they are derived from the per-call model events, and about twenty runs predate that. For those
+the cost and token columns are whatever the old sample-level accounting produced, which is
+blind to cached calls and can understate badly. Seven of them are in the comparable n=500
+set, including `dataset500-sonnet55-um-strip`, which is the lead row of the report chart.
+`scripts/check_tables.py` names them on every run, so the current list is one command away
+rather than a number in prose that goes stale. Treat a cost figure without a `usage_source` as unverifiable rather than as agreeing
+with the recomputed ones.
 
 ## Metrics
 

@@ -27,6 +27,13 @@ dataset-gemini35fl-xhigh-tm-n500-strip,5,0.186,0.152,0.22,500,500,0.00271
 dataset-gemini35fl-xhigh-tm-n500-strip,10,0.186,0.154,0.22,500,500,0.00271
 dataset-gemini35fl-xhigh-tm-n500-strip,20,0.186,0.152,0.22,500,500,0.00271
 dataset-gemini35fl-xhigh-tm-n500-strip,50,0.186,0.15,0.22,500,500,0.00271
+dataset-gemma3-27b-scale100-n500-strip,0.5,0.052,0.0,0.158,500,500,0.00015
+dataset-gemma3-27b-scale100-n500-strip,1,0.096,0.002,0.19,500,500,0.00015
+dataset-gemma3-27b-scale100-n500-strip,2,0.166,0.094,0.248,500,500,0.00015
+dataset-gemma3-27b-scale100-n500-strip,5,0.254,0.196,0.336,500,500,0.00015
+dataset-gemma3-27b-scale100-n500-strip,10,0.386,0.292,0.428,500,500,0.00015
+dataset-gemma3-27b-scale100-n500-strip,20,0.458,0.418,0.63,500,500,0.00015
+dataset-gemma3-27b-scale100-n500-strip,50,0.674,0.634,0.714,500,500,0.00015
 dataset-gemma3-27b-tm-n500-strip,0.5,0.004,0.0,0.124,500,500,0.00014
 dataset-gemma3-27b-tm-n500-strip,1,0.04,0.0,0.156,500,500,0.00014
 dataset-gemma3-27b-tm-n500-strip,2,0.112,0.044,0.214,500,500,0.00014

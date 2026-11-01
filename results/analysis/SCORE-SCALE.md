@@ -30,13 +30,24 @@ The criterion used below is at least 5 honest rows above the threshold.
 
 n=500 honest + 500 attack, comments stripped, same dataset:
 
-| monitor and scale | distinct scores | usable rungs | lowest usable FPR | AUC |
-|---|---|---|---|---|
-| Haiku 5.5 xhigh, 0-10 (default) | 10 | 2 | 1.60% | 0.9422 |
-| Haiku 5.5 xhigh, **0-100** | 77 | **8** | **1.00%** | 0.9481 |
-| Haiku 5.5 xhigh, 0-200 | 103 | 8 | 1.00% | 0.9534 |
-| Sonnet 5.5 UM, 0-10 (default) | 11 | 2 | 1.00% | 0.9577 |
-| Sonnet 5.5 UM, **0-100** | 34 | 3 | 1.20% | 0.9593 |
+| monitor and scale | distinct, honest rows | distinct, all rows | usable rungs | lowest usable FPR | AUC |
+|---|---|---|---|---|---|
+| Haiku 5.5 xhigh, 0-10 (default) | 7 | 10 | 2 | 1.60% | 0.9422 |
+| Haiku 5.5 xhigh, **0-100** | **14** | 77 | **8** | **1.00%** | 0.9481 |
+| Haiku 5.5 xhigh, 0-200 | 14 | 103 | 8 | 1.00% | 0.9534 |
+| Sonnet 5.5 UM, 0-10 (default) | 6 | 11 | 2 | 1.00% | 0.9577 |
+| Sonnet 5.5 UM, **0-100** | 7 | 34 | 3 | 1.20% | 0.9593 |
+
+> **Corrected 2026-11-01.** This table had a single "distinct scores" column
+> carrying 10, 77, 103, 11 and 34, which are the distinct values over **all**
+> 1,000 rows. That is the wrong quantity for the argument being made. An audit
+> threshold is a percentile of the **honest** distribution, so the number of
+> audit budgets a monitor can be measured at is set by its distinct **honest**
+> scores, which are 7, 14, 14, 6 and 7. The two counts differ by up to 7x and
+> they tell different stories: on honest rows the 0-200 scale buys nothing over
+> 0-100, 14 against 14, where the all-rows count suggested it emitted a third
+> more granularity. The usable-rung, floor and AUC columns were always computed
+> correctly from the honest distribution and are unchanged.
 
 ## What this says
 

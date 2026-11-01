@@ -1,7 +1,7 @@
 # GLM-5.3: is the effort ladder an effort ladder, or a serving artefact?
 
 **Answer: it is an effort ladder.** Streaming changes generation length by 0 to 10 percent.
-The effort parameter changes it eightfold. Measured 2026-11-01, 200 calls, $0.57.
+The effort parameter changes it eightfold. Measured 2026-11-01, 200 calls, $1.13.
 
 ## Why the question was asked
 
@@ -73,6 +73,11 @@ Two caveats worth carrying forward rather than discarding:
   which is the best available ground truth for a proxied model, is unavailable for exactly
   the runs that used streaming. Those runs must be costed from token counts and the price
   table, never from the reported cost, or they read as free.
+
+  This document made that mistake on its first pass. It reported the probe as costing
+  $0.57, which is the sum of the `estimated_cost` field and therefore counts only the 100
+  non-streamed calls. Priced from token counts, all 200 calls cost **$1.13**. The warning
+  above is not hypothetical: it is the error that was sitting two lines below it.
 
 ## Reproducing
 

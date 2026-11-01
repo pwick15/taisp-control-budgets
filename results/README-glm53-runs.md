@@ -37,12 +37,18 @@ accepts only `low`, `high`, `max`. DeepInfra says any other value falls back to
 | unset | 453, 454 | 325, 310 | ~128 |
 | `max` | 552, 637 | 341, 363 | ~211 |
 
-Over the 500-problem run, paired across the 999 samples both arms scored and
-with usage recovered from the model events: `none` used **5,689 output tokens
-per sample against max's 5,603, which is +1.5%**, and **6,875 total against
-6,789, +1.3%**, while reporting **no reasoning tokens at all** against max's
-5,101. It scored the same (0.760 vs 0.762) with an identically-sized parsed
-`<reasoning>` block (~1,826 characters in both).
+Over the 500-problem run, paired across all 1,000 samples and with usage
+recovered from the model events: `none` used **5,693 output tokens per sample
+against max's 5,611, which is +1.5%**, and **6,879 total against 6,797, +1.2%**,
+while reporting **no reasoning tokens at all** against max's 5,108. The parsed
+`<reasoning>` block is identically sized in both (~1,826 characters).
+
+On safety the two arms read 0.760 and 0.762, but **that pair is not matched**:
+at a 2% request the `none` arm's threshold spends 1.6% of the false-positive
+budget and max's spends 2.0%, so max buys its 0.762 with 25% more budget. At the
+only rate both can express on more than one honest row, 0.4%, they read 0.572
+and 0.574. The conclusion that the two are indistinguishable survives matching,
+which is worth saying explicitly rather than resting on the unmatched pair.
 
 So the two arms generate the same volume and differ only in how it is labelled.
 The harness stores only the parsed `MonitorResponse`, not the raw completion, so
@@ -51,7 +57,7 @@ visible channel, but the token counts now answer it: total generation is
 unchanged, so nothing was switched off. The chain of thought was relocated.
 
 - it is **not** a thinking-off arm, because total generation did not fall
-- on cost it **is** effectively the `max` run, +1.3%, so it is a duplicate in
+- on cost it **is** effectively the `max` run, +1.2%, so it is a duplicate in
   everything except the reasoning-token label
 - its scores are within noise of the `max` run, so it carries no information
   about reasoning effort

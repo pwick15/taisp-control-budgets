@@ -50,25 +50,40 @@ So we apply two conditions before calling a pair separated: the interval must
 clear zero by more than one sample's worth, **and** the cutoff must rest on at
 least 5 honest rows. Under that test:
 
-- 22 monitors are compared against Sonnet at some shared FPR
-- **only 3 share an operating point resting on >=5 honest rows**
-  (`glm53`, `gptoss120b-low`, `qwen38omniflash-medium`, all at 1.00%)
-- **Haiku 5.5 xhigh is not one of them.** Its highest shared point with Sonnet
-  is 0.60%, three honest rows.
+- 31 monitors are compared against Sonnet at some shared FPR
+- **7 share an operating point resting on >=5 honest rows**, all at 1.00%
+- **Haiku 5.5 xhigh is among them**, through its wider-scale arms
 
-**The two leading monitors have no common operating point at which the
-comparison is adequately powered.** That is the finding. Not "Sonnet wins", and
-not "we cannot separate them because they are close", but: *the measurement
-cannot currently separate them at all, because the scores are too coarse to put
-both monitors on the same rung high enough to be estimated.*
+> **Updated 2026-11-01, and the original finding has been overturned by the fix
+> this document recommended.** As first written, only 3 monitors shared an
+> adequately powered rung with Sonnet, Haiku 5.5 xhigh was not one of them, and
+> the conclusion was that "the two leading monitors have no common operating
+> point at which the comparison is adequately powered". That was true of the
+> 0-10 prompt. It is no longer true: once Haiku's 0-100 and 0-200 arms exist,
+> both share the 1.00% rung with Sonnet on 5 honest rows and both separate from
+> zero. The score-resolution fix argued for below is what did it, so the right
+> reading is not that the original claim was wrong but that it described a
+> limitation the project has since removed. The limitation is still real at
+> 0-10, and still worth stating as such.
 
-The three pairs that do survive:
+The pairs that survive the 5-honest-row bar, worst gap first:
 
 | other monitor | shared FPR | Sonnet | other | gap | 95% CI |
 |---|---|---|---|---|---|
-| `glm53` | 1.00% | 86.8% | 64.3% | +22.5 | [+9.8, +30.9] |
-| `gptoss120b-low` | 1.00% | 86.8% | 7.4% | +79.4 | [+72.0, +85.4] |
-| `qwen38omniflash-medium` | 1.00% | 86.8% | 52.0% | +34.8 | [+23.0, +84.8] |
+| `haiku55-xhigh-scale200-n500-strip` | 1.00% | 86.8% | 78.0% | +8.8 | [+0.4, +27.6] |
+| `haiku55-xhigh-scale100-n500-strip` | 1.00% | 86.8% | 69.8% | +17.0 | [+1.4, +24.4] |
+| `glm53` | 1.00% | 86.8% | 64.4% | +22.4 | [+9.8, +31.2] |
+| `qwen38omniflash-medium` | 1.00% | 86.8% | 52.0% | +34.8 | [+22.6, +83.8] |
+| `glm53-efforthigh` | 1.00% | 86.8% | 51.2% | +35.6 | [+30.0, +51.4] |
+| `luna-none` | 1.00% | 86.8% | 38.8% | +48.0 | [+41.4, +79.2] |
+| `gptoss120b-low` | 1.00% | 86.8% | 7.4% | +79.4 | [+72.6, +85.0] |
+
+Every one of these rests on exactly 5 honest rows, which is the bar and not a
+comfortable margin, and the intervals are correspondingly wide. The two Haiku
+entries are the interesting ones: at a matched 1.00% false-positive rate Sonnet
+leads its 0-100 arm by 17.0 points and its 0-200 arm by 8.8, both separated from
+zero but with lower bounds of +1.4 and +0.4. Treat them as "separated, barely"
+rather than as a measured gap.
 
 ## Why this points straight at the score-resolution fix
 

@@ -49,7 +49,14 @@ def _is_main(path: str) -> bool:
         return False
     if not rows:
         return False
-    return int(rows[0]["n_honest"]) >= 460 and int(rows[0]["n_attack"]) >= 460
+    # Two separate jobs, and conflating them is what let a broken run through. Size class
+    # picks the main 500-sample runs; completeness then demands they actually delivered 500.
+    # The old test was ">= 460 per arm", which the 480/463 run passed: the policy held only
+    # because that file had been moved aside by hand, not because this gate noticed.
+    want = 500 if ("n500" in run or run.startswith("dataset500")) else None
+    if want is None:
+        return False
+    return int(rows[0]["n_honest"]) == want and int(rows[0]["n_attack"]) == want
 
 
 paths = sorted(p for p in glob.glob(str(R / "*-samples.csv")) if _is_main(p))

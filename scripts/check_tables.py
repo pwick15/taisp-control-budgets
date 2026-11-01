@@ -54,8 +54,24 @@ def expected_size(run: str) -> int | None:
 def main() -> int:
     live = {p.name.replace("-samples.csv", "")
             for p in RESULTS.glob("*-samples.csv")}
-    retired = {p.name.replace("-samples.csv", "").replace(".partial", "")
-               for p in SUPERSEDED.glob("*-samples*.csv")}
+    # Strip in the right order. A superseded partial is named
+    # "<run>-samples.partial.csv", so replacing "-samples.csv" first matches nothing and
+    # leaves a name no run can equal, which silently disabled check 4 entirely.
+    def _run_name(path: Path) -> str:
+        name = path.name
+        for suffix in ("-samples.partial.csv", "-samples.csv", ".partial.csv", ".csv"):
+            if name.endswith(suffix):
+                return name[: -len(suffix)]
+        return name
+
+    # Two kinds live in superseded/, and they mean different things.
+    #   "<run>-samples.partial.csv"  an earlier, incomplete PASS of a run that was then
+    #                                repaired in place, so it legitimately shares its name
+    #                                with the live run.
+    #   "<run>-samples.csv"          a distinct run that a differently named run replaced,
+    #                                so its name must NOT be live.
+    retired_passes = {_run_name(p) for p in SUPERSEDED.glob("*.partial.csv")}
+    retired = {_run_name(p) for p in SUPERSEDED.glob("*-samples.csv")}
     print(f"{len(live)} runs with per-sample scores, {len(retired)} superseded\n")
 
     print("1. run names referenced by committed tables exist")
@@ -77,14 +93,16 @@ def main() -> int:
                     short.setdefault(form, run)
     for table in sorted(ANALYSIS.glob("*.csv")):
         df = pd.read_csv(table)
-        for col in ("run", "other"):
+        # `monitor` is deliberately NOT here: in chart-safety-at-2pct.csv it holds
+        # display labels, not run names, and is checked separately below.
+        for col in ("run", "other", "reference", "run_a", "run_b"):
             if col not in df.columns:
                 continue
             for name in sorted(set(df[col].dropna().astype(str))):
                 if name in live or name in short:
                     continue
                 fail(f"{table.name}: {col}={name!r} matches no run in results/"
-                     + (" (it is SUPERSEDED)" if name in retired else ""))
+                     + (" (it is SUPERSEDED)" if name in (retired | retired_passes) else ""))
     print("     done")
 
     print("2. complete runs appear in the tables that index every run")
@@ -101,6 +119,10 @@ def main() -> int:
     print("     done")
 
     print("3. every run delivers the sample count its name claims")
+    sizeless = sorted(r for r in live if expected_size(r) is None)
+    if sizeless:
+        print(f"     note: {len(sizeless)} run(s) carry no size in their name, so this "
+              f"check cannot gate them: {', '.join(sizeless)}")
     for run in sorted(live):
         want = expected_size(run)
         if want is None:
@@ -109,18 +131,56 @@ def main() -> int:
         if not summary.exists():
             fail(f"{run} has per-sample scores but no summary CSV")
             continue
-        df = pd.read_csv(summary)
-        if "n_honest" not in df.columns:
-            continue
-        got_h, got_a = int(df.n_honest.iloc[0]), int(df.n_attack.iloc[0])
+        # Count the rows themselves. Trusting the summary's own n_honest would pass a
+        # 500/500 summary sitting on top of a 943-row sample file.
+        rows = pd.read_csv(RESULTS / f"{run}-samples.csv")
+        got_h = int((rows["mode"] == "honest").sum())
+        got_a = int((rows["mode"] == "attack").sum())
         if got_h != want or got_a != want:
-            fail(f"{run} claims {want} per arm but delivers {got_h} honest and "
-                 f"{got_a} attack. Finish it or supersede it; do not analyse it.")
+            fail(f"{run} claims {want} per arm but its sample file holds {got_h} honest "
+                 f"and {got_a} attack. Finish it or supersede it; do not analyse it.")
+        dupes = rows.duplicated(subset=["mode", "sample_id"]).sum()
+        if dupes:
+            fail(f"{run} has {dupes} duplicate (mode, sample_id) rows, which double-count")
+        df = pd.read_csv(summary)
+        if "n_honest" in df.columns and (int(df.n_honest.iloc[0]) != got_h
+                                         or int(df.n_attack.iloc[0]) != got_a):
+            fail(f"{run}: summary says {int(df.n_honest.iloc[0])}/{int(df.n_attack.iloc[0])} "
+                 f"but the sample file holds {got_h}/{got_a}")
+    print("     done")
+
+    print("3b. display labels in the chart feed resolve to a configured run")
+    chart = ANALYSIS / "chart-safety-at-2pct.csv"
+    build = Path("web/build.py")
+    if chart.exists() and build.exists():
+        # web/build.py maps run name -> (display label, ...). A label in the chart feed
+        # that no longer appears there means the chart is carrying a configuration the
+        # report can no longer explain, which is how a renamed arm goes stale unnoticed.
+        import ast
+        tree = ast.parse(build.read_text())
+        runs_node = next((n for n in tree.body if isinstance(n, ast.Assign)
+                          and getattr(n.targets[0], "id", "") == "RUNS"), None)
+        if runs_node is None:
+            fail("web/build.py has no RUNS mapping to check the chart feed against")
+        else:
+            labels = {v.elts[0].value for v in runs_node.value.values}
+            for name in sorted(set(pd.read_csv(chart)["monitor"].astype(str))):
+                if name not in labels:
+                    fail(f"chart-safety-at-2pct.csv: monitor={name!r} is not a display "
+                         f"label in web/build.py RUNS, so the chart and the report disagree")
     print("     done")
 
     print("4. no superseded run is also live")
     for run in sorted(retired & live):
-        fail(f"{run} exists in BOTH results/ and results/superseded/")
+        fail(f"{run} is live in results/ AND retired in results/superseded/ as a distinct "
+             f"run, so the same name denotes two different things")
+    for run in sorted(retired_passes - live):
+        fail(f"{run} has a retired partial pass in results/superseded/ but no live run of "
+             f"that name, so the repair it was waiting for never landed")
+    if retired_passes & live:
+        print(f"     note: {len(retired_passes & live)} run(s) were repaired in place, so "
+              f"an earlier partial pass is retained under the same name: "
+              f"{', '.join(sorted(retired_passes & live))}")
     print("     done")
 
     print("5. cost and token figures carry their provenance")

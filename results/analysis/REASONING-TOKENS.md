@@ -58,7 +58,7 @@ Two practical consequences, both of which have already bitten this project:
 - **A zero is not proof of no reasoning.** The Qwen `effort=none` run reports
   `reasoning_tokens: 0` and genuinely did not think. GLM-5.3 with thinking
   disabled also reports 0, but relocates its chain of thought into the visible
-  content (see `GLM-THINKING-TOGGLE.md`). The counter measures what the provider
+  content (see `README-glm53-runs.md`). The counter measures what the provider
   labels as reasoning, not whether reasoning happened.
 
 ## 2. Signal: the thing we were not recording is a score
@@ -156,9 +156,23 @@ overstates safety at 10% by crediting a budget that was never spent.
 ## What this changes
 
 Hidden reasoning tokens were already in the cost numbers, so no published figure
-moves. The open item is the effort ladder: it is currently indexed by an opaque
-provider label (`none`, `low`, `medium`, `high`, `xhigh`) and shows an inverted-U
-on three monitors. Reasoning tokens are the dose that label is a proxy for, so
-the ladder can be re-plotted against tokens actually spent and the inverted-U
-tested against a real x-axis. That needs the per-run counts, which future runs
-will now carry.
+moves. The open item is the effort ladder: it is indexed by an opaque provider
+label (`none`, `low`, `medium`, `high`, `xhigh`) rather than by the dose that
+label stands for, so it can be re-plotted against tokens actually spent. The
+per-run counts needed for that now exist.
+
+> **Corrected 2026-11-01.** This paragraph said the ladder "shows an inverted-U
+> on three monitors". It does not. Measured at a 2% audit request across every
+> effort family in the study, six of seven are monotone: GPT-6 Luna, Haiku 5.5,
+> Qwen3.8, Sonnet 5.5 and gpt-oss-120b rise with effort, Gemini 3.5 Flash-Lite
+> falls. The only non-monotone family is GLM-5.3, and it breaks only because its
+> `effort=none` arm is included: that arm is a relabelling of max rather than a
+> rung, since it generates the same volume (+1.2% total) while reporting zero
+> reasoning tokens. Drop it and GLM is monotone too, 0.480 at low, 0.512 at high
+> and 0.762 at max. So there is no inverted-U to test against a real x-axis.
+>
+> Two caveats on the one falling ladder. Gemini's direction is itself
+> budget-axis dependent: at a 2% request thinking off leads, but it spends 0.80%
+> of the false-positive budget there against xhigh's 0.20%, and at a matched
+> 0.20% the order reverses. And the `low`/`medium` arms of that family are tied
+> at 0.202, so "falls" is really "falls in two steps with a plateau".

@@ -105,7 +105,7 @@ def sample_reasoning_tokens(df: pd.DataFrame) -> pd.Series:
     A provider that reports no reasoning count yields 0, which is indistinguishable
     from a non-reasoning model; both are honest zeros for cost purposes, but a 0 here
     does not prove the model did not reason. GLM-5.3 with thinking disabled relocates
-    its chain of thought into the visible content and reports 0 (GLM-THINKING-TOGGLE.md).
+    its chain of thought into the visible content and reports 0 (README-glm53-runs.md).
     """
     def total(raw) -> int:
         if raw is None or (isinstance(raw, float) and pd.isna(raw)):

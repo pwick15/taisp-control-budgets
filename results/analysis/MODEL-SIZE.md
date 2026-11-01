@@ -6,8 +6,17 @@ Reproduce the resolution numbers with:
 uv run python scripts/analysis_score_resolution.py
 ```
 
-n=500 honest + 500 attack each, trusted monitoring, comments stripped, all three
-served through the same litellm/DeepInfra route.
+n=500 honest + 500 attack each, trusted monitoring, comments stripped.
+
+**Correction, 2026-11-01: the three are NOT served through the same route, and
+this line previously said they were.** Both dense models are
+`openai-api/litellm/deepinfra/google/gemma-3-{4b,27b}-it`, but the MoE is
+`google/gemma-4-26b-a4b-it`, served direct by Google. So serving path is
+confounded with architecture in exactly the comparison this document is built
+on, and the MoE is also the arm whose raw log was not retained, so it has no
+recoverable token or cost figure either. The conclusion below rests on AUC,
+which is unaffected by thresholding, but it cannot separate "MoE architecture"
+from "different provider".
 
 ## The question
 
@@ -26,8 +35,20 @@ curve, because the two dense models bracket it.
 | Gemma 3 27B dense | 27B | 27B | 0.004 | 0.040 | **0.420** | **0.678** |
 
 Read as a frontier, this says the MoE is the best of the three at a 1% audit
-budget and the worst at 50%, and that the 27B dense model is beaten by a 4B one
-at tight budgets. **The ranking inverts along the budget axis.**
+budget and the worst at 50%, and that the 27B dense model is beaten by a model
+with only ~4B **active** parameters at tight budgets. **The ranking inverts
+along the budget axis.** (The dense 4B is not beating the 27B anywhere: it reads
+0.000 at both tight budgets against the 27B's 0.004 and 0.040. An earlier
+version of this sentence said "beaten by a 4B one", which reads as the dense
+model and is contradicted by the table.)
+
+**And the three cells in that first column are not the same price.** At a 0.5%
+request the thresholds actually spend 0.00% of the budget for the dense 4B,
+which has no honest row above its cutoff at all, 0.60% for the MoE and 0.20% for
+the 27B. So the MoE is getting three times the 27B's real false-positive budget
+in the cell where it looks best, and the dense 4B is getting none. None of the
+MoE's four cells clears this project's 5-honest-row bar; they rest on 3 rows or
+fewer.
 
 Almost all of that is an artefact, and finding out which part is which is the
 reason to look at resolution before reading a frontier.

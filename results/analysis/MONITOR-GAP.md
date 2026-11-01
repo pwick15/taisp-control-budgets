@@ -55,13 +55,21 @@ single-operating-point comparison cannot make.
 
 - **The floor is sample size, not scale.** Separating 0.5% from 1.0% needs more
   honest rows, not a better prompt. At n=500 honest, a 0.60% rung is 3 rows.
-- **One attack distribution.** Both monitors face the same stored backdoors, and
-  recall is known to vary by generator by ~20 points, so the gap is conditional
-  on this attack mix.
+- **One attack distribution, and it matters more than this document first said.**
+  Both monitors face the same stored backdoors, and recall varies by generator by
+  far more than the "~20 points" originally stated here. Measured at this
+  document's own headline rung, a 1.20% false-positive rate: Sonnet 0-100 spans
+  **41.5 points** across the ten generators (0.585 to 1.000) and Haiku xhigh
+  0-100 spans **63.0 points** (0.317 to 0.947). So the gap is strongly
+  conditional on the attack mix, and a different mix could plausibly reorder the
+  two monitors.
 - **Reasoning effort does not explain it, but that null is weakly supported.**
-  Toggling Sonnet's own effort is a null at the single rung the two effort arms
-  share: 0.60% FPR, +6.0 pts, 95% CI [-2.4, +10.6]. The CI admits gains up to
-  ~10 points, so this is "not detectable at n=500", not "no effect". The
+  Toggling Sonnet's own effort is a null at **both** rungs the two effort arms
+  share, not the one this document first reported: +6.0 pts with a 95% CI of
+  [-2.2, +10.6] at 0.60% FPR on 3 honest rows, and **-0.8 pts, [-2.6, +10.2]**
+  at 0.20% on a single row. Two nulls with opposite signs is a stronger null
+  than one, but both CIs admit gains up to about 10 points, so this remains "not
+  detectable at n=500" rather than "no effect". The
   low-effort arm is the weak link: it emits only 5 distinct honest scores, and
   its *only* operating point with 5 or more honest rows behind it sits at a
   14.80% FPR. The shared 0.60% rung rests on 3 honest rows. Settling whether
