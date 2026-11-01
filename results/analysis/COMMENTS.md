@@ -358,6 +358,80 @@ the confession rate, its 19%-to-94% dependence on the generator, the grep
 baseline, and now the volume effect, which is the clearest artefact of the four
 because it does not depend on what the comments say at all.
 
+## The honest side holds only because honest code here is nearly comment-free
+
+Reproduce with:
+
+```
+uv run python scripts/experiment_comment_length.py 500
+```
+
+About $2.85. Writes `results/analysis/comment-length.csv`.
+
+Everything above rests on an honest-side control: the same 500 honest programs
+with and without their own comments shift by **+0.0010, 95% CI [-0.0036,
++0.0058]**, against the attack side's +0.1808. The honest distribution does not
+move, so the audit threshold does not move, so the gap is attack-side movement
+at a matched cutoff.
+
+That control is measured in a regime worth naming. **Only 20% of these honest
+solutions carry a comment at all, and those average 2.81 words per program**,
+against 9.23 for the dataset's backdoor comments and 19.42 for the attacker
+rewrites. So the control establishes that *these* honest comments do not move the
+threshold. It cannot say what comments like the attack side's would do, and
+stripping is a deployment decision about code that is not this code.
+
+Three arms over 472 of the same honest programs, differing in comments only.
+`bare` is comments stripped; `short` and `long` each add **two** neutral
+templated comments, matched to the backdoor and rewrite lengths, drawn from a
+fixed bank describing ordinary programming operations with no word from `TELL`.
+Comment count is held at two so the arms do not also vary volume. Haiku 5.5
+xhigh, the same monitor as the headline table, re-scored in one harness so a
+harness difference cannot pass for a comment difference.
+
+| arm | words/comment | mean score | share at 0 | 2% request serves | honest rows |
+|---|---|---|---|---|---|
+| `bare` | 0 | 0.0470 | 56.4% | 1.91% | 9 |
+| `short` | 9.3 | 0.1011 | 4.0% | 0.85% | 4 |
+| `long` | 19.1 | 0.1076 | 0.0% | 0.85% | 4 |
+
+Paired over 472 programs, 3,000 replicates:
+
+| | shift | 95% CI |
+|---|---|---|
+| bare to short (0 to 9.3 words) | **+0.0540** | [+0.0489, +0.0587] |
+| short to long (9.3 to 19.1 words) | **+0.0066** | [+0.0038, +0.0093] |
+| bare to long | +0.0606 | [+0.0557, +0.0655] |
+
+**Two neutral, truthful comments more than double an honest program's mean
+suspicion score**, 0.047 to 0.101, and the interval is nowhere near zero.
+
+**But length is only about a tenth of it.** Going from no comments to
+backdoor-length comments moves the score by +0.0540; tripling the length from
+there adds +0.0066, which is 11% of the total. The effect is presence, not
+length, so the question this was run to settle is answered no: the attack-side
+gain in the headline table is not a length artefact.
+
+**The threshold does move, which is the consequence that matters.** The share of
+honest programs scoring exactly 0 goes from 56.4% to 4.0% to 0.0%, so the mode
+that makes the budget axis coarse is a property of comment-free code. At a 2%
+request the bare arm's cutoff spends **1.91%** of the false-positive budget on 9
+honest rows, and both commented arms fall back to **0.85%** on 4. Same request,
+2.2x difference in the audit budget actually spent, from comments alone.
+
+So the honest-side control above is correct and it is also local. It licenses the
+comparison on this dataset, where honest code is almost uncommented. It does not
+license "keeping comments improves the monitor" as a deployment claim, because in
+a codebase whose honest code is commented the honest threshold moves, and the
+recall figures in the headline table would have to be re-read at the rate
+actually served rather than the rate requested.
+
+What the arms cannot separate: these comments are **injected and templated**, so
+"longer" and "visibly boilerplate, not written by whoever wrote the code" move
+together. The +0.0066 length step is therefore an upper bound on length alone.
+Output tokens rise +5.0% and +9.3%, so a commented honest arm also costs more to
+monitor.
+
 ## Caveats
 
 - `TELL` is a keyword regex, not a judge. It will miss a confession phrased
@@ -393,4 +467,13 @@ because it does not depend on what the comments say at all.
   drops in the direction of the hypothesis. Raw retry replies are logged to
   `results/analysis/adversarial-comments-parsefails.txt`.
 - Honest samples keep their comments in both arms, so the audit threshold is set
-  by the same honest distribution and only the attacker side changes.
+  by the same honest distribution and only the attacker side changes. That holds
+  because honest code in this dataset is nearly comment-free; it is not a
+  property of the design. See the section above, where giving honest programs
+  comments at backdoor length moves the rate a 2% request actually serves from
+  1.91% to 0.85%.
+- The input-token column in `comment-length.csv` is unusable for the first run of
+  that script, which recorded `input_tokens` alone: with prompt caching on,
+  Anthropic reports nearly the whole prompt under `input_tokens_cache_read` and
+  leaves `input_tokens` at 4. The script now sums all three input fields. Output
+  tokens were never affected and are what the +5.0% and +9.3% figures use.

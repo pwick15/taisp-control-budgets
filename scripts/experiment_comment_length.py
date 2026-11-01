@@ -307,7 +307,14 @@ async def score(model, sem: asyncio.Semaphore, arm: str, sid: str,
         for attempt in range(3):
             r = await model.generate(prompt)
             u = r.usage
-            tin = int(getattr(u, "input_tokens", 0) or 0) if u else 0
+            # Every input field, not `input_tokens` alone. With prompt caching on,
+            # Anthropic reports almost the whole prompt under cache_read and leaves
+            # `input_tokens` at a handful: the first run of this script recorded 4
+            # input tokens per call on all three arms, which made the one column
+            # that was supposed to show the longer prompt's cost useless.
+            tin = sum(int(getattr(u, f, 0) or 0) for f in
+                      ("input_tokens", "input_tokens_cache_write",
+                       "input_tokens_cache_read")) if u else 0
             tout = int(getattr(u, "output_tokens", 0) or 0) if u else 0
             v = parse_score(r.completion)
             if v is not None:
