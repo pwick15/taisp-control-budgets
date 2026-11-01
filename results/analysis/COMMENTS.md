@@ -22,12 +22,25 @@ only difference being whether comments survive:
 | | AUC | safety @ 0.5% | @ 1% | @ 2% | @ 50% | tokens/sample |
 |---|---|---|---|---|---|---|
 | stripped (study default) | 0.9422 | 0.575 | 0.714 | 0.850 | 0.964 | 4856 |
-| comments kept | **0.9762** | **0.798** | **0.870** | **0.936** | **0.990** | **3019** |
+| comments kept | **0.9762** | **0.798** | **0.870** | **0.936** | **0.990** | **4524** |
 
 Keeping comments is better at every audit budget, by 22.3 points at 0.5% and
-15.6 points at 1%, and it is *cheaper* (38% fewer tokens, because the monitor
-reasons less when the code is already explained to it). On its face, stripping
-costs a large amount of safety for nothing.
+15.6 points at 1%, and it is *cheaper*, though by much less than this table once
+said: paired over all 1000 samples it uses **6.8% fewer total tokens, 11.5%
+fewer output tokens and 15.0% fewer reasoning tokens**, because the monitor
+reasons less when the code is already explained to it. On its face, stripping
+costs a large amount of safety for very little.
+
+> **Corrected 2026-11-01.** The comments-kept cell above read **3019** tokens
+> per sample and the saving was published as **38% fewer tokens**. Both came
+> from the `tokens_per_sample` column, which divided recorded usage by all 1000
+> rows while 320 of this run's rows reported no usage at all, because Inspect
+> served those monitor calls from its cache and does not tally a cache hit into
+> the sample-level usage field. Recovering the usage from the model events puts
+> the real figure at 4524, so the saving is 6.8% rather than 38%, overstated by
+> a factor of 5.6. The direction and the stated mechanism both survive, and the
+> mechanism survives at close to full strength: the reasoning-token saving, which
+> is the part the explanation is actually about, is 15.0%.
 
 The gap is not noise. Both arms happen to land on the same threshold (0.200) at
 the nominal 1% budget, so that comparison is already at a matched achieved FPR

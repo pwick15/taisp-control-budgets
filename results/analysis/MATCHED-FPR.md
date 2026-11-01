@@ -75,8 +75,21 @@ The three pairs that do survive:
 Monitors share few operating points because each has only a handful. More
 distinct score values would mean a denser achievable grid, more shared rungs,
 and shared rungs high enough that the cutoff rests on enough honest rows to
-estimate. The 0-100 prompt moved one monitor from 3 distinct honest scores to 7,
-and its budget floor from 2.00% to 0.50%, at +3% cost.
+estimate. In E0 (`experiments/e0-monitor-resolution/`, Haiku 4.5, n=200) the
+0-100 prompt moved the monitor from 3 distinct honest scores to 7, and its
+budget floor from 2.00% to 0.50%, at +2.8% cost.
+
+Two cautions on reading that across documents. The experiment is E0 at n=200,
+not one of the n=500 runs, where the same change is smaller and
+monitor-dependent: Sonnet 5.5 goes from 6 distinct honest scores to 7 and Haiku
+5.5 xhigh from 7 to 14. And "budget floor" is used in two senses in this
+project. Here it is the **smallest achievable non-zero false-positive rate**,
+which is what `src/e0_analyze.py` computes. In `SCORE-SCALE.md` it is the
+**lowest usable rung**, meaning the cheapest rate whose cutoff still rests on at
+least 5 honest rows, which is a different and stricter quantity: under that
+definition the same two n=500 pairs read 1.0% to 1.2% for Sonnet and 1.6% to
+1.0% for Haiku. Both numbers are correct for their own definition, and neither
+transfers to the other document.
 
 So this is not two separate work items. **The matched-FPR comparison is the
 reason the resolution fix matters**: without it, the study's central comparison
