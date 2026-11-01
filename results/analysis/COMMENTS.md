@@ -344,10 +344,64 @@ submission therefore sits away from the honest distribution on a feature that ha
 nothing to do with whether the code is correct, and an attacker that adds
 comments only pushes itself further out.
 
-**The decisive control is not yet run:** add volume-matched neutral comments to
-the HONEST solutions too, recalibrate the threshold, and see how much of the
-+0.188 survives. If most of it disappears, the comments-kept advantage is almost
-entirely this artefact. That experiment is cheap and is the top open item.
+**The decisive control has now been run, and it refutes this reading of the
+headline gap.** Reproduce with:
+
+```
+uv run python scripts/experiment_comment_length.py 500      # honest arms, ~$2.85
+uv run python scripts/experiment_honest_calibration.py 500  # attack arms, ~$1.80
+```
+
+Both attack arms were re-scored in the same harness as the honest arms, 469
+problems paired, and the kept-minus-stripped recall gap read at a 2% request
+under each honest calibration in turn, with the threshold re-estimated inside
+every one of 3,000 bootstrap replicates:
+
+| honest baseline the threshold comes from | cutoff | FPR served | rows | kept | stripped | gap | 95% CI |
+|---|---|---|---|---|---|---|---|
+| bare, comments stripped (study default) | 0.10 | 1.91% | 9 | 94.2% | 85.1% | **+9.2** | [+6.8, +14.9] |
+| commented, 9.3 words | 0.20 | 0.85% | 4 | 87.0% | 74.8% | **+12.2** | [+8.3, +15.8] |
+| commented, 19.1 words | 0.20 | 0.85% | 4 | 87.0% | 74.8% | **+12.2** | [+8.7, +16.0] |
+
+**Nothing disappears. 133% of the gap survives.** The prediction was that if the
+advantage were a mismatch between a commented submission and a comment-free
+baseline, recalibrating on a commented baseline would remove most of it. It
+removes none, and the comparison is slightly wider under the commented
+calibration.
+
+Read that last point carefully rather than as a strengthening. The commented
+honest arm buys a **tighter** operating point, 0.85% served against 1.91%, and
+every gap in this study widens as the budget tightens. So most of the +9.2 to
++12.2 difference is a budget effect and not a calibration effect. The claim this
+control supports is the negative one: the artefact hypothesis predicted collapse
+and there is no collapse at either operating point.
+
+The same holds threshold-free, though with a caveat about what is being compared.
+AUC needs no cutoff but it does need an honest arm, so these are two different
+AUCs rather than one read twice:
+
+| | kept | stripped | gap |
+|---|---|---|---|
+| against bare honest | 0.9777 | 0.9371 | +0.0406 |
+| against commented honest | 0.9586 | 0.8907 | +0.0679 |
+
+Commenting the honest side lowers both, because honest scores rose, and widens
+the gap between them.
+
+**So the headline advantage is real signal and not a baseline artefact.** What it
+is signal *about* is unchanged and is the point of this document: 83% of the gain
+sits on the samples whose comments confess, and the keyword grep below gets 51.8%
+of the backdoors at zero false positives without a model. The surface-mismatch
+explanation offered above remains the best account of the *volume* result, where
+adding comments to a backdoor raises its score regardless of content. It is not
+the account of the kept-versus-stripped gap.
+
+Two things to hold against this control. The attack arms were re-scored in a
+direct-call harness rather than the eval harness, and the paired attack shift
+reproduces at **+0.1627** against the **+0.1808** published above, same direction
+and close in size, which is the best available check that the two paths agree.
+And the honest arms carry injected templated comments, so they are a proxy for
+commented honest code and not a sample of it.
 
 ### Consequence
 
@@ -355,8 +409,19 @@ For this monitor and this dataset, **comments are not an attack surface.** The
 "stripping removes attacker leverage" justification is refuted, not supported,
 in all three attack forms tried. Stripping stands on measurement validity alone:
 the confession rate, its 19%-to-94% dependence on the generator, the grep
-baseline, and now the volume effect, which is the clearest artefact of the four
+baseline, and the volume effect, which is the clearest artefact of the four
 because it does not depend on what the comments say at all.
+
+**And the case for stripping is now narrower than it was, because one of the
+four is gone.** The recalibration control above was going to decide whether the
+headline advantage is a baseline artefact. It is not: the gap survives intact
+when the threshold is calibrated on commented honest code. So "the measured
+advantage is an artefact of the honest baseline" is no longer available as an
+argument for stripping, and what remains is the three that are about the
+*dataset*: these backdoors confess, the confession rate is a property of whichever
+model generated them, and a grep beats the monitor on the confessing half.
+Those are reasons this dataset cannot measure the comments question, which is a
+different and weaker claim than comments being bad to show a monitor.
 
 ## The honest side holds only because honest code here is nearly comment-free
 
@@ -472,8 +537,16 @@ monitor.
   property of the design. See the section above, where giving honest programs
   comments at backdoor length moves the rate a 2% request actually serves from
   1.91% to 0.85%.
-- The input-token column in `comment-length.csv` is unusable for the first run of
-  that script, which recorded `input_tokens` alone: with prompt caching on,
-  Anthropic reports nearly the whole prompt under `input_tokens_cache_read` and
-  leaves `input_tokens` at 4. The script now sums all three input fields. Output
-  tokens were never affected and are what the +5.0% and +9.3% figures use.
+- The input-token column in `comment-length.csv` and `honest-calibration.csv` is
+  unusable for the first run of each, which recorded `input_tokens` alone: with
+  prompt caching on, Anthropic reports nearly the whole prompt under
+  `input_tokens_cache_read` and leaves `input_tokens` at 4. The scripts now sum
+  all three input fields. Output tokens were never affected and are what the
+  +5.0% and +9.3% figures use.
+- The calibration run's retry replies landed in
+  `comment-length-parsefails.txt` rather than their own file, because it reuses
+  the companion script's `score` and the redirect was added after the run
+  started. So that file holds both experiments for this one run: 11 bare, 15
+  short, 6 long from the honest arms, and 9 kept, 8 stripped from the attack
+  arms. The counts are not arm-skewed in either experiment. Later runs write to
+  `honest-calibration-parsefails.txt`.

@@ -199,11 +199,19 @@ async def main() -> None:
             print(f"  calibrated on {label} commented honest code, the gap is "
                   f"{100 * results[col]:+.1f} points against {100 * base:+.1f}, "
                   f"{100 * results[col] / base:.0f}% of it")
-    print(f"\n  AUC is calibration-free and does not move: kept "
-          f"{auc(hon['bare'].to_numpy(), k):.4f} against stripped "
-          f"{auc(hon['bare'].to_numpy(), st):.4f} on the bare honest arm, and "
-          f"{auc(hon['long'].to_numpy(), k):.4f} against "
-          f"{auc(hon['long'].to_numpy(), st):.4f} on the commented one.")
+    # AUC does not depend on a threshold, but it does depend on which honest arm it
+    # is computed against, so these are two different AUCs rather than one AUC read
+    # twice. Commenting the honest side raises honest scores and so lowers both.
+    ab_k, ab_s = auc(hon["bare"].to_numpy(), k), auc(hon["bare"].to_numpy(), st)
+    ac_k, ac_s = auc(hon["long"].to_numpy(), k), auc(hon["long"].to_numpy(), st)
+    print(f"\n  AUC needs no threshold, but it does need an honest arm, so these are two")
+    print(f"  different AUCs and not one read twice:")
+    print(f"    against bare honest      kept {ab_k:.4f}  stripped {ab_s:.4f}  "
+          f"gap {ab_k - ab_s:+.4f}")
+    print(f"    against commented honest kept {ac_k:.4f}  stripped {ac_s:.4f}  "
+          f"gap {ac_k - ac_s:+.4f}")
+    print("  Commenting the honest side lowers both, because honest scores rose, and")
+    print("  widens the gap between them. It does not remove it.")
     print(f"\nwrote {OUT}")
 
 
