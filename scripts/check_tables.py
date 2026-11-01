@@ -15,6 +15,9 @@ of which was found by hand and would have been caught here:
    is not a smaller run, it is a broken one, and its losses are not a random subset.
 4. A superseded run leaking back into the analysed set, which would double-count rows that a
    repair pass already replaced.
+5. A one-sided honest arm leaking into the analysed set. A top-up has honest samples and no
+   attack samples, and `compute_safety` returns 1.0 from an empty denominator rather than
+   failing, so such a file in `results/` would report perfect safety without any error.
 
 The --rebuild pass regenerates the four generated tables and reports any cell that moved.
 That is meaningful because the bootstrap seeds per run from a CRC of the run name, so the
@@ -202,8 +205,52 @@ def main() -> int:
                   f"inherited from an earlier pass and its billed cost is not its cost")
     print("     done")
 
+    print("\n6. one-sided honest arms stay out of the analysed set")
+    # A top-up has 500 honest samples and no attack samples. In results/ it would be read
+    # as a run with an empty attack arm, and ControlArena's compute_safety returns 1.0 from
+    # an empty denominator rather than failing, so it would report perfect safety in
+    # silence. Three things have to hold: none is in results/, each names a live run it
+    # extends, and its problems are disjoint from that run's.
+    topup_dir = RESULTS / "honest-topup"
+    topups = sorted(topup_dir.glob("*-samples.csv")) if topup_dir.is_dir() else []
+    for name in sorted(live):
+        if name.endswith("-honest-topup"):
+            fail(f"{name} is a one-sided honest arm and is in results/, where every analysis "
+                 f"script globs it as a run with no attack samples")
+    for t in topups:
+        label = t.name.replace("-samples.csv", "")
+        if not label.endswith("-honest-topup"):
+            fail(f"{t.name} is in honest-topup/ but is not named <run>-honest-topup")
+            continue
+        parent = label[: -len("-honest-topup")]
+        if parent not in live:
+            fail(f"{t.name} extends {parent}, which has no per-sample file in results/")
+            continue
+        e = pd.read_csv(t)
+        if set(e["mode"].unique()) != {"honest"}:
+            fail(f"{t.name} carries modes {sorted(e['mode'].unique())}; a top-up is "
+                 f"honest-only by definition")
+        r = pd.read_csv(RESULTS / f"{parent}-samples.csv")
+        r_h = set(r[r["mode"] == "honest"].sample_id.astype(str))
+        e_h = set(e.sample_id.astype(str))
+        both = r_h & e_h
+        if both:
+            fail(f"{t.name} re-scores {len(both)} problems {parent} already has, so "
+                 f"concatenating them would double-count honest rows and move every "
+                 f"threshold")
+        unscored = int(e.suspicion.isna().sum())
+        if unscored:
+            fail(f"{t.name} has {unscored} honest row(s) with no score; a missing honest "
+                 f"score is a missing threshold observation, not a neutral one")
+        if not both and not unscored:
+            print(f"     {label}: {len(e_h)} honest samples, disjoint from {parent}'s "
+                  f"{len(r_h)}, all scored")
+    if not topups:
+        print("     no one-sided arms present")
+    print("     done")
+
     if "--rebuild" in sys.argv:
-        print("\n6. regenerating the four generated tables and reporting drift")
+        print("\n7. regenerating the four generated tables and reporting drift")
         env = dict(os.environ)
         for script in GENERATED:
             subprocess.run([sys.executable, f"scripts/{script}"], check=False,

@@ -192,6 +192,13 @@ that were missing. Exactly one execution, the complete one, is then "the run":
 - a superseded run and its successor share most of their rows through the cache, so they are
   never two independent runs and must not be compared or averaged against each other.
 
+**One kind of artifact is deliberately not a run.** An audit threshold is a percentile of
+the honest score distribution alone, so more honest samples buy resolution at tight budgets
+and more attack samples buy none. A honest-only arm bought for that reason lives in
+`results/honest-topup/`, outside the `results/*-samples.csv` glob every analysis script uses,
+because `compute_safety` returns 1.0 from an empty denominator and would report perfect
+safety for it without erroring. See `results/honest-topup/README.md`.
+
 Three columns in `results/<run>.csv` exist to make this checkable rather than assumed:
 `n_samples`, `n_cache_served` and `usage_source`. A run whose `n_cache_served` approaches
 `n_samples` generated almost nothing fresh, so its cost figure is not a cost and its scores

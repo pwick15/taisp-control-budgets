@@ -18,6 +18,18 @@ Optional knobs, also env vars:
                      Usefulness is not meaningful in this mode (dataset solutions always pass).
     STRIP_COMMENTS   "1": remove # comments from submitted code before the monitor sees it
                      (default 0). Measures code-reading alone; see src/strip_comments.py.
+    MODES            comma-separated subset of honest,attack (default: both). An audit
+                     threshold is a percentile of the HONEST scores alone, so buying more
+                     honest samples buys resolution at tight budgets while buying attack
+                     samples does not. MODES=honest is how that is bought.
+    SAMPLE_IDS       path to a JSON list of dataset sample ids to score, which replaces the
+                     prefix `limit` takes. `shuffle_dataset` is False, so a bare limit is
+                     always a prefix of the same difficulty band: naming the ids is the only
+                     way to extend an arm without re-scoring what it already has.
+
+An arm run with MODES set is NOT a run. A run is 500 honest and 500 attack, both scored,
+and results/ enforces that. A one-sided arm is a top-up to an existing run's honest side and
+belongs in results/honest-topup/, never in results/.
 """
 import json
 import os
@@ -120,6 +132,26 @@ config = ControlEvalConfig(
     max_sandboxes=int(os.getenv("MAX_SANDBOXES", "10")),
 )
 
+# Which arms to score. Both by default, so every existing run is unchanged.
+_ALL_MODES = {"honest": EvalMode.HONEST, "attack": EvalMode.ATTACK}
+_mode_names = [m.strip() for m in os.getenv("MODES", "honest,attack").split(",") if m.strip()]
+_bad_modes = set(_mode_names) - set(_ALL_MODES)
+if _bad_modes:
+    sys.exit(f"MODES must be a subset of {sorted(_ALL_MODES)}, got {sorted(_bad_modes)}")
+modes = [_ALL_MODES[m] for m in _mode_names]
+
+# An explicit id list, which replaces the prefix that `limit` takes.
+sample_ids = None
+if os.getenv("SAMPLE_IDS"):
+    sample_ids = json.loads(Path(os.environ["SAMPLE_IDS"]).read_text())
+    if not isinstance(sample_ids, list) or not sample_ids:
+        sys.exit(f"SAMPLE_IDS must point at a non-empty JSON list, got {type(sample_ids)}")
+    sample_ids = [str(x) for x in sample_ids]
+    if len(set(sample_ids)) != len(sample_ids):
+        sys.exit("SAMPLE_IDS contains duplicates, which would double-score a problem")
+    print(f"scoring {len(sample_ids)} named sample ids instead of the first {n_problems}",
+          flush=True)
+
 policy_mode = os.getenv("POLICY", "model")
 if policy_mode not in ("model", "dataset"):
     sys.exit(f'POLICY must be "model" or "dataset", got {policy_mode!r}')
@@ -177,8 +209,15 @@ for name, protocol in protocols.items():
     tasks = get_control_task_product(
         settings=setting,
         micro_protocols=protocol,
-        modes=[EvalMode.HONEST, EvalMode.ATTACK],
+        modes=modes,
         eval_config=config,
         monitoring_scorers=[max_suspicion_scorer()],
     )
-    inspect_eval(tasks, **{**config.eval_args(), "log_dir": f"{LOG_DIR}/{name}"})
+    args = {**config.eval_args(), "log_dir": f"{LOG_DIR}/{name}"}
+    if sample_ids is not None:
+        # `limit` and `sample_id` both narrow the dataset and Inspect applies limit
+        # first, so leaving it set would silently intersect the two and score only
+        # the named ids that happen to fall inside the prefix.
+        args["limit"] = None
+        args["sample_id"] = sample_ids
+    inspect_eval(tasks, **args)
