@@ -50,9 +50,11 @@ So we apply two conditions before calling a pair separated: the interval must
 clear zero by more than one sample's worth, **and** the cutoff must rest on at
 least 5 honest rows. Under that test:
 
-- 31 monitors are compared against Sonnet at some shared FPR
-- **7 share an operating point resting on >=5 honest rows**, all at 1.00%
+- 37 monitors are compared against Sonnet at some shared FPR
+- **10 share an operating point resting on >=5 honest rows**
 - **Haiku 5.5 xhigh is among them**, through its wider-scale arms
+- nine of the ten sit at 1.00% on exactly 5 honest rows; the tenth is the one
+  comfortable rung in the study, and it belongs to the weakest monitor
 
 > **Updated 2026-11-01, and the original finding has been overturned by the fix
 > this document recommended.** As first written, only 3 monitors shared an
@@ -68,22 +70,34 @@ least 5 honest rows. Under that test:
 
 The pairs that survive the 5-honest-row bar, worst gap first:
 
-| other monitor | shared FPR | Sonnet | other | gap | 95% CI |
-|---|---|---|---|---|---|
-| `haiku55-xhigh-scale200-n500-strip` | 1.00% | 86.8% | 78.0% | +8.8 | [+0.4, +27.6] |
-| `haiku55-xhigh-scale100-n500-strip` | 1.00% | 86.8% | 69.8% | +17.0 | [+1.4, +24.4] |
-| `glm53` | 1.00% | 86.8% | 64.4% | +22.4 | [+9.8, +31.2] |
-| `qwen38omniflash-medium` | 1.00% | 86.8% | 52.0% | +34.8 | [+22.6, +83.8] |
-| `glm53-efforthigh` | 1.00% | 86.8% | 51.2% | +35.6 | [+30.0, +51.4] |
-| `luna-none` | 1.00% | 86.8% | 38.8% | +48.0 | [+41.4, +79.2] |
-| `gptoss120b-low` | 1.00% | 86.8% | 7.4% | +79.4 | [+72.6, +85.0] |
+| other monitor | shared FPR | rows | Sonnet | other | gap | 95% CI |
+|---|---|---|---|---|---|---|
+| `haiku55-xhigh-scale200-n500-strip` | 1.00% | 5 | 86.8% | 78.0% | +8.8 | [+0.2, +27.2] |
+| `haiku55-xhigh-scale100-n500-strip` | 1.00% | 5 | 86.8% | 69.8% | +17.0 | [+1.6, +25.2] |
+| `glm53` | 1.00% | 5 | 86.8% | 64.4% | +22.4 | [+10.2, +31.4] |
+| `luna-scale100-n500-strip` | 1.00% | 5 | 86.8% | 55.4% | +31.4 | [+22.6, +43.6] |
+| `qwen38omniflash-medium` | 1.00% | 5 | 86.8% | 52.0% | +34.8 | [+22.8, +84.4] |
+| `glm53-efforthigh` | 1.00% | 5 | 86.8% | 51.2% | +35.6 | [+30.0, +51.0] |
+| `gemma426b-scale100-n500-strip` | 1.00% | 5 | 86.8% | 39.2% | +47.6 | [+34.0, +63.8] |
+| `luna-none` | 1.00% | 5 | 86.8% | 38.8% | +48.0 | [+41.4, +78.8] |
+| `gemma3-4b-scale100-n500-strip` | **9.20%** | **46** | 93.2% | 17.2% | +76.0 | [+64.8, +82.4] |
+| `gptoss120b-low` | 1.00% | 5 | 86.8% | 7.4% | +79.4 | [+72.0, +85.0] |
 
-Every one of these rests on exactly 5 honest rows, which is the bar and not a
+Nine of the ten rest on exactly 5 honest rows, which is the bar and not a
 comfortable margin, and the intervals are correspondingly wide. The two Haiku
 entries are the interesting ones: at a matched 1.00% false-positive rate Sonnet
 leads its 0-100 arm by 17.0 points and its 0-200 arm by 8.8, both separated from
-zero but with lower bounds of +1.4 and +0.4. Treat them as "separated, barely"
+zero but with lower bounds of +1.6 and +0.2. Treat them as "separated, barely"
 rather than as a measured gap.
+
+The Gemma 3 4B row is the exception and it is instructive. It is the only pair in
+the study whose shared cutoff rests on a comfortable number of honest rows, 46,
+and the interval is correspondingly the narrowest. It gets there by being so
+coarse that the only rate it and Sonnet can both express is 9.20%, which is 9x
+the headline budget and not an operating point anyone would deploy. So the one
+well-powered comparison the study owns is between the best monitor and the worst
+at a price nobody would pay, which is the clearest statement available of why
+resolution and not sample size is the binding constraint.
 
 ## Why this points straight at the score-resolution fix
 
