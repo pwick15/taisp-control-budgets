@@ -78,6 +78,12 @@ PRICES = {
     # DeepInfra's rates for the same weights, as a deployable-cost proxy rather than a
     # price Google charges. https://deepinfra.com/pricing
     "google/gemma-4-26b-a4b-it": (0.07, 0.34, 0.07, 0.07),
+    # The same weights reached through the proxy, which reports the model id with the
+    # provider's own capitalisation. Dict lookup is case-sensitive, so the lowercase key
+    # above does not match and the run came back with an empty cost column until this
+    # entry existed. DeepInfra reports no per-call `estimated_cost` on this route, so
+    # unlike the GLM and Gemma 3 rows these rates are unverified against a provider bill.
+    "openai-api/litellm/deepinfra/google/gemma-4-26B-A4B-it": (0.07, 0.34, 0.07, 0.07),
     "openai-api/litellm/deepinfra/google/gemma-3-4b-it": (0.05, 0.10, 0.05, 0.05),
     "openai-api/litellm/deepinfra/google/gemma-3-27b-it": (0.08, 0.16, 0.08, 0.08),
 }
