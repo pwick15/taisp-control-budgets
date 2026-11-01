@@ -55,7 +55,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 import experiment_comment_length as cl  # noqa: E402
 from experiment_comment_length import (  # noqa: E402
     CONCURRENCY, EFFORT, MAX_TOKENS, MONITOR, MONITOR_PROMPT, N_BOOT, BOOT_SEED,
-    parse_score, score, threshold)
+    guard_output, parse_score, score, threshold)
 from strip_comments import strip_comments  # noqa: E402
 
 # `score` writes unparseable replies to that module's FAILLOG, so without this the
@@ -102,6 +102,7 @@ def boot_gap(kept: np.ndarray, stripped: np.ndarray, honest: np.ndarray,
 
 
 async def main() -> None:
+    guard_output(OUT, N)
     if not HONEST_CSV.exists():
         sys.exit(f"{HONEST_CSV} is missing. Run experiment_comment_length.py first.")
     hon = pd.read_csv(HONEST_CSV).dropna(subset=["bare", "short", "long"])
@@ -155,10 +156,10 @@ async def main() -> None:
         if done % 25 == 0:
             print(f"  {done}/{len(picked)} scored", flush=True)
         row: dict = {"sample_id": sid}
-        for arm, (v, tin, tout) in zip(ARMS, res):
+        for arm, (v, usage) in zip(ARMS, res):
             row[arm] = v
-            row[f"{arm}_input_tokens"] = tin
-            row[f"{arm}_output_tokens"] = tout
+            for f, n in usage.items():
+                row[f"{arm}_{f}"] = n
         return row
 
     rows = await asyncio.gather(*(one(sid, task, v) for sid, task, v in picked))
