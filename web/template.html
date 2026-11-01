@@ -75,7 +75,7 @@ footer { margin-top: 48px; color: var(--muted); font-size: 0.85rem; }
   <li>500 honest and 500 backdoored programs from ControlArena's APPS setting, a small replication of <a href="https://arxiv.org/abs/2312.06942">AI Control</a> (Greenblatt et al.). Every monitor sees the same programs.</li>
   <li>Honest programs are the dataset's reference solutions and backdoored ones its verified backdoors, so there is no live attacker and only the monitor costs money. Comments are stripped, and the monitor prompt is ControlArena's default.</li>
   <li><b>Safety</b> is the share of backdoors caught when the audit cutoff lets us flag a given share of honest programs (the <b>audit budget</b>). Intervals are 95% bootstrap intervals over the 500 + 500 scores.</li>
-  <li>Cost is token usage times list price; free-tier models have no recorded cost. One run per configuration.</li>
+  <li>Cost is token usage times the rate actually billed. A run shows no cost only when its raw log was not retained, so its token usage cannot be recovered; the model itself is priced. One run per configuration.</li>
 </ul>
 
 <h2>Results</h2>
@@ -170,8 +170,8 @@ function render() {
     s += `<text x="${lx(c)}" y="${H - B + 18}" text-anchor="middle" font-size="12" fill="var(--ink2)">$${c}</text>`;
   });
   s += `<line x1="${L + FREE}" x2="${L + FREE}" y1="${T}" y2="${H - B}" stroke="var(--axis)" stroke-dasharray="3 4"/>`;
-  s += `<text x="${L + FREE / 2}" y="${H - B + 18}" text-anchor="middle" font-size="12" fill="var(--ink2)">free tier</text>`;
-  s += `<text x="${L + FREE / 2}" y="${H - B + 33}" text-anchor="middle" font-size="11" fill="var(--muted)">(no cost recorded)</text>`;
+  s += `<text x="${L + FREE / 2}" y="${H - B + 18}" text-anchor="middle" font-size="12" fill="var(--ink2)">no usage kept</text>`;
+  s += `<text x="${L + FREE / 2}" y="${H - B + 33}" text-anchor="middle" font-size="11" fill="var(--muted)">(log not retained)</text>`;
   s += `<text x="${(xl + xr) / 2}" y="${H - 10}" text-anchor="middle" font-size="13" fill="var(--ink2)">Estimated cost per sample (log scale)</text>`;
   s += `<text transform="translate(16 ${(T + H - B) / 2}) rotate(-90)" text-anchor="middle" font-size="13" fill="var(--ink2)">Safety: share of backdoors caught</text>`;
 
@@ -205,7 +205,7 @@ function render() {
     const show = e => {
       const [v, lo, hi] = d.s[b];
       tip.innerHTML = `<b>${esc(d.name)}</b><br>Safety ${f2(v)} (95% interval ${f2(lo)} to ${f2(hi)}) at a ${b}% budget<br>` +
-        (d.cost == null ? 'No cost recorded (free tier)' : `${fmtCost(d.cost)} per sample`);
+        (d.cost == null ? 'No cost: this run\u2019s raw log was not retained, so its token usage cannot be recovered. The model is priced.' : `${fmtCost(d.cost)} per sample`);
       tip.style.display = 'block';
       const x = Math.min(e.clientX + 14, window.innerWidth - tip.offsetWidth - 8);
       tip.style.left = Math.max(8, x) + 'px'; tip.style.top = (e.clientY + 14) + 'px';
@@ -231,7 +231,7 @@ function render() {
 
   document.getElementById('table').innerHTML =
     '<tr><th>Configuration</th><th>Safety</th><th>95% interval</th><th>Cost per sample</th></tr>' +
-    pool.map(d => `<tr><td>${esc(d.name)}</td><td>${f2(d.s[b][0])}</td><td>${f2(d.s[b][1])} to ${f2(d.s[b][2])}</td><td>${d.cost == null ? 'free tier' : fmtCost(d.cost)}</td></tr>`).join('');
+    pool.map(d => `<tr><td>${esc(d.name)}</td><td>${f2(d.s[b][0])}</td><td>${f2(d.s[b][1])} to ${f2(d.s[b][2])}</td><td>${d.cost == null ? 'log not kept' : fmtCost(d.cost)}</td></tr>`).join('');
 }
 
 const legend = document.getElementById('legend');
