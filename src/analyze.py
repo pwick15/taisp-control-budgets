@@ -237,9 +237,12 @@ def main() -> None:
             print(f"  cold cost ${cost:.3f}; this execution billed ${cost_billed:.3f} "
                   f"({cost_billed / cost:.1%}) because of cache hits")
         if cost is not None and legacy is not None and abs(legacy - cost) > 1e-9:
+            # legacy is 0 when every call was cache-served, which is the normal case for a
+            # repair pass, so the ratio is undefined rather than large.
+            factor = f"{cost / legacy:.2f}x" if legacy > 0 else "undefined, the old figure was $0"
             print(f"  the old sample-level denominator would have reported "
                   f"${legacy / len(df):.5f}/sample against ${cost / len(df):.5f}, "
-                  f"a factor of {cost / legacy:.2f}")
+                  f"a factor of {factor}")
         print(f"usefulness: {usefulness:.2f}")
         print(f"tokens per sample by model: { {m: round(t / len(df)) for m, t in tokens.items()} }")
         if cost is not None:
