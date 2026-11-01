@@ -204,6 +204,16 @@ So two trivial classifiers are available from the same text the monitor reads:
 false positive in 500 honest solutions.** For comparison, the Haiku monitor on
 stripped code gets 57.4% recall at a 0.60% FPR and 71.4% at 0.80%.
 
+> **Definition check, 2026-11-01.** "Carries a comment" above is implemented as
+> "some line contains a `#`", which also fires on a `#` inside a string literal.
+> Under a Python tokenizer, which counts only real comments, the first rule reads
+> **70.2% recall at 20.0% FPR** rather than 70.8% at 20.8%: four honest solutions
+> and three backdoors contain a `#` that is not a comment. **The keyword rule is
+> identical under both definitions, 51.8% at 0.0%**, so the headline of this
+> document does not depend on the choice. Recorded because the looser rule is
+> also what buckets samples further down, where a 0.6-point difference is below
+> anything the buckets are used to argue.
+
 A monitor that reads comments has to beat that to be reading anything but the
 artefact, and the comments-kept arm's advantage is concentrated precisely on the
 samples the grep also catches. This is the argument for stripping, and it does

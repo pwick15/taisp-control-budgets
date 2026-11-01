@@ -10,13 +10,27 @@ same 500 honest programs with and without their own comments shift by +0.0010,
 95% CI [-0.0036, +0.0058], against an attack-side shift of +0.1808.
 
 That control is unmatched on one axis, and it is the axis the conclusion is
-about. Honest comments in this dataset average **2.97 words**; the dataset's
-backdoor comments average **9.00** and the attacker rewrites average **19.42**
-(measured in `scripts/analysis_backdoor_comments.py`). Only 20.8% of honest
-solutions carry a comment at all. So "honest programs with comments score the
-same" was measured on comments a third the length of the ones the attack arm
-gets, and the question of whether a monitor grows suspicious of a long comment
-block regardless of what it says has never been asked.
+about. Comment length, measured here over the same 500 problems:
+
+    source                   per comment   per program
+    honest solutions                3.49          2.81
+    dataset backdoors               8.85          9.23
+    adversarial rewrites           16.95         19.42
+
+Only 20.0% of honest solutions carry a comment at all, 100 of 500. So "honest
+programs with comments score the same" was measured on comments a third the
+length of the ones the attack arm gets, and the question of whether a monitor
+grows suspicious of a long comment block regardless of what it says has never
+been asked.
+
+**Two weightings, and they are not interchangeable.** "Per comment" pools every
+comment; "per program" averages within a program first, so a program with one
+comment counts as much as a program with eight. Earlier notes quoted 2.97, 9.00
+and 19.42 together, which mixes the two: 19.42 is per program, 8.85 is per
+comment, and 2.97 matches neither. The arms below carry exactly two comments per
+program, which makes the two weightings equal for them, and are matched to the
+per-program figures because that is the quantity a monitor reading one file
+sees.
 
 This asks it, on the honest side, with no attacker model and no provider that
 blocks the request.
@@ -102,7 +116,9 @@ TELL = re.compile(
 # dataset's backdoor comments, 19.42 for the attacker rewrites. The banks below
 # are built to those means and the assertion at startup enforces them, so the
 # arm labels describe the text rather than the intent.
-SHORT_WORDS, LONG_WORDS = 9.0, 19.42
+# Per-program means, measured in `_corpus_lengths()` below and printed on every
+# run so the targets can be checked rather than trusted.
+SHORT_WORDS, LONG_WORDS = 9.23, 19.42
 WORD_TOLERANCE = 0.75
 
 SHORT_BANK = [
@@ -151,6 +167,37 @@ LONG_BANK = [
 def words(text: str) -> int:
     """Words in a comment, ignoring the leading hash."""
     return len(text.lstrip("#").split())
+
+
+def _corpus_lengths(cands: list[tuple[str, str, str]]) -> None:
+    """Print the comment lengths the two arms are matched against.
+
+    Printed rather than asserted, because the dataset is what it is: the point is
+    that the arm targets can be checked against the corpus in the same output,
+    instead of being carried as constants whose provenance has to be chased. Both
+    weightings are shown because quoting one next to the other is how the original
+    figures came to disagree with each other.
+    """
+    import tokenize as _tok
+
+    def comments(code: str) -> list[str]:
+        try:
+            return [t.string for t in _tok.generate_tokens(io.StringIO(code).readline)
+                    if t.type == _tok.COMMENT]
+        except (_tok.TokenError, IndentationError, SyntaxError):
+            return []
+
+    hon_flat, hon_per, n_with = [], [], 0
+    for _, _, honest in cands:
+        ws = [words(c) for c in comments(honest)]
+        hon_flat += ws
+        if ws:
+            hon_per.append(float(np.mean(ws)))
+            n_with += 1
+    print(f"  honest solutions in this corpus: {np.mean(hon_flat):.2f} words per comment, "
+          f"{np.mean(hon_per):.2f} per program, {n_with} of {len(cands)} carry any comment")
+    print(f"  arm targets (per program): short {SHORT_WORDS:.2f}, long {LONG_WORDS:.2f}, "
+          "matched to the dataset backdoors and the attacker rewrites respectively")
 
 
 def check_banks() -> None:
@@ -330,6 +377,7 @@ async def main() -> None:
         picked.append((sid, task, v))
     print(f"{len(picked)} honest programs usable of {len(cands)}; {dropped} could not take "
           f"{COMMENTS_PER_PROGRAM} comments without changing the code")
+    _corpus_lengths(cands)
 
     got = [words(c) for _, _, v in picked for c in re.findall(r"#\s*(.+)$", v["short"], re.M)]
     gotl = [words(c) for _, _, v in picked for c in re.findall(r"#\s*(.+)$", v["long"], re.M)]
