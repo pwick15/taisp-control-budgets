@@ -149,6 +149,12 @@ def usage_from_events(log_dir: str, protocol: str) -> tuple[dict, dict, set[str]
     log per arm and the same problem id occurs in both. Keying on the id alone sums the
     two arms together and doubles every token count.
 
+    Several logs MAY cover one arm, and that is not by itself an error: a run executed in
+    passes writes one log per pass, and when the passes cover disjoint problems summing
+    them is exactly right. What is never right is summing the same (arm, problem) twice,
+    whether from a superseded re-run or from overlapping passes, so that is what this
+    refuses: the key, not the arm.
+
     Returns (cold, billed, cache_served):
       cold    what a cold run of this configuration spends, every call counted. This is
               the protocol's cost, and the number every cross-run comparison wants.
@@ -166,19 +172,20 @@ def usage_from_events(log_dir: str, protocol: str) -> tuple[dict, dict, set[str]
     billed: dict[str, dict] = {}
     cache_served: set[str] = set()
     entries = list(list_eval_logs(f"{log_dir}/{protocol}"))
-    seen_modes: dict[str, str] = {}
+    seen_keys: dict[str, str] = {}
     for entry in entries:
         log = read_eval_log(entry.name)
         for smp in (log.samples or []):
             key = f"{(smp.metadata or {}).get('eval_mode')}:{smp.id}"
-            # Two logs covering the same arm would sum into one key and silently double
-            # every token count, which is the bug this keying was introduced to fix.
-            mode = (smp.metadata or {}).get("eval_mode")
-            if seen_modes.setdefault(mode, entry.name) != entry.name:
+            # The same (arm, problem) reaching this twice would sum into one key and
+            # silently double its token count, which is the bug this keying was
+            # introduced to fix. Disjoint passes of one arm are fine and are summed.
+            if seen_keys.setdefault(key, entry.name) != entry.name:
                 raise SystemExit(
-                    f"{log_dir}/{protocol} has more than one log covering the {mode!r} arm "
-                    f"({seen_modes[mode]} and {entry.name}). Summing both would double every "
-                    f"token count. Move the superseded pass out before analysing.")
+                    f"{log_dir}/{protocol} covers {key!r} in two logs "
+                    f"({seen_keys[key]} and {entry.name}). Summing both would double its "
+                    f"token count. If one is a superseded pass, move it out; if the passes "
+                    f"are meant to be disjoint, they are not.")
             c = cold.setdefault(key, nest())
             b = billed.setdefault(key, nest())
             states = set()
