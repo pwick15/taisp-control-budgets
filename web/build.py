@@ -41,6 +41,7 @@ RUNS = {
     "dataset-gemini35fl-medium-tm-n500-strip": ("Gemini 3.5 Flash · medium", "gemini35fl", "google", "medium"),
     "dataset-gemini35fl-high-tm-n500-strip": ("Gemini 3.5 Flash · high", "gemini35fl", "google", "high"),
     "dataset-gemini35fl-xhigh-tm-n500-strip": ("Gemini 3.5 Flash · xhigh", "gemini35fl", "google", "xhigh"),
+    "dataset-mistrallarge4-tm-n500-strip": ("Mistral Large 4", "mistrallarge4", "mistral", "default"),
     "dataset-gemma3-4b-tm-n500-strip": ("Gemma 3 4B", "gemma3", "google", "default"),
 }
 
@@ -49,7 +50,7 @@ MODEL_NAMES = {
     "sonnet55": "Sonnet 5.5", "haiku55": "Haiku 5.5", "haiku45": "Haiku 4.5", "luna": "GPT-6 Luna",
     "gptoss": "gpt-oss-120b", "glm53": "GLM-5.3", "qwen38": "Qwen 3.8 Omni Flash",
     "gemini35fl": "Gemini 3.5 Flash", "gemini35lite": "Gemini 3.5 Flash-Lite",
-    "gemma4": "Gemma 4 26B-A4B", "gemma3": "Gemma 3 4B",
+    "gemma4": "Gemma 4 26B-A4B", "gemma3": "Gemma 3 4B", "mistrallarge4": "Mistral Large 4",
 }
 
 

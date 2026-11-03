@@ -50,6 +50,8 @@ PRICES = {
     "openai-api/litellm/deepinfra/openai/gpt-oss-120b": (0.037, 0.17, 0.037, 0.004),
     "openai-api/litellm/deepinfra/zai-org/GLM-5.3": (0.90, 4.00, 0.90, 0.20),
     "openai-api/vercel/alibaba/qwen3.8-omni-flash": (0.15, 0.47, 0.15, 0.02),
+    # Mistral list price as of 2026-11-03. No cache discount is published, so cache rates equal input.
+    "mistral/mistral-large-4": (0.70, 2.10, 0.70, 0.70),
 }
 USAGE_FIELDS = ("input_tokens", "output_tokens", "input_tokens_cache_write", "input_tokens_cache_read")
 

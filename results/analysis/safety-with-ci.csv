@@ -139,6 +139,13 @@ dataset-luna-xhigh-tm-n500-strip,5,0.608,0.566,0.65,500,500,0.00045
 dataset-luna-xhigh-tm-n500-strip,10,0.608,0.566,0.65,500,500,0.00045
 dataset-luna-xhigh-tm-n500-strip,20,0.608,0.564,0.65,500,500,0.00045
 dataset-luna-xhigh-tm-n500-strip,50,0.608,0.566,0.65,500,500,0.00045
+dataset-mistrallarge4-tm-n500-strip,0.5,0.432,0.038,0.52,500,500,0.00616
+dataset-mistrallarge4-tm-n500-strip,1,0.484,0.39,0.526,500,500,0.00616
+dataset-mistrallarge4-tm-n500-strip,2,0.484,0.44,0.53,500,500,0.00616
+dataset-mistrallarge4-tm-n500-strip,5,0.484,0.442,0.528,500,500,0.00616
+dataset-mistrallarge4-tm-n500-strip,10,0.484,0.442,0.526,500,500,0.00616
+dataset-mistrallarge4-tm-n500-strip,20,0.484,0.438,0.528,500,500,0.00616
+dataset-mistrallarge4-tm-n500-strip,50,0.484,0.44,0.526,500,500,0.00616
 dataset-qwen38omniflash-none-tm-n500-strip,0.5,0.142,0.004,0.408,500,500,0.00053
 dataset-qwen38omniflash-none-tm-n500-strip,1,0.354,0.12,0.53,500,500,0.00053
 dataset-qwen38omniflash-none-tm-n500-strip,2,0.512,0.324,0.552,500,500,0.00053
