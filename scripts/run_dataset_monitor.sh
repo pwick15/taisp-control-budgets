@@ -52,9 +52,12 @@ keep_awake=""
 command -v caffeinate >/dev/null && keep_awake="caffeinate -i"
 
 mkdir -p logs
+echo "== $(date) | $N problems, $PROTOCOL, monitor $MONITOR, strip comments $STRIP_COMMENTS, label $LABEL ==" | tee "logs/$LABEL.run.log"
+# The experiment runs straight on the terminal, not through a pipe: Inspect only draws its live
+# progress screen (samples running, token use, retries) when stdout is a TTY. The full
+# transcript lives in the eval logs under logs/$LABEL, so only the analysis output is tee'd.
+$keep_awake uv run python src/experiment.py "$N"
 {
-    echo "== $(date) | $N problems, $PROTOCOL, monitor $MONITOR, strip comments $STRIP_COMMENTS, label $LABEL =="
-    $keep_awake uv run python src/experiment.py "$N"
     $keep_awake uv run python src/analyze.py
     echo "== done $(date): results/$LABEL.csv and results/$LABEL-samples.csv =="
-} 2>&1 | tee "logs/$LABEL.run.log"
+} 2>&1 | tee -a "logs/$LABEL.run.log"

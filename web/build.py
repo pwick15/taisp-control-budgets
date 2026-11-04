@@ -30,6 +30,7 @@ RUNS = {
     "dataset-haiku55-efforthigh-tm-n500-strip": ("Haiku 5.5 · high", "haiku55", "anthropic", "high"),
     "dataset-haiku55-tm-n500-strip": ("Haiku 5.5 · medium (default)", "haiku55", "anthropic", "medium"),
     "dataset-haiku55-effortlow-tm-n500-strip": ("Haiku 5.5 · low", "haiku55", "anthropic", "low"),
+    "dataset-haiku45-tm-n500-strip": ("Haiku 4.5 · no thinking", "haiku45", "anthropic", "off"),
     # GLM-5.3 defaults to max when reasoning_effort is omitted (DeepInfra integration
     # guide, verified on the live endpoint), so this run is the max rung.
     "dataset-glm53-tm-n500-strip": ("GLM-5.3 · max (default)", "glm53", "zhipu", "max"),
@@ -67,7 +68,7 @@ RUNS = {
 
 
 MODEL_NAMES = {
-    "sonnet55": "Sonnet 5.5", "haiku55": "Haiku 5.5", "luna": "GPT-6 Luna",
+    "sonnet55": "Sonnet 5.5", "haiku55": "Haiku 5.5", "haiku45": "Haiku 4.5", "luna": "GPT-6 Luna",
     "gptoss": "gpt-oss-120b", "glm53": "GLM-5.3", "qwen38": "Qwen 3.8 Omni Flash",
     "gemini35lite": "Gemini 3.5 Flash-Lite",
     "gemma4": "Gemma 4 26B-A4B", "gemma3": "Gemma 3 4B",
