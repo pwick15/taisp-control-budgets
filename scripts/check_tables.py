@@ -25,6 +25,7 @@ intervals are reproducible rather than merely stable in distribution.
 """
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -106,6 +107,37 @@ def main() -> int:
                     continue
                 fail(f"{table.name}: {col}={name!r} matches no run in results/"
                      + (" (it is SUPERSEDED)" if name in (retired | retired_passes) else ""))
+    print("     done")
+
+    print("1b. run names cited in the prose exist too")
+    # Checks 1 and 1b are the same check on two surfaces. A run was once renamed and four
+    # committed TABLES kept the old name in 21 rows, which is what check 1 exists for; the
+    # markdown that explains those tables is just as capable of naming a run that does not
+    # exist, and nothing looked there. A note arrived citing `dataset-glm53-low-...` and
+    # `dataset-glm53-high-...`, neither of which has ever existed, and a reader following
+    # it would have concluded the ablation rungs were missing.
+    #
+    # Only backticked tokens that look like a run name are considered, so ordinary prose
+    # cannot trip this. Two spellings are legitimate and accepted: a bare run name, and a
+    # run name with the file suffix it is being referred to as.
+    CITE = re.compile(r"`(dataset[0-9A-Za-z._-]*|sonnet55-n[0-9][0-9A-Za-z._-]*)`")
+    topups = {_run_name(q) for q in (RESULTS / "honest-topup").glob("*-samples.csv")}
+    citable = live | retired | retired_passes | topups
+    docs = sorted({*Path(".").glob("*.md"), *RESULTS.glob("**/*.md"),
+                   *Path("experiments").glob("**/*.md")})
+    for doc in docs:
+        for name in sorted(set(CITE.findall(doc.read_text(encoding="utf-8")))):
+            bare = name
+            for suffix in ("-samples.csv", ".partial.csv", ".csv", ".SUPERSEDED.md"):
+                bare = bare.removesuffix(suffix)
+            # A POLICY value, a glob and a truncation are not run names.
+            if bare in ("dataset",) or "*" in bare or bare.endswith((".", "-")):
+                continue
+            if bare in citable:
+                continue
+            fail(f"{doc}: cites `{name}`, which matches no run in results/, "
+                 f"results/superseded/ or results/honest-topup/")
+    print(f"     {len(docs)} documents")
     print("     done")
 
     print("2. complete runs appear in the tables that index every run")
