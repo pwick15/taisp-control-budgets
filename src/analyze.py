@@ -86,6 +86,25 @@ PRICES = {
     "openai-api/litellm/deepinfra/google/gemma-4-26B-A4B-it": (0.07, 0.34, 0.07, 0.07),
     "openai-api/litellm/deepinfra/google/gemma-3-4b-it": (0.05, 0.10, 0.05, 0.05),
     "openai-api/litellm/deepinfra/google/gemma-3-27b-it": (0.08, 0.16, 0.08, 0.08),
+    # Mistral's own API list rates, from the official table at
+    # https://docs.mistral.ai/inference/pricing (Generalist models), captured 2026-11-04.
+    # Worth the citation because the aggregators disagree: several list Mistral Large 4 at
+    # 1.36/4.18, which is about twice the published rate, and mistral.ai/pricing's FAQ
+    # quotes 0.50/1.50 for an older "Mistral Large". Mistral publishes input, cached input
+    # and output but no separate cache-write rate, so cache write takes the input rate as
+    # it does for Gemini above.
+    #
+    # Unlike the GLM and Gemma 3 rows these are NOT verified against a provider bill:
+    # scripts/check_prices.py reads the per-call `estimated_cost` out of model events, and
+    # these runs' logs carry no model events at all. They came from a collaborator's
+    # account, so a non-default tier would also not show up here.
+    "mistral/mistral-large-4": (0.70, 2.10, 0.70, 0.07),
+    "mistral/ministral-14b-2512": (0.20, 0.20, 0.20, 0.02),
+    # `mistral/ministral-8b-latest` is deliberately absent. The alias resolved to whatever
+    # was current when that run executed, and the only 8B on the pricing table now is
+    # "Ministral 3 8B" (v25.12) at 0.15/0.015/0.15, while the model the alias most likely
+    # named, ministral-8b-2410, was retired on 2025-12-31 with no price published. Pricing
+    # it would be a guess about which weights ran, and the run is n=50 anyway, below scope.
 }
 USAGE_FIELDS = ("input_tokens", "output_tokens", "input_tokens_cache_write", "input_tokens_cache_read")
 
