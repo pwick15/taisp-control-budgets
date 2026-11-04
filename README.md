@@ -205,24 +205,34 @@ Three columns in `results/<run>.csv` exist to make this checkable rather than as
 are inherited from an earlier pass.
 
 **They are not present on every run.** A run only gets them if its raw log survived, since
-they are derived from the per-call model events, and **14 runs** predate that. For those the
-cost and token columns are whatever the old sample-level accounting produced, which is blind
-to cached calls and can understate badly. **Five of the 14 are in the comparable n=500 set**:
+they are derived from the per-call model events, and **6 runs** predate that: the six n=30
+pilots, three configurations each kept and stripped. For those the cost and token columns are
+whatever the old sample-level accounting produced, which is blind to cached calls and can
+understate badly. **None of the comparable n=500 set is affected any more.**
 
-- `dataset500-sonnet55-um-strip`, which is the lead row of the report chart
-- `dataset500-gemini35lite-tm-strip`
-- `dataset500-gemma426b-tm-strip`
-- `dataset500-qwen38omniflash-high-tm-strip`
-- `dataset500-qwen38omniflash-medium-tm-strip`
-
-It was seven. Two were recovered by noticing that their eval logs had been written under
-`trajectories/` rather than `logs/`, which nothing had looked in:
+It was 14, and five of those were in the n=500 set, including `dataset500-sonnet55-um-strip`,
+the lead row of the report chart. Two were recovered by noticing that their eval logs had been
+written under `trajectories/` rather than `logs/`, which nothing had looked in:
 `dataset-haiku55-tm-n500-strip` and `dataset-qwen38omniflash-none-tm-n500-strip`. The first
 matters beyond its own row, because every figure in `results/analysis/REASONING-TOKENS.md`
-is computed from it.
+is computed from it. The remaining five were recovered from the collaborator logs.
+
+`usage_source` takes three values, and the difference between the last two is the whole
+question of whether a cost figure can be trusted:
+
+| value | what it means |
+|---|---|
+| `events` | read from the per-call model events, which see cached calls |
+| `sample_field_complete` | the log records no usage-bearing model events, so the sample-level field is the only source there is, and it covers every sample. Inspect empties that field for a call it serves from cache, so full coverage is the evidence that none was cached and the total is complete |
+| `sample_field` | the field was used and does **not** cover every sample, so the total undercounts by an unknown amount |
+
+That reading holds because these protocols make one monitor call per sample, so sample
+coverage is call coverage. A protocol with several calls per sample could hide a cached one
+inside a sample that still looks populated.
 
 `scripts/check_tables.py` names the current set on every run, so the list is one command
-away rather than a number in prose that goes stale. Treat a cost figure without a
+away rather than a number in prose that goes stale, and it fails a `sample_field` run while
+passing a `sample_field_complete` one by name with its reason. Treat a cost figure without a
 `usage_source` as unverifiable rather than as agreeing with the recomputed ones.
 
 ## Metrics
