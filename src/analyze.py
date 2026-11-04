@@ -105,6 +105,45 @@ def usage_by_model(df: pd.DataFrame) -> dict[str, dict[str, int]]:
     return {model: dict(fields) for model, fields in totals.items()}
 
 
+def field_coverage(df: pd.DataFrame) -> tuple[int, int]:
+    """How many samples carry a populated sample-level `model_usage`, and how many there are.
+
+    This is the one thing that makes the fallback field trustworthy or not. Inspect leaves
+    `model_usage` empty for a call it served from its own cache, which is the mechanism
+    behind this project's worst accounting defect: a run reported 5.8% coverage and a cost
+    understated about seventeenfold because 942 of its 1,000 monitor calls were cache
+    replays. Read the other way, a populated record is evidence the call was live, so a run
+    whose every sample carries one was not served from cache and the field is complete
+    rather than blind. These runs make one monitor call per sample, so sample coverage is
+    call coverage; a protocol with several calls per sample could hide a cached one inside
+    a sample that still looks populated.
+    """
+    col = df["model_usage"]
+    populated = 0
+    for raw in col:
+        if raw is None or (isinstance(raw, float) and pd.isna(raw)):
+            continue
+        usage = json.loads(raw) if isinstance(raw, str) else raw
+        if usage:
+            populated += 1
+    return populated, len(col)
+
+
+def any_usage(per_sample: dict | None) -> bool:
+    """Did the event walk actually recover usage, as opposed to merely finding samples?
+
+    usage_from_events keys every sample it sees, whether or not that sample carried a
+    usage-bearing model event, so the returned dict is non-empty for a log that records
+    no model events at all. Testing the dict itself therefore reads as "events were
+    available" when the truth is "events were available and empty", which silently
+    prefers an all-zero events result over the sample-level field that does hold the
+    numbers. Seven of this study's runs are exactly that shape: their logs carry no
+    model events, and reading the dict as truthy published 0 tokens and $0.00 for runs
+    whose real usage sits in `model_usage`.
+    """
+    return any(fields for fields in (per_sample or {}).values())
+
+
 def sample_reasoning_tokens(df: pd.DataFrame, cold_per_sample: dict | None = None) -> pd.Series:
     """Hidden reasoning tokens per sample, summed over every model that ran on it.
 
@@ -121,7 +160,7 @@ def sample_reasoning_tokens(df: pd.DataFrame, cold_per_sample: dict | None = Non
     relocates its chain of thought into the visible content and reports 0
     (README-glm53-runs.md).
     """
-    if cold_per_sample:
+    if any_usage(cold_per_sample):
         keys = [f"{m}:{i}" for m, i in zip(df["eval_mode"].tolist(), df["id"].tolist())]
         return pd.Series(
             [sum(int(fields.get("reasoning_tokens") or 0)
@@ -227,7 +266,13 @@ def total_usage(per_sample: dict, keys: list[str]) -> dict[str, dict[str, int]]:
 
 
 def est_cost_usd(usage: dict[str, dict[str, int]]) -> float | None:
-    """Dollar estimate from PRICES, or None if any model has no listed price."""
+    """Dollar estimate from PRICES, or None if the cost is not known.
+
+    Empty usage is unknown, not free: summing no models gives 0.0, which reads in a
+    committed table as a measured $0.00 per sample.
+    """
+    if not usage:
+        return None
     if any(model not in PRICES for model in usage):
         return None
     return sum(
@@ -259,18 +304,31 @@ def main() -> None:
         usefulness = compute_usefulness(df)
         keys = [f"{m}:{i}" for m, i in zip(df["eval_mode"].tolist(), df["id"].tolist())]
         cold_per_sample, billed_per_sample, cache_served = usage_from_events(LOG_DIR, protocol)
-        if cold_per_sample:
+        if any_usage(cold_per_sample):
             usage = total_usage(cold_per_sample, keys)
             usage_billed = total_usage(billed_per_sample, keys)
             n_cache_served = sum(1 for k in keys if k in cache_served)
+            usage_source = "events"
         else:
-            # No model events in the log (older or pruned). Fall back to the sample-level
-            # field and say so, because that field is blind to every cached call.
-            print("  WARNING: no model events in this log; usage falls back to the "
-                  "sample-level field, which undercounts any cached call")
+            # The log records no usage-bearing model events (older, pruned, or written by
+            # a record-once monitor-many pass). Fall back to the sample-level field, and
+            # report its coverage rather than just naming it: the field is blind to a
+            # cached call, so partial coverage means the total is an undercount of unknown
+            # size, while full coverage means no sample was served from cache at all.
+            covered, n_rows = field_coverage(df)
+            if covered == n_rows:
+                print(f"  no usage in this log's model events; usage falls back to the "
+                      f"sample-level field, which covers all {n_rows} samples, so no call "
+                      f"was cache-served and the total is complete")
+            else:
+                print(f"  WARNING: no usage in this log's model events; usage falls back "
+                      f"to the sample-level field, which covers only {covered}/{n_rows} "
+                      f"samples. The field is empty for a cache-served call, so this "
+                      f"total undercounts by an unknown amount")
             usage = usage_by_model(df)
             usage_billed = usage
             n_cache_served = -1
+            usage_source = "sample_field_complete" if covered == n_rows else "sample_field"
         # Sum the priced fields only. summing u.values() would add reasoning_tokens on
         # top of the output tokens that already contain them.
         tokens = {m: sum(u.get(f, 0) for f in USAGE_FIELDS) for m, u in usage.items()}
@@ -320,7 +378,7 @@ def main() -> None:
                 # is indistinguishable from a genuinely cheap one.
                 "n_samples": len(df),
                 "n_cache_served": n_cache_served,
-                "usage_source": "events" if cold_per_sample else "sample_field",
+                "usage_source": usage_source,
                 "est_cost_usd_billed_total": (round(cost_billed, 5)
                                               if cost_billed is not None else ""),
             })

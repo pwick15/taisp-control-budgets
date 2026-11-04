@@ -196,9 +196,19 @@ def main() -> int:
             print(f"     note: {run} predates the provenance columns, so its cost cannot "
                   f"be told apart from a cache-served one")
             continue
-        if str(df.usage_source.iloc[0]) != "events":
-            fail(f"{run} has usage_source={df.usage_source.iloc[0]!r}; the sample-level "
-                 f"field is blind to cached calls and undercounts them")
+        source = str(df.usage_source.iloc[0])
+        if source == "sample_field_complete":
+            # The log carries no usage-bearing model events, so the sample-level field is
+            # the only source there is. That is tolerable only because the field covers
+            # every sample: Inspect empties it for a call it serves from cache, so full
+            # coverage is evidence that none was cached and the total is complete. Partial
+            # coverage falls through to the failure below, where it belongs.
+            print(f"     note: {run} has no model events, so its usage comes from the "
+                  f"sample-level field. The field covers every sample, so no call was "
+                  f"cache-served and the total is complete")
+        elif source != "events":
+            fail(f"{run} has usage_source={source!r}; the sample-level field is blind to "
+                 f"cached calls and undercounts them")
         served, total = int(df.n_cache_served.iloc[0]), int(df.n_samples.iloc[0])
         if served > 0.5 * total:
             print(f"     note: {run} was {served}/{total} cache-served, so its scores are "
