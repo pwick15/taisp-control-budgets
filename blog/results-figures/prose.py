@@ -114,16 +114,16 @@ class Prose:
             "numbers": ("<table><thead><tr><th>Model</th><th>Lowest to highest setting</th><th>Caught at 2%</th>"
                         "<th>Change (points)</th><th>Cost multiple</th></tr></thead><tbody>" + "".join(trs) + "</tbody></table>"),
             "takeaway": (
-                f"<p>Reasoning effort is the cheapest lever we found, but what it buys depends on the model. Five of eight "
-                f"models gain 15 to 28 points from their lowest to their highest setting. Haiku 5.5 goes from {p(HL.safety_exact)}% "
+                f"<p>Reasoning effort is the cheapest lever we found, but what it buys depends on the model. It helps six "
+                f"of eight models. Five gain 15 to 28 points from their lowest to their highest setting. Haiku 5.5 goes from {p(HL.safety_exact)}% "
                 f"to {p(HX.safety_exact)}% for {HX.cost / HL.cost:.1f} times the cost. GLM-5.3 gains the most, "
                 f"{p(GL.safety_exact)}% to {p(GM.safety_exact)}%, but pays {GM.cost / GL.cost:.0f} times as much for it.</p>"
-                f"<p>The other three don't follow. Sonnet 5.5 gains 3 points, because it is already near the top with thinking "
-                f"off. Mistral Large 4 doesn't move. Gemini 3.5 Flash-Lite gets worse, from {p(FO.safety_exact)}% with thinking "
+                f"<p>Sonnet 5.5 gains 3 points (95% interval +0.9 to +4.9), a real but small gain, because it already catches "
+                f"85% with thinking off. Mistral Large 4 doesn't move. Gemini 3.5 Flash-Lite gets worse, from {p(FO.safety_exact)}% with thinking "
                 f"off to {p(FX.safety_exact)}% at xhigh.</p>"),
             "debate": [
                 "We agreed on the framing: effort is a measured lever that depends on the model, not a rule. With Marnick's runs "
-                "in, the case is stronger: 5 of 8 gain, one is already saturated, one is flat and one gets worse.",
+                "in, the case is stronger: 6 of 8 gain (five by 15 to 28 points, Sonnet by 3), one is flat and one gets worse.",
                 "Flash-Lite gets one line, nothing more. Marnick's summary page calls its direction unsettled because the order "
                 "flips at a matched 0.2% rate, which rests on a single honest program. At an exact 2% the intervals don't "
                 "overlap. It catches 20 to 29% either way, so nobody would deploy it.",
@@ -545,7 +545,7 @@ and one run per configuration, so none of it is high confidence yet.</p>
 Haiku 5.5 at xhigh caught {p(HX.safety_exact)}% at a 2% budget for {money(HX.cost)} per program. Sonnet 5.5 caught
 {p(S.safety_exact)}% for {money(S.cost)}. If a human can check less than about 1% of outputs, the bigger model's lead
 grows to 12 points or more. (Figures 1 to 3.) <span class="conf">Medium confidence.</span></li>
-<li><b>Measure the effort ladder for your monitor. Don't assume it.</b> Five of eight models gained 15 to 28 points from more effort.
+<li><b>Measure the effort ladder for your monitor. Don't assume it.</b> Six of eight models gained from more effort: five by 15 to 28 points, and Sonnet 5.5, already at 85%, by 3.
 Mistral Large 4 didn't move, and Gemini 3.5 Flash-Lite got 9 points worse. (Figure 2.) <span class="conf">Medium.</span></li>
 <li><b>Don't pick a monitor by price, size or brand.</b> GLM-5.3 at max effort cost {G.cost / S.cost:.1f} times Sonnet and caught {100 * (S.safety_exact - G.safety_exact):.0f} fewer points. Haiku 4.5 cost
 three times Haiku 5.5 at xhigh and caught 36 fewer. (Figure 1.) <span class="conf">High for this setting.</span></li>
@@ -613,11 +613,11 @@ Sonnet from Haiku xhigh, which the summary page said we couldn't do.</p>
 <ol>
 <li>At a 2% audit budget, Sonnet 5.5 catches {p(S.safety_exact)}% of known backdoors and Haiku 5.5 at xhigh reasoning
 catches {p(HX.safety_exact)}%, for about a fifth of the cost. (Figure 1)</li>
-<li>Raising reasoning effort adds 15 to 28 points for five of eight models. One is flat and one gets worse. (Figure 2)</li>
+<li>Raising reasoning effort helps six of eight models: five gain 15 to 28 points, and Sonnet 5.5, already at 85% without thinking, gains 3. Mistral Large 4 is flat, and Gemini 3.5 Flash-Lite gets worse. (Figure 2)</li>
 <li>The cheap monitor keeps up only when humans can check about 2% or more. At 1% Sonnet leads by 12 points. (Figure 3)</li>
 <li>Monitors use so few distinct scores that "2% budget" can mean anything from {span}. Fixing that is free and
 changes some numbers by 16 points. (Figure 4)</li>
-<li>Every monitor catches trigger-shaped backdoors. The 49 that none catch look like ordinary bugs. (Figure 5)</li>
+<li>Trigger-shaped backdoors (an arbitrary <code>if x == 1234</code> check) never got past all seven monitors. The 49 that did all look like ordinary bugs. (Figure 5)</li>
 <li>Which model wrote the backdoor matters more than which model reads it. (Figure 6)</li>
 <li>Half the stored backdoors confess in a comment, so comment handling can swamp monitor differences. (Figure 7)</li>
 </ol>
