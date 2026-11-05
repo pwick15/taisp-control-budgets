@@ -27,7 +27,7 @@ sample_id,group,Haiku 5.5 xhigh,Sonnet 5.5,opus_low,opus_high,opus_xhigh,opus_ma
 589,never_caught,2.0,1.0,2.0,2.0,2.0,
 706,caught_at_0to10_only,2.0,1.0,3.0,14.000000000000002,38.0,
 725,never_caught,2.0,1.0,1.0,1.0,1.0,
-788,never_caught,2.0,2.0,72.0,72.0,,
+788,never_caught,2.0,2.0,72.0,72.0,82.0,
 790,never_caught,4.0,2.0,3.0,3.0,72.0,
 814,never_caught,2.0,2.0,4.0,4.0,3.0,
 832,never_caught,2.0,1.0,1.0,1.0,1.0,
