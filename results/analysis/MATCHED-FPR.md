@@ -83,7 +83,7 @@ The pairs that survive the 5-honest-row bar, worst gap first:
 | `gemma426b-scale100-n500-strip` | 1.00% | 5 | 86.8% | 39.2% | +47.6 | [+34.6, +66.2] |
 | `luna-none` | 1.00% | 5 | 86.8% | 38.8% | +48.0 | [+41.4, +79.4] |
 | `gemma3-4b-scale100-n500-strip` | **9.20%** | **46** | 93.2% | 17.2% | +76.0 | [+65.2, +82.0] |
-| `gptoss120b-low` | 1.00% | 5 | 86.8% | 7.4% | +79.4 | [+71.8, +85.2] |
+| `gptoss120b-low` | 1.00% | 5 | 86.8% | 10.4% | +76.4 | [+69.2, +83.6] |
 
 Eleven of the twelve rest on exactly 5 honest rows, which is the bar and not a
 comfortable margin, and the intervals are correspondingly wide. The two Haiku

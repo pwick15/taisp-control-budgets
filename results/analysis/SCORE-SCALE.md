@@ -46,8 +46,8 @@ has both a 0-10 and a wider-scale arm, nine pairs:
 | GPT-6 Luna, **0-100** | **10** | 69 | **4** | **1.00%** | **0.9107** |
 | Gemma 4 26B-A4B, 0-10 (default) | 5 | 11 | **0** | **none** | 0.6490 |
 | Gemma 4 26B-A4B, **0-100** | **7** | 29 | **2** | **1.00%** | **0.7336** |
-| gpt-oss-120b, 0-10 (default) | 6 | 11 | 3 | 4.60% | 0.7593 |
-| gpt-oss-120b, 0-100 (confounded) | 12 | 31 | 6 | 1.80% | 0.8316 |
+| gpt-oss-120b, 0-10 (default) | 8 | 13 | 4 | 5.60% | 0.8237 |
+| gpt-oss-120b, 0-100 (confounded) | 13 | 32 | 6 | 2.00% | 0.8477 |
 | Qwen3.8 Omni Flash, 0-10 (default) | 5 | 11 | 1 | 1.80% | 0.7477 |
 | Qwen3.8 Omni Flash, 0-100 (confounded) | 13 | 64 | 7 | 1.20% | 0.8969 |
 
