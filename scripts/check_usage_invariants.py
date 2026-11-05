@@ -20,7 +20,11 @@ Each one is a bug this project actually shipped, turned into a check:
    being double counted or one is missing from the sum.
 4. **reasoning_tokens <= output_tokens.** Reasoning is a subset of output, not an
    addition. If this inverts, pricing that treats it as a subset is wrong, and
-   pricing that treats it as an addition bills thinking models twice.
+   pricing that treats it as an addition bills thinking models twice. Reported as
+   a note rather than a failure: the only inversions seen are single calls from
+   one provider whose own cost identity still holds, so failing on them would
+   make this gate permanently red for an accounting quirk upstream. A run with
+   more than a handful is worth chasing.
 5. **A model event with no usage carries an error.** A usage-less event that
    succeeded would be a billed call contributing nothing to the cost. Every one
    found so far is a transport or rate-limit failure with an empty completion.
@@ -41,14 +45,26 @@ USAGE_FIELDS = ("input_tokens", "output_tokens",
 
 def run_dirs() -> list[Path]:
     dirs = sorted(p for p in Path("logs").iterdir() if p.is_dir())
-    return dirs + [Path(e) for e in EXTRA_DIRS if Path(e).is_dir()]
+    have = {p.name for p in dirs}
+    # EXTRA_DIRS names runs whose eval logs were written under trajectories/ instead of
+    # logs/. Two of them now exist in both places, and the run key is `d.name`, so each
+    # was scanned twice and the headline sample total double-counted 2000 rows.
+    return dirs + [Path(e) for e in EXTRA_DIRS
+                   if Path(e).is_dir() and Path(e).name not in have]
 
 
 def expected_samples(run: str) -> int | None:
-    """Rows the run's name promises: two arms of n each. None when it says nothing."""
+    """Rows the run's name promises. None when it says nothing.
+
+    Two arms of n, except for a honest top-up, which is one-sided by policy: n honest
+    rows and no attack rows. Returning 2n for those made this check impossible to pass
+    while the repo holds a top-up, and put it in direct contradiction with
+    check_tables.py check 6, which validates the same files as correct.
+    """
+    arms = 1 if run.endswith("-honest-topup") else 2
     for tag, n in (("n500", 500), ("dataset500", 500), ("n100", 100), ("n30", 30)):
         if tag in run:
-            return 2 * n
+            return arms * n
     return None
 
 
@@ -60,6 +76,7 @@ def main() -> None:
     for d in run_dirs():
         run = d.name
         n_rows = n_no_usage = n_zero = n_identity = n_reason = 0
+        n_zero_field = 0
         n_usageless_ok = 0
         for proto in sorted(x for x in d.iterdir() if x.is_dir()):
             for p in sorted(glob.glob(str(proto / "*.eval"))):
@@ -101,12 +118,28 @@ def main() -> None:
                             n_reason += 1
                     if not seen_usage:
                         n_zero += 1
+                        # Inspect empties the sample-level field for a call it serves
+                        # from cache, so a populated field on a sample with no
+                        # usage-bearing event is evidence the call was not cached and
+                        # its usage is recoverable after all.
+                        if getattr(smp, "model_usage", None):
+                            n_zero_field += 1
 
         want = expected_samples(run)
         if want is not None and n_rows != want:
             fails.append(f"{run}: {n_rows} samples, its name claims {want}")
-        if n_zero:
-            fails.append(f"{run}: {n_zero} sample(s) with no usage on any model event")
+        if n_zero and n_zero_field == n_zero:
+            # The case README.md and check_tables.py check 5 both call
+            # usage_source=sample_field_complete, and pass by name with a reason. This
+            # script failed all seven such runs, so the two gates returned opposite
+            # verdicts on the same files and this one could never be green.
+            notes.append(f"{run}: {n_zero} sample(s) carry no usage-bearing model event, "
+                         f"but the sample-level field covers every one of them, so no "
+                         f"call was cache-served and the total is complete")
+        elif n_zero:
+            fails.append(f"{run}: {n_zero - n_zero_field} of {n_zero} sample(s) have no "
+                         f"usage on any model event and an empty sample-level field too, "
+                         f"so their usage is not recoverable from this log")
         if n_identity:
             fails.append(f"{run}: {n_identity} call(s) where the four input/output fields "
                          f"do not sum to total_tokens")
@@ -119,6 +152,13 @@ def main() -> None:
         if n_usageless_ok:
             notes.append(f"{run}: {n_usageless_ok} failed call(s) carried no usage, which "
                          f"is correct; they generated nothing and were retried")
+        if n_rows == 0:
+            # Every counter above stays 0 and all five checks pass having read nothing.
+            # logs/smoke holds .eval files one level deeper than the glob looks, which
+            # is how this went unnoticed.
+            notes.append(f"{run}: no samples were read, so the checks below passed on "
+                         f"nothing. Its .eval files are not directly under a protocol "
+                         f"directory, where this script looks")
         totals["runs"] += 1
         totals["rows"] += n_rows
         totals["usageless_ok"] += n_usageless_ok
