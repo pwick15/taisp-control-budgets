@@ -158,12 +158,23 @@ def main() -> int:
                   f"{len(touched):4d} row(s)", flush=True)
 
     if rows:
+        # Keep the trail cumulative. Writing only the runs named on this invocation
+        # would silently drop the audit rows for every other run already recorded,
+        # which is the whole evidence base for scores that are no longer the
+        # provider's default. Rows for the runs being processed are replaced, so a
+        # re-derivation updates itself rather than duplicating.
+        kept = []
+        if AUDIT.exists():
+            with open(AUDIT, newline="") as f:
+                kept = [r for r in csv.DictReader(f) if r["run"] not in set(runs)]
         AUDIT.parent.mkdir(parents=True, exist_ok=True)
         with open(AUDIT, "w", newline="") as f:
             w = csv.DictWriter(f, list(rows[0]), lineterminator="\n")
             w.writeheader()
-            w.writerows(sorted(rows, key=lambda r: (r["run"], r["mode"], int(r["sample_id"]))))
-        print(f"\nwrote {len(rows)} audited row(s) to {AUDIT}")
+            w.writerows(sorted(kept + rows,
+                               key=lambda r: (r["run"], r["mode"], int(r["sample_id"]))))
+        print(f"\nwrote {len(rows)} audited row(s) to {AUDIT}"
+              + (f", keeping {len(kept)} from other runs" if kept else ""))
 
     if problems:
         print(f"\n{len(problems)} row(s) could not be recovered unambiguously. "

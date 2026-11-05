@@ -98,7 +98,7 @@ The policy that follows, and that the rest of `results/analysis/` now uses:
 2. **Label every cell with the rate it served**, never with the request. The two
    agree in 8% of cells.
 3. **Compare two runs only at rates both serve exactly.** That is what
-   `MATCHED-FPR.md` does, and it is why only 12 of 40 comparisons against Sonnet
+   `MATCHED-FPR.md` does, and it is why only 11 of 40 comparisons against Sonnet
    survive: the rest share no adequately powered rung, which is a fact about the
    monitors and not a gap in the analysis.
 4. **Treat "no printable cell" as a result.** Seven runs cannot be placed on a

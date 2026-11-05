@@ -44,11 +44,11 @@ gemma426b-scale100-n500-strip,0.4,0.4,0.0,0.21,0.15
 gemma426b-scale100-n500-strip,0.6,0.6,0.0,0.288,0.08
 gemma426b-scale100-n500-strip,1.0,1.0,0.0,0.392,0.02
 gemma426b-scale100-n500-strip,2.0,1.6,0.4,0.482,0.0
-glm53-efforthigh,0.2,0.2,0.0,0.302,0.2
-glm53-efforthigh,0.4,0.2,0.2,0.302,0.2
-glm53-efforthigh,0.6,0.6,0.0,0.394,0.1
-glm53-efforthigh,1.0,1.0,0.0,0.512,0.0
-glm53-efforthigh,2.0,1.0,1.0,0.512,0.0
+glm53-efforthigh,0.2,0.2,0.0,0.304,0.2
+glm53-efforthigh,0.4,0.2,0.2,0.304,0.2
+glm53-efforthigh,0.6,0.6,0.0,0.396,0.1
+glm53-efforthigh,1.0,1.0,0.0,0.514,0.0
+glm53-efforthigh,2.0,1.0,1.0,0.514,0.0
 glm53-effortlow,0.2,0.2,0.0,0.11,0.5
 glm53-effortlow,0.4,0.4,0.0,0.326,0.1
 glm53-effortlow,0.6,0.4,0.2,0.326,0.1
