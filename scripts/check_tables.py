@@ -207,10 +207,29 @@ def main() -> int:
             fail("web/build.py has no RUNS mapping to check the chart feed against")
         else:
             labels = {v.elts[0].value for v in runs_node.value.values}
-            for name in sorted(set(pd.read_csv(chart)["monitor"].astype(str))):
+            feed = set(pd.read_csv(chart)["monitor"].astype(str))
+            for name in sorted(feed):
                 if name not in labels:
                     fail(f"chart-safety-at-2pct.csv: monitor={name!r} is not a display "
                          f"label in web/build.py RUNS, so the chart and the report disagree")
+            # And the other direction, which is the one that loses data. A feed that is
+            # a SUBSET of the configuration passes the test above without complaint,
+            # which is how the committed feed came to carry 26 of the 33 configured
+            # monitors. web/build.py gained the Mistral, GLM, Gemma 27B, Haiku 4.5 and
+            # Ministral arms, with comments recording that leaving them off had already
+            # broken this chart twice, and the feed those entries feed was never
+            # regenerated. Only runs with a committed CI are required, because that is
+            # what the generator reads.
+            configured = {k.value: v.elts[0].value
+                          for k, v in zip(runs_node.value.keys, runs_node.value.values)}
+            ci_path = ANALYSIS / "safety-with-ci.csv"
+            with_ci = (set(pd.read_csv(ci_path)["run"].astype(str))
+                       if ci_path.exists() else set())
+            for run, label in sorted(configured.items(), key=lambda kv: kv[1]):
+                if run in with_ci and label not in feed:
+                    fail(f"chart-safety-at-2pct.csv has no row for {label!r} ({run}), "
+                         f"which web/build.py configures and safety-with-ci.csv scores, "
+                         f"so the chart drops it without saying so")
     print("     done")
 
     print("4. no superseded run is also live")
@@ -303,8 +322,21 @@ def main() -> int:
         print("\n7. regenerating the four generated tables and reporting drift")
         env = dict(os.environ)
         for script in GENERATED:
-            subprocess.run([sys.executable, f"scripts/{script}"], check=False,
-                           capture_output=True, env=env)
+            r = subprocess.run([sys.executable, f"scripts/{script}"], check=False,
+                               capture_output=True, text=True, env=env)
+            if r.returncode != 0:
+                # A generator that dies before writing leaves the committed file
+                # untouched, so the `git diff` below is empty and this check used to
+                # print "every regenerated cell matches the committed table" for a
+                # table that was never regenerated. capture_output swallowed the
+                # traceback too, so nothing on screen contradicted it. This is the
+                # check the module docstring offers as the project's reproducibility
+                # evidence, so a vacuous pass here is worse than no check at all.
+                tail = "\n".join(f"        {ln}" for ln
+                                  in (r.stderr or "").strip().splitlines()[-6:])
+                fail(f"{script} exited {r.returncode}, so its table was not "
+                     f"regenerated and the comparison cannot speak for it"
+                     + (f"\n{tail}" if tail else ""))
         drift = subprocess.run(["git", "diff", "--stat", "--", str(ANALYSIS)],
                                capture_output=True, text=True).stdout.strip()
         if drift:
