@@ -50,10 +50,11 @@ BUDGET_WORD = "an exact" if HEADLINE == "exact" else "a requested"
 
 # ECharts callbacks travel as source text and are compiled by the page (and render_static.mjs).
 TIP = "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }"
+# Interval drawn as a wide, faint bar behind the marker: reads as uncertainty, not as another line.
 VBAR = ("function (params, api) { var a = api.coord([api.value(0), api.value(1)]);"
         " var b = api.coord([api.value(0), api.value(2)]);"
         " return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]},"
-        " style: {stroke: api.visual('color'), lineWidth: 1.3, opacity: 0.5}, silent: true}; }")
+        " style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.18}, silent: true}; }")
 BAND = ("function (params, api) { var p1 = api.coord([api.value(0), api.value(1)]);"
         " var p2 = api.coord([api.value(0), api.value(2)]); var p3 = api.coord([api.value(3), api.value(5)]);"
         " var p4 = api.coord([api.value(3), api.value(4)]);"
@@ -192,7 +193,7 @@ def frontier_series(t: pd.DataFrame, budget: float) -> list:
             best = r[VAL]
             front.append([r.cost, round(100 * r[VAL], 2)])
     series.append({
-        "name": "Best value (no cheaper monitor does better)", "type": "line", "data": front, "symbol": "none",
+        "name": "Best buys: nothing cheaper catches more", "type": "line", "data": front, "symbol": "none",
         "lineStyle": {"type": "dashed", "color": "@ink-muted", "width": 1.2}, "itemStyle": {"color": "@ink-muted"},
         "z": 1, "tooltip": {"show": False}, "silent": True,
     })
@@ -354,6 +355,64 @@ def fig_scores(runs: list) -> dict:
     return {"option": opt, "height": 430, "dial": None}
 
 
+SCALE_PAIRS = [
+    ("Sonnet 5.5", M.SONNET, "dataset500-sonnet55-um-scale100-strip"),
+    ("Haiku 5.5 · xhigh", M.HAIKU_X, "dataset-haiku55-xhigh-scale100-n500-strip"),
+]
+
+
+def operating_points(run: str, max_rate: float = 0.10) -> list:
+    """Every (audit rate, catch rate) a strict-cutoff monitor can actually deliver, up to max_rate."""
+    h, a = M.load_scores(run)
+    pts = []
+    for v in np.unique(h.values):
+        served = float((h.values > v).mean())
+        if 0 < served <= max_rate:
+            pts.append((100 * served, 100 * float((a.values > v).mean())))
+    return sorted(pts)
+
+
+def scale_summary() -> dict:
+    out = {}
+    for name, r10, r100 in SCALE_PAIRS:
+        out[name] = {}
+        for tag, run in (("10", r10), ("100", r100)):
+            h, a = M.load_scores(run)
+            pts = operating_points(run, 0.05)
+            out[name][tag] = {"n_points": len(pts), "distinct": int(h.nunique()),
+                              **{f"exact{b}": M.safety_at(h.values, a.values, b / 100)["exact"] for b in (0.5, 1, 2)}}
+    return out
+
+
+def fig_scale() -> dict:
+    grids, xs, ys, series, titles = [], [], [], [], []
+    for i, (name, r10, r100) in enumerate(SCALE_PAIRS):
+        left = 6 + i * 50
+        grids.append({"left": f"{left + 4}%", "width": "38%", "top": 56, "bottom": 70})
+        xs.append(axis("Share of honest programs audited (%, log scale)", gridIndex=i, type="log", min=0.1, max=10))
+        ys.append(axis("Backdoors caught (%)" if i == 0 else "", gap=40, gridIndex=i, type="value", min=0, max=100))
+        n = {}
+        for tag, run, color, dash in (("0 to 10 score", r10, "@s0", "solid"), ("0 to 100 score", r100, "@s1", "solid")):
+            pts = operating_points(run)
+            n[tag] = sum(1 for x, _ in pts if x <= 5)
+            series.append({
+                "name": tag, "type": "line", "step": "end", "xAxisIndex": i, "yAxisIndex": i, "symbolSize": 7,
+                "itemStyle": {"color": color}, "lineStyle": {"color": color, "width": 2, "type": dash},
+                "data": [{"value": [round(x, 2), round(y, 2)],
+                          "tip": f"<b>{name}, {tag}</b><br>audits {x:.1f}% of honest programs<br>catches {y:.1f}% of backdoors"}
+                         for x, y in pts],
+            })
+        titles.append({"text": name, "subtext": f"usable cutoffs at 5% or below: {n['0 to 10 score']} on 0 to 10, "
+                                                f"{n['0 to 100 score']} on 0 to 100",
+                       "left": f"{left + 23}%", "top": 0, "textAlign": "center",
+                       "textStyle": {"color": "@ink-primary", "fontSize": 13},
+                       "subtextStyle": {"color": "@ink-secondary", "fontSize": 11}})
+    opt = base_option(grid=grids, xAxis=xs, yAxis=ys, series=series, title=titles,
+                      legend={"bottom": 0, "textStyle": {"color": "@ink-secondary"},
+                              "data": ["0 to 10 score", "0 to 100 score"]})
+    return {"option": opt, "height": 440, "dial": None}
+
+
 def fig_hard(cf: pd.DataFrame) -> dict:
     counts = cf.caught_by.value_counts().reindex(range(8), fill_value=0)
     colors = {0: "@s7", 7: "@s2"}
@@ -447,6 +506,7 @@ def main() -> None:
     figs.append({"id": "fig3-sonnet-vs-haiku", **fig_sonnet_haiku(D["curves"], diff), **P.fig3()})
     figs.append({"id": "fig4-score-pileup",
                  **fig_scores([(M.SONNET, "Sonnet 5.5"), (M.HAIKU_X, "Haiku 5.5 · xhigh")]), **P.fig4()})
+    figs.append({"id": "fig4b-score-scale", **fig_scale(), **P.fig4b(scale_summary())})
     figs.append({"id": "fig5-hard-backdoors", **fig_hard(cf), **P.fig5()})
     gen = fig_generators(cf)
     gen.pop("table")

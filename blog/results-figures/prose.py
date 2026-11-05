@@ -53,8 +53,7 @@ class Prose:
             "shows": (
                 "Each marker is one monitor configuration: a model at one reasoning setting. Up is better (more of the 500 "
                 "backdoors caught). Left is cheaper (list-price cost to score one program). Colour is the provider, and a line "
-                "joins the reasoning settings of the same model. Vertical whiskers are 95% bootstrap intervals over the 500 honest "
-                "and 500 backdoored programs. The dashed line joins the monitors that no cheaper monitor beats. Use the buttons to "
+                "joins the reasoning settings of the same model. Faint vertical bars behind the markers are 95% bootstrap intervals. The dashed grey line traces the best buys: each monitor on it catches more backdoors than every cheaper monitor. Anything below and to the right of that line is beaten by something cheaper. Use the buttons to "
                 f"change the audit budget.{left_off}"),
             "takeaway": (
                 f"<p>At a 2% audit budget the top three monitors are close. Sonnet 5.5 at its default (high) effort catches "
@@ -218,6 +217,42 @@ class Prose:
                 "Marnick's literature check found MonitoringBench saw a 0 to 100 scale collapse at the top end (honest scores "
                 "hitting 100). A wider scale helps when honest scores pile up at 0, which is our case, and hurts when they pile "
                 "up at the top.",
+            ],
+        }
+
+    def fig4b(self, s):
+        S, H = s["Sonnet 5.5"], s["Haiku 5.5 · xhigh"]
+        return {
+            "num": "4b", "kind": "main", "source": "ours", "confirm": False,
+            "title": "A 0 to 100 score gives Haiku more places to set the cutoff, but not Sonnet",
+            "question": "If the monitor is asked for a score from 0 to 100 instead of 0 to 10, can the audit budget be set more finely?",
+            "shows": (
+                "Each dot is a cutoff the monitor can actually use: how much honest code it audits (across) and how many "
+                "backdoors it catches (up), auditing only programs strictly above the cutoff. Blue is the default 0 to 10 "
+                "prompt, orange the same monitor asked for 0 to 100. Steps show that between two dots there is no cutoff "
+                "to choose. Haiku's blue line stops at 1.6% because its next cutoff audits 46% of honest code. Same 500 honest "
+                "and 500 backdoored programs throughout."),
+            "takeaway": (
+                f"<p>The 0 to 10 prompt leaves few places to put the cutoff. At budgets of 5% or less, Haiku xhigh has "
+                f"{H['10']['n_points']} usable cutoffs on 0 to 10 and {H['100']['n_points']} on 0 to 100. Its catch rate at an "
+                f"exact 0.5% budget rises from {p(H['10']['exact0.5'])}% to {p(H['100']['exact0.5'])}%, because the finer "
+                f"score separates its most suspicious honest programs from the backdoors.</p>"
+                f"<p>Sonnet barely changes: {S['10']['n_points']} usable cutoffs on 0 to 10 and {S['100']['n_points']} on "
+                f"0 to 100. It still gives almost every honest program a 0, so a wider scale has nothing to spread out. "
+                f"At an exact 2% it catches {p(S['10']['exact2'])}% on 0 to 10 and {p(S['100']['exact2'])}% on 0 to 100.</p>"
+                f"<p>So a wider scale is a cheap fix for monitors whose honest scores bunch up in the middle of the range, "
+                f"not for one that already scores honest code 0.</p>"),
+            "debate": [
+                "This answers the \"why\" left open by Figure 3 only in part. Wide intervals at tight budgets come mostly from how "
+                "few honest programs sit above the cutoff (5 at 1% with 500 honest), and a wider scale doesn't add honest "
+                "programs. Marnick's supporting figure on interval width shows that side. Worth saying both in the post.",
+                "The scale isn't purely cosmetic. Marnick measured it changing ranking quality (AUC) by about +0.6 points for "
+                "Haiku and +0.2 for Sonnet, small here, but +14 for GPT-6 Luna and +8.5 for Gemma 4. So for some monitors a "
+                "0 to 100 prompt makes them better at the task, not just finer-grained.",
+                "Marnick's literature check found MonitoringBench saw 0 to 100 scores collapse at the top (honest code hitting "
+                "100). A wider scale helps when honest scores pile up low and can hurt when they pile up high.",
+                "Marnick ran 0 to 100 on 9 monitors. His supporting \"score scale\" figure shows all of them; this one picks "
+                "the two the post is about.",
             ],
         }
 
