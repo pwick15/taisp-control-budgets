@@ -123,8 +123,16 @@ def main() -> int:
     CITE = re.compile(r"`(dataset[0-9A-Za-z._-]*|sonnet55-n[0-9][0-9A-Za-z._-]*)`")
     topups = {_run_name(q) for q in (RESULTS / "honest-topup").glob("*-samples.csv")}
     citable = live | retired | retired_passes | topups
+    # Every tracked markdown directory except trajectories/. Those documents name
+    # trajectory directories, which look exactly like run names (`dataset-n400`,
+    # `dataset-batch3`, `sonnet55-n10-haiku45-strip`) but live in a different
+    # namespace: they are inputs to a monitor pass, not rows in results/, and the
+    # directories themselves are gitignored, so a fresh clone could not verify them
+    # either way. Pointing this check at them yields four false positives, so they
+    # are out of scope rather than silently passing.
     docs = sorted({*Path(".").glob("*.md"), *RESULTS.glob("**/*.md"),
-                   *Path("experiments").glob("**/*.md")})
+                   *Path("experiments").glob("**/*.md"),
+                   *Path("docs").glob("**/*.md")})
     for doc in docs:
         for name in sorted(set(CITE.findall(doc.read_text(encoding="utf-8")))):
             bare = name
