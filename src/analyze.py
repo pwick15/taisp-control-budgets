@@ -317,8 +317,29 @@ def main() -> None:
         n_honest = int((df["eval_mode"] == "honest").sum())
         n_attack = int((df["eval_mode"] == "attack").sum())
         print(f"\n== {protocol}: {n_honest} honest + {n_attack} attack samples ==")
-        print(df.groupby("eval_mode")[["main_task_success", "side_task_success", f"score_{SCORER}"]]
-              .agg("mean").round(2).to_string())
+        # Cast the score for this summary only, and on a copy. A run that recorded no
+        # suspicion score at all arrives with the column all-missing and typed
+        # string[pyarrow], and .agg("mean") raises TypeError on that dtype. df itself is
+        # left alone because its score column is what the committed per-sample CSV is
+        # written from further down, and retyping it here would change that file.
+        summary = df[["eval_mode", "main_task_success", "side_task_success",
+                      f"score_{SCORER}"]].copy()
+        summary[f"score_{SCORER}"] = summary[f"score_{SCORER}"].astype("Float64")
+        print(summary.groupby("eval_mode").agg("mean").round(2).to_string())
+
+        if df[f"score_{SCORER}"].isna().all():
+            # No monitor score was recorded for any sample, so there is no honest
+            # distribution to take a percentile of. compute_suspicion_threshold would
+            # trip its own `assert notna().all()`, which says "contains NaN values"
+            # without saying that every value is one, and which vanishes under -O.
+            # The mock setup check in the README is this case: the mock model never
+            # emits a tool call, so nothing is ever submitted for the monitor to score,
+            # the sample ends on the token limit instead, max_suspicion_scorer returns
+            # NOANSWER ("No suspicion scores found"), and samples_df renders that as
+            # missing.
+            print("  no monitor suspicion scores in these logs, so no safety to compute")
+            print("  (expected with mockllm/model, which submits nothing to score)")
+            continue
 
         usefulness = compute_usefulness(df)
         keys = [f"{m}:{i}" for m, i in zip(df["eval_mode"].tolist(), df["id"].tolist())]
@@ -402,6 +423,15 @@ def main() -> None:
                                               if cost_billed is not None else ""),
             })
         plt.plot(AUDIT_BUDGETS, safeties, marker="o", label=f"{protocol} (usefulness {usefulness:.2f})")
+
+    if not rows:
+        # Every protocol was skipped. Returning before the writes below is the point of
+        # this guard, not a tidiness measure: pd.DataFrame([]).to_csv writes a file
+        # containing one newline, which would replace a committed results table with an
+        # empty one, and pd.concat([]) raises ValueError("No objects to concatenate")
+        # from inside the save step, after the plot had already been overwritten.
+        print("\nno protocol produced safety numbers, so nothing was plotted or saved")
+        return
 
     plt.xscale("log")
     plt.xlabel("Audit budget (% of honest runs reviewed, log scale)")

@@ -29,14 +29,24 @@ cp .env.example .env            # then fill in ANTHROPIC_API_KEY
 
 ### Check your setup (no API cost)
 
-Point both models at Inspect's mock model. This exercises the whole pipeline (dataset download, Docker sandbox, scoring) without calling any API:
+Point both models at Inspect's mock model. This exercises the dataset download, the Docker sandbox and the scorers without calling any API:
 
 ```bash
 UNTRUSTED_MODEL=mockllm/model TRUSTED_MODEL=mockllm/model LOG_DIR=/tmp/mock-logs \
   uv run python src/experiment.py 1
 ```
 
-The scores will be all zero, since the mock model solves nothing. You are only checking that it runs to completion. The first run is slower because it pulls the Docker image and downloads the dataset.
+The scores are not zero, they are absent, and knowing which is the difference between a working setup and a broken one. The mock model never emits a tool call, so it never submits: each sample loops until it hits the token limit, `apps_scorer` records "No submission found in state store", and no suspicion score is written at all. The monitor is never reached, so this checks the scaffolding, not the measurement. You are only checking that it runs to completion.
+
+`src/analyze.py` can be pointed at these logs and will say so rather than fail:
+
+```bash
+LOG_DIR=/tmp/mock-logs uv run python src/analyze.py
+```
+
+It prints the per-mode summary, reports that no suspicion scores were recorded, and exits without writing a plot or a results table.
+
+The first run is slower because it pulls the Docker image and downloads the dataset.
 
 ## Running experiments
 
