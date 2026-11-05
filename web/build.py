@@ -64,6 +64,12 @@ RUNS = {
     # The 27B counterpart. MODEL-SIZE.md is about this pair, so leaving it off meant the
     # chart could not show the comparison the write-up makes.
     "dataset-gemma3-27b-tm-n500-strip": ("Gemma 3 27B", "gemma3_27b", "google", "default"),
+    # Mistral arms. These were unplottable until src/analyze.py carried Mistral prices,
+    # since the chart's x axis is cost per sample, so the page silently skipped all three
+    # while the results sat in results/.
+    "dataset-mistrallarge4-tm-n500-strip": ("Mistral Large 4 · default", "mistrallarge4", "mistral", "default"),
+    "dataset500-mistrallarge4-high-tm-strip": ("Mistral Large 4 · high", "mistrallarge4", "mistral", "high"),
+    "dataset500-ministral14b-tm-strip": ("Ministral 14B", "ministral14b", "mistral", "default"),
 }
 
 
@@ -73,6 +79,7 @@ MODEL_NAMES = {
     "gemini35lite": "Gemini 3.5 Flash-Lite",
     "gemma4": "Gemma 4 26B-A4B", "gemma3": "Gemma 3 4B",
     "gemma3_27b": "Gemma 3 27B",
+    "mistrallarge4": "Mistral Large 4", "ministral14b": "Ministral 14B",
 }
 
 
