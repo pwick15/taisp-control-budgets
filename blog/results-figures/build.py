@@ -542,23 +542,59 @@ def fig_hard(cf: pd.DataFrame) -> dict:
 SHORT_GEN = {"unknown": "original APPS backdoors"}
 
 
+def wilson(k: int, n: int, z: float = 1.96) -> tuple:
+    if n == 0:
+        return 0.0, 0.0
+    ph = k / n
+    d = 1 + z * z / n
+    c = (ph + z * z / (2 * n)) / d
+    h = z * np.sqrt(ph * (1 - ph) / n + z * z / (4 * n * n)) / d
+    return max(0.0, c - h), min(1.0, c + h)
+
+
 def fig_generators(cf: pd.DataFrame) -> dict:
+    """One 100% bar per generating model: missed by all 7 monitors, missed by some, caught by all."""
     g = cf.groupby("model").agg(n=("caught_by", "size"), miss=("caught_by", lambda s: int((s == 0).sum())),
+                                some=("caught_by", lambda s: int(((s > 0) & (s < 7)).sum())),
+                                allc=("caught_by", lambda s: int((s == 7).sum())),
                                 med=("changed_lines", "median")).reset_index()
     g["rate"] = 100 * g.miss / g.n
-    g = g.sort_values("rate")
+    g = g.sort_values(["rate", "n"], ascending=[False, False])
     names = [SHORT_GEN.get(m, m.split("/")[-1].replace("-latest", "")) for m in g.model]
-    data = [{"value": round(r.rate, 1), "itemStyle": {"color": "@s7" if r.rate >= 15 else "@s0"},
-             "label": {"show": True, "position": "right", "formatter": f"{r.miss} of {r.n}", "color": "@ink-primary"},
-             "tip": f"<b>{nm}</b><br>{r.miss} of {r.n} missed by all 7 monitors<br>median {r.med:.0f} lines differ from the reference"}
-            for nm, (_, r) in zip(names, g.iterrows())]
+    cats = [f"{nm}  ·  wrote {r.n}" for nm, (_, r) in zip(names, g.iterrows())]
+    parts = [("Missed by all 7 monitors", "miss", "@s7"), ("Missed by 1 to 6 monitors", "some", "@warning"),
+             ("Caught by all 7 monitors", "allc", "@ink-axis")]
+    series = []
+    for label, col, color in parts:
+        data = []
+        for nm, (_, r) in zip(names, g.iterrows()):
+            k = int(r[col])
+            v = 100 * k / r.n
+            data.append({"value": round(v, 2),
+                         "label": {"show": v >= 7, "formatter": f"{v:.0f}%",
+                                   "color": "#ffffff" if col == "miss" else "#1a1a19"},
+                         "tip": f"<b>{nm}</b> wrote {r.n} backdoors<br>{label.lower()}: {k} ({v:.0f}%)"
+                                f"<br>median {r.med:.0f} lines differ from the reference"})
+        series.append({"name": label, "type": "bar", "stack": "all", "data": data, "barWidth": "62%",
+                       "itemStyle": {"color": color, "borderColor": "@ink-surface", "borderWidth": 1}})
+    ci = []
+    for _, r in g.iterrows():
+        lo, hi = wilson(int(r.miss), int(r.n))
+        ci.append({"name": f"{100 * lo:.0f} to {100 * hi:.0f}%", "value": [100, len(ci)]})
+    series.append({"name": "interval", "type": "scatter", "symbolSize": 0, "data": ci, "silent": True,
+                   "clip": False, "label": {"show": True, "position": "right", "distance": 12, "formatter": "{b}",
+                                            "color": "@ink-secondary", "fontSize": 12}})
     opt = base_option(
-        grid={"left": 210, "right": 70, "top": 10, "bottom": 50},
-        xAxis=axis("Backdoors missed by all 7 monitors (%)", type="value", min=0, max=35),
-        yAxis=axis("", type="category", data=names, splitLine={"show": False}),
-        series=[{"name": "missed", "type": "bar", "data": data, "barWidth": "60%"}],
+        grid={"left": 250, "right": 120, "top": 40, "bottom": 70},
+        xAxis=axis("Share of that model's backdoors (%)", type="value", min=0, max=100, interval=20),
+        yAxis={"type": "category", "data": cats, "inverse": True, "axisTick": {"show": False},
+               "axisLine": {"lineStyle": {"color": "@ink-axis"}}, "axisLabel": {"color": "@ink-primary", "fontSize": 12}},
+        legend={"bottom": 0, "textStyle": {"color": "@ink-secondary"}, "data": [p[0] for p in parts]},
+        title={"text": "missed by all 7:\n95% range", "right": 18, "top": 0,
+               "textStyle": {"color": "@ink-secondary", "fontSize": 11, "fontWeight": "normal", "lineHeight": 14}},
+        series=series,
     )
-    return {"option": opt, "height": 420, "dial": None, "table": g}
+    return {"option": opt, "height": 470, "dial": None, "table": g}
 
 
 # ---------------------------------------------------------------- Marnick's figures

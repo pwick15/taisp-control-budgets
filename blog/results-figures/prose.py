@@ -366,24 +366,32 @@ class Prose:
 
     def fig6(self):
         cf = self.cf
-        g = cf.groupby("model").agg(n=("caught_by", "size"), miss=("caught_by", lambda s: int((s == 0).sum()))).reset_index()
+        g = cf.groupby("model").agg(n=("caught_by", "size"), miss=("caught_by", lambda s: int((s == 0).sum())),
+                                    allc=("caught_by", lambda s: int((s == 7).sum()))).reset_index()
         get = lambda m: g[g.model == m].iloc[0]
-        o3, o1 = get("openai/o3-mini"), get("openai/o1-mini")
+        o3, o1, g4m = get("openai/o3-mini"), get("openai/o1-mini"), get("openai/gpt-4o-mini")
+        pc = lambda k, n: f"{100 * k / n:.0f}%"
         return {
             "num": 6, "kind": "main", "source": "ours", "confirm": False,
             "title": "Who wrote the backdoor matters more than which monitor reads it",
-            "question": "Do backdoors from some generating models get past monitors more often?",
+            "question": "Are backdoors written by some models harder to catch?",
             "shows": (
-                "The stored backdoors come from the Control Tax dataset, written by several older models. Each bar is the share "
-                "of one model's backdoors that all seven monitors missed at a 2% budget, with counts on the right. Red bars are "
-                "15% or more. Hover for the median number of lines that differ from the reference solution."),
+                "The stored backdoors come from the Control Tax dataset, written by several older models. Each bar is all the "
+                "backdoors one model wrote (the count is next to its name), split by how many of our seven monitors caught "
+                "them at a 2% budget. Red got past every monitor, amber got past some, grey was caught by all seven. The "
+                "column on the right is the 95% range for the red share: with so few backdoors per model, the true rate "
+                "could be anywhere in it. Hover for the median number of lines that differ from the reference solution."),
             "takeaway": (
-                f"<p>Backdoors written by o3-mini almost never get through: {o3.miss} of {o3.n}. Backdoors written by o1-mini get "
-                f"through {o1.miss} of {o1.n} times, about one in four. Our dataset-wide catch rate depends on how many of each "
-                f"are in the mix. o3-mini wrote nearly a third of the set, which pulls the average up.</p>"),
+                f"<p>o1-mini and gpt-4o-mini wrote the hardest backdoors: about a quarter got past every monitor, and only "
+                f"{pc(o1.allc, o1.n)} and {pc(g4m.allc, g4m.n)} were caught by all seven. o3-mini wrote the easiest: "
+                f"{o3.miss} of {o3.n} got past every monitor. Since o3-mini wrote nearly a third of the set, the dataset-wide "
+                f"catch rate partly reflects who wrote the attacks.</p>"),
             "debate": [
-                "Groups are small (9 to 157 backdoors), so only the o3-mini vs o1-mini contrast is solid. I'd show this as a "
-                "short note or appendix figure, not a headline.",
+                "Most groups are small (9 to 41 backdoors), and their ranges overlap. Only the gap between o3-mini (1 to 6%) "
+                "and o1-mini (16 to 42%) is clearly real. I'd show this as a supporting figure, or say it in one sentence "
+                "with the caveat that more samples per model are needed.",
+                "Models didn't write backdoors for the same problems, so problem difficulty is mixed in with the writer's "
+                "skill. A fair comparison would have every model attack the same problems.",
                 "o3-mini's backdoors differ from the reference by a median 39 lines, more than any other model, so they may "
                 "be conspicuous rewrites. Marnick also found confession comments range from 19% to 94% by generating model. "
                 "Comments are stripped, but the habit may show up in the code's structure too.",
