@@ -33,10 +33,14 @@ FAMILY_COLOR = {"anthropic": "@s1", "openai": "@s0", "google": "@s2", "zhipu": "
 MODEL_SYMBOL = {
     "sonnet55": "diamond", "haiku55": "circle", "haiku45": "triangle", "luna": "circle", "gptoss": "triangle",
     "gemini35fl": "circle", "gemini35lite": "triangle", "gemma4": "rect", "gemma3": "diamond",
-    "glm53": "circle", "qwen38": "circle", "mistrallarge4": "circle",
+    "glm53": "circle", "qwen38": "circle", "mistrallarge4": "circle", "ministral14b": "triangle",
+    "gemma3_27b": "pin",
 }
+# GLM-5.3's effort=none run is the max rung in disguise (the provider ignored "none" and reasoned in
+# visible text), so it would plot as a duplicate of GLM max. Kept in data/, left off the figures.
+EXCLUDE = {"dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip"}
 EFFORT_ORDER = ["off", "low", "medium", "high", "xhigh"]
-EFFORT_LABEL = {"off": "off", "low": "low", "medium": "medium", "high": "high", "xhigh": "xhigh / max"}
+EFFORT_LABEL = {"off": "off", "low": "low", "medium": "medium / default", "high": "high", "xhigh": "xhigh / max"}
 
 FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
 VAL = "safety_exact" if HEADLINE == "exact" else "safety_reported"
@@ -87,6 +91,7 @@ def base_option(**kw) -> dict:
 def compute() -> dict:
     budgets = [0.5, 1, 2, 5]
     table = M.run_table(budgets)
+    table = table[~table.run.isin(EXCLUDE)].reset_index(drop=True)
     fine = [0.2, 0.3, 0.5, 0.75, 1, 1.5, 2, 3, 5, 7.5, 10, 15, 20]
     curves = {}
     for run in (M.SONNET, M.HAIKU_X, "dataset-haiku55-tm-n500-strip"):
@@ -147,10 +152,12 @@ def tip_run(r) -> str:
 
 
 LABELS = {
-    "Sonnet 5.5": "right", "Haiku 5.5 · xhigh": "top", "Haiku 5.5 · low": "left",
-    "GLM-5.3 · thinking on": "top", "GPT-6 Luna · xhigh": "left", "GPT-6 Luna · off": "left",
-    "Qwen 3.8 Omni Flash · off": "right", "Haiku 4.5 · no thinking": "left", "Mistral Large 4": "right",
-    "Gemini 3.5 Flash · xhigh": "right", "gpt-oss-120b · high": "left", "Gemma 3 4B": "right",
+    "Sonnet 5.5 · high (default)": "right", "Sonnet 5.5 · low (thinking off)": "bottom",
+    "Haiku 5.5 · xhigh": "top", "Haiku 5.5 · low": "left",
+    "GLM-5.3 · max (default)": "right", "GLM-5.3 · low": "bottom", "GPT-6 Luna · xhigh": "left", "GPT-6 Luna · off": "left",
+    "Gemma 4 26B-A4B": "top", "Haiku 4.5 · no thinking": "top", "Mistral Large 4 · default": "right",
+    "Gemini 3.5 Flash-Lite · off": "bottom", "Gemini 3.5 Flash-Lite · xhigh": "right", "gpt-oss-120b · high": "left",
+    "Gemma 3 4B": "right", "Ministral 14B": "right",
 }
 
 
@@ -209,9 +216,10 @@ def fig_frontier(t: pd.DataFrame) -> dict:
 
 
 def fig_effort(t: pd.DataFrame) -> dict:
-    ladder = {"haiku55": "Haiku 5.5", "luna": "GPT-6 Luna", "qwen38": "Qwen 3.8 Omni Flash",
-              "gptoss": "gpt-oss-120b", "gemini35fl": "Gemini 3.5 Flash", "glm53": "GLM-5.3"}
-    remap = {"on": "xhigh", "default": "medium"}
+    ladder = {"sonnet55": "Sonnet 5.5", "haiku55": "Haiku 5.5", "glm53": "GLM-5.3", "qwen38": "Qwen 3.8 Omni Flash",
+              "luna": "GPT-6 Luna", "mistrallarge4": "Mistral Large 4", "gptoss": "gpt-oss-120b",
+              "gemini35lite": "Gemini 3.5 Flash-Lite"}
+    remap = {"max": "xhigh", "default": "medium"}
     budgets = [1, 2, 5]
 
     def series_for(b):
@@ -234,19 +242,9 @@ def fig_effort(t: pd.DataFrame) -> dict:
             out.append({
                 "name": label, "type": "line", "data": data, "connectNulls": True, "symbolSize": 9,
                 "symbol": MODEL_SYMBOL[model], "itemStyle": {"color": FAMILY_COLOR[fam]},
-                "lineStyle": {"color": FAMILY_COLOR[fam], "width": 2,
-                              "type": "dashed" if model == "glm53" else "solid"},
+                "lineStyle": {"color": FAMILY_COLOR[fam], "width": 2},
                 "endLabel": {"show": True, "formatter": "{a}", "color": "@ink-primary", "fontSize": 11},
             })
-        son = d[d.run == M.SONNET].iloc[0]
-        out.append({
-            "name": "Sonnet 5.5 (default effort)", "type": "line", "data": [], "symbol": "none",
-            "itemStyle": {"color": "@s1"},
-            "markLine": {"silent": True, "symbol": "none",
-                         "lineStyle": {"type": "dotted", "color": "@s1", "width": 1.5},
-                         "label": {"formatter": "Sonnet 5.5", "position": "insideStartTop", "color": "@s1"},
-                         "data": [{"yAxis": round(100 * son[VAL], 2)}]},
-        })
         return out
 
     frames = [{"series": series_for(b)} for b in budgets]

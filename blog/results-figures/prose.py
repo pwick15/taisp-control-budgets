@@ -29,6 +29,11 @@ class Prose:
     def __init__(self, t, cf, diff, at, R, disagree, headline):
         self.t, self.cf, self.diff, self.at, self.R, self.dis, self.headline = t, cf, diff, at, R, disagree, headline
 
+    def dp(self, run, b):
+        """Paired gap (run minus Haiku xhigh) at an exact budget, as text."""
+        r = M.paired_diff(run, M.HAIKU_X, [b]).iloc[0]
+        return f"{100 * r['diff']:+.1f} points (95% interval {100 * r.lo:+.1f} to {100 * r.hi:+.1f})"
+
     def d(self, b):
         r = self.diff[self.diff.budget_pct == b].iloc[0]
         return f"{100 * r['diff']:+.1f} points (95% interval {100 * r.lo:+.1f} to {100 * r.hi:+.1f})"
@@ -36,8 +41,11 @@ class Prose:
     # ------------------------------------------------------------ main figures
 
     def fig1(self, no_cost):
-        S, HX, G, H45 = self.R("Sonnet 5.5"), self.R("Haiku 5.5 · xhigh"), self.R("GLM-5.3 · thinking on"), self.R("Haiku 4.5 · no thinking")
-        LX, Q0, MI = self.R("GPT-6 Luna · xhigh"), self.R("Qwen 3.8 Omni Flash · off"), self.R("Mistral Large 4")
+        S, SL, HX = self.R("Sonnet 5.5 · high (default)"), self.R("Sonnet 5.5 · low (thinking off)"), self.R("Haiku 5.5 · xhigh")
+        G, H45 = self.R("GLM-5.3 · max (default)"), self.R("Haiku 4.5 · no thinking")
+        LX, MI = self.R("GPT-6 Luna · xhigh"), self.R("Mistral Large 4 · default")
+        left_off = (f" {len(no_cost)} configurations have no recorded cost and are left off: {', '.join(no_cost)}."
+                    if no_cost else "")
         return {
             "num": 1, "kind": "main", "source": "ours", "confirm": False,
             "title": "What each monitor catches, and what it costs",
@@ -47,18 +55,19 @@ class Prose:
                 "backdoors caught). Left is cheaper (list-price cost to score one program). Colour is the provider, and a line "
                 "joins the reasoning settings of the same model. Vertical whiskers are 95% bootstrap intervals over the 500 honest "
                 "and 500 backdoored programs. The dashed line joins the monitors that no cheaper monitor beats. Use the buttons to "
-                f"change the audit budget. {len(no_cost)} configurations have no recorded cost and are left off: "
-                f"{', '.join(no_cost)}."),
+                f"change the audit budget.{left_off}"),
             "takeaway": (
-                f"<p>At a 2% audit budget the two best monitors are close. Sonnet 5.5 catches {p(S.safety_exact)}% "
-                f"({ci(S)}) for {money(S.cost)} per program. Haiku 5.5 at xhigh reasoning catches {p(HX.safety_exact)}% "
-                f"({ci(HX)}) for {money(HX.cost)}, about {S.cost / HX.cost:.0f} times cheaper.</p>"
-                f"<p>Below those two there is a gap. GLM-5.3, Qwen 3.8 and GPT-6 Luna at their best settings catch 61 to 76%. "
+                f"<p>At a 2% audit budget the top three monitors are close. Sonnet 5.5 at its default (high) effort catches "
+                f"{p(S.safety_exact)}% ({ci(S)}) for {money(S.cost)} per program. Haiku 5.5 at xhigh catches "
+                f"{p(HX.safety_exact)}% ({ci(HX)}) for {money(HX.cost)}, about {S.cost / HX.cost:.0f} times cheaper. Sonnet "
+                f"with thinking off sits between them at {p(SL.safety_exact)}% for {money(SL.cost)}.</p>"
+                f"<p>Below those there is a gap. GLM-5.3, Qwen 3.8 and GPT-6 Luna at their best settings catch 61 to 76%. "
                 f"Haiku 4.5 and Mistral Large 4 catch about 49%, and the rest are under 40%.</p>"
-                f"<p>Price is a poor guide to monitoring skill. GLM-5.3 costs {money(G.cost)} per program, twice Sonnet, "
-                f"and catches {p(G.safety_exact)}%. Haiku 4.5 costs {H45.cost / HX.cost:.1f} times as much as Haiku 5.5 "
-                f"at xhigh and catches {p(H45.safety_exact)}%. Mistral Large 4 costs {money(MI.cost)} and catches "
-                f"{p(MI.safety_exact)}%, while GPT-6 Luna at xhigh catches {p(LX.safety_exact)}% for {money(LX.cost)}.</p>"),
+                f"<p>Price is a poor guide to monitoring skill. GLM-5.3 at max effort costs {money(G.cost)} per program, "
+                f"{G.cost / S.cost:.1f} times Sonnet, and catches {p(G.safety_exact)}%. Haiku 4.5 costs "
+                f"{H45.cost / HX.cost:.1f} times as much as Haiku 5.5 at xhigh and catches {p(H45.safety_exact)}%. Mistral "
+                f"Large 4 costs {money(MI.cost)} and catches {p(MI.safety_exact)}%, while GPT-6 Luna at xhigh catches "
+                f"{p(LX.safety_exact)}% for {money(LX.cost)}.</p>"),
             "debate": [
                 "Control Tax (Terekhov et al., 2025) already plots a cost-vs-safety frontier for 13 monitors at a 5% budget, "
                 "per Marnick's literature check. We should not present the frontier itself as new. What's ours is "
@@ -66,20 +75,23 @@ class Prose:
                 "Sonnet 5.5 is labelled \"untrusted monitoring\" in our runs, but the code it reads was written by older models, "
                 "so there is no collusion. Read it as \"what a strong model gets when it monitors honestly\", a reference "
                 "point rather than something a lab would deploy as its trusted monitor.",
-                "Costs are list prices times tokens. GLM-5.3's listed price carries an unapplied promo discount, so its real "
-                "cost may be lower. Gemini 3.5 Flash costs come from Marnick's token table, not our CSVs.",
+                "Costs are list prices times tokens, after Marnick's fixes: cached calls now count, and GLM-5.3 is priced at "
+                "the discounted rate it is actually billed at. GLM-5.3's effort=none run is left off because it is the max "
+                "setting in disguise (the provider ignored \"none\").",
             ],
         }
 
     def fig2(self):
         R = self.R
         rows = [
-            ("Haiku 5.5", "Haiku 5.5 · low", "Haiku 5.5 · xhigh"),
+            ("GLM-5.3", "GLM-5.3 · low", "GLM-5.3 · max (default)"),
             ("GPT-6 Luna", "GPT-6 Luna · off", "GPT-6 Luna · xhigh"),
-            ("Qwen 3.8 Omni Flash", "Qwen 3.8 Omni Flash · off", "Qwen 3.8 Omni Flash · high"),
             ("gpt-oss-120b", "gpt-oss-120b · low", "gpt-oss-120b · high"),
-            ("Gemini 3.5 Flash", "Gemini 3.5 Flash · low", "Gemini 3.5 Flash · xhigh"),
-            ("GLM-5.3", "GLM-5.3 · thinking off", "GLM-5.3 · thinking on"),
+            ("Qwen 3.8 Omni Flash", "Qwen 3.8 Omni Flash · off", "Qwen 3.8 Omni Flash · high"),
+            ("Haiku 5.5", "Haiku 5.5 · low", "Haiku 5.5 · xhigh"),
+            ("Sonnet 5.5", "Sonnet 5.5 · low (thinking off)", "Sonnet 5.5 · high (default)"),
+            ("Mistral Large 4", "Mistral Large 4 · default", "Mistral Large 4 · high"),
+            ("Gemini 3.5 Flash-Lite", "Gemini 3.5 Flash-Lite · off", "Gemini 3.5 Flash-Lite · xhigh"),
         ]
         trs = []
         for model, lo, hi in rows:
@@ -88,34 +100,35 @@ class Prose:
                        f"<td>{p(a.safety_exact)}% to {p(b.safety_exact)}%</td>"
                        f"<td>{100 * (b.safety_exact - a.safety_exact):+.1f}</td>"
                        f"<td>{b.cost / a.cost:.1f}x</td></tr>")
-        HL, HX, S = R("Haiku 5.5 · low"), R("Haiku 5.5 · xhigh"), R("Sonnet 5.5")
+        HL, HX = R("Haiku 5.5 · low"), R("Haiku 5.5 · xhigh")
+        GL, GM = R("GLM-5.3 · low"), R("GLM-5.3 · max (default)")
+        FO, FX = R("Gemini 3.5 Flash-Lite · off"), R("Gemini 3.5 Flash-Lite · xhigh")
         return {
             "num": 2, "kind": "main", "source": "ours", "confirm": False,
             "title": "Turning up reasoning effort helps most models, not all",
             "question": "If you keep the model and raise its reasoning effort, how many more backdoors does it catch?",
             "shows": (
-                "One line per model, across the reasoning settings we ran. Up is more backdoors caught. Hover a point for its cost. "
-                "The dotted line is Sonnet 5.5 at its default setting. GLM-5.3 is dashed because its \"off\" setting is not "
-                "really off (see below)."),
-            "numbers": ("<table><thead><tr><th>Model</th><th>Setting</th><th>Caught at 2%</th><th>Change (points)</th>"
-                        "<th>Cost multiple</th></tr></thead><tbody>" + "".join(trs) + "</tbody></table>"),
+                "One line per model, across the reasoning settings we ran. Up is more backdoors caught. Hover a point for its "
+                "cost. \"medium / default\" holds each model's default where the provider doesn't name a level, and "
+                "\"xhigh / max\" holds the top setting each provider offers."),
+            "numbers": ("<table><thead><tr><th>Model</th><th>Lowest to highest setting</th><th>Caught at 2%</th>"
+                        "<th>Change (points)</th><th>Cost multiple</th></tr></thead><tbody>" + "".join(trs) + "</tbody></table>"),
             "takeaway": (
-                f"<p>Reasoning effort is the cheapest lever we found, but it depends on the model. Haiku 5.5 goes from "
-                f"{p(HL.safety_exact)}% at low to {p(HX.safety_exact)}% at xhigh, for {HX.cost / HL.cost:.1f} times the cost, "
-                f"and ends up {100 * (S.safety_exact - HX.safety_exact):.1f} points behind Sonnet 5.5. GPT-6 Luna, Qwen 3.8 and "
-                f"gpt-oss-120b also gain 15 to 22 points. Gemini 3.5 Flash gains nothing: it stays near 20% at every "
-                f"setting.</p>"),
+                f"<p>Reasoning effort is the cheapest lever we found, but what it buys depends on the model. Five of eight "
+                f"models gain 15 to 28 points from their lowest to their highest setting. Haiku 5.5 goes from {p(HL.safety_exact)}% "
+                f"to {p(HX.safety_exact)}% for {HX.cost / HL.cost:.1f} times the cost. GLM-5.3 gains the most, "
+                f"{p(GL.safety_exact)}% to {p(GM.safety_exact)}%, but pays {GM.cost / GL.cost:.0f} times as much for it.</p>"
+                f"<p>The other three don't follow. Sonnet 5.5 gains 3 points, because it is already near the top with thinking "
+                f"off. Mistral Large 4 doesn't move. Gemini 3.5 Flash-Lite gets worse, from {p(FO.safety_exact)}% with thinking "
+                f"off to {p(FX.safety_exact)}% at xhigh.</p>"),
             "debate": [
-                "You suggested \"a cheaper model with more reasoning nearly matches the expensive one\" might generalise. Our own data "
-                "says it doesn't, at least not everywhere: 4 of 6 models gain, Gemini 3.5 Flash is flat, and GLM-5.3 can't be "
-                "tested (next point). And Haiku xhigh only matches Sonnet at budgets of 2% and up (Figure 3). I'd write it as "
-                "\"for most models we tried, effort buys 15 to 22 points cheaply, and you have to check yours\".",
-                "Marnick found that GLM-5.3's \"off\" run reports zero reasoning tokens but then writes about 5,700 tokens of "
-                "visible reasoning per program, the most of any run. So off and on score the same because off still reasons. "
-                "Don't quote GLM as \"thinking doesn't help\".",
+                "We agreed on the framing: effort is a measured lever that depends on the model, not a rule. With Marnick's runs "
+                "in, the case is stronger: 5 of 8 gain, one is already saturated, one is flat and one gets worse.",
+                "Flash-Lite gets one line, nothing more. Marnick's summary page calls its direction unsettled because the order "
+                "flips at a matched 0.2% rate, which rests on a single honest program. At an exact 2% the intervals don't "
+                "overlap. It catches 20 to 29% either way, so nobody would deploy it.",
                 "Monitoring Monitorability (per Marnick's literature sweep) already shows that more test-time compute helps "
-                "weak monitors. What's new here is pricing it against a bigger sibling, and the Gemini counterexample. Marnick "
-                "also found Gemini 3.5 Flash's ranking power gets slightly worse with more effort. That's worth a sentence.",
+                "weak monitors. What's new here is pricing it against a bigger sibling, and the counterexamples.",
                 "Effort labels aren't comparable across providers. Marnick's \"dose\" section re-plots the ladder against "
                 "tokens actually spent, which is the fairer x-axis if a reviewer asks.",
             ],
@@ -140,16 +153,24 @@ class Prose:
             "takeaway": (
                 f"<p>Sonnet is ahead at every budget, but by how much depends on the budget. At 2% the gap is "
                 f"{self.d(2)}. At 5% it is {self.d(5)}. At 1% it grows to {self.d(1)}, and at 0.5% to {self.d(0.5)}.</p>"
+                f"<p>Marnick reached the same answer a different way. He compares the two only at audit rates both can hit "
+                f"exactly, using the 0 to 100 versions of both monitors. At 1.2%, the tightest rate with enough honest programs "
+                f"behind it, Sonnet leads by 13.8 points (95% interval +2.4 to +22.8).</p>"
                 f"<p>So the cheap monitor is a near substitute only when a human can check about 2% or more of "
-                f"the code. With a tighter human budget, the bigger model's lead grows fast.</p>"),
+                f"the code. With a tighter human budget, the bigger model's lead grows fast.</p>"
+                f"<p>Most of Sonnet's edge isn't its thinking. With thinking off, Sonnet catches {p(self.R('Sonnet 5.5 · low (thinking off)').safety_exact)}% "
+                f"at 2%, and Haiku xhigh matches it: the gap is {self.dp('dataset500-sonnet55-um-effortlow-v2-strip', 2)}.</p>"),
             "debate": [
                 "This changes the summary page. It says the two can't be separated because their intervals overlap. With exact "
-                "budgets and a paired test, the gap is small but clearly above zero at every budget. We should update that line.",
+                "budgets and a paired test, the gap is small but clearly above zero at every budget, and Marnick's matched-rate "
+                "test agrees. We should update that line (it lives in web/, so it needs a PR to main).",
+                "Method, as agreed: Marnick's matched-rate number for the tight-budget claim, our exact-budget curve for the "
+                "overview. Marnick should check the 13.8 figure is quoted the way he means it (results/analysis/MONITOR-GAP.md).",
                 f"Your task list asked whether Haiku finding backdoors Sonnet missed was luck. At the reported 2% the split is "
                 f"actually the other way round: Sonnet alone catches {len(only_s)}, Haiku alone {len(only_h)}. Haiku's "
                 f"{len(only_h)} were scored 0.2 by Haiku, one step above its cutoff. They only count because Haiku's \"2%\" "
                 f"audits {hx_row.served_pct:.1f}% of honest code while Sonnet's audits "
-                f"{self.R('Sonnet 5.5').served_pct:.1f}% (Figure 4). Sonnet scored them 0 or 0.1. Sonnet's {len(only_s)} got 0.2 to "
+                f"{self.R('Sonnet 5.5 · high (default)').served_pct:.1f}% (Figure 4). Sonnet scored them 0 or 0.1. Sonnet's {len(only_s)} got 0.2 to "
                 f"0.9 from Sonnet and 0.1 from Haiku, the score Haiku gives 44% of honest programs. So Haiku's extra catches "
                 f"come from extra audit budget, and Sonnet's come from real signal. Not luck, ties.",
                 f"The 50% crossover on the old chart (Haiku alone {int(((s50 == 0) & (h50 == 1)).sum())}, Sonnet alone "
@@ -184,8 +205,9 @@ class Prose:
                 f"runs, a requested 2% budget really audits between {lo:.1f}% and {hi:.1f}% of honest code.</p>"
                 f"<p>That changes rankings. Monitors whose scores tie a lot are under-credited, by up to 16 points (table). "
                 f"We fix it for free: audit everything above the cutoff, plus a random share of the programs tied at the "
-                f"cutoff, so every monitor audits exactly the budget. A deployment can do the same thing. All figures above use "
-                f"this.</p>"),
+                f"cutoff, so every monitor audits exactly the budget. All figures above use this. It matters most "
+                f"when comparing monitors with integer scores, as ControlArena's default prompt gives. More honest data "
+                f"doesn't help, because a 0 to 10 score only ever offers 11 cutoffs.</p>"),
             "debate": [
                 "This is the decision we left open. My recommendation changed after doing the numbers: report exact budgets as "
                 "the main numbers, with the old \"as reported\" numbers and the served rate in an appendix table. It's a one-line "
@@ -512,7 +534,8 @@ the groups before we print numbers.</p>
 
 def recs(P: Prose) -> str:
     R = P.R
-    S, HX = R("Sonnet 5.5"), R("Haiku 5.5 · xhigh")
+    S, HX = R("Sonnet 5.5 · high (default)"), R("Haiku 5.5 · xhigh")
+    G = R("GLM-5.3 · max (default)")
     return f"""
 <h2 id="recs">Practical recommendations (draft)</h2>
 <p>Each one points at the figure it rests on. The confidence notes are mine. Everything comes from one dataset, one monitor prompt
@@ -522,13 +545,18 @@ and one run per configuration, so none of it is high confidence yet.</p>
 Haiku 5.5 at xhigh caught {p(HX.safety_exact)}% at a 2% budget for {money(HX.cost)} per program. Sonnet 5.5 caught
 {p(S.safety_exact)}% for {money(S.cost)}. If a human can check less than about 1% of outputs, the bigger model's lead
 grows to 12 points or more. (Figures 1 to 3.) <span class="conf">Medium confidence.</span></li>
-<li><b>Measure the effort ladder for your monitor. Don't assume it.</b> Four of six models gained 15 to 22 points from more effort,
-and Gemini 3.5 Flash gained nothing. (Figure 2.) <span class="conf">Medium.</span></li>
-<li><b>Don't pick a monitor by price, size or brand.</b> GLM-5.3 cost twice Sonnet and caught 11 fewer points. Haiku 4.5 cost
+<li><b>Measure the effort ladder for your monitor. Don't assume it.</b> Five of eight models gained 15 to 28 points from more effort.
+Mistral Large 4 didn't move, and Gemini 3.5 Flash-Lite got 9 points worse. (Figure 2.) <span class="conf">Medium.</span></li>
+<li><b>Don't pick a monitor by price, size or brand.</b> GLM-5.3 at max effort cost {G.cost / S.cost:.1f} times Sonnet and caught {100 * (S.safety_exact - G.safety_exact):.0f} fewer points. Haiku 4.5 cost
 three times Haiku 5.5 at xhigh and caught 36 fewer. (Figure 1.) <span class="conf">High for this setting.</span></li>
-<li><b>Report safety at an exact audit budget.</b> Audit a random share of tied programs so every monitor audits the same share
-of honest code, and say how many honest programs sit above the cutoff. It's free, and without it rankings can shift by up to
-16 points. (Figure 4.) <span class="conf">High: this is arithmetic, not a measurement.</span></li>
+<li><b>When comparing monitors, report safety at an exact audit budget.</b> Audit a random share of tied programs so every
+monitor audits the same share of honest code, and say how many honest programs sit above the cutoff. It's free, and without it
+rankings can shift by up to 16 points. More honest data doesn't fix this, because a 0 to 10 score only ever offers 11 cutoffs.
+A deployment needs it only if its monitor gives coarse scores. To apply it, audit everything above the cutoff score, plus each
+program scored exactly at the cutoff with probability (budget − share of honest programs above the cutoff) ÷ (share at the
+cutoff). For example, with a 1% budget, 0.9% of honest programs above the cutoff and 0.3% at it, audit each program at the
+cutoff with probability 1/3. Use a random draw, not a counter like "every third one", so an attacker can't predict which ones
+get checked. (Figure 4.) <span class="conf">High: this is arithmetic, not a measurement.</span></li>
 <li><b>Size the honest sample for the budget you care about.</b> With 500 honest programs a 1% budget rests on 5 of them.
 For budgets of 1% or less, use a few thousand. (Supporting: interval width.) <span class="conf">High.</span></li>
 <li><b>Strip comments before scoring stored backdoor sets, and say that you did.</b> About half the backdoors confess in a
@@ -550,7 +578,7 @@ def page(figs: list, theme: dict, P: Prose) -> str:
     main = [f for f in figs if f["kind"] == "main"]
     sup = [f for f in figs if f["kind"] == "support"]
     t2 = P.t[P.t.budget_pct == 2]
-    S, HX = P.R("Sonnet 5.5"), P.R("Haiku 5.5 · xhigh")
+    S, HX = P.R("Sonnet 5.5 · high (default)"), P.R("Haiku 5.5 · xhigh")
     nz = t2[t2.served_pct > 0].served_pct
     zero = t2[t2.served_pct == 0]["name"].tolist()
     span = (f"{nz.min():.1f}% to {nz.max():.1f}%"
@@ -585,7 +613,7 @@ Sonnet from Haiku xhigh, which the summary page said we couldn't do.</p>
 <ol>
 <li>At a 2% audit budget, Sonnet 5.5 catches {p(S.safety_exact)}% of known backdoors and Haiku 5.5 at xhigh reasoning
 catches {p(HX.safety_exact)}%, for about a fifth of the cost. (Figure 1)</li>
-<li>Raising reasoning effort adds 15 to 22 points for four of six models, and nothing for Gemini 3.5 Flash. (Figure 2)</li>
+<li>Raising reasoning effort adds 15 to 28 points for five of eight models. One is flat and one gets worse. (Figure 2)</li>
 <li>The cheap monitor keeps up only when humans can check about 2% or more. At 1% Sonnet leads by 12 points. (Figure 3)</li>
 <li>Monitors use so few distinct scores that "2% budget" can mean anything from {span}. Fixing that is free and
 changes some numbers by 16 points. (Figure 4)</li>
