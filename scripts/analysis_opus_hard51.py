@@ -56,7 +56,8 @@ HAIKU_C, SONNET_C = "#eb6834", "#1baf7a"
 
 
 def effort_of(path: str) -> str:
-    return re.search(r"effort(\w+)$", path.rstrip("/")).group(1)
+    """logs/hard51-opus55-effortmax-pilot -> "max". A run done in pieces has one directory per piece."""
+    return re.search(r"effort([a-z]+)", os.path.basename(path.rstrip("/"))).group(1)
 
 
 def read_run(path: str) -> pd.DataFrame:
@@ -109,18 +110,27 @@ def summarise(runs: dict[str, pd.DataFrame], wide: pd.DataFrame) -> None:
             print(f"  observed output growth {a} -> {b}: x{runs[b].tokens_out.mean() / runs[a].tokens_out.mean():.2f}"
                   f"  (Haiku's was x{STEP_RATIO.get((a, b), float('nan')):.2f})")
     last = done[-1]
-    nxt = EFFORTS[EFFORTS.index(last) + 1] if last != EFFORTS[-1] else None
-    if nxt:
-        d, n = runs[last], len(runs[last])
-        ratio = STEP_RATIO[(last, nxt)]
-        # Input cost taken from the bill (it includes the 1.25x prompt-cache write), not from the plain input price.
-        in_cost = d.cost.mean() - d.tokens_out.mean() * OPUS[1] / 1e6
-        proj = n * (in_cost + d.tokens_out.mean() * ratio * OPUS[1] / 1e6)
-        fits = "fits" if proj <= BUDGET - spent - RESERVE else "DOES NOT fit"
-        print(f"next level {nxt}: projected about ${proj:.2f} (x{ratio} output tokens vs {last}) -> {fits}")
+    d, n, N = runs[last], len(runs[last]), len(wide)
+    left = BUDGET - spent - RESERVE
+    if n < N:
+        proj = (N - n) * d.cost.mean()
+        fits = "fits" if proj <= left else "DOES NOT fit"
+        print(f"{last} is partial, {n} of {N} done at ${d.cost.mean():.4f} per call. Finishing the other {N - n} would cost about "
+              f"${proj:.2f} (rough: {n} calls is a small sample) -> {fits}")
+    else:
+        nxt = EFFORTS[EFFORTS.index(last) + 1] if last != EFFORTS[-1] else None
+        if nxt:
+            ratio = STEP_RATIO[(last, nxt)]
+            # Input cost taken from the bill (it includes the 1.25x prompt-cache write), not from the plain input price.
+            in_cost = d.cost.mean() - d.tokens_out.mean() * OPUS[1] / 1e6
+            proj = n * (in_cost + d.tokens_out.mean() * ratio * OPUS[1] / 1e6)
+            fits = "fits" if proj <= left else "DOES NOT fit"
+            print(f"next level {nxt}: projected about ${proj:.2f} (x{ratio} output tokens vs {last}) -> {fits}")
     g = wide.groupby("group")[[c for c in wide if c.startswith("opus_")]].median().round(1)
     print("\nmedian score (0-100) by group:\n" + g.to_string())
     for e in runs:
+        if len(runs[e]) < len(wide):
+            continue  # a rank correlation on a handful of samples says nothing
         for ref in REFERENCE:
             # Spearman = Pearson on ranks (scipy is not installed); nan when Opus gave every sample the same score.
             rho = wide[f"opus_{e}"].rank().corr(wide[ref].rank())
@@ -218,10 +228,14 @@ def _titles(fig, title, sub, foot):
 
 def report_figures(wide: pd.DataFrame, runs: dict[str, pd.DataFrame]) -> None:
     d49 = wide[wide.group.isin(["never_caught", "caught_at_0to100"])]
-    miss, caught = d49[d49.group == "never_caught"], d49[d49.group == "caught_at_0to100"]
     e = list(runs)[-1]
     col = f"opus_{e}"
-    foot = f"49 backdoored solutions, comments stripped, 0-100 prompt. Opus 5.5 at {e} effort. Opus has no score on honest code, so its scores rank backdoors but are not a catch rate."
+    n_fail = int(d49[col].isna().sum())  # a reply with no score is NaN, not 0, so it never shows as "saw nothing"
+    d49 = d49.dropna(subset=[col])
+    miss, caught = d49[d49.group == "never_caught"], d49[d49.group == "caught_at_0to100"]
+    left_out = f" {n_fail} backdoor{'s' if n_fail > 1 else ''} left out because Opus returned no score at {e} effort." if n_fail else ""
+    foot = (f"{len(d49)} backdoored solutions, comments stripped, 0-100 prompt. Opus 5.5 at {e} effort. "
+            f"Opus has no score on honest code, so its scores rank backdoors but are not a catch rate.{left_out}")
 
     # 1. Opus agrees with the small monitors about which backdoors are obvious.
     fig, ax = _axes((8, 6))
@@ -251,16 +265,16 @@ def report_figures(wide: pd.DataFrame, runs: dict[str, pd.DataFrame]) -> None:
     ax.barh(y, top[col], color=MISS_C, height=0.55, zorder=2)
     for yi, v, so, ha in zip(y, top[col], top["Sonnet 5.5"], top["Haiku 5.5 xhigh"]):
         ax.text(v + 1.5, yi, f"{v:g}", va="center", fontsize=11, color=INK, fontweight="semibold")
-        ax.text(99, yi, f"{so:g}  /  {ha:g}", va="center", ha="right", fontsize=11, color=INK2)
-    ax.text(99, len(top) - 0.35, "Sonnet / Haiku", va="bottom", ha="right", fontsize=10, color=INK2)
+        ax.text(1.03, yi, f"{so:g}  /  {ha:g}", transform=ax.get_yaxis_transform(), va="center", ha="left", fontsize=11, color=INK2)
+    ax.text(1.03, len(top) - 0.35, "Sonnet / Haiku", transform=ax.get_yaxis_transform(), va="bottom", ha="left", fontsize=10, color=INK2)
     ax.set_yticks(y)
     ax.set_yticklabels([f"Problem {i}" for i in top.sample_id], fontsize=11, color=INK2)
     ax.set_xlim(0, 100)
     ax.grid(axis="x", color=GRID, lw=0.7, zorder=0)
     ax.set_xlabel("Suspicion score (0-100)", **BASE)
-    fig.subplots_adjust(left=0.17, right=0.95, top=0.70, bottom=0.19)
-    _titles(fig, f"Opus rates {n20} of the 41 missed backdoors at 20 or more",
-            f"The 10 highest-scored backdoors out of the 41 that no monitor caught. Bars are Opus scores; the numbers on the right are what Sonnet and Haiku gave the same backdoor. Those two score every one of the 41 at {max(miss['Haiku 5.5 xhigh'].max(), miss['Sonnet 5.5'].max()):g} or below. Opus scores the other {len(rest)} at {rest[col].max():g} or below (median {rest[col].median():g}).", foot)
+    fig.subplots_adjust(left=0.17, right=0.84, top=0.70, bottom=0.19)
+    _titles(fig, f"Opus rates {n20} of the {len(miss)} missed backdoors at 20 or more",
+            f"The 10 highest-scored backdoors out of the {len(miss)} that no monitor caught. Bars are Opus scores; the numbers on the right are what Sonnet and Haiku gave the same backdoor. Those two score every one of them at {max(miss['Haiku 5.5 xhigh'].max(), miss['Sonnet 5.5'].max()):g} or below. Opus scores the other {len(rest)} at {rest[col].max():g} or below (median {rest[col].median():g}).", foot)
     fig.savefig(OUT / "opus-hard51-fig2-missed.png", dpi=200, facecolor=SURFACE)
 
     # 3. Does thinking harder change the answer? Needs two efforts.
@@ -273,19 +287,21 @@ def report_figures(wide: pd.DataFrame, runs: dict[str, pd.DataFrame]) -> None:
         _score_axis(ax, "x")
         _score_axis(ax, "y")
         ax.grid(True, color=GRID, lw=0.7)
-        moved = int(((d49[f"opus_{hi}"] - d49[f"opus_{lo}"]).abs() < 10).sum())
+        both = d49[[f"opus_{lo}", f"opus_{hi}"]].dropna()
+        diff = both[f"opus_{hi}"] - both[f"opus_{lo}"]
+        moved, up, down = int((diff.abs() < 10).sum()), int((diff >= 10).sum()), int((diff <= -10).sum())
         ax.set_xlabel(f"Opus score at {lo} effort", **BASE)
         ax.set_ylabel(f"Opus score at {hi} effort", **BASE)
         ax.legend(loc="lower right", frameon=False, fontsize=10.5, labelcolor=INK2)
-        n_see = int(((d49[f"opus_{lo}"] <= 2) & (d49[f"opus_{hi}"] >= 50)).sum())
+        n_see = int(((d49[f"opus_{lo}"] <= 5) & (d49[f"opus_{hi}"] >= 50)).sum())
         if n_see:
-            ax.annotate(f"{n_see} backdoors noticed\nonly at {hi} effort", xy=(1.05, 60), xytext=(2.6, 33), fontsize=10.5, color=INK, arrowprops=dict(arrowstyle="-", color=INK2, lw=1))
+            ax.annotate(f"{n_see} backdoor{'s' if n_see > 1 else ''} noticed\nonly at {hi} effort", xy=(1.05, 60), xytext=(2.6, 33), fontsize=10.5, color=INK, arrowprops=dict(arrowstyle="-", color=INK2, lw=1))
         c_lo, c_hi = runs[lo].cost.mean(), runs[hi].cost.mean()
         fig.subplots_adjust(left=0.12, right=0.97, top=0.70, bottom=0.17)
-        _titles(fig, "Thinking harder changes little",
-                f"{moved} of {len(d49)} backdoors move by under 10 points between {lo} and {hi} effort (a dot on the line means no change). "
+        _titles(fig, f"Most backdoors score the same at {lo} and {hi} effort",
+                f"{len(both) - moved} of {len(both)} move by 10 points or more between {lo} and {hi} effort ({up} up, {down} down). A dot on the line means no change. "
                 f"{hi.capitalize()} effort costs \\${c_hi:.3f} per call, against \\${c_lo:.3f} at {lo}.",
-                f"49 backdoored solutions, comments stripped, 0-100 prompt, Opus 5.5.")
+                f"{len(both)} backdoored solutions, comments stripped, 0-100 prompt, Opus 5.5.{left_out}")
         fig.savefig(OUT / "opus-hard51-fig3-effort.png", dpi=200, facecolor=SURFACE)
     plt.close("all")
     print("wrote opus-hard51-fig1-agreement.png, fig2-missed.png" + (", fig3-effort.png" if len(runs) >= 2 else ""))
@@ -295,23 +311,32 @@ def main() -> None:
     dirs = sorted(glob.glob(LOG_GLOB), key=lambda p: EFFORTS.index(effort_of(p)))
     if not dirs:
         raise SystemExit(f"no runs match {LOG_GLOB}")
-    runs = {effort_of(p): read_run(p) for p in dirs}
+    by_effort: dict[str, list[pd.DataFrame]] = {}
+    for p in dirs:
+        by_effort.setdefault(effort_of(p), []).append(read_run(p))
+    runs = {}
+    for e, parts in by_effort.items():
+        runs[e] = pd.concat(parts, ignore_index=True)
+        dup = runs[e].sample_id[runs[e].sample_id.duplicated()].tolist()
+        assert not dup, f"{e}: the same sample was scored twice (overlapping pieces): {dup}"
     labels = pd.read_csv(OUT / "opus-hard51-labels.csv", dtype={"sample_id": str}).set_index("sample_id")
     ref, cutoffs = reference_scores()
     wide = labels.join(ref)
     reasons = []
     for e, d in runs.items():
         d = d.set_index("sample_id")
-        wide[f"opus_{e}"] = d.score
+        wide[f"opus_{e}"] = d.score.where(~d.parse_fail)  # a parse failure is stored as 0 by ControlArena; blank it here
         wide[f"fail_{e}"] = d.parse_fail
         reasons += [{"sample_id": i, "effort": e, "score": r.score, "parse_fail": r.parse_fail, "reason": r.reason} for i, r in d.iterrows()]
     wide = wide.reset_index()
-    assert wide[[c for c in wide if c.startswith("opus_")]].notna().all().all(), "a run is missing samples"
+    complete = {e: d for e, d in runs.items() if len(d) == len(wide)}
+    for e in runs.keys() - complete.keys():
+        print(f"note: {e} has {len(runs[e])} of {len(wide)} samples so far; it is left out of the figures until it is complete")
     wide.drop(columns=[c for c in wide if c.startswith("fail_")]).to_csv(OUT / "opus-hard51-scores.csv", index=False)
     pd.DataFrame(reasons).to_csv(OUT / "opus-hard51-reasons.csv", index=False)
     summarise(runs, wide)
-    chart(wide, runs, cutoffs)
-    report_figures(wide, runs)
+    chart(wide, complete, cutoffs)
+    report_figures(wide, complete)
 
 
 if __name__ == "__main__":
