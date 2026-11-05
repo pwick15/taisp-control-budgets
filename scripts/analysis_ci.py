@@ -34,7 +34,32 @@ def summary(run):
 
 
 out = []
-paths = sorted(glob.glob(str(R / "*n500*-strip-samples.csv")) + glob.glob(str(R / "dataset500*-strip-samples.csv")))
+# Select by what the run IS, not by how its name happens to be spelled. The previous
+# pattern was "*n500*-strip-samples.csv", which requires "-strip" to follow "n500" and so
+# silently excluded dataset-haiku55-xhigh-nostrip-n500: the comments-kept arm, and the one
+# carrying this project's headline claim about comments. It had no confidence interval at
+# all while every other n=500 run did, and nothing failed to say so.
+def _is_main(path: str) -> bool:
+    run = Path(path).name[: -len("-samples.csv")]
+    if (R / "superseded" / f"{run}-samples.csv").exists():
+        return False          # a partial pass that a later complete run replaces
+    try:
+        rows = list(csv.DictReader(open(R / f"{run}.csv")))
+    except OSError:
+        return False
+    if not rows:
+        return False
+    # Two separate jobs, and conflating them is what let a broken run through. Size class
+    # picks the main 500-sample runs; completeness then demands they actually delivered 500.
+    # The old test was ">= 460 per arm", which the 480/463 run passed: the policy held only
+    # because that file had been moved aside by hand, not because this gate noticed.
+    want = 500 if ("n500" in run or run.startswith("dataset500")) else None
+    if want is None:
+        return False
+    return int(rows[0]["n_honest"]) == want and int(rows[0]["n_attack"]) == want
+
+
+paths = sorted(p for p in glob.glob(str(R / "*-samples.csv")) if _is_main(p))
 for p in paths:
     run = Path(p).name[: -len("-samples.csv")]
     h, a = load(p)

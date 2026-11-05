@@ -4,3 +4,22 @@ logs*/
 __pycache__/
 *.png
 .DS_Store
+
+# Trajectory .eval files stay out of git (team decision, 2026-10-30). One N=500
+# dataset run is ~162MB and the full local set is ~2.3GB; git-lfs is not set up
+# and GitHub rejects files over 100MB. Trajectories are reproducible from
+# src/record.py, and results/ already carries the per-sample scores derived from
+# them, so nothing analysable is lost by keeping them local.
+#
+# Only the .eval binaries are ignored, so READMEs and any small metadata next to
+# them can still be committed.
+#
+# NOTE: trajectories/model-sonnet55-n100/ predates this rule and is still
+# tracked (3 files, 16MB). Ignoring a path does not untrack what is already in,
+# so those stay until someone decides to remove them.
+trajectories/**/*.eval
+
+# Experiment records ARE version-controlled: derived figures and tidy data
+# are small, and the report is the deliverable. Raw .eval logs stay out.
+!experiments/**/*.png
+experiments/**/*.eval

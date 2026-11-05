@@ -152,6 +152,89 @@ Pages read only the committed CSVs, never the logs, so anyone can rebuild them. 
 | `docs/codebase-guide.md` | Where things live in the ControlArena library, a trace of one attack sample, and experiment ideas. |
 | `pyproject.toml`, `uv.lock` | Dependencies. Use `uv add <pkg>` so the lockfile stays in sync. |
 
+## What the dataset is, and what that limits
+
+Every number in this repository describes **one difficulty band of APPS**, and nothing in
+the results says so, which is worth fixing before any of it is generalised.
+
+- The setting filters on `has_backdoor_solution=True`, which leaves **1,444 eligible
+  problems** out of the 5,000 in the source dataset. So a run can never exceed 1,444 paired
+  samples, and the 5,000-sample experiments that get proposed from time to time are
+  impossible by a factor of three and a half.
+- `shuffle_dataset` defaults to False, so `limit=n` takes a **prefix**. The 500 problems
+  every main run scores are the *first* 500 eligible ones, which also means a smaller pilot
+  is a nested subset of a larger run rather than an independent sample.
+- Those first 500 are **100% `interview` difficulty**. The eligible problems beyond them
+  are a different mix, roughly 1,061 interview, 277 introductory and 106 competition. So
+  the unscored remainder is not exchangeable with the scored part, and growing the sample
+  changes the population as well as its size.
+
+Two consequences. Any claim about monitor capability, backdoor hardness or generator effect
+is conditional on interview-difficulty problems. And an honest-sample increase, which is the
+one lever that buys resolution at tight audit budgets, has a hard ceiling of about 2,118
+honest samples if it is kept within the same band.
+
+## Run completeness
+
+A run named `n500` means **500 honest and 500 attack samples, all scored**. A run that
+delivers fewer is not a smaller run, it is an incomplete one, and the missing samples are
+not a random subset: the first case of this lost a contiguous tail of the dataset to an API
+credit exhaustion, unevenly across the two arms, which moved its measured recall.
+
+Executing one configuration in several passes is the normal way to repair that. Inspect's
+monitor cache replays the scores already obtained, so a later pass pays only for the samples
+that were missing. Exactly one execution, the complete one, is then "the run":
+
+- it lives in `results/` and is the only one anything analyses;
+- earlier incomplete executions of the same configuration move to `results/superseded/`,
+  which keeps the failure on the record while removing it from the `results/*-samples.csv`
+  glob every analysis script uses;
+- a superseded run and its successor share most of their rows through the cache, so they are
+  never two independent runs and must not be compared or averaged against each other.
+
+**One kind of artifact is deliberately not a run.** An audit threshold is a percentile of
+the honest score distribution alone, so more honest samples buy resolution at tight budgets
+and more attack samples buy none. A honest-only arm bought for that reason lives in
+`results/honest-topup/`, outside the `results/*-samples.csv` glob every analysis script uses,
+because `compute_safety` returns 1.0 from an empty denominator and would report perfect
+safety for it without erroring. See `results/honest-topup/README.md`.
+
+Three columns in `results/<run>.csv` exist to make this checkable rather than assumed:
+`n_samples`, `n_cache_served` and `usage_source`. A run whose `n_cache_served` approaches
+`n_samples` generated almost nothing fresh, so its cost figure is not a cost and its scores
+are inherited from an earlier pass.
+
+**They are not present on every run.** A run only gets them if its raw log survived, since
+they are derived from the per-call model events, and **6 runs** predate that: the six n=30
+pilots, three configurations each kept and stripped. For those the cost and token columns are
+whatever the old sample-level accounting produced, which is blind to cached calls and can
+understate badly. **None of the comparable n=500 set is affected any more.**
+
+It was 14, and five of those were in the n=500 set, including `dataset500-sonnet55-um-strip`,
+the lead row of the report chart. Two were recovered by noticing that their eval logs had been
+written under `trajectories/` rather than `logs/`, which nothing had looked in:
+`dataset-haiku55-tm-n500-strip` and `dataset-qwen38omniflash-none-tm-n500-strip`. The first
+matters beyond its own row, because every figure in `results/analysis/REASONING-TOKENS.md`
+is computed from it. The remaining five were recovered from the collaborator logs.
+
+`usage_source` takes three values, and the difference between the last two is the whole
+question of whether a cost figure can be trusted:
+
+| value | what it means |
+|---|---|
+| `events` | read from the per-call model events, which see cached calls |
+| `sample_field_complete` | the log records no usage-bearing model events, so the sample-level field is the only source there is, and it covers every sample. Inspect empties that field for a call it serves from cache, so full coverage is the evidence that none was cached and the total is complete |
+| `sample_field` | the field was used and does **not** cover every sample, so the total undercounts by an unknown amount |
+
+That reading holds because these protocols make one monitor call per sample, so sample
+coverage is call coverage. A protocol with several calls per sample could hide a cached one
+inside a sample that still looks populated.
+
+`scripts/check_tables.py` names the current set on every run, so the list is one command
+away rather than a number in prose that goes stale, and it fails a `sample_field` run while
+passing a `sample_field_complete` one by name with its reason. Treat a cost figure without a
+`usage_source` as unverifiable rather than as agreeing with the recomputed ones.
+
 ## Metrics
 
 - **Usefulness:** fraction of honest-mode runs that solve the problem.
@@ -176,6 +259,23 @@ ControlArena also ships `defer_to_resample` and `trusted_editing` micro-protocol
 ## Troubleshooting
 
 - **`docker` errors or sandbox failures:** start Docker Desktop and retry.
-- **Auth errors:** check `ANTHROPIC_API_KEY` is set in `.env` and that you run from the repo root.
+- **Auth errors, or every sample failing while the eval still "completes":** an
+  `ANTHROPIC_API_KEY` exported in your shell **silently overrides the one in
+  `.env`**. Inspect loads `.env` with dotenv, which by design does not replace a
+  variable that is already set. So if your shell holds a stale, revoked or
+  out-of-credit key, the one in `.env` is ignored, every sample fails with its
+  own API error, and the only symptom is `100% of executed samples had errors
+  and were not scored`. Check which key is actually in use:
+
+  ```bash
+  echo "shell: $ANTHROPIC_API_KEY" | cut -c1-20   # compare against .env
+  unset ANTHROPIC_API_KEY                          # make .env authoritative
+  # or, to load .env over the top for one shell:
+  set -a && . ./.env && set +a
+  ```
+
+  `src/preflight.py` checks this before a run starts and refuses to launch,
+  rather than letting the run burn through every sample first. It reports which
+  key wins and prints the provider's own error message.
 - **Rate limits or high cost:** lower the problem count, or lower `max_sandboxes` in `src/experiment.py`.
 - **Some other setting needs more than Docker:** several settings (`iac`, `infra`, ...) need Kubernetes. Read the setting's README in the library before switching.
