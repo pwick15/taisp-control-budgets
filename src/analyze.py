@@ -86,6 +86,25 @@ PRICES = {
     "openai-api/litellm/deepinfra/google/gemma-4-26B-A4B-it": (0.07, 0.34, 0.07, 0.07),
     "openai-api/litellm/deepinfra/google/gemma-3-4b-it": (0.05, 0.10, 0.05, 0.05),
     "openai-api/litellm/deepinfra/google/gemma-3-27b-it": (0.08, 0.16, 0.08, 0.08),
+    # Mistral's own API list rates, from the official table at
+    # https://docs.mistral.ai/inference/pricing (Generalist models), captured 2026-11-04.
+    # Worth the citation because the aggregators disagree: several list Mistral Large 4 at
+    # 1.36/4.18, which is about twice the published rate, and mistral.ai/pricing's FAQ
+    # quotes 0.50/1.50 for an older "Mistral Large". Mistral publishes input, cached input
+    # and output but no separate cache-write rate, so cache write takes the input rate as
+    # it does for Gemini above.
+    #
+    # Unlike the GLM and Gemma 3 rows these are NOT verified against a provider bill:
+    # scripts/check_prices.py reads the per-call `estimated_cost` out of model events, and
+    # these runs' logs carry no model events at all. They came from a collaborator's
+    # account, so a non-default tier would also not show up here.
+    "mistral/mistral-large-4": (0.70, 2.10, 0.70, 0.07),
+    "mistral/ministral-14b-2512": (0.20, 0.20, 0.20, 0.02),
+    # `mistral/ministral-8b-latest` is deliberately absent. The alias resolved to whatever
+    # was current when that run executed, and the only 8B on the pricing table now is
+    # "Ministral 3 8B" (v25.12) at 0.15/0.015/0.15, while the model the alias most likely
+    # named, ministral-8b-2410, was retired on 2025-12-31 with no price published. Pricing
+    # it would be a guess about which weights ran, and the run is n=50 anyway, below scope.
 }
 USAGE_FIELDS = ("input_tokens", "output_tokens", "input_tokens_cache_write", "input_tokens_cache_read")
 
@@ -105,6 +124,45 @@ def usage_by_model(df: pd.DataFrame) -> dict[str, dict[str, int]]:
     return {model: dict(fields) for model, fields in totals.items()}
 
 
+def field_coverage(df: pd.DataFrame) -> tuple[int, int]:
+    """How many samples carry a populated sample-level `model_usage`, and how many there are.
+
+    This is the one thing that makes the fallback field trustworthy or not. Inspect leaves
+    `model_usage` empty for a call it served from its own cache, which is the mechanism
+    behind this project's worst accounting defect: a run reported 5.8% coverage and a cost
+    understated about seventeenfold because 942 of its 1,000 monitor calls were cache
+    replays. Read the other way, a populated record is evidence the call was live, so a run
+    whose every sample carries one was not served from cache and the field is complete
+    rather than blind. These runs make one monitor call per sample, so sample coverage is
+    call coverage; a protocol with several calls per sample could hide a cached one inside
+    a sample that still looks populated.
+    """
+    col = df["model_usage"]
+    populated = 0
+    for raw in col:
+        if raw is None or (isinstance(raw, float) and pd.isna(raw)):
+            continue
+        usage = json.loads(raw) if isinstance(raw, str) else raw
+        if usage:
+            populated += 1
+    return populated, len(col)
+
+
+def any_usage(per_sample: dict | None) -> bool:
+    """Did the event walk actually recover usage, as opposed to merely finding samples?
+
+    usage_from_events keys every sample it sees, whether or not that sample carried a
+    usage-bearing model event, so the returned dict is non-empty for a log that records
+    no model events at all. Testing the dict itself therefore reads as "events were
+    available" when the truth is "events were available and empty", which silently
+    prefers an all-zero events result over the sample-level field that does hold the
+    numbers. Seven of this study's runs are exactly that shape: their logs carry no
+    model events, and reading the dict as truthy published 0 tokens and $0.00 for runs
+    whose real usage sits in `model_usage`.
+    """
+    return any(fields for fields in (per_sample or {}).values())
+
+
 def sample_reasoning_tokens(df: pd.DataFrame, cold_per_sample: dict | None = None) -> pd.Series:
     """Hidden reasoning tokens per sample, summed over every model that ran on it.
 
@@ -121,7 +179,7 @@ def sample_reasoning_tokens(df: pd.DataFrame, cold_per_sample: dict | None = Non
     relocates its chain of thought into the visible content and reports 0
     (README-glm53-runs.md).
     """
-    if cold_per_sample:
+    if any_usage(cold_per_sample):
         keys = [f"{m}:{i}" for m, i in zip(df["eval_mode"].tolist(), df["id"].tolist())]
         return pd.Series(
             [sum(int(fields.get("reasoning_tokens") or 0)
@@ -149,6 +207,12 @@ def usage_from_events(log_dir: str, protocol: str) -> tuple[dict, dict, set[str]
     log per arm and the same problem id occurs in both. Keying on the id alone sums the
     two arms together and doubles every token count.
 
+    Several logs MAY cover one arm, and that is not by itself an error: a run executed in
+    passes writes one log per pass, and when the passes cover disjoint problems summing
+    them is exactly right. What is never right is summing the same (arm, problem) twice,
+    whether from a superseded re-run or from overlapping passes, so that is what this
+    refuses: the key, not the arm.
+
     Returns (cold, billed, cache_served):
       cold    what a cold run of this configuration spends, every call counted. This is
               the protocol's cost, and the number every cross-run comparison wants.
@@ -166,19 +230,20 @@ def usage_from_events(log_dir: str, protocol: str) -> tuple[dict, dict, set[str]
     billed: dict[str, dict] = {}
     cache_served: set[str] = set()
     entries = list(list_eval_logs(f"{log_dir}/{protocol}"))
-    seen_modes: dict[str, str] = {}
+    seen_keys: dict[str, str] = {}
     for entry in entries:
         log = read_eval_log(entry.name)
         for smp in (log.samples or []):
             key = f"{(smp.metadata or {}).get('eval_mode')}:{smp.id}"
-            # Two logs covering the same arm would sum into one key and silently double
-            # every token count, which is the bug this keying was introduced to fix.
-            mode = (smp.metadata or {}).get("eval_mode")
-            if seen_modes.setdefault(mode, entry.name) != entry.name:
+            # The same (arm, problem) reaching this twice would sum into one key and
+            # silently double its token count, which is the bug this keying was
+            # introduced to fix. Disjoint passes of one arm are fine and are summed.
+            if seen_keys.setdefault(key, entry.name) != entry.name:
                 raise SystemExit(
-                    f"{log_dir}/{protocol} has more than one log covering the {mode!r} arm "
-                    f"({seen_modes[mode]} and {entry.name}). Summing both would double every "
-                    f"token count. Move the superseded pass out before analysing.")
+                    f"{log_dir}/{protocol} covers {key!r} in two logs "
+                    f"({seen_keys[key]} and {entry.name}). Summing both would double its "
+                    f"token count. If one is a superseded pass, move it out; if the passes "
+                    f"are meant to be disjoint, they are not.")
             c = cold.setdefault(key, nest())
             b = billed.setdefault(key, nest())
             states = set()
@@ -220,7 +285,13 @@ def total_usage(per_sample: dict, keys: list[str]) -> dict[str, dict[str, int]]:
 
 
 def est_cost_usd(usage: dict[str, dict[str, int]]) -> float | None:
-    """Dollar estimate from PRICES, or None if any model has no listed price."""
+    """Dollar estimate from PRICES, or None if the cost is not known.
+
+    Empty usage is unknown, not free: summing no models gives 0.0, which reads in a
+    committed table as a measured $0.00 per sample.
+    """
+    if not usage:
+        return None
     if any(model not in PRICES for model in usage):
         return None
     return sum(
@@ -252,18 +323,31 @@ def main() -> None:
         usefulness = compute_usefulness(df)
         keys = [f"{m}:{i}" for m, i in zip(df["eval_mode"].tolist(), df["id"].tolist())]
         cold_per_sample, billed_per_sample, cache_served = usage_from_events(LOG_DIR, protocol)
-        if cold_per_sample:
+        if any_usage(cold_per_sample):
             usage = total_usage(cold_per_sample, keys)
             usage_billed = total_usage(billed_per_sample, keys)
             n_cache_served = sum(1 for k in keys if k in cache_served)
+            usage_source = "events"
         else:
-            # No model events in the log (older or pruned). Fall back to the sample-level
-            # field and say so, because that field is blind to every cached call.
-            print("  WARNING: no model events in this log; usage falls back to the "
-                  "sample-level field, which undercounts any cached call")
+            # The log records no usage-bearing model events (older, pruned, or written by
+            # a record-once monitor-many pass). Fall back to the sample-level field, and
+            # report its coverage rather than just naming it: the field is blind to a
+            # cached call, so partial coverage means the total is an undercount of unknown
+            # size, while full coverage means no sample was served from cache at all.
+            covered, n_rows = field_coverage(df)
+            if covered == n_rows:
+                print(f"  no usage in this log's model events; usage falls back to the "
+                      f"sample-level field, which covers all {n_rows} samples, so no call "
+                      f"was cache-served and the total is complete")
+            else:
+                print(f"  WARNING: no usage in this log's model events; usage falls back "
+                      f"to the sample-level field, which covers only {covered}/{n_rows} "
+                      f"samples. The field is empty for a cache-served call, so this "
+                      f"total undercounts by an unknown amount")
             usage = usage_by_model(df)
             usage_billed = usage
             n_cache_served = -1
+            usage_source = "sample_field_complete" if covered == n_rows else "sample_field"
         # Sum the priced fields only. summing u.values() would add reasoning_tokens on
         # top of the output tokens that already contain them.
         tokens = {m: sum(u.get(f, 0) for f in USAGE_FIELDS) for m, u in usage.items()}
@@ -313,7 +397,7 @@ def main() -> None:
                 # is indistinguishable from a genuinely cheap one.
                 "n_samples": len(df),
                 "n_cache_served": n_cache_served,
-                "usage_source": "events" if cold_per_sample else "sample_field",
+                "usage_source": usage_source,
                 "est_cost_usd_billed_total": (round(cost_billed, 5)
                                               if cost_billed is not None else ""),
             })

@@ -127,10 +127,12 @@ const BUDGETS = ['0.5', '1', '2', '5', '10', '20'];
 const FAM = {
   anthropic: ['Anthropic', '#0072B2'], openai: ['OpenAI', '#E69F00'], google: ['Google', '#009E73'],
   zhipu: ['Zhipu GLM', '#CC79A7'], alibaba: ['Alibaba Qwen', '#D55E00'],
+  mistral: ['Mistral', '#56B4E9'],
 };
 const SHAPE = {
   sonnet55: 'diamond', haiku55: 'circle', haiku45: 'square', luna: 'square', gptoss: 'triangle', glm53: 'circle', qwen38: 'plus',
   gemini35fl: 'circle', gemini35lite: 'triangle', gemma4: 'square', gemma3: 'diamond',
+  mistrallarge4: 'diamond', ministral14b: 'triangle',
 };
 function marker(shape, x, y, r, c, attrs = '') {
   const f = `fill="${c}" stroke="var(--bg)" stroke-width="1.5" ${attrs}`;

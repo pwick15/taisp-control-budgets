@@ -14,6 +14,10 @@ Coverage is partial by nature, and the gaps are worth knowing:
                             models, which return no such field at all
   returns zero              any STREAMED call, so a streamed arm cannot be checked this
                             way and must be costed from token counts
+  not visible at all        the three Mistral arms, whose logs record no model events, so
+                            there is nothing here to read a per-call cost out of. Their
+                            rates come from Mistral's published table and are the only
+                            ones in PRICES with no independent check behind them
 
 So a pass here is strong evidence for the models it covers and says nothing about the rest.
 Prices for the uncovered models are taken from the serving proxy's own rate card.
