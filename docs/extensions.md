@@ -20,11 +20,13 @@ Where to pick things up. Everything here uses the N=500 dataset-policy setup (`s
 - [x] Price the Google models in `src/analyze.py` so they get a cost. Done 2026-11-01:
       `google/gemini-3.5-flash-lite`, both Gemma 3 sizes and Gemma 4 26B-A4B now carry
       rates, verified against the serving proxy's own rate card and, for the proxied
-      ones, against the provider's per-call `estimated_cost` to ratio 1.000. Two runs
-      still show no cost, `dataset500-gemini35lite-tm-strip` and
-      `dataset500-gemma426b-tm-strip`, because their raw logs were not retained and the
-      input/output split a price needs cannot be recovered from the committed summary.
-      That is a log-retention limit, not a pricing one.
+      ones, against the provider's per-call `estimated_cost` to ratio 1.000. The two runs
+      that showed no cost, `dataset500-gemini35lite-tm-strip` and
+      `dataset500-gemma426b-tm-strip`, now carry one too: $0.00111362 and $0.0007365 per
+      sample, recovered from the sample-level usage field. Both record
+      `usage_source=sample_field_complete`, so that field covers every sample, which is
+      the evidence that no call was cache-served and the total is complete. No run in
+      `results/` is without a cost now.
 
 ## Higher cost
 
