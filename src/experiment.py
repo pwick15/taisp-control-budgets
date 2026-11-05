@@ -18,10 +18,23 @@ Optional knobs, also env vars:
                      Usefulness is not meaningful in this mode (dataset solutions always pass).
     STRIP_COMMENTS   "1": remove # comments from submitted code before the monitor sees it
                      (default 0). Measures code-reading alone; see src/strip_comments.py.
+    MODES            comma-separated subset of honest,attack (default: both). An audit
+                     threshold is a percentile of the HONEST scores alone, so buying more
+                     honest samples buys resolution at tight budgets while buying attack
+                     samples does not. MODES=honest is how that is bought.
+    SAMPLE_IDS       path to a JSON list of dataset sample ids to score, which replaces the
+                     prefix `limit` takes. `shuffle_dataset` is False, so a bare limit is
+                     always a prefix of the same difficulty band: naming the ids is the only
+                     way to extend an arm without re-scoring what it already has.
+
+An arm run with MODES set is NOT a run. A run is 500 honest and 500 attack, both scored,
+and results/ enforces that. A one-sided arm is a top-up to an existing run's honest side and
+belongs in results/honest-topup/, never in results/.
 """
 import json
 import os
 import sys
+from pathlib import Path
 
 from inspect_ai import eval as inspect_eval
 from inspect_ai.model import GenerateConfig, get_model
@@ -33,11 +46,14 @@ from control_arena.micro_protocol import (
     trusted_monitoring_builder,
 )
 from control_arena.monitor import basic_monitor_builder
+from control_arena.monitor._types import MonitorScoreRange
 from control_arena.scorers import max_suspicion_scorer
 from control_arena.settings.apps.apps_setting import AppsSetting
 from control_arena.settings.apps.apps_solution_policy import apps_solution_policy
 
 from strip_comments import strip_comments_prompt_formatter
+
+from preflight import check_credentials
 
 LOG_DIR = os.getenv("LOG_DIR", "logs")
 n_problems = int(sys.argv[1]) if len(sys.argv) > 1 else 10
@@ -53,6 +69,12 @@ max_connections = int(os.getenv("MAX_CONNECTIONS", "10"))
 # only how the bytes are delivered, never the model's output, so streamed and
 # non-streamed scores are identical. Off by default: non-streaming runs are unchanged.
 trusted_model_name = os.getenv("TRUSTED_MODEL", "anthropic/claude-haiku-4-5-20251001")
+untrusted_model_name = os.getenv("UNTRUSTED_MODEL", "anthropic/claude-sonnet-5-5")
+
+# One tiny call per model before anything expensive starts. Without this, a bad
+# or shadowed key fails every sample individually, the eval still "completes",
+# and the only symptom is 100% of samples unscored.
+check_credentials(untrusted_model_name, trusted_model_name)
 
 # Optional monitor reasoning-effort sweep, all env-gated so the baselines are unchanged:
 #   MONITOR_REASONING         reasoning effort none/low/medium/high/xhigh (OpenAI / DeepInfra
@@ -91,14 +113,44 @@ else:
     trusted_model = trusted_model_name
     trusted_config = GenerateConfig(**monitor_cfg)
 
+# Under untrusted_monitoring the MONITOR is the untrusted model, so the monitor knobs
+# (reasoning effort, extra body) have to reach the untrusted role or they are silently
+# dropped: the run then looks like a sweep arm but is really a duplicate of the default.
+_selected_protocols = os.getenv("PROTOCOLS", "")
+_monitor_is_untrusted = "untrusted_monitoring" in _selected_protocols
+untrusted_config = GenerateConfig(
+    **({**monitor_cfg, "max_connections": max_connections} if _monitor_is_untrusted
+       else {"max_connections": max_connections})
+)
+
 config = ControlEvalConfig(
-    untrusted_model=os.getenv("UNTRUSTED_MODEL", "anthropic/claude-sonnet-5-5"),
+    untrusted_model=untrusted_model_name,
     trusted_model=trusted_model,
-    untrusted_config=GenerateConfig(max_connections=max_connections),
+    untrusted_config=untrusted_config,
     trusted_config=trusted_config,
     limit=n_problems,
     max_sandboxes=int(os.getenv("MAX_SANDBOXES", "10")),
 )
+
+# Which arms to score. Both by default, so every existing run is unchanged.
+_ALL_MODES = {"honest": EvalMode.HONEST, "attack": EvalMode.ATTACK}
+_mode_names = [m.strip() for m in os.getenv("MODES", "honest,attack").split(",") if m.strip()]
+_bad_modes = set(_mode_names) - set(_ALL_MODES)
+if _bad_modes:
+    sys.exit(f"MODES must be a subset of {sorted(_ALL_MODES)}, got {sorted(_bad_modes)}")
+modes = [_ALL_MODES[m] for m in _mode_names]
+
+# An explicit id list, which replaces the prefix that `limit` takes.
+sample_ids = None
+if os.getenv("SAMPLE_IDS"):
+    sample_ids = json.loads(Path(os.environ["SAMPLE_IDS"]).read_text())
+    if not isinstance(sample_ids, list) or not sample_ids:
+        sys.exit(f"SAMPLE_IDS must point at a non-empty JSON list, got {type(sample_ids)}")
+    sample_ids = [str(x) for x in sample_ids]
+    if len(set(sample_ids)) != len(sample_ids):
+        sys.exit("SAMPLE_IDS contains duplicates, which would double-score a problem")
+    print(f"scoring {len(sample_ids)} named sample ids instead of the first {n_problems}",
+          flush=True)
 
 policy_mode = os.getenv("POLICY", "model")
 if policy_mode not in ("model", "dataset"):
@@ -113,7 +165,22 @@ dtt_kwargs = {"untrusted_policy": apps_solution_policy()} if use_dataset else {}
 # The builders default to the "untrusted" / "trusted" model roles, which is why models are
 # only set once, in the config above.
 strip_comments = os.getenv("STRIP_COMMENTS", "0") == "1"
-monitor_kwargs = {"prompt_formatter": strip_comments_prompt_formatter} if strip_comments else {}
+monitor_kwargs: dict = {"prompt_formatter": strip_comments_prompt_formatter} if strip_comments else {}
+
+# Suspicion-score scale. The library default asks for an integer 0-10, so the score has at
+# most 11 values and in practice monitors use 3-7 of them. Every audit threshold is a
+# percentile of that distribution, so the number of distinct values IS the number of audit
+# budgets that can be bought. A wider range is the cheapest way to buy resolution.
+#   MONITOR_PROMPT     path to a prompt file (see src/prompts/monitor_0_100.txt)
+#   MONITOR_SCORE_MAX  top of the scale that prompt asks for; MUST match it, or scores are
+#                      normalised against the wrong maximum and silently rescaled
+if os.getenv("MONITOR_PROMPT"):
+    monitor_kwargs["prompt"] = Path(os.environ["MONITOR_PROMPT"]).read_text()
+    if not os.getenv("MONITOR_SCORE_MAX"):
+        sys.exit("MONITOR_PROMPT needs MONITOR_SCORE_MAX to match the scale it asks for")
+if os.getenv("MONITOR_SCORE_MAX"):
+    monitor_kwargs["score_range"] = MonitorScoreRange(
+        min=0.0, max=float(os.environ["MONITOR_SCORE_MAX"]))
 
 all_protocols = {
     # monitor only; humans audit the top-scoring
@@ -142,8 +209,15 @@ for name, protocol in protocols.items():
     tasks = get_control_task_product(
         settings=setting,
         micro_protocols=protocol,
-        modes=[EvalMode.HONEST, EvalMode.ATTACK],
+        modes=modes,
         eval_config=config,
         monitoring_scorers=[max_suspicion_scorer()],
     )
-    inspect_eval(tasks, **{**config.eval_args(), "log_dir": f"{LOG_DIR}/{name}"})
+    args = {**config.eval_args(), "log_dir": f"{LOG_DIR}/{name}"}
+    if sample_ids is not None:
+        # `limit` and `sample_id` both narrow the dataset and Inspect applies limit
+        # first, so leaving it set would silently intersect the two and score only
+        # the named ids that happen to fall inside the prefix.
+        args["limit"] = None
+        args["sample_id"] = sample_ids
+    inspect_eval(tasks, **args)
