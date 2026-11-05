@@ -3,9 +3,10 @@
 Settled earlier: `reasoning_effort="none"` is not an ablation. The provider
 documents `reasoning_effort` as accepting low/high/max and **defaulting to max
 when set to any other value**, so "none" was never applied. Over the
-500-problem run it used 24% MORE output tokens than the default while scoring
-the same and reporting zero reasoning tokens, so it is neither thinking-off nor
-a duplicate of max. That run is named
+500-problem run it scored the same as the default and reported zero reasoning
+tokens while spending +1.5% output and +1.2% total tokens, so on cost it is
+effectively the `max` run and differs from it only in the reasoning-token
+label. That run is named
 `dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip` for this reason and
 carries no information about reasoning effort in either direction.
 
@@ -28,9 +29,21 @@ content begins: "Let me analyze this code carefully.
 The reasoning field is empty and the visible content opens with the reasoning.
 **Turning thinking off moves the chain of thought into the answer rather than
 stopping it**, which explains both observations at once: the score does not
-change because the model still reasons, and the token count rises because the
-reasoning is now billed as output and is no longer compressed into a thinking
-block.
+change because the model still reasons, and the total token count barely moves
+because the same reasoning is billed as output instead of as thinking. Had
+thinking been disabled rather than relocated, the total should have fallen. It
+moved by +1.2% while the reasoning-token label went to zero, and a flat total
+with a zeroed label is what relocation looks like.
+
+> **Corrected 2026-11-05.** This document was written against a withdrawn
+> figure. It read "24% MORE output tokens" and argued from it that the arm is
+> "neither thinking-off nor a duplicate of max", three days after
+> `../README-glm53-runs.md` had retracted that number and the argument built on
+> it. The 24% came from the `tokens_per_sample` column, which divides recorded
+> usage by all 1000 rows; the max run had 179 cache-served rows reporting no
+> usage, which deflated its mean and manufactured the gap. Recovered from the
+> model events the difference is +1.5% output and +1.2% total. The conclusion
+> here is unchanged and now rests on the flat total rather than on a rise.
 
 Consequences for the study:
 

@@ -68,7 +68,7 @@ unchanged, so nothing was switched off. The chain of thought was relocated.
 > came from the `tokens_per_sample` column, which divides recorded usage by all
 > 1000 rows; the max run had 179 cache-served rows reporting no usage, which
 > deflated its mean and manufactured the gap. Recovered from the model events
-> the difference is +1.5% on output and +1.3% on total, so the cost argument for
+> the difference is +1.5% on output and +1.2% on total, so the cost argument for
 > treating the two as distinct does not hold. The conclusion that the arm
 > carries no information about reasoning effort is unaffected, and the
 > "relocated, not disabled" reading is now supported rather than merely
