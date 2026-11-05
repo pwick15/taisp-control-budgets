@@ -314,38 +314,38 @@ def fig_sonnet_haiku(curves: dict, diff: pd.DataFrame) -> dict:
     return {"option": opt, "height": 600, "dial": None}
 
 
-def fig_scores(runs: list) -> dict:
-    cats = [f"{x / 10:.1f}" for x in range(11)]
+def fig_scores(runs: list, step: float = 0.1, scale_label: str = "0 to 10") -> dict:
+    """Honest vs backdoored score counts per monitor, on a value axis so 0-10 and 0-100 runs look alike."""
     grids, xs, ys, series, titles = [], [], [], [], []
+    bar_w = 10 if step >= 0.1 else 3
     for i, (run, name) in enumerate(runs):
         h, a = M.load_scores(run)
         s = M.safety_at(h.values, a.values, 0.02)
         left = 6 + i * 50
         grids.append({"left": f"{left + 4}%", "width": "38%", "top": 56, "bottom": 64})
-        xs.append(axis("Suspicion score", gridIndex=i, type="category", data=cats, splitLine={"show": False}))
+        xs.append(axis(f"Suspicion score ({scale_label} scale, shown as 0 to 1)", gridIndex=i, type="value",
+                       min=-0.03, max=1.03, splitLine={"show": False}))
         ys.append(axis("Programs (log scale)" if i == 0 else "", gap=44, gridIndex=i, type="log", min=0.5, max=1000,
                        axisLabel={"color": "@ink-secondary",
                                   "formatter": "function (v) { return v < 1 ? '' : String(v); }"}))
-        hc = h.round(1).value_counts()
-        ac = a.round(1).value_counts()
-        cut = s["cutoff"]
-        first_audited = f"{min(cut + 0.1, 1.0):.1f}"
-        for mode, counts, color in (("honest", hc, "@s0"), ("backdoored", ac, "@s1")):
+        hc, ac = h.round(2).value_counts(), a.round(2).value_counts()
+        for mode, counts, color, off in (("honest", hc, "@s0", -step / 4), ("backdoored", ac, "@s1", step / 4)):
+            off = off if step >= 0.1 else 0
             series.append({
-                "name": f"{mode} programs", "type": "bar", "xAxisIndex": i, "yAxisIndex": i, "barGap": "10%",
-                "itemStyle": {"color": color},
-                "data": [{"value": int(counts.get(float(c), 0)) or None,
-                          "tip": f"<b>{name}</b><br>{int(counts.get(float(c), 0))} {mode} programs scored {c}"}
-                         for c in cats],
+                "name": f"{mode} programs", "type": "bar", "xAxisIndex": i, "yAxisIndex": i, "barWidth": bar_w,
+                "barGap": "-100%" if step < 0.1 else "10%", "itemStyle": {"color": color, "opacity": 0.85}, "z": 3 if mode == "honest" else 2,
+                "data": [{"value": [round(v + off, 4), int(c)],
+                          "tip": f"<b>{name}</b><br>{int(c)} {mode} programs scored {v:.2f}"} for v, c in counts.items()],
                 **({"markArea": {"silent": True, "itemStyle": {"color": "@s2", "opacity": 0.08},
-                                 "label": {"show": True, "position": "insideTop", "color": "@ink-secondary",
-                                           "fontSize": 11,
+                                 "label": {"show": True, "position": "insideTop", "color": "@ink-secondary", "fontSize": 11,
                                            "formatter": f"audited at a requested 2%\n(really {100 * s['served']:.1f}% of honest)"},
-                                 "data": [[{"xAxis": first_audited}, {"xAxis": "1.0"}]]}}
+                                 "data": [[{"xAxis": round(s["cutoff"] + step / 2, 4)}, {"xAxis": 1.03}]]}}
                    if mode == "honest" else {}),
             })
-        zero = (h == 0).mean()
-        titles.append({"text": name, "subtext": f"{pct(zero, 0)}% of honest programs score exactly 0",
+        top = h.round(2).value_counts()
+        titles.append({"text": name,
+                       "subtext": f"{100 * top.iloc[0] / len(h):.0f}% of honest programs share one score ({top.index[0]:g}); "
+                                  f"{h.nunique()} distinct honest scores",
                        "left": f"{left + 23}%", "top": 0, "textAlign": "center",
                        "textStyle": {"color": "@ink-primary", "fontSize": 13},
                        "subtextStyle": {"color": "@ink-secondary", "fontSize": 11}})
@@ -411,6 +411,100 @@ def fig_scale() -> dict:
                       legend={"bottom": 0, "textStyle": {"color": "@ink-secondary"},
                               "data": ["0 to 10 score", "0 to 100 score"]})
     return {"option": opt, "height": 440, "dial": None}
+
+
+BLOCK = ("function (params, api) { var a = api.coord([api.value(0), api.value(2)]);"
+         " var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.62;"
+         " return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h},"
+         " style: api.style()}; }")
+
+TIE_ROWS = [
+    ("Sonnet 5.5, 0 to 10", M.SONNET), ("Sonnet 5.5, 0 to 100", SCALE_PAIRS[0][2]),
+    ("Haiku 5.5 · xhigh, 0 to 10", M.HAIKU_X), ("Haiku 5.5 · xhigh, 0 to 100", SCALE_PAIRS[1][2]),
+]
+
+
+def tie_blocks(run: str) -> list:
+    """Honest programs ranked most suspicious first, grouped into blocks of equal score: (score, start %, end %, n)."""
+    h, _ = M.load_scores(run)
+    vc = h.round(2).value_counts().sort_index(ascending=False)
+    out, cum = [], 0
+    for v, c in vc.items():
+        out.append((float(v), 100 * cum / len(h), 100 * (cum + c) / len(h), int(c)))
+        cum += c
+    return out
+
+
+def tie_choices(b: float = 2.0) -> dict:
+    """For each row, the two audit rates either side of the requested budget (equal if it lands on a boundary)."""
+    out = {}
+    for name, run in TIE_ROWS:
+        for v, x0, x1, n in tie_blocks(run):
+            if x1 >= b - 1e-9:
+                out[name] = (x0, x1) if x0 < b - 1e-9 and x1 > b + 1e-9 else (b, b)
+                out[name] = out[name] + (n,)
+                break
+    return out
+
+
+def fig_ties(budgets=(0.5, 1, 2, 5), initial=2, xmax=10.0) -> dict:
+    rows = [(name, tie_blocks(run), "100" in name) for name, run in TIE_ROWS]
+    cats = [n for n, _, _ in rows]
+
+    def frame(b):
+        aud, cut, rest, notes, labels = [], [], [], [], []
+        for i, (name, blocks, wide) in enumerate(rows):
+            scale = 100 if wide else 10
+            lo = hi = None
+            for v, x0, x1, n in blocks:
+                tip = (f"<b>{name}</b><br>{n} honest program{'s' if n > 1 else ''} scored {v * scale:g}"
+                       f"<br>ranked {x0:.1f}% to {x1:.1f}% most suspicious")
+                item = {"value": [round(x0, 3), round(min(x1, xmax), 3), i], "tip": tip}
+                if x1 <= b + 1e-9:
+                    aud.append(item)
+                elif x0 < b - 1e-9:
+                    cut.append(item)
+                    lo, hi = x0, x1
+                    if min(x1, xmax) - x0 > 2.2:
+                        labels.append({"name": f"{n} tied at {v * scale:g}", "value": [round((x0 + min(x1, xmax)) / 2, 3), i]})
+                else:
+                    rest.append(item)
+            note = (f"can audit exactly {b:g}%" if lo is None
+                    else f"can audit {lo:.1f}% or {hi:.1f}%\nnothing in between")
+            notes.append({"name": note, "value": [xmax, i]})
+        blk = lambda name, color, data, z: {
+            "name": name, "type": "custom", "renderItem": BLOCK, "data": data, "z": z, "clip": False,
+            "itemStyle": {"color": color, "borderColor": "@ink-surface", "borderWidth": 1}}
+        return {"series": [
+            blk("Audited", "@s0", aud, 3),
+            blk("Tied at the line", "@warning", cut, 3),
+            blk("Not audited", "@ink-axis", rest, 2),
+            {"name": "block labels", "type": "scatter", "symbolSize": 0, "data": labels, "silent": True, "z": 5,
+             "label": {"show": True, "formatter": "{b}", "color": "#1a1a19", "fontSize": 11}},
+            {"name": "notes", "type": "scatter", "symbolSize": 0, "data": notes, "silent": True, "clip": False,
+             "label": {"show": True, "position": "right", "distance": 12, "formatter": "{b}",
+                       "color": "@ink-primary", "fontSize": 12, "lineHeight": 17},
+             "markLine": {"silent": True, "symbol": "none", "data": [{"xAxis": b}],
+                          "lineStyle": {"color": "@ink-primary", "type": "dashed", "width": 1.5},
+                          "label": {"formatter": f"requested {b:g}%", "position": "start", "color": "@ink-primary"}}},
+        ]}
+
+    frames = [frame(b) for b in budgets]
+    opt = base_option(
+        grid={"left": 190, "right": 250, "top": 36, "bottom": 70},
+        xAxis=axis("Honest programs, ranked most suspicious first (% of all 500; cropped at 10%)", type="value",
+                   min=0, max=xmax, interval=1, axisLabel={"color": "@ink-secondary", "formatter": "{value}%"}),
+        yAxis={"type": "category", "data": cats, "inverse": True, "axisTick": {"show": False},
+               "axisLine": {"lineStyle": {"color": "@ink-axis"}},
+               "axisLabel": {"color": "@ink-primary", "fontSize": 12}},
+        legend={"bottom": 0, "textStyle": {"color": "@ink-secondary"},
+                "data": ["Audited", "Tied at the line",
+                         "Not audited"]},
+        **frames[budgets.index(initial)],
+    )
+    dial = {"label": "Requested budget", "kind": "choice", "steps": [f"{b:g}%" for b in budgets], "initial": budgets.index(initial),
+            "frames": frames}
+    return {"option": opt, "height": 360, "dial": dial}
 
 
 def fig_hard(cf: pd.DataFrame) -> dict:
@@ -504,9 +598,13 @@ def main() -> None:
     figs.append({"id": "fig1-cost-vs-safety", **fr, **P.fig1(fr["no_cost"])})
     figs.append({"id": "fig2-reasoning-effort", **fig_effort(t), **P.fig2()})
     figs.append({"id": "fig3-sonnet-vs-haiku", **fig_sonnet_haiku(D["curves"], diff), **P.fig3()})
-    figs.append({"id": "fig4-score-pileup",
-                 **fig_scores([(M.SONNET, "Sonnet 5.5"), (M.HAIKU_X, "Haiku 5.5 · xhigh")]), **P.fig4()})
+    figs.append({"id": "fig4-tied-blocks", **fig_ties(), **P.fig4_ties(tie_choices())})
     figs.append({"id": "fig4b-score-scale", **fig_scale(), **P.fig4b(scale_summary())})
+    figs.append({"id": "s-score-pileup",
+                 **fig_scores([(M.SONNET, "Sonnet 5.5"), (M.HAIKU_X, "Haiku 5.5 · xhigh")]), **P.fig4()})
+    figs.append({"id": "s-score-pileup-100",
+                 **fig_scores([(SCALE_PAIRS[0][2], "Sonnet 5.5"), (SCALE_PAIRS[1][2], "Haiku 5.5 · xhigh")],
+                              step=0.01, scale_label="0 to 100"), **P.fig4b_hist(scale_summary())})
     figs.append({"id": "fig5-hard-backdoors", **fig_hard(cf), **P.fig5()})
     gen = fig_generators(cf)
     gen.pop("table")

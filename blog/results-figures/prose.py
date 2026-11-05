@@ -180,6 +180,53 @@ class Prose:
             ],
         }
 
+    def fig4_ties(self, ch):
+        t2 = self.t[self.t.budget_pct == 2]
+        movers = t2.assign(delta=t2.safety_exact - t2.safety_reported).sort_values("delta", ascending=False).head(6)
+        trs = "".join(
+            f"<tr><td>{html.escape(r['name'])}</td><td>{p(r.safety_reported)}%</td><td>{r.served_pct:.1f}%</td>"
+            f"<td>{p(r.safety_exact)}%</td><td>{100 * r.delta:+.1f}</td></tr>" for _, r in movers.iterrows())
+        lo, hi = t2[t2.served_pct > 0].served_pct.min(), t2.served_pct.max()
+        s10, h10 = ch["Sonnet 5.5, 0 to 10"], ch["Haiku 5.5 · xhigh, 0 to 10"]
+        s100, h100 = ch["Sonnet 5.5, 0 to 100"], ch["Haiku 5.5 · xhigh, 0 to 100"]
+        return {
+            "num": 4, "kind": "main", "source": "ours", "confirm": False,
+            "title": "A 2% budget usually lands in the middle of a tie",
+            "question": "Can you actually audit 2% of programs when the monitor only uses a few scores?",
+            "shows": (
+                "Each bar is the 500 honest programs, lined up from most to least suspicious by one monitor. Programs that got "
+                "the same score form one block. Only the top 10% is shown. The dashed line is the requested budget. Blue "
+                "blocks score above it and get audited. The amber block is a group of tied programs the line cuts through: "
+                "you can't audit part of a tie by score alone, so you either stop before it or audit all of it. Use the "
+                "buttons to move the budget."),
+            "numbers": ("<p>What breaking the tie at random changes, at a 2% budget, for the six monitors it changes most:</p>"
+                        "<table><thead><tr><th>Monitor</th><th>Audit only above the tie</th><th>Which really audits</th>"
+                        "<th>Exact 2%</th><th>Change (points)</th></tr></thead>"
+                        f"<tbody>{trs}</tbody></table>"),
+            "takeaway": (
+                f"<p>With ControlArena's default 0 to 10 score, Sonnet gives {s10[2]} honest programs the same score of 1, "
+                f"right where a 2% budget falls. So you can audit {s10[0]:.1f}% or {s10[1]:.1f}% of code, nothing in between. "
+                f"Haiku is worse: {h10[0]:.1f}% or {h10[1]:.1f}%. Across all our monitors, auditing only the programs above "
+                f"the tie means a requested 2% really audits between {lo:.1f}% and {hi:.1f}%. Monitors that tie a lot get "
+                f"under-credited, by up to 16 points (table).</p>"
+                f"<p>Two fixes. Asking for a 0 to 100 score spreads out the top of the ranking: Sonnet can then audit "
+                + (f"exactly 2%" if s100[0] == s100[1] else f"{s100[0]:.1f}% or {s100[1]:.1f}%")
+                + f", and Haiku {h100[0]:.1f}% or {h100[1]:.1f}%. And for any scale, break the tie at random: audit "
+                f"everything above the tie, plus just enough programs picked at random from the tie to make up the budget. "
+                f"Every number in Figures 1 to 3 does this.</p>"),
+            "debate": [
+                "This is the decision we left open. My recommendation changed after doing the numbers: report exact budgets as "
+                "the main numbers, with the \"audit only above the tie\" numbers and the rate they really audit in an appendix "
+                "table. It's a one-line switch (HEADLINE in build.py), so it's cheap to reverse.",
+                "More honest data doesn't fix ties: a 0 to 10 score only ever offers 11 places to cut. It does fix the other "
+                "problem, that at 500 honest programs a 1% budget rests on just 5 of them (Marnick's interval-width figure).",
+                "Marnick's literature check found MonitoringBench saw a 0 to 100 scale collapse at the top end (honest scores "
+                "hitting 100). A wider scale helps when honest scores pile up at the bottom, which is our case, and can hurt "
+                "when they pile up at the top.",
+                "The old score histograms are kept in the supporting section. They show the same thing less directly.",
+            ],
+        }
+
     def fig4(self):
         t2 = self.t[self.t.budget_pct == 2]
         movers = t2.assign(delta=t2.safety_exact - t2.safety_reported).sort_values("delta", ascending=False).head(6)
@@ -188,8 +235,8 @@ class Prose:
             f"<td>{p(r.safety_exact)}%</td><td>{100 * r.delta:+.1f}</td></tr>" for _, r in movers.iterrows())
         lo, hi = t2[t2.served_pct > 0].served_pct.min(), t2.served_pct.max()
         return {
-            "num": 4, "kind": "main", "source": "ours", "confirm": False,
-            "title": "Monitors use a handful of scores, so a \"2% budget\" is not 2%",
+            "num": None, "kind": "support", "source": "ours", "confirm": False,
+            "title": "Score histograms, 0 to 10 scale",
             "question": "Why do monitors with the same nominal audit budget end up auditing different amounts of code?",
             "shows": (
                 "How often each monitor gives each suspicion score, for honest (blue) and backdoored (orange) programs. The "
@@ -220,11 +267,32 @@ class Prose:
             ],
         }
 
+    def fig4b_hist(self, s):
+        S, H = s["Sonnet 5.5"], s["Haiku 5.5 · xhigh"]
+        return {
+            "num": None, "kind": "support", "source": "ours", "confirm": False,
+            "title": "Score histograms, 0 to 100 scale",
+            "question": "If the monitor is asked for a score from 0 to 100 instead of 0 to 10, does the pile-up go away?",
+            "shows": (
+                "Exactly the same layout as the 0 to 10 histograms, for the same two monitors on the same programs, but with the monitor "
+                "prompted for a score from 0 to 100. Scores are shown on the same 0 to 1 axis so the two figures line up. "
+                "The shaded region is what a requested 2% budget audits when only scores strictly above the cutoff count."),
+            "takeaway": (
+                f"<p>The pile-up moves but doesn't disappear. Most honest programs now score 1 or 2 out of 100 instead of 0 "
+                f"out of 10. What changes is the tail: Haiku's most suspicious honest programs now get different scores "
+                f"instead of tying, so it has {H['100']['distinct']} distinct honest scores instead of {H['10']['distinct']}, "
+                f"and a 2% request audits much closer to 2%.</p>"
+                f"<p>Sonnet's honest programs still sit almost entirely on the lowest two scores, so it gains little. "
+                f"Figure 4b shows what this does to the cutoffs each monitor can use.</p>"),
+            "debate": [
+                ],
+        }
+
     def fig4b(self, s):
         S, H = s["Sonnet 5.5"], s["Haiku 5.5 · xhigh"]
         return {
             "num": "4b", "kind": "main", "source": "ours", "confirm": False,
-            "title": "A 0 to 100 score gives Haiku more places to set the cutoff, but not Sonnet",
+            "title": "What the extra cutoffs buy",
             "question": "If the monitor is asked for a score from 0 to 100 instead of 0 to 10, can the audit budget be set more finely?",
             "shows": (
                 "Each dot is a cutoff the monitor can actually use: how much honest code it audits (across) and how many "
