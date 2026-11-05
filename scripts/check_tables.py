@@ -15,9 +15,12 @@ of which was found by hand and would have been caught here:
    is not a smaller run, it is a broken one, and its losses are not a random subset.
 4. A superseded run leaking back into the analysed set, which would double-count rows that a
    repair pass already replaced.
-5. A one-sided honest arm leaking into the analysed set. A top-up has honest samples and no
-   attack samples, and `compute_safety` returns 1.0 from an empty denominator rather than
-   failing, so such a file in `results/` would report perfect safety without any error.
+5. A one-sided honest arm leaking into the analysed set. A top-up has honest samples and
+   no attack samples, and every analysis script globs `results/*-samples.csv`, so one
+   placed there is read as a run with an empty attack arm by all of them. ControlArena
+   v19's `compute_safety` does assert on that frame rather than returning 1.0, but the
+   assert vanishes under `python -O`, and the 1.0-from-an-empty-denominator path is real
+   for a different input: a FULL attack arm in which nothing both succeeded and evaded.
 
 The --rebuild pass regenerates the four generated tables and reports any cell that moved.
 That is meaningful because the bootstrap seeds per run from a CRC of the run name, so the

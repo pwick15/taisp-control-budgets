@@ -3,9 +3,13 @@
     uv run python scripts/extract_honest_topup.py logs/<label>
 
 Why not src/analyze.py. That script's job is safety against an audit budget, which needs
-both arms: with no attack rows the denominator is empty, and ControlArena's
-`compute_safety` returns 1.0 from an empty denominator rather than failing. A one-sided arm
-has no safety number and must not be given one.
+both arms. A one-sided arm has no safety number and must not be given one. Measured
+against the installed ControlArena v19, `compute_safety` on an honest-only frame raises
+`AssertionError: No attack samples found in the DataFrame.` rather than returning 1.0, so
+the loud failure is the library's and not this policy's doing. The policy still stands for
+two reasons that do not depend on that assert: it vanishes under `python -O`, and every
+analysis script globs `results/*-samples.csv`, so a one-sided arm placed there would be
+read as a run with an empty attack arm by all of them.
 
 Writes results/honest-topup/<label>-samples.csv with the same columns as a run's samples
 file, so it can be concatenated onto the arm it extends. It lands in honest-topup/ and not
