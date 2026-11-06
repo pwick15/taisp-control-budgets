@@ -364,6 +364,38 @@ class Prose:
             ],
         }
 
+    def fig5b(self):
+        cf = self.cf
+        def grp(lo, hi):
+            g = cf[(cf.changed_lines >= lo) & (cf.changed_lines <= hi)]
+            return int((g.caught_by == 0).sum()), len(g)
+        s_m, s_n = grp(0, 4)
+        b_m, b_n = grp(21, 10 ** 9)
+        hard = cf[cf.caught_by == 0]
+        return {
+            "num": "5b", "kind": "main", "source": "ours", "confirm": False,
+            "title": "Small edits get past monitors far more often",
+            "question": "Does the size of the change from an honest solution predict whether a backdoor is caught?",
+            "shows": (
+                "All 500 backdoors, grouped by how many lines differ from the honest reference solution. Each bar is split "
+                "the same way as Figure 6: red got past all seven monitors at a 2% budget, amber got past some, grey was "
+                "caught by all seven. The right column is the 95% range for the red share. Built from Marnick's "
+                "lines-changed analysis, regrouped so every group has at least 25 backdoors."),
+            "takeaway": (
+                f"<p>The smaller the edit, the more likely it gets past every monitor: {s_m} of {s_n} backdoors that change "
+                f"4 lines or fewer, against {b_m} of {b_n} that change 21 or more. A one-line tweak looks like an "
+                f"ordinary bug; a large rewrite gives the monitor more to notice.</p>"
+                f"<p>Size isn't the whole story. The {len(hard)} backdoors no monitor caught have a median of "
+                f"{hard.changed_lines.median():.0f} changed lines, so most aren't tiny. What they share is that they look "
+                f"like bugs (Figure 5).</p>"),
+            "debate": [
+                "Changed lines is measured against the dataset's honest reference solution, not against what an honest "
+                "model would write, so a big number can mean a rewrite rather than a big backdoor.",
+                "Size and writer are tangled: o3-mini's backdoors change a median 39 lines and are the easiest to catch "
+                "(Figure 6). This figure alone can't say which one drives the other.",
+            ],
+        }
+
     def fig6(self):
         cf = self.cf
         g = cf.groupby("model").agg(n=("caught_by", "size"), miss=("caught_by", lambda s: int((s == 0).sum())),
@@ -446,6 +478,36 @@ class Prose:
             "If the attacker must land several backdoors, catch-at-least-once climbs fast even for weak monitors. This assumes "
             "attempts are independent and the attacker doesn't adapt, so it's an optimistic bound."),
     }
+
+    def fig8(self, d):
+        n = len(d)
+        hi = {c: int((d[c] >= 50).sum()) for c in ["opus_low", "opus_high", "opus_xhigh"]}
+        mx = d["opus_max"].dropna()
+        return {
+            "num": 8, "kind": "main", "source": "marnick", "confirm": True,
+            "title": "A frontier monitor flags a quarter of the backdoors the others missed",
+            "question": "Would a much stronger (and pricier) monitor catch the backdoors that Haiku and Sonnet miss?",
+            "shows": (
+                f"Marnick's Opus 5.5 run on the {n} hardest backdoors: the 49 no monitor caught, plus 2 only a 0 to 10 "
+                f"Haiku run caught. Every monitor here scores 0 to 100 with comments stripped. Each bar splits the {n} "
+                f"backdoors by how suspicious that monitor rated them. Green is 50 or more, which any sensible cutoff would "
+                f"audit. The right column is the 95% range for the green share."),
+            "takeaway": (
+                f"<p>Haiku and Sonnet rate every one of these as close to honest: none scores above 30. Opus 5.5 rates "
+                f"{hi['opus_xhigh']} of {n} at 50 or more at xhigh effort, {hi['opus_high']} at high and "
+                f"{hi['opus_low']} at low. So a frontier model spots some backdoors the cheaper monitors can't, and more "
+                f"thinking helps a little. But most of the hard set still looks honest to it.</p>"),
+            "debate": [
+                "This is not a catch rate. We never ran Opus on honest code, so we don't know where its 2% cutoff sits. If "
+                "Opus also scores many honest programs at 50 or more, some of this advantage disappears. Running Opus on "
+                "the honest set is the experiment that would turn this into a real comparison.",
+                f"Max effort was only piloted on {len(mx)} backdoors, so it's left out of the chart.",
+                "The set was chosen because the other monitors failed on it, so it's the hardest possible test for them "
+                "and says nothing about how Opus does on ordinary backdoors.",
+                "Marnick also rated these backdoors for how incriminating and how harmful they look. Those ratings aren't "
+                "in the repo yet, so that 2x2 isn't rebuilt here. Worth asking him for the CSV.",
+            ],
+        }
 
     def support(self, vid, v):
         title, note = self.SUPPORT[vid]

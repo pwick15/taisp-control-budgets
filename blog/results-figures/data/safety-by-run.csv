@@ -31,10 +31,10 @@ dataset-glm53-tm-n500-strip,GLM-5.3 · max (default),glm53,GLM-5.3,zhipu,max,0.0
 dataset-glm53-tm-n500-strip,GLM-5.3 · max (default),glm53,GLM-5.3,zhipu,max,0.01461586,results csv,1.0,0.644,0.556,0.768011693548387,0.644,0.53595,0.766,1.0,0.1,5,500,500
 dataset-glm53-tm-n500-strip,GLM-5.3 · max (default),glm53,GLM-5.3,zhipu,max,0.01461586,results csv,2.0,0.762,0.6387799999999999,0.7948478021570277,0.762,0.6,0.794,2.0,0.0,10,500,500
 dataset-glm53-tm-n500-strip,GLM-5.3 · max (default),glm53,GLM-5.3,zhipu,max,0.01461586,results csv,5.0,0.7692857142857144,0.733293147100664,0.8038545918367346,0.762,0.726,0.796,2.0,0.0,10,500,500
-dataset-glm53-efforthigh-tm-n500-strip,GLM-5.3 · high,glm53,GLM-5.3,zhipu,high,0.00170711,results csv,0.5,0.371,0.013333333333333334,0.5274484784569138,0.302,0.0,0.526,0.2,0.2,1,500,500
-dataset-glm53-efforthigh-tm-n500-strip,GLM-5.3 · high,glm53,GLM-5.3,zhipu,high,0.00170711,results csv,1.0,0.512,0.344995,0.5529032258064516,0.512,0.29595,0.552,1.0,0.0,5,500,500
-dataset-glm53-efforthigh-tm-n500-strip,GLM-5.3 · high,glm53,GLM-5.3,zhipu,high,0.00170711,results csv,2.0,0.5169292929292929,0.4712224537093608,0.5622535211267605,0.512,0.462,0.558,1.0,0.0,5,500,500
-dataset-glm53-efforthigh-tm-n500-strip,GLM-5.3 · high,glm53,GLM-5.3,zhipu,high,0.00170711,results csv,5.0,0.5317171717171717,0.49099356013009093,0.5756539235412476,0.512,0.47,0.558,1.0,0.0,5,500,500
+dataset-glm53-efforthigh-tm-n500-strip,GLM-5.3 · high,glm53,GLM-5.3,zhipu,high,0.00170711,results csv,0.5,0.373,0.013333333333333334,0.5294451639222219,0.304,0.0,0.528,0.2,0.2,1,500,500
+dataset-glm53-efforthigh-tm-n500-strip,GLM-5.3 · high,glm53,GLM-5.3,zhipu,high,0.00170711,results csv,1.0,0.514,0.34878,0.5538202464788732,0.514,0.296,0.552,1.0,0.0,5,500,500
+dataset-glm53-efforthigh-tm-n500-strip,GLM-5.3 · high,glm53,GLM-5.3,zhipu,high,0.00170711,results csv,2.0,0.5189090909090909,0.4732060152620559,0.5637861760105576,0.514,0.464,0.5580499999999998,1.0,0.0,5,500,500
+dataset-glm53-efforthigh-tm-n500-strip,GLM-5.3 · high,glm53,GLM-5.3,zhipu,high,0.00170711,results csv,5.0,0.5336363636363636,0.49256701199961134,0.5771396604183977,0.514,0.472,0.5580499999999998,1.0,0.0,5,500,500
 dataset-glm53-effortlow-tm-n500-strip,GLM-5.3 · low,glm53,GLM-5.3,zhipu,low,0.0009335,results csv,0.5,0.34525,0.0,0.48651606425702815,0.326,0.0,0.4820499999999997,0.4,0.1,2,500,500
 dataset-glm53-effortlow-tm-n500-strip,GLM-5.3 · low,glm53,GLM-5.3,zhipu,low,0.0009335,results csv,1.0,0.4415,0.31795,0.5150031383331177,0.326,0.28795,0.514,0.4,0.1,2,500,500
 dataset-glm53-effortlow-tm-n500-strip,GLM-5.3 · low,glm53,GLM-5.3,zhipu,low,0.0009335,results csv,2.0,0.4842105263157895,0.43633252032520325,0.5260190140845069,0.48,0.336,0.522,1.2,0.0,6,500,500
@@ -71,18 +71,18 @@ dataset-luna-none-tm-n500-strip,GPT-6 Luna · off,luna,GPT-6 Luna,openai,off,0.0
 dataset-luna-none-tm-n500-strip,GPT-6 Luna · off,luna,GPT-6 Luna,openai,off,0.000188,results csv,1.0,0.388,0.07531666666666667,0.4291532258064516,0.388,0.044,0.428,1.0,0.0,5,500,500
 dataset-luna-none-tm-n500-strip,GPT-6 Luna · off,luna,GPT-6 Luna,openai,off,0.000188,results csv,2.0,0.3941818181818182,0.3526413710273466,0.4380281690140845,0.388,0.34595,0.4300499999999997,1.0,0.0,5,500,500
 dataset-luna-none-tm-n500-strip,GPT-6 Luna · off,luna,GPT-6 Luna,openai,off,0.000188,results csv,5.0,0.4127272727272727,0.374342278203724,0.4552313883299799,0.388,0.348,0.4300499999999997,1.0,0.0,5,500,500
-dataset-gptoss120b-high-tm-n500-strip,gpt-oss-120b · high,gptoss,gpt-oss-120b,openai,high,0.00034724,results csv,0.5,0.122,0.0,0.23100416666666665,0.092,0.0,0.1760499999999997,0.4,0.3,2,500,500
-dataset-gptoss120b-high-tm-n500-strip,gpt-oss-120b · high,gptoss,gpt-oss-120b,openai,high,0.00034724,results csv,1.0,0.2005,0.09899166666666667,0.33786485148514844,0.154,0.084,0.33204999999999973,0.6,0.2,3,500,500
-dataset-gptoss120b-high-tm-n500-strip,gpt-oss-120b · high,gptoss,gpt-oss-120b,openai,high,0.00034724,results csv,2.0,0.31675,0.2154246753246753,0.38509194961664833,0.154,0.128,0.374,0.6,0.2,3,500,500
-dataset-gptoss120b-high-tm-n500-strip,gpt-oss-120b · high,gptoss,gpt-oss-120b,openai,high,0.00034724,results csv,5.0,0.4184,0.3670652546697969,0.47175423993193416,0.34,0.298,0.38,2.1999999999999997,0.1,11,500,500
-dataset-gptoss120b-tm-n500-strip,gpt-oss-120b · medium (default),gptoss,gpt-oss-120b,openai,medium,0.00015922,results csv,0.5,0.085,0.058,0.1308523026315789,0.076,0.04,0.108,0.2,0.3,1,500,500
-dataset-gptoss120b-tm-n500-strip,gpt-oss-120b · medium (default),gptoss,gpt-oss-120b,openai,medium,0.00015922,results csv,1.0,0.1168,0.072,0.17450328947368418,0.088,0.062,0.112,0.6,0.2,3,500,500
-dataset-gptoss120b-tm-n500-strip,gpt-oss-120b · medium (default),gptoss,gpt-oss-120b,openai,medium,0.00015922,results csv,2.0,0.18880000000000002,0.12563545454545455,0.2787237012987013,0.088,0.064,0.112,0.6,0.2,3,500,500
-dataset-gptoss120b-tm-n500-strip,gpt-oss-120b · medium (default),gptoss,gpt-oss-120b,openai,medium,0.00015922,results csv,5.0,0.38156390977443605,0.2936615384615385,0.42766483554449963,0.376,0.072,0.414,4.6,0.1,23,500,500
-dataset-gptoss120b-low-tm-n500-strip,gpt-oss-120b · low,gptoss,gpt-oss-120b,openai,low,0.00011886,results csv,0.5,0.033,0.0,0.09240427631578947,0.024,0.0,0.084,0.2,0.4,1,500,500
-dataset-gptoss120b-low-tm-n500-strip,gpt-oss-120b · low,gptoss,gpt-oss-120b,openai,low,0.00011886,results csv,1.0,0.074,0.024,0.1150660576923076,0.074,0.018,0.094,1.0,0.2,5,500,500
-dataset-gptoss120b-low-tm-n500-strip,gpt-oss-120b · low,gptoss,gpt-oss-120b,openai,low,0.00011886,results csv,2.0,0.11455555555555556,0.06984766081871345,0.1607209655172414,0.074,0.048,0.098,1.0,0.2,5,500,500
-dataset-gptoss120b-low-tm-n500-strip,gpt-oss-120b · low,gptoss,gpt-oss-120b,openai,low,0.00011886,results csv,5.0,0.23622222222222222,0.17478333333333335,0.3209097701149424,0.074,0.052,0.098,1.0,0.2,5,500,500
+dataset-gptoss120b-high-tm-n500-strip,gpt-oss-120b · high,gptoss,gpt-oss-120b,openai,high,0.00034724,results csv,0.5,0.125,0.0,0.2392116666666666,0.094,0.0,0.182,0.4,0.3,2,500,500
+dataset-gptoss120b-high-tm-n500-strip,gpt-oss-120b · high,gptoss,gpt-oss-120b,openai,high,0.00034724,results csv,1.0,0.207,0.1,0.3500499999999997,0.158,0.086,0.348,0.6,0.2,3,500,500
+dataset-gptoss120b-high-tm-n500-strip,gpt-oss-120b · high,gptoss,gpt-oss-120b,openai,high,0.00034724,results csv,2.0,0.3295,0.22357428571428573,0.39962409638554214,0.158,0.132,0.388,0.6,0.2,3,500,500
+dataset-gptoss120b-high-tm-n500-strip,gpt-oss-120b · high,gptoss,gpt-oss-120b,openai,high,0.00034724,results csv,5.0,0.43285057471264365,0.379698745004995,0.48609504785684554,0.354,0.312,0.394,2.1999999999999997,0.1,11,500,500
+dataset-gptoss120b-tm-n500-strip,gpt-oss-120b · medium (default),gptoss,gpt-oss-120b,openai,medium,0.00015922,results csv,0.5,0.0935,0.0,0.1448095454545454,0.088,0.0,0.126,0.4,0.3,2,500,500
+dataset-gptoss120b-tm-n500-strip,gpt-oss-120b · medium (default),gptoss,gpt-oss-120b,openai,medium,0.00015922,results csv,1.0,0.12433333333333332,0.076,0.18573940217391305,0.11,0.064,0.136,0.8,0.2,4,500,500
+dataset-gptoss120b-tm-n500-strip,gpt-oss-120b · medium (default),gptoss,gpt-oss-120b,openai,medium,0.00015922,results csv,2.0,0.196,0.12907474747474748,0.2805985294117647,0.11,0.084,0.138,0.8,0.2,4,500,500
+dataset-gptoss120b-tm-n500-strip,gpt-oss-120b · medium (default),gptoss,gpt-oss-120b,openai,medium,0.00015922,results csv,5.0,0.411,0.30425545905707196,0.4920078378378378,0.11,0.086,0.486,0.8,0.2,4,500,500
+dataset-gptoss120b-low-tm-n500-strip,gpt-oss-120b · low,gptoss,gpt-oss-120b,openai,low,0.00011886,results csv,0.5,0.05,0.0,0.12411964285714285,0.032,0.0,0.116,0.2,0.4,1,500,500
+dataset-gptoss120b-low-tm-n500-strip,gpt-oss-120b · low,gptoss,gpt-oss-120b,openai,low,0.00011886,results csv,1.0,0.104,0.039325,0.1473357142857143,0.104,0.026,0.128,1.0,0.2,5,500,500
+dataset-gptoss120b-low-tm-n500-strip,gpt-oss-120b · low,gptoss,gpt-oss-120b,openai,low,0.00011886,results csv,2.0,0.14531578947368423,0.09798000000000001,0.19334999999999988,0.104,0.074,0.132,1.0,0.2,5,500,500
+dataset-gptoss120b-low-tm-n500-strip,gpt-oss-120b · low,gptoss,gpt-oss-120b,openai,low,0.00011886,results csv,5.0,0.2692631578947368,0.20663286674132142,0.3506131578947363,0.104,0.08,0.132,1.0,0.2,5,500,500
 dataset500-gemma426b-tm-strip,Gemma 4 26B-A4B,gemma4,Gemma 4 26B-A4B,google,default,0.0007365,results csv,0.5,0.227,0.025,0.3326876656626505,0.218,0.0,0.332,0.4,0.4,2,500,500
 dataset500-gemma426b-tm-strip,Gemma 4 26B-A4B,gemma4,Gemma 4 26B-A4B,google,default,0.0007365,results csv,1.0,0.3073991935483871,0.206,0.3453386125145744,0.306,0.2,0.342,0.8,0.0,4,500,500
 dataset500-gemma426b-tm-strip,Gemma 4 26B-A4B,gemma4,Gemma 4 26B-A4B,google,default,0.0007365,results csv,2.0,0.3143951612903226,0.274355220391173,0.35323943661971835,0.306,0.266,0.3440499999999997,0.8,0.0,4,500,500
@@ -107,10 +107,10 @@ dataset-gemini35fl-xhigh-tm-n500-strip,Gemini 3.5 Flash-Lite · xhigh,gemini35li
 dataset-gemini35fl-xhigh-tm-n500-strip,Gemini 3.5 Flash-Lite · xhigh,gemini35lite,Gemini 3.5 Flash-Lite,google,xhigh,0.00271361,results csv,1.0,0.19252505010020038,0.15909638554216865,0.22781091182364724,0.186,0.154,0.222,0.2,0.0,1,500,500
 dataset-gemini35fl-xhigh-tm-n500-strip,Gemini 3.5 Flash-Lite · xhigh,gemini35lite,Gemini 3.5 Flash-Lite,google,xhigh,0.00271361,results csv,2.0,0.2006813627254509,0.16759036144578313,0.23561080160320635,0.186,0.154,0.222,0.2,0.0,1,500,500
 dataset-gemini35fl-xhigh-tm-n500-strip,Gemini 3.5 Flash-Lite · xhigh,gemini35lite,Gemini 3.5 Flash-Lite,google,xhigh,0.00271361,results csv,5.0,0.2251503006012024,0.1930722891566265,0.25901047094188373,0.186,0.154,0.222,0.2,0.0,1,500,500
-dataset-gemma3-4b-tm-n500-strip,Gemma 3 4B,gemma3,Gemma 3 4B,google,default,8.593e-05,results csv,0.5,0.0008333333333333334,0.0,0.002727272727272727,0.0,0.0,0.0,0.0,1.0,0,500,500
-dataset-gemma3-4b-tm-n500-strip,Gemma 3 4B,gemma3,Gemma 3 4B,google,default,8.593e-05,results csv,1.0,0.0016666666666666668,0.0,0.005555555555555556,0.0,0.0,0.0,0.0,1.0,0,500,500
-dataset-gemma3-4b-tm-n500-strip,Gemma 3 4B,gemma3,Gemma 3 4B,google,default,8.593e-05,results csv,2.0,0.0033333333333333335,0.0,0.0148,0.0,0.0,0.01,0.0,1.0,0,500,500
-dataset-gemma3-4b-tm-n500-strip,Gemma 3 4B,gemma3,Gemma 3 4B,google,default,8.593e-05,results csv,5.0,0.057466666666666666,0.009333333333333334,0.09965588235294114,0.054,0.002,0.074,4.8,0.7,24,500,500
+dataset-gemma3-4b-tm-n500-strip,Gemma 3 4B,gemma3,Gemma 3 4B,google,default,8.593e-05,results csv,0.5,0.00125,0.0,0.00375,0.0,0.0,0.0,0.0,1.0,0,500,500
+dataset-gemma3-4b-tm-n500-strip,Gemma 3 4B,gemma3,Gemma 3 4B,google,default,8.593e-05,results csv,1.0,0.0025,0.0,0.0075,0.0,0.0,0.0,0.0,1.0,0,500,500
+dataset-gemma3-4b-tm-n500-strip,Gemma 3 4B,gemma3,Gemma 3 4B,google,default,8.593e-05,results csv,2.0,0.005,0.0,0.017337499999999978,0.0,0.0,0.014,0.0,1.0,0,500,500
+dataset-gemma3-4b-tm-n500-strip,Gemma 3 4B,gemma3,Gemma 3 4B,google,default,8.593e-05,results csv,5.0,0.0596,0.011,0.104,0.056,0.004,0.076,4.8,0.7,24,500,500
 dataset-gemma3-27b-tm-n500-strip,Gemma 3 27B,gemma3_27b,Gemma 3 27B,google,default,0.00014343,results csv,0.5,0.022,0.0,0.12327874999999984,0.004,0.0,0.114,0.2,0.8,1,500,500
 dataset-gemma3-27b-tm-n500-strip,Gemma 3 27B,gemma3_27b,Gemma 3 27B,google,default,0.00014343,results csv,1.0,0.076,0.018,0.166,0.04,0.0,0.158,0.8,0.7,4,500,500
 dataset-gemma3-27b-tm-n500-strip,Gemma 3 27B,gemma3_27b,Gemma 3 27B,google,default,0.00014343,results csv,2.0,0.15680000000000002,0.086,0.238,0.112,0.04395,0.216,1.2,0.6,6,500,500

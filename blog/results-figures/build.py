@@ -552,49 +552,98 @@ def wilson(k: int, n: int, z: float = 1.96) -> tuple:
     return max(0.0, c - h), min(1.0, c + h)
 
 
+CATCH_PARTS = [("Missed by all 7 monitors", "@s7"), ("Missed by 1 to 6 monitors", "@warning"),
+               ("Caught by all 7 monitors", "@ink-axis")]
+
+
+def partition_bars(cats: list, rows: list, parts: list, x_name: str, ci_head: str, height: int = 470,
+                   left: int = 250) -> dict:
+    """100% bars, one per row. rows: [(counts per part, n, tip suffix)]. Right column: 95% range of part 0."""
+    series = []
+    for p, (label, color) in enumerate(parts):
+        data = []
+        for cat, (counts, n, extra) in zip(cats, rows):
+            k = int(counts[p])
+            v = 100 * k / n
+            data.append({"value": round(v, 2),
+                         "label": {"show": v >= 7, "formatter": f"{v:.0f}%", "color": "#ffffff" if p == 0 else "#1a1a19"},
+                         "tip": f"<b>{cat}</b> (n = {n})<br>{label.lower()}: {k} ({v:.0f}%){extra}"})
+        series.append({"name": label, "type": "bar", "stack": "all", "data": data, "barWidth": "62%",
+                       "itemStyle": {"color": color, "borderColor": "@ink-surface", "borderWidth": 1}})
+    ci = []
+    for idx, (counts, n, _) in enumerate(rows):
+        lo, hi = wilson(int(counts[0]), int(n))
+        ci.append({"name": f"{100 * lo:.0f} to {100 * hi:.0f}%", "value": [100, idx]})
+    series.append({"name": "interval", "type": "scatter", "symbolSize": 0, "data": ci, "silent": True,
+                   "clip": False, "label": {"show": True, "position": "right", "distance": 12, "formatter": "{b}",
+                                            "color": "@ink-secondary", "fontSize": 12}})
+    opt = base_option(
+        grid={"left": left, "right": 120, "top": 40, "bottom": 70},
+        xAxis=axis(x_name, type="value", min=0, max=100, interval=20),
+        yAxis={"type": "category", "data": cats, "inverse": True, "axisTick": {"show": False},
+               "axisLine": {"lineStyle": {"color": "@ink-axis"}}, "axisLabel": {"color": "@ink-primary", "fontSize": 12}},
+        legend={"bottom": 0, "textStyle": {"color": "@ink-secondary"}, "data": [p[0] for p in parts]},
+        title={"text": ci_head, "right": 18, "top": 0,
+               "textStyle": {"color": "@ink-secondary", "fontSize": 11, "fontWeight": "normal", "lineHeight": 14}},
+        series=series,
+    )
+    return {"option": opt, "height": height, "dial": None}
+
+
+def catch_counts(s: pd.Series) -> tuple:
+    return (int((s == 0).sum()), int(((s > 0) & (s < 7)).sum()), int((s == 7).sum()))
+
+
 def fig_generators(cf: pd.DataFrame) -> dict:
     """One 100% bar per generating model: missed by all 7 monitors, missed by some, caught by all."""
     g = cf.groupby("model").agg(n=("caught_by", "size"), miss=("caught_by", lambda s: int((s == 0).sum())),
-                                some=("caught_by", lambda s: int(((s > 0) & (s < 7)).sum())),
-                                allc=("caught_by", lambda s: int((s == 7).sum())),
                                 med=("changed_lines", "median")).reset_index()
     g["rate"] = 100 * g.miss / g.n
     g = g.sort_values(["rate", "n"], ascending=[False, False])
     names = [SHORT_GEN.get(m, m.split("/")[-1].replace("-latest", "")) for m in g.model]
     cats = [f"{nm}  ·  wrote {r.n}" for nm, (_, r) in zip(names, g.iterrows())]
-    parts = [("Missed by all 7 monitors", "miss", "@s7"), ("Missed by 1 to 6 monitors", "some", "@warning"),
-             ("Caught by all 7 monitors", "allc", "@ink-axis")]
-    series = []
-    for label, col, color in parts:
-        data = []
-        for nm, (_, r) in zip(names, g.iterrows()):
-            k = int(r[col])
-            v = 100 * k / r.n
-            data.append({"value": round(v, 2),
-                         "label": {"show": v >= 7, "formatter": f"{v:.0f}%",
-                                   "color": "#ffffff" if col == "miss" else "#1a1a19"},
-                         "tip": f"<b>{nm}</b> wrote {r.n} backdoors<br>{label.lower()}: {k} ({v:.0f}%)"
-                                f"<br>median {r.med:.0f} lines differ from the reference"})
-        series.append({"name": label, "type": "bar", "stack": "all", "data": data, "barWidth": "62%",
-                       "itemStyle": {"color": color, "borderColor": "@ink-surface", "borderWidth": 1}})
-    ci = []
-    for _, r in g.iterrows():
-        lo, hi = wilson(int(r.miss), int(r.n))
-        ci.append({"name": f"{100 * lo:.0f} to {100 * hi:.0f}%", "value": [100, len(ci)]})
-    series.append({"name": "interval", "type": "scatter", "symbolSize": 0, "data": ci, "silent": True,
-                   "clip": False, "label": {"show": True, "position": "right", "distance": 12, "formatter": "{b}",
-                                            "color": "@ink-secondary", "fontSize": 12}})
-    opt = base_option(
-        grid={"left": 250, "right": 120, "top": 40, "bottom": 70},
-        xAxis=axis("Share of that model's backdoors (%)", type="value", min=0, max=100, interval=20),
-        yAxis={"type": "category", "data": cats, "inverse": True, "axisTick": {"show": False},
-               "axisLine": {"lineStyle": {"color": "@ink-axis"}}, "axisLabel": {"color": "@ink-primary", "fontSize": 12}},
-        legend={"bottom": 0, "textStyle": {"color": "@ink-secondary"}, "data": [p[0] for p in parts]},
-        title={"text": "missed by all 7:\n95% range", "right": 18, "top": 0,
-               "textStyle": {"color": "@ink-secondary", "fontSize": 11, "fontWeight": "normal", "lineHeight": 14}},
-        series=series,
-    )
-    return {"option": opt, "height": 470, "dial": None, "table": g}
+    rows = [(catch_counts(cf[cf.model == r.model].caught_by), int(r.n),
+             f"<br>median {r.med:.0f} lines differ from the reference") for _, r in g.iterrows()]
+    out = partition_bars(cats, rows, CATCH_PARTS, "Share of that model's backdoors (%)", "missed by all 7:\n95% range")
+    out["table"] = g
+    return out
+
+
+LINE_BINS = [(0, 4, "1 to 4 lines"), (5, 8, "5 to 8 lines"), (9, 20, "9 to 20 lines"), (21, 10 ** 9, "21 or more lines")]
+
+
+def fig_lines(cf: pd.DataFrame) -> dict:
+    """Same partition as Figure 6, by how many lines the backdoor changes relative to the honest solution."""
+    cats, rows = [], []
+    for lo, hi, label in LINE_BINS:
+        g = cf[(cf.changed_lines >= lo) & (cf.changed_lines <= hi)]
+        cats.append(f"{label}  ·  {len(g)} backdoors")
+        rows.append((catch_counts(g.caught_by), len(g), ""))
+    return partition_bars(cats, rows, CATCH_PARTS, "Share of backdoors in that size group (%)",
+                          "missed by all 7:\n95% range", height=330, left=210)
+
+
+OPUS_CSV = ROOT / "results" / "analysis" / "opus-hard51-scores.csv"
+OPUS_COLS = [("Haiku 5.5 xhigh", "Haiku 5.5 · xhigh"), ("Sonnet 5.5", "Sonnet 5.5 · high"),
+             ("opus_low", "Opus 5.5 · low"), ("opus_high", "Opus 5.5 · high"), ("opus_xhigh", "Opus 5.5 · xhigh")]
+OPUS_PARTS = [("Scored 50 or more", "@s2"), ("20 to 49", "@warning"),
+              ("Under 20 (looks honest)", "@ink-axis")]
+
+
+def opus_table() -> pd.DataFrame:
+    return pd.read_csv(OPUS_CSV)
+
+
+def fig_opus() -> dict:
+    d = opus_table()
+    cats, rows = [], []
+    for col, label in OPUS_COLS:
+        s = d[col].dropna()
+        cats.append(label)
+        rows.append(((int((s >= 50).sum()), int(((s >= 20) & (s < 50)).sum()), int((s < 20).sum())), len(s),
+                     f"<br>median score {s.median():.0f} of 100"))
+    return partition_bars(cats, rows, OPUS_PARTS, f"Share of the {len(d)} hardest backdoors (%), scored 0 to 100",
+                          "scored 50+:\n95% range", height=340, left=170)
 
 
 # ---------------------------------------------------------------- Marnick's figures
@@ -644,8 +693,10 @@ def main() -> None:
     figs.append({"id": "fig5-hard-backdoors", **fig_hard(cf), **P.fig5()})
     gen = fig_generators(cf)
     gen.pop("table")
+    figs.append({"id": "fig5b-lines-changed", **fig_lines(cf), **P.fig5b()})
     figs.append({"id": "fig6-who-wrote-it", **gen, **P.fig6()})
     figs.append({"id": "fig7-comments", **from_marnick(mv["cases-catch-set-upset"]), **P.fig7()})
+    figs.append({"id": "fig8-opus-hard", **fig_opus(), **P.fig8(opus_table())})
     for vid in ["b1-requested-vs-served", "e3-width-vs-rows", "geom-score-scale", "cases-honest-recalibration",
                 "geom-ensemble-vs-budget", "free-auc-reason-vs-suspicion", "geom-campaign-safety"]:
         figs.append({"id": f"s-{vid}", **from_marnick(mv[vid]), **P.support(vid, mv[vid])})
