@@ -33,6 +33,7 @@ inside every replicate, and the same resampled problems are scored by both
 monitors. That keeps problem difficulty from leaking into the gap.
 """
 import glob
+import zlib
 from pathlib import Path
 
 import numpy as np
@@ -106,7 +107,6 @@ def main() -> None:
         print(f"\nreference {REFERENCE} not found; skipping pairwise")
         return
     rh, ra, rpts = runs[REFERENCE]
-    rng = np.random.default_rng(SEED)
     pair_rows = []
     for run, (h, a, pts) in runs.items():
         if run == REFERENCE:
@@ -124,6 +124,20 @@ def main() -> None:
                 continue
             rec_ref = [r for _, ff, r in rpts if abs(ff - f) < 1e-9][0]
             rec_oth = [r for _, ff, r in pts if abs(ff - f) < 1e-9][0]
+            # Seed per comparison, not once for the whole table. A single generator
+            # created before this loop is consumed in iteration order, so adding a
+            # monitor inserts draws into the middle of the stream and shifts every
+            # pair after it. That is not a theoretical worry: adding four runs that
+            # were already sitting in results/ moved 47 of 93 committed intervals by
+            # up to 3.18 points while every point estimate stayed identical, and one
+            # published lower bound changed sign. The interval is a property of the
+            # pair, so it has to be reproducible from the pair alone.
+            # analysis_ci.py has done this per run from the start; this is the same
+            # idea at the granularity this table needs, because `shared` is derived
+            # from the data and an added rung would otherwise shift the later rungs
+            # of the same pair.
+            key = f"{REFERENCE}|{run}|{f:.6f}"
+            rng = np.random.default_rng([SEED, zlib.crc32(key.encode())])
             gaps = []
             for _ in range(N_BOOT):
                 ih = rng.integers(0, len(h_ref), len(h_ref))

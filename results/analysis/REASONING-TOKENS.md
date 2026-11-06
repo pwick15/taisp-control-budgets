@@ -13,8 +13,8 @@ the Haiku 5.5 trusted-monitoring run, n=500 honest and 500 attack on the same
 
 **Read the Caveats before quoting the headline.** The resolution argument below
 holds on this run and is the point of the document. The implied general claim
-does not: across the 24 runs that emit reasoning tokens, thinking length
-out-discriminates the suspicion score on 6 and loses on 18, and the 6 are the
+does not: across the 31 runs that emit reasoning tokens, thinking length
+out-discriminates the suspicion score on 9 and loses on 22, and the 9 are the
 study's weakest monitors. The title is scoped accordingly.
 
 ## Why look
@@ -143,10 +143,10 @@ overstates safety at 10% by crediting a budget that was never spent.
 
 ## Caveats
 
-- **Measured on one run, now checked on 24, and it does not generalise.** The
-  tie-break above is Haiku 5.5 at default effort. 34 runs retained their logs, 24
-  of which emit reasoning tokens at all, and on those 24 **thinking length beats
-  the suspicion score on 6 and loses on 18**. The 6 are not a random subset: their
+- **Measured on one run, now checked on 31, and it does not generalise.** The
+  tie-break above is Haiku 5.5 at default effort. 46 runs retained their logs, 31
+  of which emit reasoning tokens at all, and on those 31 **thinking length beats
+  the suspicion score on 9 and loses on 22**. The 9 are not a random subset: their
   suspicion AUC spans **0.592 to 0.752**, which is the bottom of the study, while
   all ten of the best-discriminating arms have the score far ahead (Haiku xhigh
   comments-kept 0.976 against 0.677, Sonnet 0-100 0.959 against 0.632). So
@@ -154,7 +154,7 @@ overstates safety at 10% by crediting a budget that was never spent.
   it should not be offered as a general second signal.
 - **Not a universal free lunch, and a zero has two meanings.** A monitor that does
   not reason has no tie-break available: Qwen at `effort=none` reports 0 on all
-  500 samples and would gain nothing. Ten of the 34 runs with a token record read
+  500 samples and would gain nothing. 15 of the 46 runs with a token record read
   zero, and the column cannot say which of two reasons applies. Gemma 3 genuinely
   does not reason. Sonnet 5.5 at `reasoning_effort=low` emits no reasoning block
   on any of its 1,000 calls and so reports nothing, while the same model at its

@@ -101,5 +101,6 @@ API cost, which is what made extending this look cheap. It cannot be re-run: it
 needs the monitored eval logs and this configuration's were not kept, so the
 committed CSV is the whole record. Extending the sweep means re-running the
 monitor on those 100 problems first, about $5, and the conclusion above says not
-to bother. Recorded because it is the same log-retention gap that leaves five
-n=500 runs with no recoverable cost.
+to bother. Recorded because it is the same log-retention gap that once left five
+n=500 runs with no recoverable cost. That gap is closed: every n=500 run carries
+a cost now, and only the six n=30 pilots predate the provenance columns.

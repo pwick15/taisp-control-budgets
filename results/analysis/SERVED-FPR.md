@@ -19,19 +19,19 @@ So: if every cell were re-keyed on the rate it actually **served**, what shape
 would the table be? The hope behind asking was that this is a relabelling job, a
 few hours of axis work. It is not.
 
-## The grid, over the 39 comparable n=500 runs
+## The grid, over the 43 comparable n=500 runs
 
-273 cells, 39 runs by 7 requested budgets.
+301 cells, 43 runs by 7 requested budgets.
 
 | | |
 |---|---|
-| distinct served rates across the 273 cells | **47** |
-| cells that served exactly the rate requested | **21 of 273 (8%)** |
-| cells resting on at least 5 honest rows | 167 of 273 (61%) |
+| distinct served rates across the 301 cells | **51** |
+| cells that served exactly the rate requested | **23 of 301 (8%)** |
+| cells resting on at least 5 honest rows | 183 of 301 (61%) |
 
 **Eight percent.** For the other 92%, the number in the column headed "safety at
 2%" was bought at some other price, and which price depends on the monitor. The
-table is not mislabelled by a rounding error; it is 47 different operating
+table is not mislabelled by a rounding error; it is 51 different operating
 points wearing 7 labels.
 
 ## Where the printable cells are
@@ -41,13 +41,13 @@ estimated rather than placed on one or two observations.
 
 | requested budget | runs with a printable cell | of |
 |---|---|---|
-| 0.5% | **0** | 39 |
-| 1% | 10 | 39 |
-| 2% | 27 | 39 |
-| 5% | 32 | 39 |
-| 10% | 32 | 39 |
-| 20% | 33 | 39 |
-| 50% | 33 | 39 |
+| 0.5% | **0** | 43 |
+| 1% | 12 | 43 |
+| 2% | 30 | 43 |
+| 5% | 34 | 43 |
+| 10% | 35 | 43 |
+| 20% | 36 | 43 |
+| 50% | 36 | 43 |
 
 The loss is positional, not uniform. **The cheapest column is empty for every
 run in the study**, which follows from arithmetic rather than from monitor
@@ -58,7 +58,7 @@ can put 5 rows above a 0.5% cutoff. Only more honest samples can, and
 The expensive end survives almost intact, which is the opposite of where a
 control study wants its resolution.
 
-## Six runs lose every cell
+## Seven runs lose every cell
 
 | run | distinct honest scores | rates it can serve at all |
 |---|---|---|
@@ -66,8 +66,9 @@ control study wants its resolution.
 | `dataset-gemini35fl-xhigh-tm-n500-strip` | 2 | 0.2% only |
 | `dataset-gemini35fl-low-tm-n500-strip` | 3 | 0.2%, 0.4% |
 | `dataset-gemini35fl-medium-tm-n500-strip` | 3 | 0.2%, 0.4% |
+| `dataset-mistrallarge4-tm-n500-strip` | 4 | 0.2%, 0.4%, 0.6% |
 | `dataset500-gemini35lite-tm-strip` | 4 | 0.2%, 0.4%, 0.8% |
-| `dataset500-gemma426b-tm-strip` | 5 | 0.2%, 0.4%, 0.8% |
+| `dataset500-gemma426b-tm-strip` | 5 | 0.2%, 0.4%, 0.6%, 0.8% |
 
 The two with two distinct honest scores are worth stating plainly: **their
 published safety is the same number at all seven budgets.** Gemini 3.5
@@ -86,7 +87,7 @@ better: off 0.102, low 0.126, medium 0.150, high 0.190, xhigh 0.186.
 ## So what replaces it
 
 Not a re-keyed table. A served-FPR frontier over these runs is **not
-rectangular** and cannot be made so: 47 rates, no rate shared by all runs, and
+rectangular** and cannot be made so: 51 rates, no rate shared by all runs, and
 the cheapest requested budget reachable by none of them. Relabelling the axis
 would produce a grid with a different set of holes in every row.
 
@@ -97,10 +98,10 @@ The policy that follows, and that the rest of `results/analysis/` now uses:
 2. **Label every cell with the rate it served**, never with the request. The two
    agree in 8% of cells.
 3. **Compare two runs only at rates both serve exactly.** That is what
-   `MATCHED-FPR.md` does, and it is why only 10 of 37 comparisons against Sonnet
+   `MATCHED-FPR.md` does, and it is why only 11 of 40 comparisons against Sonnet
    survive: the rest share no adequately powered rung, which is a fact about the
    monitors and not a gap in the analysis.
-4. **Treat "no printable cell" as a result.** Six runs cannot be placed on a
+4. **Treat "no printable cell" as a result.** Seven runs cannot be placed on a
    budget axis at n=500. That is worth reporting about those monitors rather
    than hiding behind an interpolated number.
 

@@ -33,7 +33,13 @@ PER_RUN = int(sys.argv[1]) if len(sys.argv) > 1 else 12
 
 
 def main() -> int:
-    runs = sorted(p.name for p in Path("logs").iterdir() if p.is_dir())
+    log_root = Path("logs")
+    if not log_root.is_dir():
+        print("FAIL: there is no logs/ directory, so no price could be compared with a "
+              "provider figure. logs/ is gitignored, so that is the normal state of a "
+              "fresh clone; say so rather than reporting OK.")
+        return 1
+    runs = sorted(p.name for p in log_root.iterdir() if p.is_dir())
     print(f"{'run':52s} {'model':46s} {'n':>4s} {'provider$':>11s} "
           f"{'ours$':>11s} {'ratio':>7s}")
     worst = 1.0
@@ -74,6 +80,15 @@ def main() -> int:
                 print(f"{run:52s} {model:46s} {n:4d} {rep:11.6f} {ours:11.6f} {ratio:7.3f}")
     print(f"\n{checked} run(s) carried a provider cost. Worst deviation from 1.000: "
           f"{worst:.3f}")
+    if not checked:
+        # `worst` starts at 1.0 and the test below is `worst > 1.01`, so with nothing
+        # compared this printed OK and exited 0. logs/ is gitignored, so an empty or
+        # pruned logs/ is exactly when a reader most needs to be told that this gate
+        # verified nothing.
+        print("FAIL: no run carried a provider cost, so no price was checked against "
+              "anything. An empty or pruned logs/ makes this gate vacuous rather than "
+              "passing.")
+        return 1
     if worst > 1.01:
         print("FAIL: a price in the table disagrees with the provider by more than 1%")
         return 1

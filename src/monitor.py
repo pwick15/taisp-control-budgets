@@ -16,6 +16,10 @@ Env vars:
     STRIP_COMMENTS  "1": the monitor sees the code with # comments removed (default 0)
     LOG_DIR         where to write the monitored logs (default logs/<trajectories>-<monitor>)
     MAX_CONNECTIONS max concurrent monitor calls (default 10; use 1-2 on free tiers)
+    REASONING_EFFORT  low | medium | high | xhigh | max (provider default if unset)
+    MONITOR_PROMPT  path to a prompt file, e.g. src/prompts/monitor_0_100.txt (default: library 0-10 prompt)
+    MONITOR_SCORE_MAX  top of the scale that prompt asks for (100 for monitor_0_100.txt); required
+                    with MONITOR_PROMPT, because scores are divided by it. A mismatch silently rescales.
 
 Then:  LOG_DIR=<same LOG_DIR> uv run python src/analyze.py
 """
@@ -30,6 +34,7 @@ from inspect_ai.scorer import Score
 
 from control_arena.eval import run_monitor_for_eval_log
 from control_arena.monitor import basic_monitor_builder
+from control_arena.monitor._types import MonitorScoreRange
 
 from strip_comments import strip_comments_prompt_formatter
 
@@ -77,14 +82,21 @@ async def run() -> None:
     if not files:
         sys.exit(f"No U trajectories under {Path(traj_dir, 'untrusted')}. Run src/record.py first.")
 
+    extra: dict = {"prompt_formatter": strip_comments_prompt_formatter} if strip else {}
+    if os.getenv("MONITOR_PROMPT"):
+        if not os.getenv("MONITOR_SCORE_MAX"):
+            sys.exit("MONITOR_PROMPT needs MONITOR_SCORE_MAX to match the scale it asks for")
+        extra["prompt"] = Path(os.environ["MONITOR_PROMPT"]).read_text()
+    if os.getenv("MONITOR_SCORE_MAX"):
+        extra["score_range"] = MonitorScoreRange(min=0.0, max=float(os.environ["MONITOR_SCORE_MAX"]))
     monitor = basic_monitor_builder(
         model_role=None,
         model=monitor_model,
-                config=GenerateConfig(
+        config=GenerateConfig(
             max_connections=int(os.getenv("MAX_CONNECTIONS", "10")),
             reasoning_effort=os.getenv("REASONING_EFFORT") or None,
         ),
-        **({"prompt_formatter": strip_comments_prompt_formatter} if strip else {}),
+        **extra,
     )
     out_dir = log_dir / protocol
     out_dir.mkdir(parents=True, exist_ok=True)

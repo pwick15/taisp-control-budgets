@@ -29,14 +29,24 @@ cp .env.example .env            # then fill in ANTHROPIC_API_KEY
 
 ### Check your setup (no API cost)
 
-Point both models at Inspect's mock model. This exercises the whole pipeline (dataset download, Docker sandbox, scoring) without calling any API:
+Point both models at Inspect's mock model. This exercises the dataset download, the Docker sandbox and the scorers without calling any API:
 
 ```bash
 UNTRUSTED_MODEL=mockllm/model TRUSTED_MODEL=mockllm/model LOG_DIR=/tmp/mock-logs \
   uv run python src/experiment.py 1
 ```
 
-The scores will be all zero, since the mock model solves nothing. You are only checking that it runs to completion. The first run is slower because it pulls the Docker image and downloads the dataset.
+The scores are not zero, they are absent, and knowing which is the difference between a working setup and a broken one. The mock model never emits a tool call, so it never submits: each sample loops until it hits the token limit, `apps_scorer` records "No submission found in state store", and no suspicion score is written at all. The monitor is never reached, so this checks the scaffolding, not the measurement. You are only checking that it runs to completion.
+
+`src/analyze.py` can be pointed at these logs and will say so rather than fail:
+
+```bash
+LOG_DIR=/tmp/mock-logs uv run python src/analyze.py
+```
+
+It prints the per-mode summary, reports that no suspicion scores were recorded, and exits without writing a plot or a results table.
+
+The first run is slower because it pulls the Docker image and downloads the dataset.
 
 ## Running experiments
 
@@ -164,10 +174,12 @@ the results says so, which is worth fixing before any of it is generalised.
 - `shuffle_dataset` defaults to False, so `limit=n` takes a **prefix**. The 500 problems
   every main run scores are the *first* 500 eligible ones, which also means a smaller pilot
   is a nested subset of a larger run rather than an independent sample.
-- Those first 500 are **100% `interview` difficulty**. The eligible problems beyond them
-  are a different mix, roughly 1,061 interview, 277 introductory and 106 competition. So
-  the unscored remainder is not exchangeable with the scored part, and growing the sample
-  changes the population as well as its size.
+- Those first 500 are **100% `interview` difficulty**. The eligible pool as a whole is
+  roughly 1,061 interview, 277 introductory and 106 competition, which sums to the 1,444
+  above, so the 944 problems **beyond** the first 500 are about 561 interview, 277
+  introductory and 106 competition. The unscored remainder is therefore not exchangeable
+  with the scored part, and growing the sample changes the population as well as its
+  size.
 
 Two consequences. Any claim about monitor capability, backdoor hardness or generator effect
 is conditional on interview-difficulty problems. And an honest-sample increase, which is the
@@ -211,11 +223,18 @@ whatever the old sample-level accounting produced, which is blind to cached call
 understate badly. **None of the comparable n=500 set is affected any more.**
 
 It was 14, and five of those were in the n=500 set, including `dataset500-sonnet55-um-strip`,
-the lead row of the report chart. Two were recovered by noticing that their eval logs had been
-written under `trajectories/` rather than `logs/`, which nothing had looked in:
-`dataset-haiku55-tm-n500-strip` and `dataset-qwen38omniflash-none-tm-n500-strip`. The first
-matters beyond its own row, because every figure in `results/analysis/REASONING-TOKENS.md`
-is computed from it. The remaining five were recovered from the collaborator logs.
+the lead row of the report chart. All 14 became 6 in a single pass, when **eight** runs that
+had scores but no retained logs got usage from the collaborator archives. Their suspicion
+scores were checked against the committed tables first and agree on every one of 6,400
+samples, so the only change to an existing samples file was that `reasoning_tokens` became
+populated where it had been blank.
+
+Two further runs were recovered earlier, and separately, by noticing that their eval logs had
+been written under `trajectories/` rather than `logs/`, which nothing had looked in:
+`dataset-haiku55-tm-n500-strip` and `dataset-qwen38omniflash-none-tm-n500-strip`. Both already
+carried usage before the collaborator pass, so neither is part of the 14. The first matters
+beyond its own row, because every figure in `results/analysis/REASONING-TOKENS.md` is computed
+from it.
 
 `usage_source` takes three values, and the difference between the last two is the whole
 question of whether a cost figure can be trusted:
