@@ -332,6 +332,34 @@ def main() -> None:
     complete = {e: d for e, d in runs.items() if len(d) == len(wide)}
     for e in runs.keys() - complete.keys():
         print(f"note: {e} has {len(runs[e])} of {len(wide)} samples so far; it is left out of the figures until it is complete")
+
+    # Refuse to write when the logs on hand cannot rebuild what is already committed.
+    # The two CSVs and four PNGs below ARE the committed tables and figures, and the
+    # writes are unconditional while the figures they illustrate are not. Run with a
+    # subset of the logs and the four-effort scores table was replaced by a one-column
+    # one, after which report_figures raised IndexError from `list(runs)[-1]` on an
+    # empty `complete`, naming a list index rather than the runs that were missing. By
+    # then the committed data was already gone. logs/ is gitignored, so having part of
+    # the input is the ordinary case for anyone but the person who produced it, not an
+    # exotic one. The note above is printed for the same condition, so the script knew.
+    scores_csv = OUT / "opus-hard51-scores.csv"
+    if scores_csv.exists():
+        had = [c for c in pd.read_csv(scores_csv, nrows=0).columns if c.startswith("opus_")]
+        rebuilt = [f"opus_{e}" for e in runs]
+        lost = [c for c in had if c not in rebuilt]
+        if lost:
+            raise SystemExit(
+                f"{scores_csv.name} holds {', '.join(had)}, but these logs rebuild only "
+                f"{', '.join(rebuilt) or 'nothing'}, so writing would drop "
+                f"{', '.join(lost)}. Point LOG_GLOB at the full set of runs (it is "
+                f"currently {LOG_GLOB}) or move the committed tables aside on purpose.")
+    if not complete:
+        have = ", ".join(f"{e}={len(d)}" for e, d in runs.items()) or "none"
+        raise SystemExit(
+            f"no effort arm is complete ({have} of {len(wide)} samples), so there is "
+            f"nothing for the figures to show and report_figures would fail on an empty "
+            f"set. Nothing was written.")
+
     wide.drop(columns=[c for c in wide if c.startswith("fail_")]).to_csv(OUT / "opus-hard51-scores.csv", index=False)
     pd.DataFrame(reasons).to_csv(OUT / "opus-hard51-reasons.csv", index=False)
     summarise(runs, wide)

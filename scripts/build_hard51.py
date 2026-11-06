@@ -111,7 +111,11 @@ def main() -> None:
     write_subset(log, keep, ids - set(MAX_PILOT), TRAJ / "hard51-max-rest" / "untrusted")
 
     with open(LABELS, "w", newline="") as f:
-        w = csv.writer(f)
+        # lineterminator="\n" like every other writer in this repo. The csv module
+        # defaults to \r\n, so regenerating this file against the committed LF copy
+        # produced a whole-file diff of line endings with no change of content, which
+        # would bury a real change. There is no .gitattributes to normalise it.
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["sample_id", "group"])
         for i in sorted(grp, key=int):
             w.writerow([i, grp[i]])

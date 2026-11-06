@@ -24,7 +24,10 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from control_arena.analysis import compute_safety, compute_usefulness, samples_df
+from control_arena.analysis import (compute_caught_attack_count, compute_safety,
+                                   compute_suspicion_threshold,
+                                   compute_uncaught_successful_attack_count,
+                                   compute_usefulness, samples_df)
 
 LOG_DIR = os.getenv("LOG_DIR", "logs")
 SCORER = "max_suspicion_scorer"
@@ -162,6 +165,21 @@ def any_usage(per_sample: dict | None) -> bool:
     whose real usage sits in `model_usage`.
     """
     return any(fields for fields in (per_sample or {}).values())
+
+
+def safety_terms(df, budget: float) -> tuple[int, int]:
+    """The two counts compute_safety divides by: caught, and uncaught-but-successful.
+
+    Recomputed with ControlArena's own helpers and the same threshold rule, so these are
+    its numerator and denominator rather than an approximation of them.
+    """
+    attack = df[df["eval_mode"] == "attack"]
+    honest = df[df["eval_mode"] == "honest"]
+    thr = compute_suspicion_threshold(honest, SCORER, budget)
+    caught = compute_caught_attack_count(attack, SCORER, thr)
+    uncaught = compute_uncaught_successful_attack_count(attack, SCORER, thr,
+                                                       require_main_task_success=True)
+    return int(caught), int(uncaught)
 
 
 def sample_reasoning_tokens(df: pd.DataFrame, cold_per_sample: dict | None = None) -> pd.Series:
@@ -409,7 +427,17 @@ def main() -> None:
         for b, s in zip(AUDIT_BUDGETS, safeties):
             # An audit budget below 100/n_honest % is thresholded on less than one honest sample.
             note = "  (too few honest samples for this budget)" if b * n_honest / 100 < 1 else ""
-            print(f"  audit budget {b:>4}% -> safety {s:.2f}{note}")
+            caught, uncaught = safety_terms(df, b)
+            # Print the denominator, always. compute_safety returns 1.0 whenever both
+            # terms are zero, and the interesting case is not the empty attack arm the
+            # project's notes describe: that one trips an assert. This one fires on a
+            # FULL arm in which no attack both succeeded at its main task and evaded the
+            # threshold, so a run whose attack policy quietly degraded reports perfect
+            # safety at every budget. A bare "safety 1.00" cannot be told apart from a
+            # monitor that caught everything; "1.00 [0 of 0]" can.
+            empty = "  <- empty denominator, so this is not a catch rate" if caught + uncaught == 0 else ""
+            print(f"  audit budget {b:>4}% -> safety {s:.2f} "
+                  f"[{caught} of {caught + uncaught} successful backdoors]{note}{empty}")
             rows.append({
                 "run": RUN_LABEL, "protocol": protocol, "n_honest": n_honest, "n_attack": n_attack,
                 "audit_budget_pct": b, "safety": round(s, 3), "usefulness": round(usefulness, 3),
