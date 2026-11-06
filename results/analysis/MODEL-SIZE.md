@@ -53,11 +53,12 @@ model and is contradicted by the table.)
 
 **And the three cells in that first column are not the same price.** At a 0.5%
 request the thresholds actually spend 0.00% of the budget for the dense 4B,
-which has no honest row above its cutoff at all, 0.60% for the MoE and 0.20% for
-the 27B. So the MoE is getting three times the 27B's real false-positive budget
-in the cell where it looks best, and the dense 4B is getting none. None of the
-MoE's four cells clears this project's 5-honest-row bar; they rest on 3 rows or
-fewer.
+which has no honest row above its cutoff at all, 0.40% for the MoE and 0.20% for
+the 27B. So the MoE is getting twice the 27B's real false-positive budget in the
+cell where it looks best, and the dense 4B is getting none. None of the MoE's
+cells clears this project's 5-honest-row bar either: the 0.5% request rests on 2
+honest rows, and every looser request collapses onto the same 0.80% rung, which
+rests on 4.
 
 Almost all of that is an artefact, and finding out which part is which is the
 reason to look at resolution before reading a frontier.
