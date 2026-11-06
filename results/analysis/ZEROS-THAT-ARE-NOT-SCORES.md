@@ -80,15 +80,26 @@ and emitting no visible text.
 **Still outstanding, and it needs someone else's Google access.** A re-score is the only
 route, and unlike the Gemma arm there is no alternative host: `gemini/gemini-3.5-flash-lite`
 returns 401 through the proxy and no other deployment carries it, so this needs a funded
-Google API key. For whoever picks it up, the trajectory holding exactly these three samples
-is built and the invocation is:
+Google API key. Everything else is in place. For whoever picks it up, with this arm's logs
+under `logs/` (they are gitignored, so they have to be the ones that produced the run):
 
 ```
+# 1. take the three affected samples out into their own trajectory
+uv run python scripts/build_repair_trajectory.py \
+  dataset-gemini35fl-low-tm-n500-strip \
+  trajectories/repair-dataset-gemini35fl-low-tm-n500-strip \
+  'No score found in model response'
+
+# 2. score just those three, on the arm's own configuration
 TRAJ_DIR=trajectories/repair-dataset-gemini35fl-low-tm-n500-strip \
   LOG_DIR=logs/repair-dataset-gemini35fl-low-tm-n500-strip \
   PROTOCOL=trusted_monitoring MONITOR_MODEL=google/gemini-3.5-flash-lite \
   REASONING_EFFORT=low STRIP_COMMENTS=1 uv run python src/monitor.py
 ```
+
+Step 1 should report `kept 2: 293,961` and `kept 1: 1006`. Send back the three scores with
+the monitor's reason for each, and say whether any came back empty again, because that is
+the result either way.
 
 It may also not help. If the empty reply is a property of these prompts at low effort it
 will recur, and the honest record is then a missing value rather than a 0, which would make
