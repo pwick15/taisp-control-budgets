@@ -1,0 +1,411 @@
+<svg width="960" height="480" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 960 480">
+<rect width="960" height="480" x="0" y="0" fill="#ffffff"></rect>
+<path d="M92.5 371.5L920 371.5" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M92.5 302.5L920 302.5" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M92.5 234.5L920 234.5" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M92.5 165.5L920 165.5" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M92.5 96.5L920 96.5" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M92.5 28.5L920 28.5" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M92.5 28L92.5 371" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M268.5 28L268.5 371" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M444.5 28L444.5 371" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M620.5 28L620.5 371" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M797.5 28L797.5 371" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M920.5 28L920.5 371" fill="transparent" stroke="#e1e0d9" class="zr17-cls-81"></path>
+<path d="M92.5 371L92.5 28" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr17-cls-81"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" xml:space="preserve" y="-5.5" transform="matrix(0,-1,1,0,46.48,199.5)" fill="#52514e">width of the 95% interval on the recall gap (points)</text>
+<path d="M92.5 371.5L920 371.5" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr17-cls-81"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" xml:space="preserve" y="5.5" transform="translate(506.24 401)" fill="#52514e">honest files above the cutoff (the sample that positions the threshold)</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" transform="translate(84.48 371)" fill="#898781">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" transform="translate(84.48 302.4)" fill="#898781">20</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" transform="translate(84.48 233.8)" fill="#898781">40</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" transform="translate(84.48 165.2)" fill="#898781">60</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" transform="translate(84.48 96.6)" fill="#898781">80</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" transform="translate(84.48 28)" fill="#898781">100</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" y="5.5" transform="translate(92.48 379)" fill="#898781">0</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" y="5.5" transform="translate(268.5481 379)" fill="#898781">10</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" y="5.5" transform="translate(444.6162 379)" fill="#898781">20</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" y="5.5" transform="translate(620.6843 379)" fill="#898781">30</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" y="5.5" transform="translate(796.7523 379)" fill="#898781">40</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" y="5.5" transform="translate(920 379)" fill="#898781">47</text>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,139.132)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,132.958)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,132.272)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,138.446)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,135.702)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,137.0397)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,81.508)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,78.764)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="7" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,286.622)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="8" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,78.078)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="9" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,73.962)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="10" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,902.3932,310.632)" fill="rgb(13,54,107)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="11" ecmeta_ssr_type="chart" class="zr17-cls-85"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,93.856)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="12" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,93.17)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="13" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,196.07)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="14" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,180.514,268.7517)" fill="rgb(157,195,242)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="15" ecmeta_ssr_type="chart" class="zr17-cls-86"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,190.582)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="16" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,289.366)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="17" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,180.514,298.97)" fill="rgb(157,195,242)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="18" ecmeta_ssr_type="chart" class="zr17-cls-86"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,127.47)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="19" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,128.1217)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="20" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,198.0937)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="21" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,200.872)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="22" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,268.1)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="23" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,266.0077)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="24" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,180.514,298.284)" fill="rgb(157,195,242)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="25" ecmeta_ssr_type="chart" class="zr17-cls-86"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,194.6637)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="26" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,191.954)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="27" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,86.9617)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="28" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,85.624)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="29" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,266.0077)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="30" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,84.252)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="31" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,291.3897)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="32" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,180.514,326.41)" fill="rgb(157,195,242)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="33" ecmeta_ssr_type="chart" class="zr17-cls-86"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,46.522)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="34" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,51.9757)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="35" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,64.3237)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="36" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,294.854)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="37" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,151.4457)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="38" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,150.794)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="39" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,104.146)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="40" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,105.518)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="41" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,125.412)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="42" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,126.784)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="43" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,131.5517)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="44" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,141.1557)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="45" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,142.562)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="46" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,204.988)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="47" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,207.046)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="48" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,209.104)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="49" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,173.432)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="50" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,176.176)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="51" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,192.64)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="52" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,180.514,290.052)" fill="rgb(157,195,242)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="53" ecmeta_ssr_type="chart" class="zr17-cls-86"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,139.818)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="54" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,140.504)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="55" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,153.538)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="56" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,180.514,278.39)" fill="rgb(157,195,242)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="57" ecmeta_ssr_type="chart" class="zr17-cls-86"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,200.186)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="58" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,241.346)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="59" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,170.6537)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="60" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,171.374)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="61" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,281.82)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="62" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,97.9377)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="63" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,197.442)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="64" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,180.514,242.718)" fill="rgb(157,195,242)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="65" ecmeta_ssr_type="chart" class="zr17-cls-86"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,118.552)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="66" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,120.61)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="67" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,177.548)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="68" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,180.514,298.9357)" fill="rgb(157,195,242)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="69" ecmeta_ssr_type="chart" class="zr17-cls-86"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,196.756)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="70" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,194.698)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="71" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,244.7417)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="72" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,122.6337)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="73" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,123.354)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="74" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,180.292)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="75" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,84.938)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="76" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,84.938)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="77" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,124.726)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="78" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,123.354)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="79" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,102.774)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="80" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,103.46)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="81" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,246.148)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="82" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,89.74)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="83" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,127.6936,90.426)" fill="rgb(176,207,245)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="84" ecmeta_ssr_type="chart" class="zr17-cls-83"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,142.562)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="85" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,79.45)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="86" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,143.934)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="87" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,180.514,159.712)" fill="rgb(157,195,242)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="88" ecmeta_ssr_type="chart" class="zr17-cls-86"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,326.41)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="89" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,326.41)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="90" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,110.0868,329.154)" fill="rgb(183,211,246)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="91" ecmeta_ssr_type="chart" class="zr17-cls-82"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5.5,0,0,5.5,145.3004,331.212)" fill="rgb(170,203,244)" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="0.18181818181818182" stroke-opacity="0.8" ecmeta_series_index="0" ecmeta_data_index="92" ecmeta_ssr_type="chart" class="zr17-cls-84"></path>
+<g clip-path="url(#zr17-c0)">
+<path d="M110.1 127.5L127.7 128.1L145.3 241.3L180.5 290.1L902.4 310.6" fill="transparent" stroke="#0b0b0b" stroke-width="2" stroke-dasharray="8,4" stroke-linejoin="bevel" class="zr17-cls-88"></path>
+</g>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4,0,0,4,110.0868,127.47)" fill="#fff" stroke="#0b0b0b" stroke-width="0.5" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr17-cls-89"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4,0,0,4,127.6936,128.1217)" fill="#fff" stroke="#0b0b0b" stroke-width="0.5" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr17-cls-89"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4,0,0,4,145.3004,241.346)" fill="#fff" stroke="#0b0b0b" stroke-width="0.5" ecmeta_series_index="1" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr17-cls-89"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4,0,0,4,180.514,290.052)" fill="#fff" stroke="#0b0b0b" stroke-width="0.5" ecmeta_series_index="1" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr17-cls-89"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(4,0,0,4,902.3932,310.632)" fill="#fff" stroke="#0b0b0b" stroke-width="0.5" ecmeta_series_index="1" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr17-cls-89"></path>
+<path d="M-40.2 -19l252.3 0l0 24l-252.3 0Z" transform="translate(394.035 473)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr17-cls-81"></path>
+<path d="M-5 -5l279.4 0l0 22l-279.4 0Z" transform="translate(345.32 463)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr17-cls-81"></path>
+<g clip-path="url(#zr17-c1)">
+<polygon points="0 0 14 0 14 110 0 110" transform="matrix(0,-1,1,0,394.035,473)" fill="url(#zr17-g0)" class="zr17-cls-90"></polygon>
+<polygon points="0 0 14 0 14 110 0 110" transform="matrix(0,-1,1,0,394.035,473)" fill="url(#zr17-g1)" class="zr17-cls-91"></polygon>
+</g>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" x="-10" y="-7" transform="translate(394.035 473)" fill="#52514e">0.2%</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" xml:space="preserve" x="120" y="-6.999999999999993" transform="translate(394.035 473)" fill="#52514e">shared FPR 9.2%</text>
+<path d="M2.5 0L7.5 0A2.5 2.5 0 0 1 10 2.5L10 7.5A2.5 2.5 0 0 1 7.5 10L2.5 10A2.5 2.5 0 0 1 0 7.5L0 2.5A2.5 2.5 0 0 1 2.5 0" transform="translate(346.32 464)" fill="#5470c6" fill-opacity="0.8" stroke="#fcfcfb" stroke-width="2" stroke-opacity="0.8" stroke-linecap="butt" stroke-miterlimit="10" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr17-cls-81"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" xml:space="preserve" x="15" y="5" transform="translate(346.32 464)" fill="#52514e">one comparison</text>
+<path d="M-1 -1l94.5 0l0 12l-94.5 0Z" transform="translate(346.32 464)" fill="transparent" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr17-cls-92"></path>
+<path d="M2.5 0L7.5 0A2.5 2.5 0 0 1 10 2.5L10 7.5A2.5 2.5 0 0 1 7.5 10L2.5 10A2.5 2.5 0 0 1 0 7.5L0 2.5A2.5 2.5 0 0 1 2.5 0" transform="translate(449.86 464)" fill="#0b0b0b" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" ecmeta_silent="true" class="zr17-cls-81"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:system-ui, -apple-system, 'Segoe UI', sans-serif;" xml:space="preserve" x="15" y="5" transform="translate(449.86 464)" fill="#52514e">median width at that row count</text>
+<path d="M0 -0.5l164.8 0l0 11l-164.8 0Z" transform="translate(449.86 464)" fill="transparent" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr17-cls-92"></path>
+<defs >
+<clipPath id="zr17-c0">
+<path d="M91 27l831 0l0 345l-831 0Z" fill="#000" class="zr17-cls-87"></path>
+</clipPath>
+<clipPath id="zr17-c1">
+<path d="M3 0L11 0A3 3 0 0 1 14 3L14 107A3 3 0 0 1 11 110L3 110A3 3 0 0 1 0 107L0 3A3 3 0 0 1 3 0" transform="matrix(0,-1,1,0,394.035,473)" fill="#000" class="zr17-cls-87"></path>
+</clipPath>
+<linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1" id="zr17-g0">
+<stop offset="0%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="1%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="2%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="3%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="4%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="5%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="6%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="7.000000000000001%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="8%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="9%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="10%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="11%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="12%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="13%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="14.000000000000002%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="15%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="16%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="17%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="18%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="19%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="20%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="21%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="22%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="23%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="24%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="25%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="26%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="27%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="28.000000000000004%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="28.999999999999996%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="30%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="31%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="32%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="33%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="34%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="35%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="36%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="37%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="38%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="39%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="40%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="41%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="42%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="43%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="44%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="45%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="46%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="47%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="48%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="49%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="50%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="51%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="52%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="53%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="54%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="55.00000000000001%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="56.00000000000001%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="56.99999999999999%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="57.99999999999999%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="59%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="60%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="61%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="62%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="63%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="64%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="65%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="66%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="67%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="68%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="69%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="70%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="71%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="72%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="73%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="74%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="75%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="76%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="77%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="78%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="79%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="80%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="81%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="82%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="83%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="84%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="85%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="86%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="87%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="88%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="89%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="90%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="91%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="92%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="93%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="94%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="95%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="96%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="97%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="98%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="99%" stop-color="rgb(170,170,170)"></stop>
+<stop offset="100%" stop-color="rgb(170,170,170)"></stop>
+</linearGradient>
+<linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0" x2="0" y2="1" id="zr17-g1">
+<stop offset="0%" stop-color="rgb(183,211,246)"></stop>
+<stop offset="1%" stop-color="rgb(180,209,246)"></stop>
+<stop offset="2%" stop-color="rgb(177,207,245)"></stop>
+<stop offset="3%" stop-color="rgb(174,206,245)"></stop>
+<stop offset="4%" stop-color="rgb(171,204,244)"></stop>
+<stop offset="5%" stop-color="rgb(168,202,244)"></stop>
+<stop offset="6%" stop-color="rgb(165,200,244)"></stop>
+<stop offset="7.000000000000001%" stop-color="rgb(162,199,243)"></stop>
+<stop offset="8%" stop-color="rgb(159,197,243)"></stop>
+<stop offset="9%" stop-color="rgb(156,195,242)"></stop>
+<stop offset="10%" stop-color="rgb(153,193,242)"></stop>
+<stop offset="11%" stop-color="rgb(150,192,242)"></stop>
+<stop offset="12%" stop-color="rgb(147,190,241)"></stop>
+<stop offset="13%" stop-color="rgb(145,188,241)"></stop>
+<stop offset="14.000000000000002%" stop-color="rgb(142,186,240)"></stop>
+<stop offset="15%" stop-color="rgb(139,185,240)"></stop>
+<stop offset="16%" stop-color="rgb(136,183,240)"></stop>
+<stop offset="17%" stop-color="rgb(133,181,239)"></stop>
+<stop offset="18%" stop-color="rgb(130,179,239)"></stop>
+<stop offset="19%" stop-color="rgb(127,178,238)"></stop>
+<stop offset="20%" stop-color="rgb(124,176,238)"></stop>
+<stop offset="21%" stop-color="rgb(121,174,238)"></stop>
+<stop offset="22%" stop-color="rgb(118,172,237)"></stop>
+<stop offset="23%" stop-color="rgb(115,171,237)"></stop>
+<stop offset="24%" stop-color="rgb(112,169,236)"></stop>
+<stop offset="25%" stop-color="rgb(109,167,236)"></stop>
+<stop offset="26%" stop-color="rgb(106,165,235)"></stop>
+<stop offset="27%" stop-color="rgb(104,163,234)"></stop>
+<stop offset="28.000000000000004%" stop-color="rgb(101,161,233)"></stop>
+<stop offset="28.999999999999996%" stop-color="rgb(98,159,232)"></stop>
+<stop offset="30%" stop-color="rgb(96,158,232)"></stop>
+<stop offset="31%" stop-color="rgb(93,156,231)"></stop>
+<stop offset="32%" stop-color="rgb(90,154,230)"></stop>
+<stop offset="33%" stop-color="rgb(88,152,229)"></stop>
+<stop offset="34%" stop-color="rgb(85,150,228)"></stop>
+<stop offset="35%" stop-color="rgb(82,148,227)"></stop>
+<stop offset="36%" stop-color="rgb(80,146,226)"></stop>
+<stop offset="37%" stop-color="rgb(77,144,225)"></stop>
+<stop offset="38%" stop-color="rgb(74,143,225)"></stop>
+<stop offset="39%" stop-color="rgb(71,141,224)"></stop>
+<stop offset="40%" stop-color="rgb(69,139,223)"></stop>
+<stop offset="41%" stop-color="rgb(66,137,222)"></stop>
+<stop offset="42%" stop-color="rgb(63,135,221)"></stop>
+<stop offset="43%" stop-color="rgb(61,133,220)"></stop>
+<stop offset="44%" stop-color="rgb(58,131,219)"></stop>
+<stop offset="45%" stop-color="rgb(55,129,218)"></stop>
+<stop offset="46%" stop-color="rgb(53,128,218)"></stop>
+<stop offset="47%" stop-color="rgb(50,126,217)"></stop>
+<stop offset="48%" stop-color="rgb(47,124,216)"></stop>
+<stop offset="49%" stop-color="rgb(45,122,215)"></stop>
+<stop offset="50%" stop-color="rgb(42,120,214)"></stop>
+<stop offset="51%" stop-color="rgb(41,118,211)"></stop>
+<stop offset="52%" stop-color="rgb(41,117,209)"></stop>
+<stop offset="53%" stop-color="rgb(40,115,206)"></stop>
+<stop offset="54%" stop-color="rgb(39,113,204)"></stop>
+<stop offset="55.00000000000001%" stop-color="rgb(38,112,201)"></stop>
+<stop offset="56.00000000000001%" stop-color="rgb(38,110,198)"></stop>
+<stop offset="56.99999999999999%" stop-color="rgb(37,109,196)"></stop>
+<stop offset="57.99999999999999%" stop-color="rgb(36,107,193)"></stop>
+<stop offset="59%" stop-color="rgb(36,105,191)"></stop>
+<stop offset="60%" stop-color="rgb(35,104,188)"></stop>
+<stop offset="61%" stop-color="rgb(34,102,185)"></stop>
+<stop offset="62%" stop-color="rgb(33,100,183)"></stop>
+<stop offset="63%" stop-color="rgb(33,99,180)"></stop>
+<stop offset="64%" stop-color="rgb(32,97,178)"></stop>
+<stop offset="65%" stop-color="rgb(31,95,175)"></stop>
+<stop offset="66%" stop-color="rgb(30,94,172)"></stop>
+<stop offset="67%" stop-color="rgb(30,92,170)"></stop>
+<stop offset="68%" stop-color="rgb(29,90,167)"></stop>
+<stop offset="69%" stop-color="rgb(28,89,165)"></stop>
+<stop offset="70%" stop-color="rgb(28,87,162)"></stop>
+<stop offset="71%" stop-color="rgb(27,86,159)"></stop>
+<stop offset="72%" stop-color="rgb(26,84,157)"></stop>
+<stop offset="73%" stop-color="rgb(25,82,154)"></stop>
+<stop offset="74%" stop-color="rgb(25,81,152)"></stop>
+<stop offset="75%" stop-color="rgb(24,79,149)"></stop>
+<stop offset="76%" stop-color="rgb(24,78,147)"></stop>
+<stop offset="77%" stop-color="rgb(23,77,146)"></stop>
+<stop offset="78%" stop-color="rgb(23,76,144)"></stop>
+<stop offset="79%" stop-color="rgb(22,75,142)"></stop>
+<stop offset="80%" stop-color="rgb(22,74,141)"></stop>
+<stop offset="81%" stop-color="rgb(21,73,139)"></stop>
+<stop offset="82%" stop-color="rgb(21,72,137)"></stop>
+<stop offset="83%" stop-color="rgb(20,71,136)"></stop>
+<stop offset="84%" stop-color="rgb(20,70,134)"></stop>
+<stop offset="85%" stop-color="rgb(20,69,132)"></stop>
+<stop offset="86%" stop-color="rgb(19,68,131)"></stop>
+<stop offset="87%" stop-color="rgb(19,67,129)"></stop>
+<stop offset="88%" stop-color="rgb(18,66,127)"></stop>
+<stop offset="89%" stop-color="rgb(18,65,125)"></stop>
+<stop offset="90%" stop-color="rgb(17,64,124)"></stop>
+<stop offset="91%" stop-color="rgb(17,63,122)"></stop>
+<stop offset="92%" stop-color="rgb(17,62,120)"></stop>
+<stop offset="93%" stop-color="rgb(16,61,119)"></stop>
+<stop offset="94%" stop-color="rgb(16,60,117)"></stop>
+<stop offset="95%" stop-color="rgb(15,59,115)"></stop>
+<stop offset="96%" stop-color="rgb(15,58,114)"></stop>
+<stop offset="97%" stop-color="rgb(14,57,112)"></stop>
+<stop offset="98%" stop-color="rgb(14,56,110)"></stop>
+<stop offset="99%" stop-color="rgb(13,55,109)"></stop>
+<stop offset="100%" stop-color="rgb(13,54,107)"></stop>
+</linearGradient>
+</defs>
+<style ><![CDATA[
+.zr17-cls-81:hover {
+pointer-events:none;
+}
+.zr17-cls-82:hover {
+cursor:pointer;
+fill:rgba(201,232,255,1);
+}
+.zr17-cls-83:hover {
+cursor:pointer;
+fill:rgba(193,227,255,1);
+}
+.zr17-cls-84:hover {
+cursor:pointer;
+fill:rgba(187,223,255,1);
+}
+.zr17-cls-85:hover {
+cursor:pointer;
+fill:rgba(14,59,117,1);
+}
+.zr17-cls-86:hover {
+cursor:pointer;
+fill:rgba(172,214,255,1);
+}
+.zr17-cls-87:hover {
+cursor:pointer;
+fill:rgba(0,0,0,1);
+}
+.zr17-cls-88:hover {
+cursor:pointer;
+}
+.zr17-cls-89:hover {
+cursor:pointer;
+fill:rgba(255,255,255,1);
+}
+.zr17-cls-90:hover {
+cursor:pointer;
+fill:[object Object];
+}
+.zr17-cls-91:hover {
+cursor:pointer;
+fill:[object Object];
+}
+.zr17-cls-92:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+
+]]>
+
+</style>
+</svg>

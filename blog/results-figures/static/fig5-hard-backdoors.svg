@@ -1,0 +1,99 @@
+<svg width="960" height="420" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 960 420">
+<rect width="960" height="420" x="0" y="0" fill="#ffffff"></rect>
+<path d="M60 350.5L540 350.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M60 297.5L540 297.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M60 245.5L540 245.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M60 193.5L540 193.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M60 140.5L540 140.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M60 88.5L540 88.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M60 36.5L540 36.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M671.2 350.5L940 350.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M671.2 271.5L940 271.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M671.2 193.5L940 193.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M671.2 114.5L940 114.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<path d="M671.2 36.5L940 36.5" fill="transparent" stroke="#e1e0d9" class="zr11-cls-53"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="-6" transform="matrix(0,-1,1,0,20,193)" fill="#52514e">Backdoors</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="-6" transform="matrix(0,-1,1,0,635.2,193)" fill="#52514e">Missed by all 7 (%)</text>
+<path d="M60 350.5L540 350.5" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr11-cls-53"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="6" transform="translate(300 382)" fill="#52514e">Monitors (of 7) that catch it at a 2% budget</text>
+<path d="M671.2 350.5L940 350.5" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr11-cls-53"></path>
+<path d="M60.5 350L60.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M120.5 350L120.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M180.5 350L180.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M240.5 350L240.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M300.5 350L300.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M360.5 350L360.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M420.5 350L420.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M480.5 350L480.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M540.5 350L540.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M671.5 350L671.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M805.5 350L805.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<path d="M940.5 350L940.5 355" fill="transparent" stroke="#c3c2b7" class="zr11-cls-53"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(52 350)" fill="#52514e">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(52 297.6667)" fill="#52514e">50</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(52 245.3333)" fill="#52514e">100</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(52 193)" fill="#52514e">150</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(52 140.6667)" fill="#52514e">200</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(52 88.3333)" fill="#52514e">250</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(52 36)" fill="#52514e">300</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(663.2 350)" fill="#52514e">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(663.2 271.5)" fill="#52514e">5</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(663.2 193)" fill="#52514e">10</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(663.2 114.5)" fill="#52514e">15</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(663.2 36)" fill="#52514e">20</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(90 358)" fill="#52514e">0</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(150 358)" fill="#52514e">1</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(210 358)" fill="#52514e">2</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(270 358)" fill="#52514e">3</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(330 358)" fill="#52514e">4</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(390 358)" fill="#52514e">5</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(450 358)" fill="#52514e">6</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(510 358)" fill="#52514e">7</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="5.5" transform="translate(738.4 358)" fill="#52514e">Compares input to a</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="16.5" transform="translate(738.4 358)" fill="#52514e">new number (x == 1234)</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="5.5" transform="translate(872.8 358)" fill="#52514e">No new number</text>
+<path d="M72 350l36 0l0 -51.3l-36 0Z" fill="#e34948" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr11-cls-54"></path>
+<path d="M132 350l36 0l0 -18.8l-36 0Z" fill="#2a78d6" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr11-cls-55"></path>
+<path d="M192 350l36 0l0 -20.9l-36 0Z" fill="#2a78d6" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr11-cls-55"></path>
+<path d="M252 350l36 0l0 -18.8l-36 0Z" fill="#2a78d6" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr11-cls-55"></path>
+<path d="M312 350l36 0l0 -33.5l-36 0Z" fill="#2a78d6" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr11-cls-55"></path>
+<path d="M372 350l36 0l0 -42.9l-36 0Z" fill="#2a78d6" ecmeta_series_index="0" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr11-cls-55"></path>
+<path d="M432 350l36 0l0 -47.1l-36 0Z" fill="#2a78d6" ecmeta_series_index="0" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr11-cls-55"></path>
+<path d="M492 350l36 0l0 -289.9l-36 0Z" fill="#1baf7a" ecmeta_series_index="0" ecmeta_data_index="7" ecmeta_ssr_type="chart" class="zr11-cls-56"></path>
+<path d="M704.8 350l67.2 0l0 0l-67.2 0Z" fill="#e34948" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr11-cls-54"></path>
+<path d="M839.2 350l67.2 0l0 -186.8l-67.2 0Z" fill="#e34948" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr11-cls-54"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="-6" transform="translate(90 293.7133)" fill="#0b0b0b">49</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="-6" transform="translate(150 326.16)" fill="#0b0b0b">18</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="-6" transform="translate(210 324.0667)" fill="#0b0b0b">20</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="-6" transform="translate(270 326.16)" fill="#0b0b0b">18</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="-6" transform="translate(330 311.5067)" fill="#0b0b0b">32</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="-6" transform="translate(390 302.0867)" fill="#0b0b0b">41</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="-6" transform="translate(450 297.9)" fill="#0b0b0b">45</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="-6" transform="translate(510 55.0733)" fill="#0b0b0b">277</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="-6" transform="translate(738.4 345)" fill="#0b0b0b">0 of 88</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="-6" transform="translate(872.8 158.17)" fill="#0b0b0b">49 of 412</text>
+<path d="M-5 -5l249.2 0l0 23l-249.2 0Z" transform="translate(65 5)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr11-cls-53"></path>
+<path d="M-5 -5l205 0l0 23l-205 0Z" transform="translate(740 5)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr11-cls-53"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:13px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-weight:bold;" xml:space="preserve" y="6.5" transform="translate(65 5)" fill="#0b0b0b">How many monitors catch each backdoor</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:13px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-weight:bold;" xml:space="preserve" y="6.5" transform="translate(740 5)" fill="#0b0b0b">Missed by all 7, by backdoor style</text>
+<style ><![CDATA[
+.zr11-cls-53:hover {
+pointer-events:none;
+}
+.zr11-cls-54:hover {
+cursor:pointer;
+fill:rgba(249,80,79,1);
+}
+.zr11-cls-55:hover {
+cursor:pointer;
+fill:rgba(46,132,235,1);
+}
+.zr11-cls-56:hover {
+cursor:pointer;
+fill:rgba(29,192,134,1);
+}
+
+]]>
+
+</style>
+</svg>

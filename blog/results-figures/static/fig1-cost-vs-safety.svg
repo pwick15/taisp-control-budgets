@@ -1,0 +1,312 @@
+<svg width="960" height="560" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 960 560">
+<rect width="960" height="560" x="0" y="0" fill="#ffffff"></rect>
+<path d="M64 24l746 0l0 440l-746 0Z" fill="url(#zr0-g0)" stroke="#ccc" stroke-width="0" class="zr0-cls-0"></path>
+<path d="M64 464.5L810 464.5" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M64 376.5L810 376.5" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M64 288.5L810 288.5" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M64 200.5L810 200.5" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M64 112.5L810 112.5" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M64 24.5L810 24.5" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M64.5 24L64.5 464" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M139.5 24L139.5 464" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M387.5 24L387.5 464" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M636.5 24L636.5 464" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M810.5 24L810.5 464" fill="transparent" stroke="#e1e0d9" class="zr0-cls-0"></path>
+<path d="M64.5 464L64.5 24" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="-6" transform="matrix(0,-1,1,0,24,244)" fill="#52514e">Backdoors caught (%)</text>
+<path d="M64 464.5L810 464.5" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="6" transform="translate(437 496)" fill="#52514e">Monitor cost per program, USD at list price (log scale)</text>
+<path d="M64 464.5L59 464.5" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M64 376.5L59 376.5" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M64 288.5L59 288.5" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M64 200.5L59 200.5" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M64 112.5L59 112.5" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M64 24.5L59 24.5" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M64.5 464L64.5 469" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M139.5 464L139.5 469" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M387.5 464L387.5 469" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M636.5 464L636.5 469" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<path d="M810.5 464L810.5 469" fill="transparent" stroke="#c3c2b7" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(56 464)" fill="#52514e">0</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(56 376)" fill="#52514e">20</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(56 288)" fill="#52514e">40</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(56 200)" fill="#52514e">60</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(56 112)" fill="#52514e">80</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(56 24)" fill="#52514e">100</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(64 472)" fill="#52514e">0.00005</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(138.8561 472)" fill="#52514e">0.0001</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(387.5228 472)" fill="#52514e">0.001</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(636.1895 472)" fill="#52514e">0.01</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(810 472)" fill="#52514e">0.05</text>
+<g clip-path="url(#zr0-c0)">
+<path d="M122.5 461.8L157.5 400.1L177.8 395L189.1 377.8L207 290.6L245 244.4L266.4 222.1L281.4 209.9L302.2 195.8L345.7 155.8L358.5 124.3L388.1 105.4L449.4 89.6L628.5 78.6" fill="transparent" stroke="#898781" stroke-width="1.2" stroke-dasharray="4.8,2.4" stroke-linejoin="bevel" class="zr0-cls-0"></path>
+</g>
+<path d="M606.9 105.4L606.9 77.9" fill="#000" fill-opacity="0.18" stroke="#eb6834" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M628.5 92.8L628.5 66.6" fill="#000" fill-opacity="0.18" stroke="#eb6834" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M345.7 207.5L345.7 120.8" fill="#000" fill-opacity="0.18" stroke="#eb6834" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="3" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M358.5 193L358.5 109" fill="#000" fill-opacity="0.18" stroke="#eb6834" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="3" ecmeta_data_index="1" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M388.1 158.1L388.1 91.1" fill="#000" fill-opacity="0.18" stroke="#eb6834" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="3" ecmeta_data_index="2" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M449.4 130.8L449.4 76.8" fill="#000" fill-opacity="0.18" stroke="#eb6834" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="3" ecmeta_data_index="3" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M572.1 273.9L572.1 216.7" fill="#000" fill-opacity="0.18" stroke="#eb6834" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="5" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M380.1 272L380.1 232.6" fill="#000" fill-opacity="0.18" stroke="#6250d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="7" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M445.3 255.8L445.3 215.9" fill="#000" fill-opacity="0.18" stroke="#6250d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="7" ecmeta_data_index="1" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M677.2 182.9L677.2 114.3" fill="#000" fill-opacity="0.18" stroke="#6250d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="7" ecmeta_data_index="2" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M320.1 290.2L320.1 220.8" fill="#000" fill-opacity="0.18" stroke="#eda100" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="9" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M378.3 198L378.3 139.5" fill="#000" fill-opacity="0.18" stroke="#eda100" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="9" ecmeta_data_index="1" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M380.9 237L380.9 171.8" fill="#000" fill-opacity="0.18" stroke="#eda100" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="9" ecmeta_data_index="2" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M207 308.9L207 271.3" fill="#000" fill-opacity="0.18" stroke="#2a78d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="11" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M245 273.2L245 226" fill="#000" fill-opacity="0.18" stroke="#2a78d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="11" ecmeta_data_index="1" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M266.4 243.1L266.4 202.9" fill="#000" fill-opacity="0.18" stroke="#2a78d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="11" ecmeta_data_index="2" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M281.4 230.9L281.4 190.4" fill="#000" fill-opacity="0.18" stroke="#2a78d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="11" ecmeta_data_index="3" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M302.2 221.7L302.2 177.3" fill="#000" fill-opacity="0.18" stroke="#2a78d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="11" ecmeta_data_index="4" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M157.5 420.9L157.5 378.9" fill="#000" fill-opacity="0.18" stroke="#2a78d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="13" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M189.1 407.2L189.1 340.5" fill="#000" fill-opacity="0.18" stroke="#2a78d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="13" ecmeta_data_index="1" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M273.3 365.6L273.3 288.2" fill="#000" fill-opacity="0.18" stroke="#2a78d6" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="13" ecmeta_data_index="2" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M354.5 343.3L354.5 308.6" fill="#000" fill-opacity="0.18" stroke="#1baf7a" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="15" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M399.1 353.1L399.1 318.1" fill="#000" fill-opacity="0.18" stroke="#1baf7a" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="17" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M432.3 384.2L432.3 353.7" fill="#000" fill-opacity="0.18" stroke="#1baf7a" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="17" ecmeta_data_index="1" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M468.4 384.1L468.4 353.7" fill="#000" fill-opacity="0.18" stroke="#1baf7a" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="17" ecmeta_data_index="2" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M493.9 387.8L493.9 359.3" fill="#000" fill-opacity="0.18" stroke="#1baf7a" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="17" ecmeta_data_index="3" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M495.3 390.3L495.3 360.3" fill="#000" fill-opacity="0.18" stroke="#1baf7a" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="17" ecmeta_data_index="4" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M122.5 464L122.5 456.4" fill="#000" fill-opacity="0.18" stroke="#1baf7a" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="19" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M177.8 426.2L177.8 359.3" fill="#000" fill-opacity="0.18" stroke="#1baf7a" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="21" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M584.6 266L584.6 228.7" fill="#000" fill-opacity="0.18" stroke="#e34948" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="23" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M585.4 276.8L585.4 237.8" fill="#000" fill-opacity="0.18" stroke="#e34948" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="23" ecmeta_data_index="1" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<path d="M296.5 455.5L296.5 421.3" fill="#000" fill-opacity="0.18" stroke="#e34948" stroke-width="7" stroke-opacity="0.18" stroke-linecap="round" ecmeta_series_index="25" ecmeta_data_index="0" ecmeta_ssr_type="chart" ecmeta_silent="true" class="zr0-cls-0"></path>
+<g clip-path="url(#zr0-c1)">
+<path d="M606.9 91.5L628.5 78.6" fill="transparent" stroke="#eb6834" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c2)">
+<path d="M345.7 155.8L358.5 124.3L388.1 105.4L449.4 89.6" fill="transparent" stroke="#eb6834" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c3)">
+<path d="M572.1 247.5" fill="transparent" stroke="#eb6834" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c4)">
+<path d="M380.1 251L445.3 235.7L677.2 128.7" fill="transparent" stroke="#6250d6" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c5)">
+<path d="M320.1 238.3L378.3 169.9L380.9 188.6" fill="transparent" stroke="#eda100" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c6)">
+<path d="M207 290.6L245 244.4L266.4 222.1L281.4 209.9L302.2 195.8" fill="transparent" stroke="#2a78d6" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c7)">
+<path d="M157.5 400.1L189.1 377.8L273.3 319" fill="transparent" stroke="#2a78d6" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c8)">
+<path d="M354.5 325.7" fill="transparent" stroke="#1baf7a" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c9)">
+<path d="M399.1 336.1L432.3 369.5L468.4 369.5L493.9 374L495.3 375.7" fill="transparent" stroke="#1baf7a" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c10)">
+<path d="M122.5 461.8" fill="transparent" stroke="#1baf7a" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c11)">
+<path d="M177.8 395" fill="transparent" stroke="#1baf7a" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c12)">
+<path d="M584.6 247.8L585.4 255.7" fill="transparent" stroke="#e34948" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<g clip-path="url(#zr0-c13)">
+<path d="M296.5 435.9" fill="transparent" stroke="#e34948" stroke-width="1.5" stroke-opacity="0.6" stroke-linejoin="bevel" class="zr0-cls-2"></path>
+</g>
+<path d="M0 -1L1 0L0 1L-1 0Z" transform="matrix(5,0,0,5,606.9312,91.452)" fill="#eb6834" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M0 -1L1 0L0 1L-1 0Z" transform="matrix(5,0,0,5,628.52,78.648)" fill="#eb6834" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,345.7017,155.78)" fill="#eb6834" ecmeta_series_index="2" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,358.5269,124.32)" fill="#eb6834" ecmeta_series_index="2" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,388.1162,105.444)" fill="#eb6834" ecmeta_series_index="2" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,449.3525,89.56)" fill="#eb6834" ecmeta_series_index="2" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,572.1172,247.52)" fill="#eb6834" ecmeta_series_index="4" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-3"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,380.0912,250.952)" fill="#6250d6" ecmeta_series_index="6" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-4"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,445.2785,235.684)" fill="#6250d6" ecmeta_series_index="6" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-4"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,677.1758,128.72)" fill="#6250d6" ecmeta_series_index="6" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-4"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,320.1005,238.28)" fill="#eda100" ecmeta_series_index="8" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,378.3441,169.904)" fill="#eda100" ecmeta_series_index="8" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,380.9003,188.56)" fill="#eda100" ecmeta_series_index="8" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-5"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,207.03,290.552)" fill="#2a78d6" ecmeta_series_index="10" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-6"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,245.0123,244.396)" fill="#2a78d6" ecmeta_series_index="10" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-6"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,266.41,222.132)" fill="#2a78d6" ecmeta_series_index="10" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-6"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,281.4141,209.944)" fill="#2a78d6" ecmeta_series_index="10" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr0-cls-6"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,302.2036,195.776)" fill="#2a78d6" ecmeta_series_index="10" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr0-cls-6"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,157.515,400.068)" fill="#2a78d6" ecmeta_series_index="12" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-6"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,189.0862,377.76)" fill="#2a78d6" ecmeta_series_index="12" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-6"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,273.2927,319.02)" fill="#2a78d6" ecmeta_series_index="12" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-6"></path>
+<path d="M-1 -1l2 0l0 2l-2 0Z" transform="matrix(5,0,0,5,354.4931,325.664)" fill="#1baf7a" ecmeta_series_index="14" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-7"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,399.1447,336.092)" fill="#1baf7a" ecmeta_series_index="16" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-7"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,432.2727,369.488)" fill="#1baf7a" ecmeta_series_index="16" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-7"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,468.3548,369.488)" fill="#1baf7a" ecmeta_series_index="16" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr0-cls-7"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,493.9365,373.976)" fill="#1baf7a" ecmeta_series_index="16" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr0-cls-7"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,495.3316,375.692)" fill="#1baf7a" ecmeta_series_index="16" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr0-cls-7"></path>
+<path d="M0 -1L1 0L0 1L-1 0Z" transform="matrix(5,0,0,5,122.4801,461.8)" fill="#1baf7a" ecmeta_series_index="18" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-7"></path>
+<path d="M-0.5 -0.9A0.6 0.6 0 1 1 0.5 -0.9C0.4 -0.6 0 -0.4 0 0C0 -0.4 -0.4 -0.6 -0.5 -0.9Z" transform="matrix(5,0,0,5,177.8073,395.008)" fill="#1baf7a" ecmeta_series_index="20" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-7"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,584.6198,247.828)" fill="#e34948" ecmeta_series_index="22" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-8"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(5,0,0,5,585.4252,255.704)" fill="#e34948" ecmeta_series_index="22" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr0-cls-8"></path>
+<path d="M0 -1L1 1L-1 1Z" transform="matrix(5,0,0,5,296.5041,435.928)" fill="#e34948" ecmeta_series_index="24" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr0-cls-8"></path>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="5.5" transform="translate(606.9312 101.452)" fill="#0b0b0b">Sonnet 5.5 · low (thinking off)</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(638.52 78.648)" fill="#0b0b0b">Sonnet 5.5 · high (default)</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(335.7017 155.78)" fill="#0b0b0b">Haiku 5.5 · low</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="-5.5" transform="translate(449.3525 79.56)" fill="#0b0b0b">Haiku 5.5 · xhigh</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="-5.5" transform="translate(572.1172 237.52)" fill="#0b0b0b">Haiku 4.5 · no thinking</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="5.5" transform="translate(380.0912 260.952)" fill="#0b0b0b">GLM-5.3 · low</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(687.1758 128.72)" fill="#0b0b0b">GLM-5.3 · max (default)</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(197.03 290.552)" fill="#0b0b0b">GPT-6 Luna · off</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(292.2036 195.776)" fill="#0b0b0b">GPT-6 Luna · xhigh</text>
+<text dominant-baseline="central" text-anchor="end" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(263.2927 319.02)" fill="#0b0b0b">gpt-oss-120b · high</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="-5.5" transform="translate(354.4931 315.664)" fill="#0b0b0b">Gemma 4 26B-A4B</text>
+<text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="5.5" transform="translate(399.1447 346.092)" fill="#0b0b0b">Gemini 3.5 Flash-Lite · off</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(505.3316 375.692)" fill="#0b0b0b">Gemini 3.5 Flash-Lite · xhigh</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(132.4801 461.8)" fill="#0b0b0b">Gemma 3 4B</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(594.6198 247.828)" fill="#0b0b0b">Mistral Large 4 · default</text>
+<text dominant-baseline="central" text-anchor="start" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" transform="translate(306.5041 435.928)" fill="#0b0b0b">Ministral 14B</text>
+<path d="M-5 -5l948.1 0l0 44l-948.1 0Z" transform="translate(10.94 521)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr0-cls-0"></path>
+<path d="M0 7L14 7" transform="translate(11.94 520)" fill="#000" fill-opacity="0.6" stroke="#eb6834" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M7 1.4L12.6 7L7 12.6L1.4 7Z" transform="translate(11.94 520)" fill="#eb6834" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(11.94 520)" fill="#52514e">Sonnet 5.5</text>
+<path d="M-1 1l78.4 0l0 12l-78.4 0Z" transform="translate(11.94 520)" fill="transparent" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(100.38 520)" fill="#000" fill-opacity="0.6" stroke="#eb6834" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M12.6 7A5.6 5.6 0 1 1 12.6 6.4A5.6 5.6 0 0 1 12.6 7" transform="translate(100.38 520)" fill="#eb6834" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(100.38 520)" fill="#52514e">Haiku 5.5</text>
+<path d="M-1 1l70.9 0l0 12l-70.9 0Z" transform="translate(100.38 520)" fill="transparent" ecmeta_series_index="2" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(181.26 520)" fill="#000" fill-opacity="0.6" stroke="#eb6834" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M7 1.4L12.6 12.6L1.4 12.6Z" transform="translate(181.26 520)" fill="#eb6834" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(181.26 520)" fill="#52514e">Haiku 4.5</text>
+<path d="M-1 1l70.9 0l0 12l-70.9 0Z" transform="translate(181.26 520)" fill="transparent" ecmeta_series_index="4" ecmeta_data_index="2" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(262.14 520)" fill="#000" fill-opacity="0.6" stroke="#6250d6" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M12.6 7A5.6 5.6 0 1 1 12.6 6.4A5.6 5.6 0 0 1 12.6 7" transform="translate(262.14 520)" fill="#6250d6" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" x="19" y="7" transform="translate(262.14 520)" fill="#52514e">GLM-5.3</text>
+<path d="M-1 1l66.8 0l0 12l-66.8 0Z" transform="translate(262.14 520)" fill="transparent" ecmeta_series_index="6" ecmeta_data_index="3" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(338.94 520)" fill="#000" fill-opacity="0.6" stroke="#eda100" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M12.6 7A5.6 5.6 0 1 1 12.6 6.4A5.6 5.6 0 0 1 12.6 7" transform="translate(338.94 520)" fill="#eda100" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(338.94 520)" fill="#52514e">Qwen 3.8 Omni Flash</text>
+<path d="M-1 1l136.4 0l0 12l-136.4 0Z" transform="translate(338.94 520)" fill="transparent" ecmeta_series_index="8" ecmeta_data_index="4" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(485.34 520)" fill="#000" fill-opacity="0.6" stroke="#2a78d6" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M12.6 7A5.6 5.6 0 1 1 12.6 6.4A5.6 5.6 0 0 1 12.6 7" transform="translate(485.34 520)" fill="#2a78d6" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(485.34 520)" fill="#52514e">GPT-6 Luna</text>
+<path d="M-1 1l85.6 0l0 12l-85.6 0Z" transform="translate(485.34 520)" fill="transparent" ecmeta_series_index="10" ecmeta_data_index="5" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(580.98 520)" fill="#000" fill-opacity="0.6" stroke="#2a78d6" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M7 1.4L12.6 12.6L1.4 12.6Z" transform="translate(580.98 520)" fill="#2a78d6" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" x="19" y="7" transform="translate(580.98 520)" fill="#52514e">gpt-oss-120b</text>
+<path d="M-1 1l90.3 0l0 12l-90.3 0Z" transform="translate(580.98 520)" fill="transparent" ecmeta_series_index="12" ecmeta_data_index="6" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(681.3 520)" fill="#000" fill-opacity="0.6" stroke="#1baf7a" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M1.4 1.4l11.2 0l0 11.2l-11.2 0Z" transform="translate(681.3 520)" fill="#1baf7a" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(681.3 520)" fill="#52514e">Gemma 4 26B-A4B</text>
+<path d="M-1 1l124.4 0l0 12l-124.4 0Z" transform="translate(681.3 520)" fill="transparent" ecmeta_series_index="14" ecmeta_data_index="7" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(815.7 520)" fill="#000" fill-opacity="0.6" stroke="#1baf7a" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M7 1.4L12.6 12.6L1.4 12.6Z" transform="translate(815.7 520)" fill="#1baf7a" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(815.7 520)" fill="#52514e">Gemini 3.5 Flash-Lite</text>
+<path d="M-1 1l134.4 0l0 12l-134.4 0Z" transform="translate(815.7 520)" fill="transparent" ecmeta_series_index="16" ecmeta_data_index="8" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(11.94 542)" fill="#000" fill-opacity="0.6" stroke="#1baf7a" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M7 1.4L12.6 7L7 12.6L1.4 7Z" transform="translate(11.94 542)" fill="#1baf7a" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(11.94 542)" fill="#52514e">Gemma 3 4B</text>
+<path d="M-1 1l90.9 0l0 12l-90.9 0Z" transform="translate(11.94 542)" fill="transparent" ecmeta_series_index="18" ecmeta_data_index="9" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(112.86 542)" fill="#000" fill-opacity="0.6" stroke="#1baf7a" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M4 2A3.4 3.4 0 1 1 10 2C9.2 3.9 7 4.6 7 7C7 4.6 4.8 3.9 4 2Z" transform="translate(112.86 542)" fill="#1baf7a" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(112.86 542)" fill="#52514e">Gemma 3 27B</text>
+<path d="M-1 -2.8l97.6 0l0 15.8l-97.6 0Z" transform="translate(112.86 542)" fill="transparent" ecmeta_series_index="20" ecmeta_data_index="10" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(220.5 542)" fill="#000" fill-opacity="0.6" stroke="#e34948" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M12.6 7A5.6 5.6 0 1 1 12.6 6.4A5.6 5.6 0 0 1 12.6 7" transform="translate(220.5 542)" fill="#e34948" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(220.5 542)" fill="#52514e">Mistral Large 4</text>
+<path d="M-1 1l99.6 0l0 12l-99.6 0Z" transform="translate(220.5 542)" fill="transparent" ecmeta_series_index="22" ecmeta_data_index="11" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(330.06 542)" fill="#000" fill-opacity="0.6" stroke="#e34948" stroke-width="2" stroke-opacity="0.6" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M7 1.4L12.6 12.6L1.4 12.6Z" transform="translate(330.06 542)" fill="#e34948" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(330.06 542)" fill="#52514e">Ministral 14B</text>
+<path d="M-1 1l89.5 0l0 12l-89.5 0Z" transform="translate(330.06 542)" fill="transparent" ecmeta_series_index="24" ecmeta_data_index="12" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<path d="M0 7L14 7" transform="translate(429.54 542)" fill="#000" stroke="#898781" stroke-width="2" stroke-dasharray="8,4" stroke-linecap="butt" stroke-miterlimit="10" class="zr0-cls-0"></path>
+<path d="M12.6 7A5.6 5.6 0 1 1 12.6 6.4A5.6 5.6 0 0 1 12.6 7" transform="translate(429.54 542)" fill="#898781" class="zr0-cls-0"></path>
+<text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="19" y="7" transform="translate(429.54 542)" fill="#52514e">Best buys: nothing cheaper catches more</text>
+<path d="M-1 1l241.8 0l0 12l-241.8 0Z" transform="translate(429.54 542)" fill="transparent" ecmeta_series_index="26" ecmeta_data_index="13" ecmeta_ssr_type="legend" class="zr0-cls-9"></path>
+<defs >
+<linearGradient gradientUnits="objectBoundingBox" x1="0" y1="0" x2="1" y2="1" id="zr0-g0">
+<stop offset="0%" stop-color="rgb(76,184,119)" stop-opacity="0.16"></stop>
+<stop offset="50%" stop-color="rgb(242,201,76)" stop-opacity="0.05"></stop>
+<stop offset="100%" stop-color="rgb(232,100,90)" stop-opacity="0.14"></stop>
+</linearGradient>
+<clipPath id="zr0-c0">
+<path d="M63 23.4l749 0l0 441.2l-749 0Z" fill="#000" class="zr0-cls-0"></path>
+</clipPath>
+<clipPath id="zr0-c1">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c2">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c3">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c4">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c5">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c6">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c7">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c8">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c9">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c10">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c11">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c12">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+<clipPath id="zr0-c13">
+<path d="M63 23.3l749 0l0 441.5l-749 0Z" fill="#000" class="zr0-cls-1"></path>
+</clipPath>
+</defs>
+<style ><![CDATA[
+.zr0-cls-0:hover {
+pointer-events:none;
+}
+.zr0-cls-1:hover {
+cursor:pointer;
+fill:rgba(0,0,0,1);
+}
+.zr0-cls-2:hover {
+cursor:pointer;
+}
+.zr0-cls-3:hover {
+cursor:pointer;
+fill:rgba(255,114,57,1);
+}
+.zr0-cls-4:hover {
+cursor:pointer;
+fill:rgba(107,88,235,1);
+}
+.zr0-cls-5:hover {
+cursor:pointer;
+fill:rgba(255,177,0,1);
+}
+.zr0-cls-6:hover {
+cursor:pointer;
+fill:rgba(46,132,235,1);
+}
+.zr0-cls-7:hover {
+cursor:pointer;
+fill:rgba(29,192,134,1);
+}
+.zr0-cls-8:hover {
+cursor:pointer;
+fill:rgba(249,80,79,1);
+}
+.zr0-cls-9:hover {
+cursor:pointer;
+fill:rgba(0,0,0,0);
+}
+
+]]>
+
+</style>
+</svg>
