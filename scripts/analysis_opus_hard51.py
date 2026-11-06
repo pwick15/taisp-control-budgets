@@ -361,7 +361,15 @@ def main() -> None:
             f"set. Nothing was written.")
 
     wide.drop(columns=[c for c in wide if c.startswith("fail_")]).to_csv(OUT / "opus-hard51-scores.csv", index=False)
-    pd.DataFrame(reasons).to_csv(OUT / "opus-hard51-reasons.csv", index=False)
+    # Sorted so the row order is a property of the data and not of how the logs
+    # happened to be split into pieces. Sample 788 arrives in a second xhigh piece,
+    # which otherwise appends it after the first pass's 50 rather than in place.
+    (pd.DataFrame(reasons)
+       .assign(_e=lambda d: d.effort.map({e: i for i, e in enumerate(EFFORTS)}))
+       .sort_values(["_e", "sample_id"], key=lambda c: c if c.name == "_e"
+                    else c.astype(int))
+       .drop(columns="_e")
+       .to_csv(OUT / "opus-hard51-reasons.csv", index=False))
     summarise(runs, wide)
     chart(wide, complete, cutoffs)
     report_figures(wide, complete)

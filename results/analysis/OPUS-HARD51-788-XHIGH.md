@@ -63,12 +63,39 @@ If the same holds here, the one re-measured cell is not a random draw from the a
 sample in 51 that moves nothing, and the alternative was a permanent hole, but the column
 is no longer a single pass and should not be described as one.
 
-## The three report figures predate this repair
+## Resolved 2026-11-06: the raw logs arrived and the figures are regenerated
 
-`analysis_opus_hard51.py` regenerates the CSVs and the figures together from
-`logs/hard51-opus55-effort*`, and those logs are not in git. The tables here are repaired;
-the PNGs still show the pre-repair state and need regenerating by whoever holds the logs.
-What changes, computed from the repaired tables:
+The four Opus arms were received as `hard51-opus55-logs.zip` and ingested into
+`logs/hard51-opus55-effort*`. All three full arms carry 51 scored samples and the max
+pilot carries 5. `analysis_opus_hard51.py` now runs, and the three report figures show the
+repaired state.
+
+**The repair verified itself.** `opus-hard51-scores.csv` regenerated from the real logs is
+**byte-identical** to the committed file that was repaired by hand, 788's 82.0 included.
+`opus-hard51-reasons.csv` holds an identical set of records. Every one of the deltas
+predicted below was borne out.
+
+**Why 788 is still a second-pass value.** The first-pass xhigh log does contain sample
+788, as its single parse failure, and its only model event ends in a well formed
+`<score>1</score>`. That score is **not Opus's**. The event's model is
+`anthropic/claude-haiku-5-5`: it is the leftover from the Haiku pass that produced the
+trajectory, which `scripts/build_hard51.py` does not strip because it clears the monitor
+keys from the messages and leaves `sample.events` alone. Opus's own reply was never
+retained for this sample, only its aggregate usage, so the first-pass value is
+unrecoverable and the second pass remains the only measurement of this cell. Reading that
+stale event would have filed a Haiku score in an Opus column, with nothing to catch it:
+the text parses, the value is in range, and both extraction patterns agree. That is now
+guarded against in `scripts/recover_unparsed_scores.py`, which refuses to read a reply
+whose model is not the arm's monitor.
+
+**The ingest arrangement.** The script asserts that pieces of one arm are disjoint, so
+sample 788 was removed from the first-pass xhigh piece and is supplied by
+`logs/hard51-opus55-effortxhigh-s788`. The xhigh column is therefore 50 first-pass values
+and 1 second-pass value, which is what this document has said from the start. Re-ingesting
+the archive without removing 788 again will trip that assert, which is the correct
+behaviour rather than a problem to work around.
+
+## What the regeneration changed, as predicted
 
 | | committed PNGs | after regenerating |
 |---|---|---|
