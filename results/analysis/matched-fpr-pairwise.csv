@@ -101,5 +101,5 @@ sonnet55-um-strip,qwen38omniflash-medium,0.6,3,66.8,500,500,0.834,0.46,37.4,19.6
 sonnet55-um-strip,qwen38omniflash-medium,1.0,5,61.4,500,500,0.868,0.52,34.8,23.0,84.4,True
 sonnet55-um-strip,sonnet55-um-effortlow-v2-strip,0.2,1,13.2,500,500,0.708,0.716,-0.8,-2.8,10.4,False
 sonnet55-um-strip,sonnet55-um-effortlow-v2-strip,0.6,3,13.0,500,500,0.834,0.774,6.0,-2.4,10.6,False
-sonnet55-um-strip,sonnet55-um-scale100-strip,0.2,1,12.21,500,500,0.708,0.79,-8.2,-10.01,2.2,False
-sonnet55-um-strip,sonnet55-um-scale100-strip,0.6,3,11.8,500,500,0.834,0.842,-0.8,-9.4,2.4,False
+sonnet55-um-strip,sonnet55-um-scale100-strip,0.2,1,12.2,500,500,0.708,0.792,-8.4,-10.2,2.0,False
+sonnet55-um-strip,sonnet55-um-scale100-strip,0.6,3,11.6,500,500,0.834,0.844,-1.0,-9.6,2.0,False
