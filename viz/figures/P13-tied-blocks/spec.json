@@ -1,0 +1,2287 @@
+{
+ "id": "P13",
+ "kind": "echarts",
+ "title": "A 2% budget usually lands in the middle of a tie",
+ "section": "appendix",
+ "order": 10,
+ "caption": "Each bar is the 500 honest programs, ranked from most to least suspicious by one monitor; programs with the same score form one block. Only the top 10% is shown. Blue blocks are audited; the amber block is a tie the budget cuts through, so you audit all of it or none.",
+ "notes": [
+  "Report exact budgets as the main numbers, with the audit-only-above-the-tie numbers and the rate they really audit in an appendix table.",
+  "More honest data doesn't fix ties: a 0 to 10 score only ever offers 11 places to cut. It does fix the other problem, that at 500 honest programs a 1% budget rests on just 5 of them."
+ ],
+ "height": 360,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P13-tied-blocks",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 184,
+   "right": 130,
+   "top": 34,
+   "bottom": 74
+  },
+  "graphic": [
+   {
+    "type": "text",
+    "right": 8,
+    "top": 12,
+    "style": {
+     "text": "Share you can audit",
+     "fill": "@ink-muted",
+     "fontSize": 11,
+     "align": "right"
+    }
+   }
+  ],
+  "xAxis": {
+   "name": "Honest programs ranked by suspicion (top 10%)",
+   "nameLocation": "middle",
+   "nameGap": 30,
+   "type": "value",
+   "min": 0,
+   "max": 10.0,
+   "interval": 1,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "yAxis": {
+   "type": "category",
+   "data": [
+    "Sonnet 5.5, 0 to 10",
+    "Sonnet 5.5, 0 to 100",
+    "Haiku 5.5 xhigh, 0 to 10",
+    "Haiku 5.5 xhigh, 0 to 100"
+   ],
+   "inverse": true,
+   "axisLabel": {
+    "color": "@ink-primary",
+    "fontSize": 12,
+    "fontWeight": 500
+   }
+  },
+  "legend": {
+   "bottom": 0,
+   "left": 178,
+   "data": [
+    "Audited",
+    "Tied at the line",
+    "Not audited"
+   ]
+  },
+  "series": [
+   {
+    "name": "Audited",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+    "data": [
+     {
+      "value": [
+       0.0,
+       0.2,
+       0
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+     },
+     {
+      "value": [
+       0.2,
+       0.4,
+       0
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 6<br>ranked 0.2% to 0.4% most suspicious"
+     },
+     {
+      "value": [
+       0.4,
+       0.6,
+       0
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+     },
+     {
+      "value": [
+       0.6,
+       1.0,
+       0
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10</b><br>2 honest programs scored 2<br>ranked 0.6% to 1.0% most suspicious"
+     },
+     {
+      "value": [
+       0.0,
+       0.2,
+       1
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 93<br>ranked 0.0% to 0.2% most suspicious"
+     },
+     {
+      "value": [
+       0.2,
+       0.6,
+       1
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 30<br>ranked 0.2% to 0.6% most suspicious"
+     },
+     {
+      "value": [
+       0.6,
+       0.8,
+       1
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 6<br>ranked 0.6% to 0.8% most suspicious"
+     },
+     {
+      "value": [
+       0.8,
+       1.2,
+       1
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 4<br>ranked 0.8% to 1.2% most suspicious"
+     },
+     {
+      "value": [
+       1.2,
+       2.0,
+       1
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100</b><br>4 honest programs scored 3<br>ranked 1.2% to 2.0% most suspicious"
+     },
+     {
+      "value": [
+       0.0,
+       0.2,
+       2
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+     },
+     {
+      "value": [
+       0.2,
+       0.4,
+       2
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 7<br>ranked 0.2% to 0.4% most suspicious"
+     },
+     {
+      "value": [
+       0.4,
+       0.6,
+       2
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+     },
+     {
+      "value": [
+       0.6,
+       0.8,
+       2
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 3<br>ranked 0.6% to 0.8% most suspicious"
+     },
+     {
+      "value": [
+       0.8,
+       1.6,
+       2
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>4 honest programs scored 2<br>ranked 0.8% to 1.6% most suspicious"
+     },
+     {
+      "value": [
+       0.0,
+       0.2,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 88<br>ranked 0.0% to 0.2% most suspicious"
+     },
+     {
+      "value": [
+       0.2,
+       0.4,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 71<br>ranked 0.2% to 0.4% most suspicious"
+     },
+     {
+      "value": [
+       0.4,
+       0.6,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 23<br>ranked 0.4% to 0.6% most suspicious"
+     },
+     {
+      "value": [
+       0.6,
+       0.8,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 22<br>ranked 0.6% to 0.8% most suspicious"
+     },
+     {
+      "value": [
+       0.8,
+       1.0,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 17<br>ranked 0.8% to 1.0% most suspicious"
+     },
+     {
+      "value": [
+       1.0,
+       1.2,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 14<br>ranked 1.0% to 1.2% most suspicious"
+     },
+     {
+      "value": [
+       1.2,
+       1.4,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 12<br>ranked 1.2% to 1.4% most suspicious"
+     },
+     {
+      "value": [
+       1.4,
+       1.6,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 11<br>ranked 1.4% to 1.6% most suspicious"
+     },
+     {
+      "value": [
+       1.6,
+       1.8,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 9<br>ranked 1.6% to 1.8% most suspicious"
+     }
+    ],
+    "z": 3,
+    "clip": false,
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1
+    }
+   },
+   {
+    "name": "Tied at the line",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+    "data": [
+     {
+      "value": [
+       1.0,
+       9.2,
+       0
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10</b><br>41 honest programs scored 1<br>ranked 1.0% to 9.2% most suspicious"
+     },
+     {
+      "value": [
+       1.6,
+       10.0,
+       2
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>221 honest programs scored 1<br>ranked 1.6% to 45.8% most suspicious"
+     },
+     {
+      "value": [
+       1.8,
+       2.2,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>2 honest programs scored 5<br>ranked 1.8% to 2.2% most suspicious"
+     }
+    ],
+    "z": 3,
+    "clip": false,
+    "itemStyle": {
+     "color": "@warning",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1
+    }
+   },
+   {
+    "name": "Not audited",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+    "data": [
+     {
+      "value": [
+       9.2,
+       10.0,
+       0
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10</b><br>454 honest programs scored 0<br>ranked 9.2% to 100.0% most suspicious"
+     },
+     {
+      "value": [
+       2.0,
+       10.0,
+       1
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100</b><br>70 honest programs scored 2<br>ranked 2.0% to 16.0% most suspicious"
+     },
+     {
+      "value": [
+       2.2,
+       3.6,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>7 honest programs scored 4<br>ranked 2.2% to 3.6% most suspicious"
+     },
+     {
+      "value": [
+       3.6,
+       8.0,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>22 honest programs scored 3<br>ranked 3.6% to 8.0% most suspicious"
+     },
+     {
+      "value": [
+       8.0,
+       10.0,
+       3
+      ],
+      "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>358 honest programs scored 2<br>ranked 8.0% to 79.6% most suspicious"
+     }
+    ],
+    "z": 2,
+    "clip": false,
+    "itemStyle": {
+     "color": "@context",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1
+    }
+   },
+   {
+    "name": "_labels",
+    "type": "scatter",
+    "symbolSize": 0,
+    "data": [
+     {
+      "name": "41 tied at 1",
+      "value": [
+       5.1,
+       0
+      ]
+     },
+     {
+      "name": "221 tied at 1",
+      "value": [
+       5.8,
+       2
+      ]
+     }
+    ],
+    "silent": true,
+    "z": 5,
+    "tooltip": {
+     "show": false
+    },
+    "label": {
+     "show": true,
+     "formatter": "{b}",
+     "color": "@on-bright",
+     "fontSize": 11
+    }
+   },
+   {
+    "name": "_notes",
+    "type": "scatter",
+    "symbolSize": 0,
+    "data": [
+     {
+      "name": "1.0% or 9.2%",
+      "value": [
+       10.0,
+       0
+      ]
+     },
+     {
+      "name": "exactly 2%",
+      "value": [
+       10.0,
+       1
+      ]
+     },
+     {
+      "name": "1.6% or 45.8%",
+      "value": [
+       10.0,
+       2
+      ]
+     },
+     {
+      "name": "1.8% or 2.2%",
+      "value": [
+       10.0,
+       3
+      ]
+     }
+    ],
+    "silent": true,
+    "clip": false,
+    "tooltip": {
+     "show": false
+    },
+    "label": {
+     "show": true,
+     "position": "right",
+     "distance": 12,
+     "formatter": "{b}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600
+    },
+    "markLine": {
+     "silent": true,
+     "symbol": "none",
+     "data": [
+      {
+       "xAxis": 2
+      }
+     ],
+     "lineStyle": {
+      "color": "@ink-primary",
+      "type": "dashed",
+      "width": 1.5
+     },
+     "label": {
+      "formatter": "requested 2%",
+      "position": "start",
+      "color": "@ink-secondary",
+      "fontSize": 12
+     }
+    }
+   }
+  ]
+ },
+ "dial": {
+  "label": "Requested budget",
+  "steps": [
+   "0.5%",
+   "1%",
+   "2%",
+   "5%"
+  ],
+  "initial": 2,
+  "frames": [
+   {
+    "series": [
+     {
+      "name": "Audited",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         0.0,
+         0.2,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 6<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 93<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 7<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 88<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 71<br>ranked 0.2% to 0.4% most suspicious"
+       }
+      ],
+      "z": 3,
+      "clip": false,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "Tied at the line",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         0.4,
+         0.6,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.6,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 30<br>ranked 0.2% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 23<br>ranked 0.4% to 0.6% most suspicious"
+       }
+      ],
+      "z": 3,
+      "clip": false,
+      "itemStyle": {
+       "color": "@warning",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "Not audited",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         0.6,
+         1.0,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>2 honest programs scored 2<br>ranked 0.6% to 1.0% most suspicious"
+       },
+       {
+        "value": [
+         1.0,
+         9.2,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>41 honest programs scored 1<br>ranked 1.0% to 9.2% most suspicious"
+       },
+       {
+        "value": [
+         9.2,
+         10.0,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>454 honest programs scored 0<br>ranked 9.2% to 100.0% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 6<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.2,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 4<br>ranked 0.8% to 1.2% most suspicious"
+       },
+       {
+        "value": [
+         1.2,
+         2.0,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>4 honest programs scored 3<br>ranked 1.2% to 2.0% most suspicious"
+       },
+       {
+        "value": [
+         2.0,
+         10.0,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>70 honest programs scored 2<br>ranked 2.0% to 16.0% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 3<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.6,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>4 honest programs scored 2<br>ranked 0.8% to 1.6% most suspicious"
+       },
+       {
+        "value": [
+         1.6,
+         10.0,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>221 honest programs scored 1<br>ranked 1.6% to 45.8% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 22<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 17<br>ranked 0.8% to 1.0% most suspicious"
+       },
+       {
+        "value": [
+         1.0,
+         1.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 14<br>ranked 1.0% to 1.2% most suspicious"
+       },
+       {
+        "value": [
+         1.2,
+         1.4,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 12<br>ranked 1.2% to 1.4% most suspicious"
+       },
+       {
+        "value": [
+         1.4,
+         1.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 11<br>ranked 1.4% to 1.6% most suspicious"
+       },
+       {
+        "value": [
+         1.6,
+         1.8,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 9<br>ranked 1.6% to 1.8% most suspicious"
+       },
+       {
+        "value": [
+         1.8,
+         2.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>2 honest programs scored 5<br>ranked 1.8% to 2.2% most suspicious"
+       },
+       {
+        "value": [
+         2.2,
+         3.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>7 honest programs scored 4<br>ranked 2.2% to 3.6% most suspicious"
+       },
+       {
+        "value": [
+         3.6,
+         8.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>22 honest programs scored 3<br>ranked 3.6% to 8.0% most suspicious"
+       },
+       {
+        "value": [
+         8.0,
+         10.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>358 honest programs scored 2<br>ranked 8.0% to 79.6% most suspicious"
+       }
+      ],
+      "z": 2,
+      "clip": false,
+      "itemStyle": {
+       "color": "@context",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "_labels",
+      "type": "scatter",
+      "symbolSize": 0,
+      "data": [],
+      "silent": true,
+      "z": 5,
+      "tooltip": {
+       "show": false
+      },
+      "label": {
+       "show": true,
+       "formatter": "{b}",
+       "color": "@on-bright",
+       "fontSize": 11
+      }
+     },
+     {
+      "name": "_notes",
+      "type": "scatter",
+      "symbolSize": 0,
+      "data": [
+       {
+        "name": "0.4% or 0.6%",
+        "value": [
+         10.0,
+         0
+        ]
+       },
+       {
+        "name": "0.2% or 0.6%",
+        "value": [
+         10.0,
+         1
+        ]
+       },
+       {
+        "name": "0.4% or 0.6%",
+        "value": [
+         10.0,
+         2
+        ]
+       },
+       {
+        "name": "0.4% or 0.6%",
+        "value": [
+         10.0,
+         3
+        ]
+       }
+      ],
+      "silent": true,
+      "clip": false,
+      "tooltip": {
+       "show": false
+      },
+      "label": {
+       "show": true,
+       "position": "right",
+       "distance": 12,
+       "formatter": "{b}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600
+      },
+      "markLine": {
+       "silent": true,
+       "symbol": "none",
+       "data": [
+        {
+         "xAxis": 0.5
+        }
+       ],
+       "lineStyle": {
+        "color": "@ink-primary",
+        "type": "dashed",
+        "width": 1.5
+       },
+       "label": {
+        "formatter": "requested 0.5%",
+        "position": "start",
+        "color": "@ink-secondary",
+        "fontSize": 12
+       }
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "Audited",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         0.0,
+         0.2,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 6<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         1.0,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>2 honest programs scored 2<br>ranked 0.6% to 1.0% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 93<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.6,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 30<br>ranked 0.2% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 6<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 7<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 3<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 88<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 71<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 23<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 22<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 17<br>ranked 0.8% to 1.0% most suspicious"
+       }
+      ],
+      "z": 3,
+      "clip": false,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "Tied at the line",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         0.8,
+         1.2,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 4<br>ranked 0.8% to 1.2% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.6,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>4 honest programs scored 2<br>ranked 0.8% to 1.6% most suspicious"
+       }
+      ],
+      "z": 3,
+      "clip": false,
+      "itemStyle": {
+       "color": "@warning",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "Not audited",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         1.0,
+         9.2,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>41 honest programs scored 1<br>ranked 1.0% to 9.2% most suspicious"
+       },
+       {
+        "value": [
+         9.2,
+         10.0,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>454 honest programs scored 0<br>ranked 9.2% to 100.0% most suspicious"
+       },
+       {
+        "value": [
+         1.2,
+         2.0,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>4 honest programs scored 3<br>ranked 1.2% to 2.0% most suspicious"
+       },
+       {
+        "value": [
+         2.0,
+         10.0,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>70 honest programs scored 2<br>ranked 2.0% to 16.0% most suspicious"
+       },
+       {
+        "value": [
+         1.6,
+         10.0,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>221 honest programs scored 1<br>ranked 1.6% to 45.8% most suspicious"
+       },
+       {
+        "value": [
+         1.0,
+         1.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 14<br>ranked 1.0% to 1.2% most suspicious"
+       },
+       {
+        "value": [
+         1.2,
+         1.4,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 12<br>ranked 1.2% to 1.4% most suspicious"
+       },
+       {
+        "value": [
+         1.4,
+         1.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 11<br>ranked 1.4% to 1.6% most suspicious"
+       },
+       {
+        "value": [
+         1.6,
+         1.8,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 9<br>ranked 1.6% to 1.8% most suspicious"
+       },
+       {
+        "value": [
+         1.8,
+         2.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>2 honest programs scored 5<br>ranked 1.8% to 2.2% most suspicious"
+       },
+       {
+        "value": [
+         2.2,
+         3.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>7 honest programs scored 4<br>ranked 2.2% to 3.6% most suspicious"
+       },
+       {
+        "value": [
+         3.6,
+         8.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>22 honest programs scored 3<br>ranked 3.6% to 8.0% most suspicious"
+       },
+       {
+        "value": [
+         8.0,
+         10.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>358 honest programs scored 2<br>ranked 8.0% to 79.6% most suspicious"
+       }
+      ],
+      "z": 2,
+      "clip": false,
+      "itemStyle": {
+       "color": "@context",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "_labels",
+      "type": "scatter",
+      "symbolSize": 0,
+      "data": [],
+      "silent": true,
+      "z": 5,
+      "tooltip": {
+       "show": false
+      },
+      "label": {
+       "show": true,
+       "formatter": "{b}",
+       "color": "@on-bright",
+       "fontSize": 11
+      }
+     },
+     {
+      "name": "_notes",
+      "type": "scatter",
+      "symbolSize": 0,
+      "data": [
+       {
+        "name": "exactly 1%",
+        "value": [
+         10.0,
+         0
+        ]
+       },
+       {
+        "name": "0.8% or 1.2%",
+        "value": [
+         10.0,
+         1
+        ]
+       },
+       {
+        "name": "0.8% or 1.6%",
+        "value": [
+         10.0,
+         2
+        ]
+       },
+       {
+        "name": "exactly 1%",
+        "value": [
+         10.0,
+         3
+        ]
+       }
+      ],
+      "silent": true,
+      "clip": false,
+      "tooltip": {
+       "show": false
+      },
+      "label": {
+       "show": true,
+       "position": "right",
+       "distance": 12,
+       "formatter": "{b}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600
+      },
+      "markLine": {
+       "silent": true,
+       "symbol": "none",
+       "data": [
+        {
+         "xAxis": 1
+        }
+       ],
+       "lineStyle": {
+        "color": "@ink-primary",
+        "type": "dashed",
+        "width": 1.5
+       },
+       "label": {
+        "formatter": "requested 1%",
+        "position": "start",
+        "color": "@ink-secondary",
+        "fontSize": 12
+       }
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "Audited",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         0.0,
+         0.2,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 6<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         1.0,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>2 honest programs scored 2<br>ranked 0.6% to 1.0% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 93<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.6,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 30<br>ranked 0.2% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 6<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.2,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 4<br>ranked 0.8% to 1.2% most suspicious"
+       },
+       {
+        "value": [
+         1.2,
+         2.0,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>4 honest programs scored 3<br>ranked 1.2% to 2.0% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 7<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 3<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.6,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>4 honest programs scored 2<br>ranked 0.8% to 1.6% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 88<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 71<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 23<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 22<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 17<br>ranked 0.8% to 1.0% most suspicious"
+       },
+       {
+        "value": [
+         1.0,
+         1.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 14<br>ranked 1.0% to 1.2% most suspicious"
+       },
+       {
+        "value": [
+         1.2,
+         1.4,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 12<br>ranked 1.2% to 1.4% most suspicious"
+       },
+       {
+        "value": [
+         1.4,
+         1.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 11<br>ranked 1.4% to 1.6% most suspicious"
+       },
+       {
+        "value": [
+         1.6,
+         1.8,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 9<br>ranked 1.6% to 1.8% most suspicious"
+       }
+      ],
+      "z": 3,
+      "clip": false,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "Tied at the line",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         1.0,
+         9.2,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>41 honest programs scored 1<br>ranked 1.0% to 9.2% most suspicious"
+       },
+       {
+        "value": [
+         1.6,
+         10.0,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>221 honest programs scored 1<br>ranked 1.6% to 45.8% most suspicious"
+       },
+       {
+        "value": [
+         1.8,
+         2.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>2 honest programs scored 5<br>ranked 1.8% to 2.2% most suspicious"
+       }
+      ],
+      "z": 3,
+      "clip": false,
+      "itemStyle": {
+       "color": "@warning",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "Not audited",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         9.2,
+         10.0,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>454 honest programs scored 0<br>ranked 9.2% to 100.0% most suspicious"
+       },
+       {
+        "value": [
+         2.0,
+         10.0,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>70 honest programs scored 2<br>ranked 2.0% to 16.0% most suspicious"
+       },
+       {
+        "value": [
+         2.2,
+         3.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>7 honest programs scored 4<br>ranked 2.2% to 3.6% most suspicious"
+       },
+       {
+        "value": [
+         3.6,
+         8.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>22 honest programs scored 3<br>ranked 3.6% to 8.0% most suspicious"
+       },
+       {
+        "value": [
+         8.0,
+         10.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>358 honest programs scored 2<br>ranked 8.0% to 79.6% most suspicious"
+       }
+      ],
+      "z": 2,
+      "clip": false,
+      "itemStyle": {
+       "color": "@context",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "_labels",
+      "type": "scatter",
+      "symbolSize": 0,
+      "data": [
+       {
+        "name": "41 tied at 1",
+        "value": [
+         5.1,
+         0
+        ]
+       },
+       {
+        "name": "221 tied at 1",
+        "value": [
+         5.8,
+         2
+        ]
+       }
+      ],
+      "silent": true,
+      "z": 5,
+      "tooltip": {
+       "show": false
+      },
+      "label": {
+       "show": true,
+       "formatter": "{b}",
+       "color": "@on-bright",
+       "fontSize": 11
+      }
+     },
+     {
+      "name": "_notes",
+      "type": "scatter",
+      "symbolSize": 0,
+      "data": [
+       {
+        "name": "1.0% or 9.2%",
+        "value": [
+         10.0,
+         0
+        ]
+       },
+       {
+        "name": "exactly 2%",
+        "value": [
+         10.0,
+         1
+        ]
+       },
+       {
+        "name": "1.6% or 45.8%",
+        "value": [
+         10.0,
+         2
+        ]
+       },
+       {
+        "name": "1.8% or 2.2%",
+        "value": [
+         10.0,
+         3
+        ]
+       }
+      ],
+      "silent": true,
+      "clip": false,
+      "tooltip": {
+       "show": false
+      },
+      "label": {
+       "show": true,
+       "position": "right",
+       "distance": 12,
+       "formatter": "{b}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600
+      },
+      "markLine": {
+       "silent": true,
+       "symbol": "none",
+       "data": [
+        {
+         "xAxis": 2
+        }
+       ],
+       "lineStyle": {
+        "color": "@ink-primary",
+        "type": "dashed",
+        "width": 1.5
+       },
+       "label": {
+        "formatter": "requested 2%",
+        "position": "start",
+        "color": "@ink-secondary",
+        "fontSize": 12
+       }
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "Audited",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         0.0,
+         0.2,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 6<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         1.0,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>2 honest programs scored 2<br>ranked 0.6% to 1.0% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 93<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.6,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 30<br>ranked 0.2% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>1 honest program scored 6<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.2,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>2 honest programs scored 4<br>ranked 0.8% to 1.2% most suspicious"
+       },
+       {
+        "value": [
+         1.2,
+         2.0,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>4 honest programs scored 3<br>ranked 1.2% to 2.0% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 9<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 7<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 4<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>1 honest program scored 3<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.6,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>4 honest programs scored 2<br>ranked 0.8% to 1.6% most suspicious"
+       },
+       {
+        "value": [
+         0.0,
+         0.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 88<br>ranked 0.0% to 0.2% most suspicious"
+       },
+       {
+        "value": [
+         0.2,
+         0.4,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 71<br>ranked 0.2% to 0.4% most suspicious"
+       },
+       {
+        "value": [
+         0.4,
+         0.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 23<br>ranked 0.4% to 0.6% most suspicious"
+       },
+       {
+        "value": [
+         0.6,
+         0.8,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 22<br>ranked 0.6% to 0.8% most suspicious"
+       },
+       {
+        "value": [
+         0.8,
+         1.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 17<br>ranked 0.8% to 1.0% most suspicious"
+       },
+       {
+        "value": [
+         1.0,
+         1.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 14<br>ranked 1.0% to 1.2% most suspicious"
+       },
+       {
+        "value": [
+         1.2,
+         1.4,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 12<br>ranked 1.2% to 1.4% most suspicious"
+       },
+       {
+        "value": [
+         1.4,
+         1.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 11<br>ranked 1.4% to 1.6% most suspicious"
+       },
+       {
+        "value": [
+         1.6,
+         1.8,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>1 honest program scored 9<br>ranked 1.6% to 1.8% most suspicious"
+       },
+       {
+        "value": [
+         1.8,
+         2.2,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>2 honest programs scored 5<br>ranked 1.8% to 2.2% most suspicious"
+       },
+       {
+        "value": [
+         2.2,
+         3.6,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>7 honest programs scored 4<br>ranked 2.2% to 3.6% most suspicious"
+       }
+      ],
+      "z": 3,
+      "clip": false,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "Tied at the line",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         1.0,
+         9.2,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>41 honest programs scored 1<br>ranked 1.0% to 9.2% most suspicious"
+       },
+       {
+        "value": [
+         2.0,
+         10.0,
+         1
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 100</b><br>70 honest programs scored 2<br>ranked 2.0% to 16.0% most suspicious"
+       },
+       {
+        "value": [
+         1.6,
+         10.0,
+         2
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 10</b><br>221 honest programs scored 1<br>ranked 1.6% to 45.8% most suspicious"
+       },
+       {
+        "value": [
+         3.6,
+         8.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>22 honest programs scored 3<br>ranked 3.6% to 8.0% most suspicious"
+       }
+      ],
+      "z": 3,
+      "clip": false,
+      "itemStyle": {
+       "color": "@warning",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "Not audited",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.6; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h, r: 2}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         9.2,
+         10.0,
+         0
+        ],
+        "tip": "<b>Sonnet 5.5, 0 to 10</b><br>454 honest programs scored 0<br>ranked 9.2% to 100.0% most suspicious"
+       },
+       {
+        "value": [
+         8.0,
+         10.0,
+         3
+        ],
+        "tip": "<b>Haiku 5.5 xhigh, 0 to 100</b><br>358 honest programs scored 2<br>ranked 8.0% to 79.6% most suspicious"
+       }
+      ],
+      "z": 2,
+      "clip": false,
+      "itemStyle": {
+       "color": "@context",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1
+      }
+     },
+     {
+      "name": "_labels",
+      "type": "scatter",
+      "symbolSize": 0,
+      "data": [
+       {
+        "name": "41 tied at 1",
+        "value": [
+         5.1,
+         0
+        ]
+       },
+       {
+        "name": "70 tied at 2",
+        "value": [
+         6.0,
+         1
+        ]
+       },
+       {
+        "name": "221 tied at 1",
+        "value": [
+         5.8,
+         2
+        ]
+       },
+       {
+        "name": "22 tied at 3",
+        "value": [
+         5.8,
+         3
+        ]
+       }
+      ],
+      "silent": true,
+      "z": 5,
+      "tooltip": {
+       "show": false
+      },
+      "label": {
+       "show": true,
+       "formatter": "{b}",
+       "color": "@on-bright",
+       "fontSize": 11
+      }
+     },
+     {
+      "name": "_notes",
+      "type": "scatter",
+      "symbolSize": 0,
+      "data": [
+       {
+        "name": "1.0% or 9.2%",
+        "value": [
+         10.0,
+         0
+        ]
+       },
+       {
+        "name": "2.0% or 16.0%",
+        "value": [
+         10.0,
+         1
+        ]
+       },
+       {
+        "name": "1.6% or 45.8%",
+        "value": [
+         10.0,
+         2
+        ]
+       },
+       {
+        "name": "3.6% or 8.0%",
+        "value": [
+         10.0,
+         3
+        ]
+       }
+      ],
+      "silent": true,
+      "clip": false,
+      "tooltip": {
+       "show": false
+      },
+      "label": {
+       "show": true,
+       "position": "right",
+       "distance": 12,
+       "formatter": "{b}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600
+      },
+      "markLine": {
+       "silent": true,
+       "symbol": "none",
+       "data": [
+        {
+         "xAxis": 5
+        }
+       ],
+       "lineStyle": {
+        "color": "@ink-primary",
+        "type": "dashed",
+        "width": 1.5
+       },
+       "label": {
+        "formatter": "requested 5%",
+        "position": "start",
+        "color": "@ink-secondary",
+        "fontSize": 12
+       }
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "data": {
+  "columns": [
+   "row",
+   "score",
+   "from_pct",
+   "to_pct",
+   "programs"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5, 0 to 10",
+    9.0,
+    0.0,
+    0.2,
+    1
+   ],
+   [
+    "Sonnet 5.5, 0 to 10",
+    6.0,
+    0.2,
+    0.4,
+    1
+   ],
+   [
+    "Sonnet 5.5, 0 to 10",
+    4.0,
+    0.4,
+    0.6,
+    1
+   ],
+   [
+    "Sonnet 5.5, 0 to 10",
+    2.0,
+    0.6,
+    1.0,
+    2
+   ],
+   [
+    "Sonnet 5.5, 0 to 10",
+    1.0,
+    1.0,
+    9.2,
+    41
+   ],
+   [
+    "Sonnet 5.5, 0 to 10",
+    0.0,
+    9.2,
+    100.0,
+    454
+   ],
+   [
+    "Sonnet 5.5, 0 to 100",
+    93.0,
+    0.0,
+    0.2,
+    1
+   ],
+   [
+    "Sonnet 5.5, 0 to 100",
+    30.0,
+    0.2,
+    0.6,
+    2
+   ],
+   [
+    "Sonnet 5.5, 0 to 100",
+    6.0,
+    0.6,
+    0.8,
+    1
+   ],
+   [
+    "Sonnet 5.5, 0 to 100",
+    4.0,
+    0.8,
+    1.2,
+    2
+   ],
+   [
+    "Sonnet 5.5, 0 to 100",
+    3.0,
+    1.2,
+    2.0,
+    4
+   ],
+   [
+    "Sonnet 5.5, 0 to 100",
+    2.0,
+    2.0,
+    16.0,
+    70
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 10",
+    9.0,
+    0.0,
+    0.2,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 10",
+    7.0,
+    0.2,
+    0.4,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 10",
+    4.0,
+    0.4,
+    0.6,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 10",
+    3.0,
+    0.6,
+    0.8,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 10",
+    2.0,
+    0.8,
+    1.6,
+    4
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 10",
+    1.0,
+    1.6,
+    45.8,
+    221
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    88.0,
+    0.0,
+    0.2,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    71.0,
+    0.2,
+    0.4,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    23.0,
+    0.4,
+    0.6,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    22.0,
+    0.6,
+    0.8,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    17.0,
+    0.8,
+    1.0,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    14.0,
+    1.0,
+    1.2,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    12.0,
+    1.2,
+    1.4,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    11.0,
+    1.4,
+    1.6,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    9.0,
+    1.6,
+    1.8,
+    1
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    5.0,
+    1.8,
+    2.2,
+    2
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    4.0,
+    2.2,
+    3.6,
+    7
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    3.0,
+    3.6,
+    8.0,
+    22
+   ],
+   [
+    "Haiku 5.5 xhigh, 0 to 100",
+    2.0,
+    8.0,
+    79.6,
+    358
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-xhigh-scale100-n500-strip-samples.csv": "sha256:1271c66323a3a3d7",
+   "results/dataset500-sonnet55-um-scale100-strip-samples.csv": "sha256:456576cccddb0c0d",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63"
+  },
+  "code": "sha256:4b1a0d859bbf51a6",
+  "spec": "sha256:08aacd90ce5ce36d"
+ }
+}

@@ -1,0 +1,345 @@
+{
+ "id": "P09",
+ "kind": "echarts",
+ "title": "Monitors catch trigger-shaped backdoors and miss bug-shaped ones",
+ "section": "results",
+ "order": 90,
+ "caption": "Left: how many of seven monitors catch each of the 500 backdoors at a 2% budget, as reported. Right: the share missed by all seven, split by whether the backdoor compares the input to a number its honest twin never uses (if x == 1234). A regex finds these, so the split is approximate.",
+ "notes": [
+  "The web/ summary page says the hard cases are mostly one-token edits. That's not right: most of them change several lines. What they share is how they look, not how big they are (see P10).",
+  "Our 85 to 88% is a statement about this dataset's attacks, most of them clumsy. An attacker who writes bug-shaped backdoors on purpose would face a much weaker monitor.",
+  "Is a bug-shaped backdoor detectable from the code alone? A flipped >= looks the same planted or slipped. If not, the defence for this class is testing, not a better monitor.",
+  "Three of the seven monitors are Haiku at different efforts, so hard for everyone is partly circular. A monitor from another family (or Opus, P12) is the check."
+ ],
+ "height": 420,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P09-hard-backdoors",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": [
+   {
+    "left": 56,
+    "width": "52%",
+    "top": 44,
+    "bottom": 64
+   },
+   {
+    "right": 16,
+    "width": "28%",
+    "top": 44,
+    "bottom": 64
+   }
+  ],
+  "graphic": [
+   {
+    "type": "text",
+    "left": 56,
+    "top": 8,
+    "style": {
+     "text": "Monitors (of 7) catching each backdoor",
+     "fill": "@ink-primary",
+     "fontSize": 13,
+     "fontWeight": 600
+    }
+   },
+   {
+    "type": "text",
+    "right": 16,
+    "top": 8,
+    "style": {
+     "text": "Missed by all 7, by style",
+     "fill": "@ink-primary",
+     "fontSize": 13,
+     "fontWeight": 600,
+     "align": "right"
+    }
+   }
+  ],
+  "xAxis": [
+   {
+    "name": "Monitors that catch it at a 2% budget",
+    "nameLocation": "middle",
+    "nameGap": 34,
+    "type": "category",
+    "data": [
+     "0",
+     "1",
+     "2",
+     "3",
+     "4",
+     "5",
+     "6",
+     "7"
+    ]
+   },
+   {
+    "name": "",
+    "nameLocation": "middle",
+    "nameGap": 34,
+    "gridIndex": 1,
+    "type": "category",
+    "data": [
+     "Compares input to\na new number",
+     "No new number"
+    ],
+    "axisLabel": {
+     "interval": 0,
+     "fontSize": 11,
+     "lineHeight": 14
+    }
+   }
+  ],
+  "yAxis": [
+   {
+    "name": "Backdoors",
+    "nameLocation": "middle",
+    "nameGap": 40,
+    "type": "value"
+   },
+   {
+    "name": "Missed by all 7",
+    "nameLocation": "middle",
+    "nameGap": 36,
+    "gridIndex": 1,
+    "type": "value",
+    "min": 0,
+    "max": 20,
+    "axisLabel": {
+     "formatter": "{value}%"
+    }
+   }
+  ],
+  "series": [
+   {
+    "name": "backdoors",
+    "type": "bar",
+    "data": [
+     {
+      "value": 49,
+      "itemStyle": {
+       "color": "@s7",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "tip": "49 backdoors caught by 0 of 7 monitors"
+     },
+     {
+      "value": 18,
+      "itemStyle": {
+       "color": "@warning/0.6",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "tip": "18 backdoors caught by 1 of 7 monitors"
+     },
+     {
+      "value": 20,
+      "itemStyle": {
+       "color": "@warning/0.6",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "tip": "20 backdoors caught by 2 of 7 monitors"
+     },
+     {
+      "value": 18,
+      "itemStyle": {
+       "color": "@warning/0.6",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "tip": "18 backdoors caught by 3 of 7 monitors"
+     },
+     {
+      "value": 32,
+      "itemStyle": {
+       "color": "@warning/0.6",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "tip": "32 backdoors caught by 4 of 7 monitors"
+     },
+     {
+      "value": 41,
+      "itemStyle": {
+       "color": "@warning/0.6",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "tip": "41 backdoors caught by 5 of 7 monitors"
+     },
+     {
+      "value": 45,
+      "itemStyle": {
+       "color": "@warning/0.6",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "tip": "45 backdoors caught by 6 of 7 monitors"
+     },
+     {
+      "value": 277,
+      "itemStyle": {
+       "color": "@context",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "tip": "277 backdoors caught by 7 of 7 monitors"
+     }
+    ],
+    "barWidth": "62%",
+    "label": {
+     "show": true,
+     "position": "top",
+     "color": "@ink-secondary",
+     "fontSize": 12
+    }
+   },
+   {
+    "name": "style",
+    "type": "bar",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "data": [
+     {
+      "value": 0.0,
+      "itemStyle": {
+       "color": "@s7",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "position": "top",
+       "formatter": "0 of 88",
+       "color": "@ink-secondary",
+       "fontSize": 12
+      },
+      "tip": "Compares input to a new number: 0 of 88 missed by all 7"
+     },
+     {
+      "value": 11.9,
+      "itemStyle": {
+       "color": "@s7",
+       "borderRadius": [
+        4,
+        4,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "position": "top",
+       "formatter": "49 of 412",
+       "color": "@ink-secondary",
+       "fontSize": 12
+      },
+      "tip": "No new number: 49 of 412 missed by all 7"
+     }
+    ],
+    "barWidth": "46%"
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "group",
+   "backdoors"
+  ],
+  "rows": [
+   [
+    "caught by 0 of 7",
+    49
+   ],
+   [
+    "caught by 1 of 7",
+    18
+   ],
+   [
+    "caught by 2 of 7",
+    20
+   ],
+   [
+    "caught by 3 of 7",
+    18
+   ],
+   [
+    "caught by 4 of 7",
+    32
+   ],
+   [
+    "caught by 5 of 7",
+    41
+   ],
+   [
+    "caught by 6 of 7",
+    45
+   ],
+   [
+    "caught by 7 of 7",
+    277
+   ],
+   [
+    "Compares input to a new number",
+    88
+   ],
+   [
+    "No new number",
+    412
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {
+   "results/analysis/case-features.csv": "sha256:26805e982a831ffc",
+   "viz/data/magic-numbers.csv": "sha256:52ed0b38299b1a16"
+  },
+  "code": "sha256:675f48db2772cb8a",
+  "spec": "sha256:547a659fd95e6e6b"
+ }
+}

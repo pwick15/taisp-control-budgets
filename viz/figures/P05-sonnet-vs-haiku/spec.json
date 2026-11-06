@@ -1,0 +1,1302 @@
+{
+ "id": "P05",
+ "kind": "echarts",
+ "title": "Haiku at xhigh keeps up with Sonnet from 2% up, not below",
+ "section": "results",
+ "order": 50,
+ "caption": "Top: share of backdoors caught as the audit budget grows, with 95% bands; Haiku at its default is there for reference. Bottom: Sonnet's lead over Haiku xhigh. Its band comes from a paired bootstrap, so it is tighter than comparing the top bands by eye.",
+ "notes": [
+  "This changes the web/ summary page, which says the two can't be separated because their intervals overlap. With exact budgets and a paired test the gap is small but above zero at every budget, and Marnick's matched-rate test agrees.",
+  "Method, as agreed: Marnick's matched-rate number for the tight-budget claim, this exact-budget curve for the overview. Check the gap is quoted the way results/analysis/MONITOR-GAP.md means it.",
+  "Below 1% the cutoff rests on 5 honest programs or fewer, so the bands are wide. The gap there is real but its size is not well measured."
+ ],
+ "height": 600,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P05-sonnet-vs-haiku",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": [
+   {
+    "left": 58,
+    "right": 24,
+    "top": 44,
+    "height": "47%"
+   },
+   {
+    "left": 58,
+    "right": 24,
+    "bottom": 52,
+    "height": "22%"
+   }
+  ],
+  "xAxis": [
+   {
+    "name": "",
+    "nameLocation": "middle",
+    "nameGap": 34,
+    "type": "log",
+    "min": 0.2,
+    "max": 20,
+    "axisLabel": {
+     "show": false
+    }
+   },
+   {
+    "name": "Audit budget (log scale)",
+    "nameLocation": "middle",
+    "nameGap": 34,
+    "gridIndex": 1,
+    "type": "log",
+    "min": 0.2,
+    "max": 20,
+    "axisLabel": {
+     "formatter": "{value}%"
+    }
+   }
+  ],
+  "yAxis": [
+   {
+    "name": "Backdoors caught",
+    "nameLocation": "middle",
+    "nameGap": 44,
+    "type": "value",
+    "min": 0,
+    "max": 100,
+    "axisLabel": {
+     "formatter": "{value}%"
+    }
+   },
+   {
+    "name": "Lead (points)",
+    "nameLocation": "middle",
+    "nameGap": 44,
+    "type": "value",
+    "gridIndex": 1,
+    "min": -10
+   }
+  ],
+  "legend": {
+   "top": 0,
+   "left": 50,
+   "data": [
+    "Sonnet 5.5",
+    "Haiku 5.5 · xhigh",
+    "Haiku 5.5 · default",
+    "Sonnet's lead"
+   ]
+  },
+  "series": [
+   {
+    "name": "Sonnet 5.5",
+    "type": "line",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@s0"
+    },
+    "lineStyle": {
+     "color": "@s0",
+     "width": 2
+    },
+    "data": [
+     {
+      "value": [
+       0.2,
+       70.8
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>0.2% budget: 70.8% (8.5 to 86.4)"
+     },
+     {
+      "value": [
+       0.3,
+       74.0
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>0.3% budget: 74.0% (12.6 to 87.0)"
+     },
+     {
+      "value": [
+       0.5,
+       80.7
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>0.5% budget: 80.7% (20.9 to 88.3)"
+     },
+     {
+      "value": [
+       0.75,
+       84.67
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>0.75% budget: 84.7% (72.2 to 89.0)"
+     },
+     {
+      "value": [
+       1,
+       86.8
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>1% budget: 86.8% (78.9 to 89.4)"
+     },
+     {
+      "value": [
+       1.5,
+       87.19
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>1.5% budget: 87.2% (83.4 to 90.0)"
+     },
+     {
+      "value": [
+       2,
+       87.58
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>2% budget: 87.6% (84.4 to 90.3)"
+     },
+     {
+      "value": [
+       3,
+       88.36
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>3% budget: 88.4% (85.5 to 91.0)"
+     },
+     {
+      "value": [
+       5,
+       89.92
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>5% budget: 89.9% (87.2 to 92.5)"
+     },
+     {
+      "value": [
+       7.5,
+       91.87
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>7.5% budget: 91.9% (89.1 to 94.5)"
+     },
+     {
+      "value": [
+       10,
+       93.26
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>10% budget: 93.3% (90.7 to 95.3)"
+     },
+     {
+      "value": [
+       15,
+       93.63
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>15% budget: 93.6% (91.4 to 95.6)"
+     },
+     {
+      "value": [
+       20,
+       94.01
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>20% budget: 94.0% (91.9 to 95.9)"
+     }
+    ]
+   },
+   {
+    "name": "Sonnet 5.5",
+    "type": "custom",
+    "renderItem": "function (params, api) { var p1 = api.coord([api.value(0), api.value(1)]); var p2 = api.coord([api.value(0), api.value(2)]); var p3 = api.coord([api.value(3), api.value(5)]); var p4 = api.coord([api.value(3), api.value(4)]); return {type: 'polygon', shape: {points: [p1, p4, p3, p2]}, style: {fill: api.visual('color'), opacity: 0.15}, silent: true}; }",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "clip": true,
+    "itemStyle": {
+     "color": "@s0"
+    },
+    "data": [
+     [
+      0.2,
+      8.53,
+      86.4,
+      0.3,
+      12.6,
+      87.01
+     ],
+     [
+      0.3,
+      12.6,
+      87.01,
+      0.5,
+      20.87,
+      88.3
+     ],
+     [
+      0.5,
+      20.87,
+      88.3,
+      0.75,
+      72.25,
+      89.03
+     ],
+     [
+      0.75,
+      72.25,
+      89.03,
+      1,
+      78.9,
+      89.4
+     ],
+     [
+      1,
+      78.9,
+      89.4,
+      1.5,
+      83.37,
+      89.98
+     ],
+     [
+      1.5,
+      83.37,
+      89.98,
+      2,
+      84.43,
+      90.32
+     ],
+     [
+      2,
+      84.43,
+      90.32,
+      3,
+      85.45,
+      91.02
+     ],
+     [
+      3,
+      85.45,
+      91.02,
+      5,
+      87.2,
+      92.52
+     ],
+     [
+      5,
+      87.2,
+      92.52,
+      7.5,
+      89.13,
+      94.47
+     ],
+     [
+      7.5,
+      89.13,
+      94.47,
+      10,
+      90.67,
+      95.28
+     ],
+     [
+      10,
+      90.67,
+      95.28,
+      15,
+      91.41,
+      95.6
+     ],
+     [
+      15,
+      91.41,
+      95.6,
+      20,
+      91.91,
+      95.86
+     ]
+    ],
+    "encode": {
+     "x": [
+      0,
+      3
+     ],
+     "y": [
+      1,
+      2,
+      4,
+      5
+     ]
+    },
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "Haiku 5.5 · xhigh",
+    "type": "line",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@s1"
+    },
+    "lineStyle": {
+     "color": "@s1",
+     "width": 2
+    },
+    "data": [
+     {
+      "value": [
+       0.2,
+       10.4
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>0.2% budget: 10.4% (0.2 to 73.2)"
+     },
+     {
+      "value": [
+       0.3,
+       18.8
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>0.3% budget: 18.8% (0.3 to 75.6)"
+     },
+     {
+      "value": [
+       0.5,
+       54.1
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>0.5% budget: 54.1% (0.7 to 80.5)"
+     },
+     {
+      "value": [
+       0.75,
+       67.9
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>0.75% budget: 67.9% (16.6 to 85.2)"
+     },
+     {
+      "value": [
+       1,
+       74.8
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>1% budget: 74.8% (50.6 to 87.0)"
+     },
+     {
+      "value": [
+       1.5,
+       83.3
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>1.5% budget: 83.3% (67.5 to 87.6)"
+     },
+     {
+      "value": [
+       2,
+       85.1
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>2% budget: 85.1% (76.7 to 88.0)"
+     },
+     {
+      "value": [
+       3,
+       85.36
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>3% budget: 85.4% (82.2 to 88.3)"
+     },
+     {
+      "value": [
+       5,
+       85.88
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>5% budget: 85.9% (82.8 to 88.7)"
+     },
+     {
+      "value": [
+       7.5,
+       86.52
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>7.5% budget: 86.5% (83.6 to 89.2)"
+     },
+     {
+      "value": [
+       10,
+       87.17
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>10% budget: 87.2% (84.4 to 89.7)"
+     },
+     {
+      "value": [
+       15,
+       88.46
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>15% budget: 88.5% (85.9 to 90.8)"
+     },
+     {
+      "value": [
+       20,
+       89.75
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>20% budget: 89.7% (87.4 to 91.9)"
+     }
+    ]
+   },
+   {
+    "name": "Haiku 5.5 · xhigh",
+    "type": "custom",
+    "renderItem": "function (params, api) { var p1 = api.coord([api.value(0), api.value(1)]); var p2 = api.coord([api.value(0), api.value(2)]); var p3 = api.coord([api.value(3), api.value(5)]); var p4 = api.coord([api.value(3), api.value(4)]); return {type: 'polygon', shape: {points: [p1, p4, p3, p2]}, style: {fill: api.visual('color'), opacity: 0.15}, silent: true}; }",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "clip": true,
+    "itemStyle": {
+     "color": "@s1"
+    },
+    "data": [
+     [
+      0.2,
+      0.2,
+      73.2,
+      0.3,
+      0.3,
+      75.63
+     ],
+     [
+      0.3,
+      0.3,
+      75.63,
+      0.5,
+      0.67,
+      80.5
+     ],
+     [
+      0.5,
+      0.67,
+      80.5,
+      0.75,
+      16.57,
+      85.24
+     ],
+     [
+      0.75,
+      16.57,
+      85.24,
+      1,
+      50.6,
+      87.0
+     ],
+     [
+      1,
+      50.6,
+      87.0,
+      1.5,
+      67.54,
+      87.62
+     ],
+     [
+      1.5,
+      67.54,
+      87.62,
+      2,
+      76.72,
+      87.98
+     ],
+     [
+      2,
+      76.72,
+      87.98,
+      3,
+      82.21,
+      88.29
+     ],
+     [
+      3,
+      82.21,
+      88.29,
+      5,
+      82.84,
+      88.71
+     ],
+     [
+      5,
+      82.84,
+      88.71,
+      7.5,
+      83.62,
+      89.24
+     ],
+     [
+      7.5,
+      83.62,
+      89.24,
+      10,
+      84.41,
+      89.72
+     ],
+     [
+      10,
+      84.41,
+      89.72,
+      15,
+      85.94,
+      90.8
+     ],
+     [
+      15,
+      85.94,
+      90.8,
+      20,
+      87.41,
+      91.88
+     ]
+    ],
+    "encode": {
+     "x": [
+      0,
+      3
+     ],
+     "y": [
+      1,
+      2,
+      4,
+      5
+     ]
+    },
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "Haiku 5.5 · default",
+    "type": "line",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong"
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       0.2,
+       15.0
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>0.2% budget: 15.0% (0.1 to 59.0)"
+     },
+     {
+      "value": [
+       0.3,
+       21.5
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>0.3% budget: 21.5% (0.2 to 60.9)"
+     },
+     {
+      "value": [
+       0.5,
+       42.45
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>0.5% budget: 42.4% (0.5 to 65.3)"
+     },
+     {
+      "value": [
+       0.75,
+       54.57
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>0.75% budget: 54.6% (19.2 to 72.7)"
+     },
+     {
+      "value": [
+       1,
+       60.37
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>1% budget: 60.4% (37.0 to 77.8)"
+     },
+     {
+      "value": [
+       1.5,
+       68.78
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>1.5% budget: 68.8% (53.1 to 79.5)"
+     },
+     {
+      "value": [
+       2,
+       77.2
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>2% budget: 77.2% (61.7 to 80.5)"
+     },
+     {
+      "value": [
+       3,
+       77.48
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>3% budget: 77.5% (72.8 to 80.9)"
+     },
+     {
+      "value": [
+       5,
+       78.03
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>5% budget: 78.0% (74.3 to 81.5)"
+     },
+     {
+      "value": [
+       7.5,
+       78.73
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>7.5% budget: 78.7% (75.2 to 82.0)"
+     },
+     {
+      "value": [
+       10,
+       79.42
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>10% budget: 79.4% (76.0 to 82.6)"
+     },
+     {
+      "value": [
+       15,
+       80.81
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>15% budget: 80.8% (77.6 to 83.8)"
+     },
+     {
+      "value": [
+       20,
+       82.19
+      ],
+      "tip": "<b>Haiku 5.5 · default</b><br>20% budget: 82.2% (79.2 to 85.0)"
+     }
+    ]
+   },
+   {
+    "name": "Sonnet's lead",
+    "type": "line",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@s6"
+    },
+    "lineStyle": {
+     "color": "@s6",
+     "width": 2
+    },
+    "data": [
+     {
+      "value": [
+       0.2,
+       60.4
+      ],
+      "tip": "<b>Sonnet's lead</b><br>0.2% budget: +60.4 points (+8.0 to +70.4)"
+     },
+     {
+      "value": [
+       0.3,
+       55.2
+      ],
+      "tip": "<b>Sonnet's lead</b><br>0.3% budget: +55.2 points (+9.6 to +64.8)"
+     },
+     {
+      "value": [
+       0.5,
+       26.6
+      ],
+      "tip": "<b>Sonnet's lead</b><br>0.5% budget: +26.6 points (+6.4 to +64.1)"
+     },
+     {
+      "value": [
+       0.75,
+       16.77
+      ],
+      "tip": "<b>Sonnet's lead</b><br>0.75% budget: +16.8 points (+2.2 to +59.1)"
+     },
+     {
+      "value": [
+       1.0,
+       12.0
+      ],
+      "tip": "<b>Sonnet's lead</b><br>1% budget: +12.0 points (+1.0 to +30.3)"
+     },
+     {
+      "value": [
+       1.5,
+       3.89
+      ],
+      "tip": "<b>Sonnet's lead</b><br>1.5% budget: +3.9 points (+0.8 to +20.8)"
+     },
+     {
+      "value": [
+       2.0,
+       2.48
+      ],
+      "tip": "<b>Sonnet's lead</b><br>2% budget: +2.5 points (+0.6 to +10.6)"
+     },
+     {
+      "value": [
+       3.0,
+       3.0
+      ],
+      "tip": "<b>Sonnet's lead</b><br>3% budget: +3.0 points (+1.1 to +5.2)"
+     },
+     {
+      "value": [
+       5.0,
+       4.05
+      ],
+      "tip": "<b>Sonnet's lead</b><br>5% budget: +4.0 points (+2.1 to +6.4)"
+     },
+     {
+      "value": [
+       7.5,
+       5.35
+      ],
+      "tip": "<b>Sonnet's lead</b><br>7.5% budget: +5.4 points (+3.0 to +8.0)"
+     },
+     {
+      "value": [
+       10.0,
+       6.09
+      ],
+      "tip": "<b>Sonnet's lead</b><br>10% budget: +6.1 points (+3.7 to +8.3)"
+     },
+     {
+      "value": [
+       15.0,
+       5.18
+      ],
+      "tip": "<b>Sonnet's lead</b><br>15% budget: +5.2 points (+3.1 to +7.2)"
+     },
+     {
+      "value": [
+       20.0,
+       4.26
+      ],
+      "tip": "<b>Sonnet's lead</b><br>20% budget: +4.3 points (+2.4 to +6.1)"
+     }
+    ],
+    "markLine": {
+     "silent": true,
+     "symbol": "none",
+     "lineStyle": {
+      "color": "@ink-muted",
+      "type": "dashed"
+     },
+     "label": {
+      "show": false
+     },
+     "data": [
+      {
+       "yAxis": 0
+      }
+     ]
+    }
+   },
+   {
+    "name": "Sonnet's lead",
+    "type": "custom",
+    "renderItem": "function (params, api) { var p1 = api.coord([api.value(0), api.value(1)]); var p2 = api.coord([api.value(0), api.value(2)]); var p3 = api.coord([api.value(3), api.value(5)]); var p4 = api.coord([api.value(3), api.value(4)]); return {type: 'polygon', shape: {points: [p1, p4, p3, p2]}, style: {fill: api.visual('color'), opacity: 0.15}, silent: true}; }",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "clip": true,
+    "itemStyle": {
+     "color": "@s6"
+    },
+    "data": [
+     [
+      0.2,
+      8.0,
+      70.4,
+      0.3,
+      9.62,
+      64.8
+     ],
+     [
+      0.3,
+      9.62,
+      64.8,
+      0.5,
+      6.4,
+      64.05
+     ],
+     [
+      0.5,
+      6.4,
+      64.05,
+      0.75,
+      2.15,
+      59.05
+     ],
+     [
+      0.75,
+      2.15,
+      59.05,
+      1.0,
+      1.02,
+      30.27
+     ],
+     [
+      1.0,
+      1.02,
+      30.27,
+      1.5,
+      0.81,
+      20.77
+     ],
+     [
+      1.5,
+      0.81,
+      20.77,
+      2.0,
+      0.63,
+      10.58
+     ],
+     [
+      2.0,
+      0.63,
+      10.58,
+      3.0,
+      1.13,
+      5.23
+     ],
+     [
+      3.0,
+      1.13,
+      5.23,
+      5.0,
+      2.07,
+      6.44
+     ],
+     [
+      5.0,
+      2.07,
+      6.44,
+      7.5,
+      3.01,
+      7.97
+     ],
+     [
+      7.5,
+      3.01,
+      7.97,
+      10.0,
+      3.68,
+      8.3
+     ],
+     [
+      10.0,
+      3.68,
+      8.3,
+      15.0,
+      3.14,
+      7.25
+     ],
+     [
+      15.0,
+      3.14,
+      7.25,
+      20.0,
+      2.4,
+      6.13
+     ]
+    ],
+    "encode": {
+     "x": [
+      0,
+      3
+     ],
+     "y": [
+      1,
+      2,
+      4,
+      5
+     ]
+    },
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "series",
+   "budget_pct",
+   "value",
+   "lo",
+   "hi"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5",
+    0.2,
+    0.708,
+    0.0853333,
+    0.864
+   ],
+   [
+    "Sonnet 5.5",
+    0.3,
+    0.74,
+    0.126,
+    0.870103
+   ],
+   [
+    "Sonnet 5.5",
+    0.5,
+    0.807,
+    0.208658,
+    0.883
+   ],
+   [
+    "Sonnet 5.5",
+    0.75,
+    0.84675,
+    0.7225,
+    0.890335
+   ],
+   [
+    "Sonnet 5.5",
+    1,
+    0.868,
+    0.788975,
+    0.894
+   ],
+   [
+    "Sonnet 5.5",
+    1.5,
+    0.871902,
+    0.833665,
+    0.899824
+   ],
+   [
+    "Sonnet 5.5",
+    2,
+    0.875805,
+    0.844287,
+    0.903201
+   ],
+   [
+    "Sonnet 5.5",
+    3,
+    0.88361,
+    0.854541,
+    0.91017
+   ],
+   [
+    "Sonnet 5.5",
+    5,
+    0.89922,
+    0.87204,
+    0.925232
+   ],
+   [
+    "Sonnet 5.5",
+    7.5,
+    0.918732,
+    0.891333,
+    0.944662
+   ],
+   [
+    "Sonnet 5.5",
+    10,
+    0.932599,
+    0.906666,
+    0.952838
+   ],
+   [
+    "Sonnet 5.5",
+    15,
+    0.936344,
+    0.914066,
+    0.956038
+   ],
+   [
+    "Sonnet 5.5",
+    20,
+    0.940088,
+    0.919121,
+    0.958624
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    0.2,
+    0.104,
+    0.002,
+    0.732
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    0.3,
+    0.188,
+    0.003,
+    0.756338
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    0.5,
+    0.541,
+    0.00665625,
+    0.805
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    0.75,
+    0.679,
+    0.16575,
+    0.852437
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    1,
+    0.748,
+    0.506,
+    0.87
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    1.5,
+    0.833,
+    0.675412,
+    0.87618
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    2,
+    0.851032,
+    0.767239,
+    0.879829
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    3,
+    0.853611,
+    0.822062,
+    0.882852
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    5,
+    0.858769,
+    0.828353,
+    0.887062
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    7.5,
+    0.865217,
+    0.836159,
+    0.892374
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    10,
+    0.871665,
+    0.844127,
+    0.897211
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    15,
+    0.884561,
+    0.85939,
+    0.908001
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    20,
+    0.897457,
+    0.874146,
+    0.918792
+   ],
+   [
+    "Haiku 5.5 · default",
+    0.2,
+    0.15,
+    0.0015,
+    0.59
+   ],
+   [
+    "Haiku 5.5 · default",
+    0.3,
+    0.215,
+    0.00225,
+    0.60901
+   ],
+   [
+    "Haiku 5.5 · default",
+    0.5,
+    0.4245,
+    0.005,
+    0.653025
+   ],
+   [
+    "Haiku 5.5 · default",
+    0.75,
+    0.54575,
+    0.192325,
+    0.727269
+   ],
+   [
+    "Haiku 5.5 · default",
+    1,
+    0.603667,
+    0.37,
+    0.778
+   ],
+   [
+    "Haiku 5.5 · default",
+    1.5,
+    0.687833,
+    0.531308,
+    0.795208
+   ],
+   [
+    "Haiku 5.5 · default",
+    2,
+    0.772,
+    0.617164,
+    0.804931
+   ],
+   [
+    "Haiku 5.5 · default",
+    3,
+    0.774774,
+    0.727833,
+    0.809472
+   ],
+   [
+    "Haiku 5.5 · default",
+    5,
+    0.780321,
+    0.743425,
+    0.814596
+   ],
+   [
+    "Haiku 5.5 · default",
+    7.5,
+    0.787254,
+    0.751564,
+    0.820476
+   ],
+   [
+    "Haiku 5.5 · default",
+    10,
+    0.794188,
+    0.759639,
+    0.826426
+   ],
+   [
+    "Haiku 5.5 · default",
+    15,
+    0.808056,
+    0.775887,
+    0.838012
+   ],
+   [
+    "Haiku 5.5 · default",
+    20,
+    0.821924,
+    0.792178,
+    0.849884
+   ],
+   [
+    "Sonnet's lead",
+    0.2,
+    0.604,
+    0.0799833,
+    0.70405
+   ],
+   [
+    "Sonnet's lead",
+    0.3,
+    0.552,
+    0.0962487,
+    0.648
+   ],
+   [
+    "Sonnet's lead",
+    0.5,
+    0.266,
+    0.0639933,
+    0.640504
+   ],
+   [
+    "Sonnet's lead",
+    0.75,
+    0.16775,
+    0.0215089,
+    0.590521
+   ],
+   [
+    "Sonnet's lead",
+    1.0,
+    0.12,
+    0.0102465,
+    0.3027
+   ],
+   [
+    "Sonnet's lead",
+    1.5,
+    0.0389024,
+    0.00805866,
+    0.207697
+   ],
+   [
+    "Sonnet's lead",
+    2.0,
+    0.0247732,
+    0.00631983,
+    0.105768
+   ],
+   [
+    "Sonnet's lead",
+    3.0,
+    0.0299989,
+    0.0112769,
+    0.0523301
+   ],
+   [
+    "Sonnet's lead",
+    5.0,
+    0.0404503,
+    0.0206948,
+    0.0644272
+   ],
+   [
+    "Sonnet's lead",
+    7.5,
+    0.0535145,
+    0.0300966,
+    0.0797472
+   ],
+   [
+    "Sonnet's lead",
+    10.0,
+    0.060934,
+    0.036799,
+    0.082952
+   ],
+   [
+    "Sonnet's lead",
+    15.0,
+    0.0517825,
+    0.0313905,
+    0.0724893
+   ],
+   [
+    "Sonnet's lead",
+    20.0,
+    0.0426311,
+    0.0240197,
+    0.0612606
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63"
+  },
+  "code": "sha256:313e3b529a974b31",
+  "spec": "sha256:2715b40ce8f1f850"
+ }
+}

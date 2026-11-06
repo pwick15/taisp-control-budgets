@@ -129,9 +129,13 @@ LOG_DIR=logs/sonnet55-n100-haiku45-strip TRAJ_DIR=trajectories/model-sonnet55-n1
 
 `trajectories/` is not gitignored. Commit a trajectory folder (its `.eval` files) when it is small (`record.py` prints the size), so anyone can re-score the exact same outputs. Share larger ones outside git and note where in the PR.
 
+## Figures
+
+Every chart for the report is a figure in `viz/`: one folder per figure holding its generator and what it produced, built into one gallery page (`viz/gallery.html`) with copy and export buttons. Figures have permanent IDs (`P07`), read only committed data, and must pass `uv run python -m viz check` (style, provenance, freshness, and a render in a real browser in light and dark). Start with `viz/README.md`; agents read `viz/CLAUDE.md`.
+
 ## Results viewer
 
-`reports/` turns finished experiments into readable web pages: one page per experiment with a summary, the story of how the design evolved, charts, tables and caveats. Pages are plain HTML files with light and dark themes, so you can open them locally or send one to a teammate.
+`reports/` is the older per-experiment write-up viewer. New charts go in `viz/`. `reports/` turns finished experiments into readable web pages: one page per experiment with a summary, the story of how the design evolved, charts, tables and caveats. Pages are plain HTML files with light and dark themes, so you can open them locally or send one to a teammate.
 
 ```bash
 uv run python reports/build.py --open     # builds reports/site/index.html and one page per experiment
@@ -156,6 +160,7 @@ Pages read only the committed CSVs, never the logs, so anyone can rebuild them. 
 | `src/monitor.py` | Scores saved trajectories with one monitor and writes logs in `experiment.py`'s layout. |
 | `src/defer_sim.py` | Offline defer-to-trusted at every audit budget and defer threshold, with Pareto flags. |
 | `src/strip_comments.py` | Monitor prompt formatter that removes `#` comments from submitted code. Used when `STRIP_COMMENTS=1`. |
+| `viz/` | Figures for the report: one folder per figure (generator + output), the gallery page, and `python -m viz build/check`. See `viz/README.md`. |
 | `reports/build.py` | Builds the results viewer: one HTML page per file in `reports/experiments/`, plus an index. |
 | `reports/experiments/` | One Python file per experiment page. `_template.py` is the starting point. |
 | `reports/viewer/` | The viewer's building blocks: page components, SVG charts, theme and the loader for `results/`. |

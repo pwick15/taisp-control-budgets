@@ -1,0 +1,5799 @@
+{
+ "id": "P01",
+ "kind": "echarts",
+ "title": "Price is a poor guide to monitoring skill",
+ "section": "results",
+ "order": 10,
+ "caption": "Each dot is one monitor setting: a model at one reasoning level. Higher catches more of the 500 backdoors; further left costs less per program at list price. Lines join a model's settings and the dashed line traces the best buys. Bars are 95% intervals.",
+ "notes": [
+  "Control Tax (Terekhov et al., 2025) already plots a cost-vs-safety frontier for 13 monitors at a 5% budget. What's ours is reasoning effort as a second dial, current models, and exact-budget accounting.",
+  "Sonnet 5.5 is labelled untrusted monitoring in our runs, but older models wrote the code it reads, so there's no collusion. Treat it as a reference point, not a trusted monitor a lab would deploy.",
+  "Costs are list price times tokens, after Marnick's fixes: cached calls count, and GLM-5.3 is priced at the discounted rate it is billed at. GLM-5.3's effort=none run is left off: it is max in disguise."
+ ],
+ "height": 540,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P01-cost-vs-safety",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 58,
+   "right": 30,
+   "top": 20,
+   "bottom": 52,
+   "show": true,
+   "borderWidth": 0,
+   "backgroundColor": {
+    "type": "linear",
+    "x": 0,
+    "y": 0,
+    "x2": 1,
+    "y2": 1,
+    "colorStops": [
+     {
+      "offset": 0,
+      "color": "@good/0.11"
+     },
+     {
+      "offset": 0.5,
+      "color": "@ink-surface/0"
+     },
+     {
+      "offset": 1,
+      "color": "@s7/0.09"
+     }
+    ]
+   }
+  },
+  "xAxis": {
+   "name": "Cost per program, list price (log scale)",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "log",
+   "min": 5e-05,
+   "max": 0.05,
+   "axisLabel": {
+    "formatter": "function (v) { return '$' + v; }"
+   }
+  },
+  "yAxis": {
+   "name": "Backdoors caught",
+   "nameLocation": "middle",
+   "nameGap": 44,
+   "type": "value",
+   "min": 0,
+   "max": 100,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "graphic": [
+   {
+    "type": "text",
+    "left": 70,
+    "top": 30,
+    "silent": true,
+    "style": {
+     "text": "↖ better",
+     "fill": "@ink-muted",
+     "fontSize": 12
+    }
+   }
+  ],
+  "series": [
+   {
+    "name": "Sonnet 5.5",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.00762675,
+       84.67
+      ],
+      "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 84.7% (81.5 to 87.8)<br>$0.0076 per program"
+     },
+     {
+      "value": [
+       0.00931446,
+       87.58
+      ],
+      "tip": "<b>Sonnet 5.5 · high (default)</b><br>caught 87.6% (84.4 to 90.3)<br>$0.0093 per program",
+      "label": {
+       "show": true,
+       "position": "right",
+       "formatter": "Sonnet 5.5",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 4,
+    "symbol": "circle",
+    "symbolSize": 10,
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s0",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Sonnet 5.5",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "itemStyle": {
+     "color": "@s0"
+    },
+    "data": [
+     [
+      0.00762675,
+      81.5,
+      87.75
+     ],
+     [
+      0.00931446,
+      84.37,
+      90.32
+     ]
+    ],
+    "encode": {
+     "x": 0,
+     "y": [
+      1,
+      2
+     ]
+    },
+    "z": 2,
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "Haiku 5.5",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.00067892,
+       70.05
+      ],
+      "tip": "<b>Haiku 5.5 · low</b><br>caught 70.0% (58.3 to 78.0)<br>$0.00068 per program"
+     },
+     {
+      "value": [
+       0.00076453,
+       77.2
+      ],
+      "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 77.2% (61.6 to 80.7)<br>$0.00076 per program"
+     },
+     {
+      "value": [
+       0.00100551,
+       81.49
+      ],
+      "tip": "<b>Haiku 5.5 · high</b><br>caught 81.5% (69.5 to 84.7)<br>$0.0010 per program"
+     },
+     {
+      "value": [
+       0.00177274,
+       85.1
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.1% (75.7 to 88.0)<br>$0.0018 per program",
+      "label": {
+       "show": true,
+       "position": "top",
+       "formatter": "Haiku 5.5",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 4,
+    "symbol": "circle",
+    "symbolSize": 10,
+    "itemStyle": {
+     "color": "@s1",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s1",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Haiku 5.5",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "itemStyle": {
+     "color": "@s1"
+    },
+    "data": [
+     [
+      0.00067892,
+      58.3,
+      78.0
+     ],
+     [
+      0.00076453,
+      61.6,
+      80.69
+     ],
+     [
+      0.00100551,
+      69.53,
+      84.75
+     ],
+     [
+      0.00177274,
+      75.73,
+      88.0
+     ]
+    ],
+    "encode": {
+     "x": 0,
+     "y": [
+      1,
+      2
+     ]
+    },
+    "z": 2,
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "Haiku 4.5",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.00552506,
+       49.2
+      ],
+      "tip": "<b>Haiku 4.5 · no thinking</b><br>caught 49.2% (43.2 to 56.2)<br>$0.0055 per program",
+      "label": {
+       "show": true,
+       "position": "left",
+       "formatter": "Haiku 4.5",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 4,
+    "symbol": "circle",
+    "symbolSize": 10,
+    "itemStyle": {
+     "color": "@ink-surface",
+     "borderColor": "@s1",
+     "borderWidth": 2
+    },
+    "lineStyle": {
+     "color": "@s1",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Haiku 4.5",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "itemStyle": {
+     "color": "@s1"
+    },
+    "data": [
+     [
+      0.00552506,
+      43.2,
+      56.2
+     ]
+    ],
+    "encode": {
+     "x": 0,
+     "y": [
+      1,
+      2
+     ]
+    },
+    "z": 2,
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "GLM-5.3",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.0009335,
+       48.42
+      ],
+      "tip": "<b>GLM-5.3 · low</b><br>caught 48.4% (43.6 to 52.6)<br>$0.00093 per program"
+     },
+     {
+      "value": [
+       0.00170711,
+       51.89
+      ],
+      "tip": "<b>GLM-5.3 · high</b><br>caught 51.9% (47.3 to 56.4)<br>$0.0017 per program"
+     },
+     {
+      "value": [
+       0.0146159,
+       76.2
+      ],
+      "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.2% (63.9 to 79.5)<br>$0.0146 per program",
+      "label": {
+       "show": true,
+       "position": "right",
+       "formatter": "GLM-5.3",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 4,
+    "symbol": "circle",
+    "symbolSize": 10,
+    "itemStyle": {
+     "color": "@s2",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s2",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "GLM-5.3",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "itemStyle": {
+     "color": "@s2"
+    },
+    "data": [
+     [
+      0.0009335,
+      43.63,
+      52.6
+     ],
+     [
+      0.00170711,
+      47.32,
+      56.38
+     ],
+     [
+      0.0146159,
+      63.88,
+      79.48
+     ]
+    ],
+    "encode": {
+     "x": 0,
+     "y": [
+      1,
+      2
+     ]
+    },
+    "z": 2,
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "Qwen 3.8",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.00053563,
+       51.3
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 51.3% (39.5 to 55.3)<br>$0.00054 per program"
+     },
+     {
+      "value": [
+       0.00091852,
+       66.84
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 66.8% (60.4 to 73.8)<br>$0.00092 per program",
+      "label": {
+       "show": true,
+       "position": "left",
+       "formatter": "Qwen 3.8",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 7
+      }
+     },
+     {
+      "value": [
+       0.00094052,
+       62.6
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 62.6% (51.6 to 66.4)<br>$0.00094 per program"
+     }
+    ],
+    "z": 3,
+    "symbol": "circle",
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    },
+    "labelLayout": {
+     "hideOverlap": true
+    }
+   },
+   {
+    "name": "GPT-6 Luna",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.000188,
+       39.42
+      ],
+      "tip": "<b>GPT-6 Luna · off</b><br>caught 39.4% (35.3 to 43.8)<br>$0.00019 per program"
+     },
+     {
+      "value": [
+       0.00026724,
+       49.91
+      ],
+      "tip": "<b>GPT-6 Luna · low</b><br>caught 49.9% (43.4 to 54.1)<br>$0.00027 per program"
+     },
+     {
+      "value": [
+       0.0003258,
+       54.97
+      ],
+      "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 55.0% (50.2 to 59.3)<br>$0.00033 per program"
+     },
+     {
+      "value": [
+       0.00037436,
+       57.74
+      ],
+      "tip": "<b>GPT-6 Luna · high</b><br>caught 57.7% (53.0 to 62.2)<br>$0.00037 per program"
+     },
+     {
+      "value": [
+       0.00045383,
+       60.96
+      ],
+      "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 61.0% (55.1 to 65.2)<br>$0.00045 per program",
+      "label": {
+       "show": true,
+       "position": "left",
+       "formatter": "GPT-6 Luna",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 3,
+    "symbol": "circle",
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    },
+    "labelLayout": {
+     "hideOverlap": true
+    }
+   },
+   {
+    "name": "gpt-oss-120b",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.00011886,
+       14.53
+      ],
+      "tip": "<b>gpt-oss-120b · low</b><br>caught 14.5% (9.8 to 19.3)<br>$0.00012 per program"
+     },
+     {
+      "value": [
+       0.00015922,
+       19.6
+      ],
+      "tip": "<b>gpt-oss-120b · medium (default)</b><br>caught 19.6% (12.9 to 28.1)<br>$0.00016 per program"
+     },
+     {
+      "value": [
+       0.00034724,
+       32.95
+      ],
+      "tip": "<b>gpt-oss-120b · high</b><br>caught 33.0% (22.4 to 40.0)<br>$0.00035 per program",
+      "label": {
+       "show": true,
+       "position": "top",
+       "formatter": "gpt-oss-120b",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 3,
+    "symbol": "circle",
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    },
+    "labelLayout": {
+     "hideOverlap": true
+    }
+   },
+   {
+    "name": "Gemma 4",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.0007365,
+       31.44
+      ],
+      "tip": "<b>Gemma 4 26B-A4B</b><br>caught 31.4% (27.4 to 35.3)<br>$0.00074 per program",
+      "label": {
+       "show": true,
+       "position": "top",
+       "formatter": "Gemma 4",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 3,
+    "symbol": "circle",
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    },
+    "labelLayout": {
+     "hideOverlap": true
+    }
+   },
+   {
+    "name": "Gemini Flash-Lite",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.00111362,
+       29.07
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>caught 29.1% (25.2 to 33.2)<br>$0.0011 per program",
+      "label": {
+       "show": true,
+       "position": "bottom",
+       "formatter": "Gemini Flash-Lite",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 7
+      }
+     },
+     {
+      "value": [
+       0.00151342,
+       21.48
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>caught 21.5% (18.1 to 25.1)<br>$0.0015 per program"
+     },
+     {
+      "value": [
+       0.00211379,
+       21.48
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>caught 21.5% (18.2 to 25.1)<br>$0.0021 per program"
+     },
+     {
+      "value": [
+       0.00267878,
+       20.46
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>caught 20.5% (17.3 to 23.8)<br>$0.0027 per program"
+     },
+     {
+      "value": [
+       0.00271361,
+       20.07
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>caught 20.1% (16.8 to 23.6)<br>$0.0027 per program"
+     }
+    ],
+    "z": 3,
+    "symbol": "circle",
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    },
+    "labelLayout": {
+     "hideOverlap": true
+    }
+   },
+   {
+    "name": "Gemma 3 4B",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       8.593e-05,
+       0.5
+      ],
+      "tip": "<b>Gemma 3 4B</b><br>caught 0.5% (0.0 to 1.7)<br>$0.00009 per program",
+      "label": {
+       "show": true,
+       "position": "right",
+       "formatter": "Gemma 3 4B",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 3,
+    "symbol": "circle",
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    },
+    "labelLayout": {
+     "hideOverlap": true
+    }
+   },
+   {
+    "name": "Gemma 3 27B",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.00014343,
+       15.68
+      ],
+      "tip": "<b>Gemma 3 27B</b><br>caught 15.7% (8.6 to 23.8)<br>$0.00014 per program",
+      "label": {
+       "show": true,
+       "position": "left",
+       "formatter": "Gemma 3 27B",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 3,
+    "symbol": "circle",
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    },
+    "labelLayout": {
+     "hideOverlap": true
+    }
+   },
+   {
+    "name": "Mistral Large 4",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.00620319,
+       49.13
+      ],
+      "tip": "<b>Mistral Large 4 · default</b><br>caught 49.1% (45.0 to 53.5)<br>$0.0062 per program",
+      "label": {
+       "show": true,
+       "position": "right",
+       "formatter": "Mistral Large 4",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 7
+      }
+     },
+     {
+      "value": [
+       0.00624963,
+       47.34
+      ],
+      "tip": "<b>Mistral Large 4 · high</b><br>caught 47.3% (42.6 to 51.4)<br>$0.0062 per program"
+     }
+    ],
+    "z": 3,
+    "symbol": "circle",
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    },
+    "labelLayout": {
+     "hideOverlap": true
+    }
+   },
+   {
+    "name": "Ministral 14B",
+    "type": "line",
+    "data": [
+     {
+      "value": [
+       0.0004305,
+       6.38
+      ],
+      "tip": "<b>Ministral 14B</b><br>caught 6.4% (1.9 to 9.7)<br>$0.00043 per program",
+      "label": {
+       "show": true,
+       "position": "right",
+       "formatter": "Ministral 14B",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 7
+      }
+     }
+    ],
+    "z": 3,
+    "symbol": "circle",
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context",
+     "width": 1.5,
+     "opacity": 0.65
+    },
+    "emphasis": {
+     "focus": "series"
+    },
+    "labelLayout": {
+     "hideOverlap": true
+    }
+   },
+   {
+    "name": "_best buys",
+    "type": "line",
+    "data": [
+     [
+      8.593e-05,
+      0.5
+     ],
+     [
+      0.00011886,
+      14.53
+     ],
+     [
+      0.00014343,
+      15.68
+     ],
+     [
+      0.00015922,
+      19.6
+     ],
+     [
+      0.000188,
+      39.42
+     ],
+     [
+      0.00026724,
+      49.91
+     ],
+     [
+      0.0003258,
+      54.97
+     ],
+     [
+      0.00037436,
+      57.74
+     ],
+     [
+      0.00045383,
+      60.96
+     ],
+     [
+      0.00067892,
+      70.05
+     ],
+     [
+      0.00076453,
+      77.2
+     ],
+     [
+      0.00100551,
+      81.49
+     ],
+     [
+      0.00177274,
+      85.1
+     ],
+     [
+      0.00931446,
+      87.58
+     ]
+    ],
+    "symbol": "none",
+    "z": 1,
+    "silent": true,
+    "lineStyle": {
+     "type": "dashed",
+     "color": "@ink-muted",
+     "width": 1.2
+    },
+    "tooltip": {
+     "show": false
+    }
+   }
+  ]
+ },
+ "dial": {
+  "label": "Audit budget",
+  "steps": [
+   "0.5%",
+   "1%",
+   "2%",
+   "5%"
+  ],
+  "initial": 2,
+  "frames": [
+   {
+    "series": [
+     {
+      "name": "Sonnet 5.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00762675,
+         75.95
+        ],
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 75.9% (12.3 to 86.1)<br>$0.0076 per program"
+       },
+       {
+        "value": [
+         0.00931446,
+         80.7
+        ],
+        "tip": "<b>Sonnet 5.5 · high (default)</b><br>caught 80.7% (20.2 to 88.4)<br>$0.0093 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Sonnet 5.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s0",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Sonnet 5.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       [
+        0.00762675,
+        12.33,
+        86.06
+       ],
+       [
+        0.00931446,
+        20.16,
+        88.35
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00067892,
+         42.45
+        ],
+        "tip": "<b>Haiku 5.5 · low</b><br>caught 42.4% (0.2 to 61.4)<br>$0.00068 per program"
+       },
+       {
+        "value": [
+         0.00076453,
+         42.45
+        ],
+        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 42.4% (0.5 to 64.8)<br>$0.00076 per program"
+       },
+       {
+        "value": [
+         0.00100551,
+         48.45
+        ],
+        "tip": "<b>Haiku 5.5 · high</b><br>caught 48.4% (0.3 to 77.0)<br>$0.0010 per program"
+       },
+       {
+        "value": [
+         0.00177274,
+         54.1
+        ],
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 54.1% (0.5 to 80.7)<br>$0.0018 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "Haiku 5.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s1"
+      },
+      "data": [
+       [
+        0.00067892,
+        0.17,
+        61.38
+       ],
+       [
+        0.00076453,
+        0.5,
+        64.84
+       ],
+       [
+        0.00100551,
+        0.33,
+        76.95
+       ],
+       [
+        0.00177274,
+        0.5,
+        80.73
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Haiku 4.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00552506,
+         12.0
+        ],
+        "tip": "<b>Haiku 4.5 · no thinking</b><br>caught 12.0% (2.9 to 47.7)<br>$0.0055 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Haiku 4.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s1",
+       "borderWidth": 2
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 4.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s1"
+      },
+      "data": [
+       [
+        0.00552506,
+        2.87,
+        47.7
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0009335,
+         34.52
+        ],
+        "tip": "<b>GLM-5.3 · low</b><br>caught 34.5% (0.0 to 48.7)<br>$0.00093 per program"
+       },
+       {
+        "value": [
+         0.00170711,
+         37.3
+        ],
+        "tip": "<b>GLM-5.3 · high</b><br>caught 37.3% (1.3 to 52.9)<br>$0.0017 per program"
+       },
+       {
+        "value": [
+         0.0146159,
+         58.57
+        ],
+        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 58.6% (12.9 to 69.2)<br>$0.0146 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "GLM-5.3",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s2",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s2"
+      },
+      "data": [
+       [
+        0.0009335,
+        0.0,
+        48.65
+       ],
+       [
+        0.00170711,
+        1.33,
+        52.94
+       ],
+       [
+        0.0146159,
+        12.87,
+        69.2
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Qwen 3.8",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00053563,
+         17.05
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 17.1% (0.7 to 44.8)<br>$0.00054 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Qwen 3.8",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00091852,
+         14.5
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 14.5% (0.0 to 65.1)<br>$0.00092 per program"
+       },
+       {
+        "value": [
+         0.00094052,
+         3.45
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 3.5% (0.0 to 56.6)<br>$0.00094 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "GPT-6 Luna",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.000188,
+         8.75
+        ],
+        "tip": "<b>GPT-6 Luna · off</b><br>caught 8.8% (0.0 to 40.6)<br>$0.00019 per program"
+       },
+       {
+        "value": [
+         0.00026724,
+         31.9
+        ],
+        "tip": "<b>GPT-6 Luna · low</b><br>caught 31.9% (1.2 to 49.0)<br>$0.00027 per program"
+       },
+       {
+        "value": [
+         0.0003258,
+         41.2
+        ],
+        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 41.2% (2.2 to 55.7)<br>$0.00033 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "GPT-6 Luna",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00037436,
+         40.55
+        ],
+        "tip": "<b>GPT-6 Luna · high</b><br>caught 40.6% (2.8 to 58.6)<br>$0.00037 per program"
+       },
+       {
+        "value": [
+         0.00045383,
+         36.6
+        ],
+        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 36.6% (3.8 to 59.3)<br>$0.00045 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "gpt-oss-120b",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00011886,
+         5.0
+        ],
+        "tip": "<b>gpt-oss-120b · low</b><br>caught 5.0% (0.0 to 12.4)<br>$0.00012 per program"
+       },
+       {
+        "value": [
+         0.00015922,
+         9.35
+        ],
+        "tip": "<b>gpt-oss-120b · medium (default)</b><br>caught 9.3% (0.0 to 14.5)<br>$0.00016 per program"
+       },
+       {
+        "value": [
+         0.00034724,
+         12.5
+        ],
+        "tip": "<b>gpt-oss-120b · high</b><br>caught 12.5% (0.0 to 23.9)<br>$0.00035 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "gpt-oss-120b",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 4",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0007365,
+         22.7
+        ],
+        "tip": "<b>Gemma 4 26B-A4B</b><br>caught 22.7% (2.5 to 33.3)<br>$0.00074 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "Gemma 4",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemini Flash-Lite",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00111362,
+         19.8
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>caught 19.8% (0.0 to 31.0)<br>$0.0011 per program"
+       },
+       {
+        "value": [
+         0.00151342,
+         20.28
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>caught 20.3% (0.3 to 23.7)<br>$0.0015 per program",
+        "label": {
+         "show": true,
+         "position": "bottom",
+         "formatter": "Gemini Flash-Lite",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00211379,
+         20.28
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>caught 20.3% (0.5 to 23.8)<br>$0.0021 per program"
+       },
+       {
+        "value": [
+         0.00267878,
+         19.24
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>caught 19.2% (4.7 to 22.6)<br>$0.0027 per program"
+       },
+       {
+        "value": [
+         0.00271361,
+         18.84
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>caught 18.8% (3.8 to 22.4)<br>$0.0027 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 3 4B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         8.593e-05,
+         0.12
+        ],
+        "tip": "<b>Gemma 3 4B</b><br>caught 0.1% (0.0 to 0.4)<br>$0.00009 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Gemma 3 4B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 3 27B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00014343,
+         2.2
+        ],
+        "tip": "<b>Gemma 3 27B</b><br>caught 2.2% (0.0 to 12.3)<br>$0.00014 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Gemma 3 27B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Mistral Large 4",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00620319,
+         41.5
+        ],
+        "tip": "<b>Mistral Large 4 · default</b><br>caught 41.5% (3.7 to 52.0)<br>$0.0062 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Mistral Large 4",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00624963,
+         32.3
+        ],
+        "tip": "<b>Mistral Large 4 · high</b><br>caught 32.3% (2.5 to 48.7)<br>$0.0062 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Ministral 14B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0004305,
+         0.25
+        ],
+        "tip": "<b>Ministral 14B</b><br>caught 0.2% (0.0 to 3.5)<br>$0.00043 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Ministral 14B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "_best buys",
+      "type": "line",
+      "data": [
+       [
+        8.593e-05,
+        0.12
+       ],
+       [
+        0.00011886,
+        5.0
+       ],
+       [
+        0.00015922,
+        9.35
+       ],
+       [
+        0.00026724,
+        31.9
+       ],
+       [
+        0.0003258,
+        41.2
+       ],
+       [
+        0.00067892,
+        42.45
+       ],
+       [
+        0.00100551,
+        48.45
+       ],
+       [
+        0.00177274,
+        54.1
+       ],
+       [
+        0.00762675,
+        75.95
+       ],
+       [
+        0.00931446,
+        80.7
+       ]
+      ],
+      "symbol": "none",
+      "z": 1,
+      "silent": true,
+      "lineStyle": {
+       "type": "dashed",
+       "color": "@ink-muted",
+       "width": 1.2
+      },
+      "tooltip": {
+       "show": false
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "Sonnet 5.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00762675,
+         83.95
+        ],
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 83.9% (74.6 to 87.1)<br>$0.0076 per program"
+       },
+       {
+        "value": [
+         0.00931446,
+         86.8
+        ],
+        "tip": "<b>Sonnet 5.5 · high (default)</b><br>caught 86.8% (78.7 to 89.5)<br>$0.0093 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Sonnet 5.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s0",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Sonnet 5.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       [
+        0.00762675,
+        74.56,
+        87.14
+       ],
+       [
+        0.00931446,
+        78.73,
+        89.53
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00067892,
+         57.17
+        ],
+        "tip": "<b>Haiku 5.5 · low</b><br>caught 57.2% (37.4 to 72.0)<br>$0.00068 per program"
+       },
+       {
+        "value": [
+         0.00076453,
+         60.37
+        ],
+        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 60.4% (36.0 to 77.6)<br>$0.00076 per program"
+       },
+       {
+        "value": [
+         0.00100551,
+         67.15
+        ],
+        "tip": "<b>Haiku 5.5 · high</b><br>caught 67.2% (41.8 to 83.4)<br>$0.0010 per program"
+       },
+       {
+        "value": [
+         0.00177274,
+         74.8
+        ],
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 74.8% (50.0 to 86.6)<br>$0.0018 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "Haiku 5.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s1"
+      },
+      "data": [
+       [
+        0.00067892,
+        37.4,
+        72.01
+       ],
+       [
+        0.00076453,
+        35.99,
+        77.6
+       ],
+       [
+        0.00100551,
+        41.8,
+        83.44
+       ],
+       [
+        0.00177274,
+        50.0,
+        86.65
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Haiku 4.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00552506,
+         44.4
+        ],
+        "tip": "<b>Haiku 4.5 · no thinking</b><br>caught 44.4% (6.7 to 51.0)<br>$0.0055 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Haiku 4.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s1",
+       "borderWidth": 2
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 4.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s1"
+      },
+      "data": [
+       [
+        0.00552506,
+        6.67,
+        51.0
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0009335,
+         44.15
+        ],
+        "tip": "<b>GLM-5.3 · low</b><br>caught 44.1% (31.8 to 51.5)<br>$0.00093 per program"
+       },
+       {
+        "value": [
+         0.00170711,
+         51.4
+        ],
+        "tip": "<b>GLM-5.3 · high</b><br>caught 51.4% (34.9 to 55.4)<br>$0.0017 per program"
+       },
+       {
+        "value": [
+         0.0146159,
+         64.4
+        ],
+        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 64.4% (55.6 to 76.8)<br>$0.0146 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "GLM-5.3",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s2",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s2"
+      },
+      "data": [
+       [
+        0.0009335,
+        31.8,
+        51.5
+       ],
+       [
+        0.00170711,
+        34.88,
+        55.38
+       ],
+       [
+        0.0146159,
+        55.6,
+        76.8
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Qwen 3.8",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00053563,
+         38.56
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 38.6% (14.2 to 53.0)<br>$0.00054 per program"
+       },
+       {
+        "value": [
+         0.00091852,
+         60.0
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 60.0% (4.8 to 68.6)<br>$0.00092 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Qwen 3.8",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00094052,
+         52.0
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 52.0% (2.4 to 63.4)<br>$0.00094 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "GPT-6 Luna",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.000188,
+         38.8
+        ],
+        "tip": "<b>GPT-6 Luna · off</b><br>caught 38.8% (7.5 to 42.9)<br>$0.00019 per program"
+       },
+       {
+        "value": [
+         0.00026724,
+         42.8
+        ],
+        "tip": "<b>GPT-6 Luna · low</b><br>caught 42.8% (29.2 to 52.7)<br>$0.00027 per program"
+       },
+       {
+        "value": [
+         0.0003258,
+         51.5
+        ],
+        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 51.5% (38.5 to 58.3)<br>$0.00033 per program"
+       },
+       {
+        "value": [
+         0.00037436,
+         55.13
+        ],
+        "tip": "<b>GPT-6 Luna · high</b><br>caught 55.1% (38.7 to 61.2)<br>$0.00037 per program"
+       },
+       {
+        "value": [
+         0.00045383,
+         55.25
+        ],
+        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 55.2% (34.9 to 63.5)<br>$0.00045 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "GPT-6 Luna",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "gpt-oss-120b",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00011886,
+         10.4
+        ],
+        "tip": "<b>gpt-oss-120b · low</b><br>caught 10.4% (3.9 to 14.7)<br>$0.00012 per program"
+       },
+       {
+        "value": [
+         0.00015922,
+         12.43
+        ],
+        "tip": "<b>gpt-oss-120b · medium (default)</b><br>caught 12.4% (7.6 to 18.6)<br>$0.00016 per program"
+       },
+       {
+        "value": [
+         0.00034724,
+         20.7
+        ],
+        "tip": "<b>gpt-oss-120b · high</b><br>caught 20.7% (10.0 to 35.0)<br>$0.00035 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "gpt-oss-120b",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 4",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0007365,
+         30.74
+        ],
+        "tip": "<b>Gemma 4 26B-A4B</b><br>caught 30.7% (20.6 to 34.5)<br>$0.00074 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "Gemma 4",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemini Flash-Lite",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00111362,
+         28.34
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>caught 28.3% (16.8 to 32.3)<br>$0.0011 per program",
+        "label": {
+         "show": true,
+         "position": "bottom",
+         "formatter": "Gemini Flash-Lite",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00151342,
+         20.68
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>caught 20.7% (17.1 to 24.3)<br>$0.0015 per program"
+       },
+       {
+        "value": [
+         0.00211379,
+         20.68
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>caught 20.7% (17.3 to 24.3)<br>$0.0021 per program"
+       },
+       {
+        "value": [
+         0.00267878,
+         19.65
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>caught 19.6% (16.5 to 23.0)<br>$0.0027 per program"
+       },
+       {
+        "value": [
+         0.00271361,
+         19.25
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>caught 19.3% (15.9 to 22.8)<br>$0.0027 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 3 4B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         8.593e-05,
+         0.25
+        ],
+        "tip": "<b>Gemma 3 4B</b><br>caught 0.2% (0.0 to 0.8)<br>$0.00009 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Gemma 3 4B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 3 27B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00014343,
+         7.6
+        ],
+        "tip": "<b>Gemma 3 27B</b><br>caught 7.6% (1.8 to 16.6)<br>$0.00014 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Gemma 3 27B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Mistral Large 4",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00620319,
+         48.61
+        ],
+        "tip": "<b>Mistral Large 4 · default</b><br>caught 48.6% (38.7 to 52.9)<br>$0.0062 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Mistral Large 4",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00624963,
+         46.8
+        ],
+        "tip": "<b>Mistral Large 4 · high</b><br>caught 46.8% (27.2 to 50.4)<br>$0.0062 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Ministral 14B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0004305,
+         1.52
+        ],
+        "tip": "<b>Ministral 14B</b><br>caught 1.5% (0.0 to 7.1)<br>$0.00043 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Ministral 14B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "_best buys",
+      "type": "line",
+      "data": [
+       [
+        8.593e-05,
+        0.25
+       ],
+       [
+        0.00011886,
+        10.4
+       ],
+       [
+        0.00015922,
+        12.43
+       ],
+       [
+        0.000188,
+        38.8
+       ],
+       [
+        0.00026724,
+        42.8
+       ],
+       [
+        0.0003258,
+        51.5
+       ],
+       [
+        0.00037436,
+        55.13
+       ],
+       [
+        0.00045383,
+        55.25
+       ],
+       [
+        0.00067892,
+        57.17
+       ],
+       [
+        0.00076453,
+        60.37
+       ],
+       [
+        0.00100551,
+        67.15
+       ],
+       [
+        0.00177274,
+        74.8
+       ],
+       [
+        0.00762675,
+        83.95
+       ],
+       [
+        0.00931446,
+        86.8
+       ]
+      ],
+      "symbol": "none",
+      "z": 1,
+      "silent": true,
+      "lineStyle": {
+       "type": "dashed",
+       "color": "@ink-muted",
+       "width": 1.2
+      },
+      "tooltip": {
+       "show": false
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "Sonnet 5.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00762675,
+         84.67
+        ],
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 84.7% (81.5 to 87.8)<br>$0.0076 per program"
+       },
+       {
+        "value": [
+         0.00931446,
+         87.58
+        ],
+        "tip": "<b>Sonnet 5.5 · high (default)</b><br>caught 87.6% (84.4 to 90.3)<br>$0.0093 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Sonnet 5.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s0",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Sonnet 5.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       [
+        0.00762675,
+        81.5,
+        87.75
+       ],
+       [
+        0.00931446,
+        84.37,
+        90.32
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00067892,
+         70.05
+        ],
+        "tip": "<b>Haiku 5.5 · low</b><br>caught 70.0% (58.3 to 78.0)<br>$0.00068 per program"
+       },
+       {
+        "value": [
+         0.00076453,
+         77.2
+        ],
+        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 77.2% (61.6 to 80.7)<br>$0.00076 per program"
+       },
+       {
+        "value": [
+         0.00100551,
+         81.49
+        ],
+        "tip": "<b>Haiku 5.5 · high</b><br>caught 81.5% (69.5 to 84.7)<br>$0.0010 per program"
+       },
+       {
+        "value": [
+         0.00177274,
+         85.1
+        ],
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.1% (75.7 to 88.0)<br>$0.0018 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "Haiku 5.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s1"
+      },
+      "data": [
+       [
+        0.00067892,
+        58.3,
+        78.0
+       ],
+       [
+        0.00076453,
+        61.6,
+        80.69
+       ],
+       [
+        0.00100551,
+        69.53,
+        84.75
+       ],
+       [
+        0.00177274,
+        75.73,
+        88.0
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Haiku 4.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00552506,
+         49.2
+        ],
+        "tip": "<b>Haiku 4.5 · no thinking</b><br>caught 49.2% (43.2 to 56.2)<br>$0.0055 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Haiku 4.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s1",
+       "borderWidth": 2
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 4.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s1"
+      },
+      "data": [
+       [
+        0.00552506,
+        43.2,
+        56.2
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0009335,
+         48.42
+        ],
+        "tip": "<b>GLM-5.3 · low</b><br>caught 48.4% (43.6 to 52.6)<br>$0.00093 per program"
+       },
+       {
+        "value": [
+         0.00170711,
+         51.89
+        ],
+        "tip": "<b>GLM-5.3 · high</b><br>caught 51.9% (47.3 to 56.4)<br>$0.0017 per program"
+       },
+       {
+        "value": [
+         0.0146159,
+         76.2
+        ],
+        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.2% (63.9 to 79.5)<br>$0.0146 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "GLM-5.3",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s2",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s2"
+      },
+      "data": [
+       [
+        0.0009335,
+        43.63,
+        52.6
+       ],
+       [
+        0.00170711,
+        47.32,
+        56.38
+       ],
+       [
+        0.0146159,
+        63.88,
+        79.48
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Qwen 3.8",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00053563,
+         51.3
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 51.3% (39.5 to 55.3)<br>$0.00054 per program"
+       },
+       {
+        "value": [
+         0.00091852,
+         66.84
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 66.8% (60.4 to 73.8)<br>$0.00092 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Qwen 3.8",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00094052,
+         62.6
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 62.6% (51.6 to 66.4)<br>$0.00094 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "GPT-6 Luna",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.000188,
+         39.42
+        ],
+        "tip": "<b>GPT-6 Luna · off</b><br>caught 39.4% (35.3 to 43.8)<br>$0.00019 per program"
+       },
+       {
+        "value": [
+         0.00026724,
+         49.91
+        ],
+        "tip": "<b>GPT-6 Luna · low</b><br>caught 49.9% (43.4 to 54.1)<br>$0.00027 per program"
+       },
+       {
+        "value": [
+         0.0003258,
+         54.97
+        ],
+        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 55.0% (50.2 to 59.3)<br>$0.00033 per program"
+       },
+       {
+        "value": [
+         0.00037436,
+         57.74
+        ],
+        "tip": "<b>GPT-6 Luna · high</b><br>caught 57.7% (53.0 to 62.2)<br>$0.00037 per program"
+       },
+       {
+        "value": [
+         0.00045383,
+         60.96
+        ],
+        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 61.0% (55.1 to 65.2)<br>$0.00045 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "GPT-6 Luna",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "gpt-oss-120b",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00011886,
+         14.53
+        ],
+        "tip": "<b>gpt-oss-120b · low</b><br>caught 14.5% (9.8 to 19.3)<br>$0.00012 per program"
+       },
+       {
+        "value": [
+         0.00015922,
+         19.6
+        ],
+        "tip": "<b>gpt-oss-120b · medium (default)</b><br>caught 19.6% (12.9 to 28.1)<br>$0.00016 per program"
+       },
+       {
+        "value": [
+         0.00034724,
+         32.95
+        ],
+        "tip": "<b>gpt-oss-120b · high</b><br>caught 33.0% (22.4 to 40.0)<br>$0.00035 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "gpt-oss-120b",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 4",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0007365,
+         31.44
+        ],
+        "tip": "<b>Gemma 4 26B-A4B</b><br>caught 31.4% (27.4 to 35.3)<br>$0.00074 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "Gemma 4",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemini Flash-Lite",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00111362,
+         29.07
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>caught 29.1% (25.2 to 33.2)<br>$0.0011 per program",
+        "label": {
+         "show": true,
+         "position": "bottom",
+         "formatter": "Gemini Flash-Lite",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00151342,
+         21.48
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>caught 21.5% (18.1 to 25.1)<br>$0.0015 per program"
+       },
+       {
+        "value": [
+         0.00211379,
+         21.48
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>caught 21.5% (18.2 to 25.1)<br>$0.0021 per program"
+       },
+       {
+        "value": [
+         0.00267878,
+         20.46
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>caught 20.5% (17.3 to 23.8)<br>$0.0027 per program"
+       },
+       {
+        "value": [
+         0.00271361,
+         20.07
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>caught 20.1% (16.8 to 23.6)<br>$0.0027 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 3 4B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         8.593e-05,
+         0.5
+        ],
+        "tip": "<b>Gemma 3 4B</b><br>caught 0.5% (0.0 to 1.7)<br>$0.00009 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Gemma 3 4B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 3 27B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00014343,
+         15.68
+        ],
+        "tip": "<b>Gemma 3 27B</b><br>caught 15.7% (8.6 to 23.8)<br>$0.00014 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Gemma 3 27B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Mistral Large 4",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00620319,
+         49.13
+        ],
+        "tip": "<b>Mistral Large 4 · default</b><br>caught 49.1% (45.0 to 53.5)<br>$0.0062 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Mistral Large 4",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00624963,
+         47.34
+        ],
+        "tip": "<b>Mistral Large 4 · high</b><br>caught 47.3% (42.6 to 51.4)<br>$0.0062 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Ministral 14B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0004305,
+         6.38
+        ],
+        "tip": "<b>Ministral 14B</b><br>caught 6.4% (1.9 to 9.7)<br>$0.00043 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Ministral 14B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "_best buys",
+      "type": "line",
+      "data": [
+       [
+        8.593e-05,
+        0.5
+       ],
+       [
+        0.00011886,
+        14.53
+       ],
+       [
+        0.00014343,
+        15.68
+       ],
+       [
+        0.00015922,
+        19.6
+       ],
+       [
+        0.000188,
+        39.42
+       ],
+       [
+        0.00026724,
+        49.91
+       ],
+       [
+        0.0003258,
+        54.97
+       ],
+       [
+        0.00037436,
+        57.74
+       ],
+       [
+        0.00045383,
+        60.96
+       ],
+       [
+        0.00067892,
+        70.05
+       ],
+       [
+        0.00076453,
+        77.2
+       ],
+       [
+        0.00100551,
+        81.49
+       ],
+       [
+        0.00177274,
+        85.1
+       ],
+       [
+        0.00931446,
+        87.58
+       ]
+      ],
+      "symbol": "none",
+      "z": 1,
+      "silent": true,
+      "lineStyle": {
+       "type": "dashed",
+       "color": "@ink-muted",
+       "width": 1.2
+      },
+      "tooltip": {
+       "show": false
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "Sonnet 5.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00762675,
+         86.86
+        ],
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 86.9% (84.1 to 89.7)<br>$0.0076 per program"
+       },
+       {
+        "value": [
+         0.00931446,
+         89.92
+        ],
+        "tip": "<b>Sonnet 5.5 · high (default)</b><br>caught 89.9% (87.1 to 92.4)<br>$0.0093 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Sonnet 5.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s0",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Sonnet 5.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       [
+        0.00762675,
+        84.12,
+        89.74
+       ],
+       [
+        0.00931446,
+        87.07,
+        92.44
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00067892,
+         75.96
+        ],
+        "tip": "<b>Haiku 5.5 · low</b><br>caught 76.0% (72.2 to 79.6)<br>$0.00068 per program"
+       },
+       {
+        "value": [
+         0.00076453,
+         78.03
+        ],
+        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 78.0% (74.5 to 81.7)<br>$0.00076 per program"
+       },
+       {
+        "value": [
+         0.00100551,
+         82.2
+        ],
+        "tip": "<b>Haiku 5.5 · high</b><br>caught 82.2% (79.0 to 85.6)<br>$0.0010 per program"
+       },
+       {
+        "value": [
+         0.00177274,
+         85.88
+        ],
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.9% (83.0 to 88.8)<br>$0.0018 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "Haiku 5.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s1"
+      },
+      "data": [
+       [
+        0.00067892,
+        72.19,
+        79.57
+       ],
+       [
+        0.00076453,
+        74.51,
+        81.67
+       ],
+       [
+        0.00100551,
+        78.95,
+        85.56
+       ],
+       [
+        0.00177274,
+        82.96,
+        88.79
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Haiku 4.5",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00552506,
+         56.27
+        ],
+        "tip": "<b>Haiku 4.5 · no thinking</b><br>caught 56.3% (51.8 to 60.9)<br>$0.0055 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Haiku 4.5",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s1",
+       "borderWidth": 2
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 4.5",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s1"
+      },
+      "data": [
+       [
+        0.00552506,
+        51.81,
+        60.93
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0009335,
+         50.0
+        ],
+        "tip": "<b>GLM-5.3 · low</b><br>caught 50.0% (45.9 to 54.1)<br>$0.00093 per program"
+       },
+       {
+        "value": [
+         0.00170711,
+         53.36
+        ],
+        "tip": "<b>GLM-5.3 · high</b><br>caught 53.4% (49.3 to 57.7)<br>$0.0017 per program"
+       },
+       {
+        "value": [
+         0.0146159,
+         76.93
+        ],
+        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.9% (73.3 to 80.4)<br>$0.0146 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "GLM-5.3",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 4,
+      "symbol": "circle",
+      "symbolSize": 10,
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s2",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+      "itemStyle": {
+       "color": "@s2"
+      },
+      "data": [
+       [
+        0.0009335,
+        45.85,
+        54.13
+       ],
+       [
+        0.00170711,
+        49.26,
+        57.71
+       ],
+       [
+        0.0146159,
+        73.33,
+        80.39
+       ]
+      ],
+      "encode": {
+       "x": 0,
+       "y": [
+        1,
+        2
+       ]
+      },
+      "z": 2,
+      "silent": true,
+      "tooltip": {
+       "show": false
+      }
+     },
+     {
+      "name": "Qwen 3.8",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00053563,
+         52.79
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 52.8% (48.6 to 56.9)<br>$0.00054 per program"
+       },
+       {
+        "value": [
+         0.00091852,
+         72.52
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 72.5% (68.5 to 76.3)<br>$0.00092 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Qwen 3.8",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00094052,
+         63.74
+        ],
+        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 63.7% (59.9 to 67.8)<br>$0.00094 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "GPT-6 Luna",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.000188,
+         41.27
+        ],
+        "tip": "<b>GPT-6 Luna · off</b><br>caught 41.3% (37.4 to 45.5)<br>$0.00019 per program"
+       },
+       {
+        "value": [
+         0.00026724,
+         51.44
+        ],
+        "tip": "<b>GPT-6 Luna · low</b><br>caught 51.4% (47.2 to 55.7)<br>$0.00027 per program"
+       },
+       {
+        "value": [
+         0.0003258,
+         56.35
+        ],
+        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 56.3% (52.1 to 60.6)<br>$0.00033 per program"
+       },
+       {
+        "value": [
+         0.00037436,
+         59.04
+        ],
+        "tip": "<b>GPT-6 Luna · high</b><br>caught 59.0% (54.7 to 63.3)<br>$0.00037 per program"
+       },
+       {
+        "value": [
+         0.00045383,
+         62.15
+        ],
+        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 62.2% (58.2 to 66.3)<br>$0.00045 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "GPT-6 Luna",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "gpt-oss-120b",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00011886,
+         26.93
+        ],
+        "tip": "<b>gpt-oss-120b · low</b><br>caught 26.9% (20.7 to 35.1)<br>$0.00012 per program"
+       },
+       {
+        "value": [
+         0.00015922,
+         41.1
+        ],
+        "tip": "<b>gpt-oss-120b · medium (default)</b><br>caught 41.1% (30.4 to 49.2)<br>$0.00016 per program"
+       },
+       {
+        "value": [
+         0.00034724,
+         43.29
+        ],
+        "tip": "<b>gpt-oss-120b · high</b><br>caught 43.3% (38.0 to 48.6)<br>$0.00035 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "gpt-oss-120b",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 4",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0007365,
+         33.54
+        ],
+        "tip": "<b>Gemma 4 26B-A4B</b><br>caught 33.5% (29.7 to 37.3)<br>$0.00074 per program",
+        "label": {
+         "show": true,
+         "position": "top",
+         "formatter": "Gemma 4",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemini Flash-Lite",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00111362,
+         31.24
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>caught 31.2% (27.5 to 35.2)<br>$0.0011 per program",
+        "label": {
+         "show": true,
+         "position": "bottom",
+         "formatter": "Gemini Flash-Lite",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00151342,
+         23.89
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>caught 23.9% (20.6 to 27.4)<br>$0.0015 per program"
+       },
+       {
+        "value": [
+         0.00211379,
+         23.89
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>caught 23.9% (20.7 to 27.4)<br>$0.0021 per program"
+       },
+       {
+        "value": [
+         0.00267878,
+         22.9
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>caught 22.9% (19.8 to 26.1)<br>$0.0027 per program"
+       },
+       {
+        "value": [
+         0.00271361,
+         22.52
+        ],
+        "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>caught 22.5% (19.3 to 25.9)<br>$0.0027 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 3 4B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         8.593e-05,
+         5.96
+        ],
+        "tip": "<b>Gemma 3 4B</b><br>caught 6.0% (1.1 to 10.4)<br>$0.00009 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Gemma 3 4B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Gemma 3 27B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00014343,
+         30.39
+        ],
+        "tip": "<b>Gemma 3 27B</b><br>caught 30.4% (22.4 to 36.3)<br>$0.00014 per program",
+        "label": {
+         "show": true,
+         "position": "left",
+         "formatter": "Gemma 3 27B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Mistral Large 4",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.00620319,
+         50.68
+        ],
+        "tip": "<b>Mistral Large 4 · default</b><br>caught 50.7% (46.7 to 54.9)<br>$0.0062 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Mistral Large 4",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       },
+       {
+        "value": [
+         0.00624963,
+         48.95
+        ],
+        "tip": "<b>Mistral Large 4 · high</b><br>caught 48.9% (44.5 to 52.9)<br>$0.0062 per program"
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "Ministral 14B",
+      "type": "line",
+      "data": [
+       {
+        "value": [
+         0.0004305,
+         13.7
+        ],
+        "tip": "<b>Ministral 14B</b><br>caught 13.7% (8.2 to 20.5)<br>$0.00043 per program",
+        "label": {
+         "show": true,
+         "position": "right",
+         "formatter": "Ministral 14B",
+         "color": "@ink-muted",
+         "fontSize": 11,
+         "fontWeight": 400,
+         "distance": 7
+        }
+       }
+      ],
+      "z": 3,
+      "symbol": "circle",
+      "symbolSize": 7,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5,
+       "opacity": 0.65
+      },
+      "emphasis": {
+       "focus": "series"
+      },
+      "labelLayout": {
+       "hideOverlap": true
+      }
+     },
+     {
+      "name": "_best buys",
+      "type": "line",
+      "data": [
+       [
+        8.593e-05,
+        5.96
+       ],
+       [
+        0.00011886,
+        26.93
+       ],
+       [
+        0.00014343,
+        30.39
+       ],
+       [
+        0.00015922,
+        41.1
+       ],
+       [
+        0.000188,
+        41.27
+       ],
+       [
+        0.00026724,
+        51.44
+       ],
+       [
+        0.0003258,
+        56.35
+       ],
+       [
+        0.00037436,
+        59.04
+       ],
+       [
+        0.00045383,
+        62.15
+       ],
+       [
+        0.00067892,
+        75.96
+       ],
+       [
+        0.00076453,
+        78.03
+       ],
+       [
+        0.00100551,
+        82.2
+       ],
+       [
+        0.00177274,
+        85.88
+       ],
+       [
+        0.00762675,
+        86.86
+       ],
+       [
+        0.00931446,
+        89.92
+       ]
+      ],
+      "symbol": "none",
+      "z": 1,
+      "silent": true,
+      "lineStyle": {
+       "type": "dashed",
+       "color": "@ink-muted",
+       "width": 1.2
+      },
+      "tooltip": {
+       "show": false
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "data": {
+  "columns": [
+   "name",
+   "model",
+   "effort",
+   "budget_pct",
+   "cost",
+   "safety_exact",
+   "ci_lo",
+   "ci_hi"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5 · high (default)",
+    "sonnet55",
+    "high",
+    0.5,
+    0.009314,
+    0.807,
+    0.201642,
+    0.883511
+   ],
+   [
+    "Sonnet 5.5 · high (default)",
+    "sonnet55",
+    "high",
+    1.0,
+    0.009314,
+    0.868,
+    0.7873,
+    0.895288
+   ],
+   [
+    "Sonnet 5.5 · high (default)",
+    "sonnet55",
+    "high",
+    2.0,
+    0.009314,
+    0.875805,
+    0.843718,
+    0.903213
+   ],
+   [
+    "Sonnet 5.5 · high (default)",
+    "sonnet55",
+    "high",
+    5.0,
+    0.009314,
+    0.89922,
+    0.870718,
+    0.924357
+   ],
+   [
+    "Sonnet 5.5 · low (thinking off)",
+    "sonnet55",
+    "low",
+    0.5,
+    0.007627,
+    0.7595,
+    0.123333,
+    0.860644
+   ],
+   [
+    "Sonnet 5.5 · low (thinking off)",
+    "sonnet55",
+    "low",
+    1.0,
+    0.007627,
+    0.839457,
+    0.745598,
+    0.871392
+   ],
+   [
+    "Sonnet 5.5 · low (thinking off)",
+    "sonnet55",
+    "low",
+    2.0,
+    0.007627,
+    0.846743,
+    0.814999,
+    0.877528
+   ],
+   [
+    "Sonnet 5.5 · low (thinking off)",
+    "sonnet55",
+    "low",
+    5.0,
+    0.007627,
+    0.8686,
+    0.841183,
+    0.8974
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "haiku55",
+    "xhigh",
+    0.5,
+    0.001773,
+    0.541,
+    0.005,
+    0.807338
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "haiku55",
+    "xhigh",
+    1.0,
+    0.001773,
+    0.748,
+    0.499967,
+    0.866477
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "haiku55",
+    "xhigh",
+    2.0,
+    0.001773,
+    0.851032,
+    0.757333,
+    0.880029
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "haiku55",
+    "xhigh",
+    5.0,
+    0.001773,
+    0.858769,
+    0.829632,
+    0.887899
+   ],
+   [
+    "Haiku 5.5 · high",
+    "haiku55",
+    "high",
+    0.5,
+    0.001006,
+    0.4845,
+    0.003333,
+    0.76952
+   ],
+   [
+    "Haiku 5.5 · high",
+    "haiku55",
+    "high",
+    1.0,
+    0.001006,
+    0.6715,
+    0.41795,
+    0.834392
+   ],
+   [
+    "Haiku 5.5 · high",
+    "haiku55",
+    "high",
+    2.0,
+    0.001006,
+    0.814941,
+    0.695308,
+    0.847484
+   ],
+   [
+    "Haiku 5.5 · high",
+    "haiku55",
+    "high",
+    5.0,
+    0.001006,
+    0.821994,
+    0.789533,
+    0.855636
+   ],
+   [
+    "Haiku 5.5 · medium (default)",
+    "haiku55",
+    "medium",
+    0.5,
+    0.000765,
+    0.4245,
+    0.005,
+    0.648433
+   ],
+   [
+    "Haiku 5.5 · medium (default)",
+    "haiku55",
+    "medium",
+    1.0,
+    0.000765,
+    0.603667,
+    0.3599,
+    0.776
+   ],
+   [
+    "Haiku 5.5 · medium (default)",
+    "haiku55",
+    "medium",
+    2.0,
+    0.000765,
+    0.772,
+    0.616,
+    0.806906
+   ],
+   [
+    "Haiku 5.5 · medium (default)",
+    "haiku55",
+    "medium",
+    5.0,
+    0.000765,
+    0.780321,
+    0.745121,
+    0.816667
+   ],
+   [
+    "Haiku 5.5 · low",
+    "haiku55",
+    "low",
+    0.5,
+    0.000679,
+    0.4245,
+    0.001667,
+    0.613756
+   ],
+   [
+    "Haiku 5.5 · low",
+    "haiku55",
+    "low",
+    1.0,
+    0.000679,
+    0.57175,
+    0.37395,
+    0.720087
+   ],
+   [
+    "Haiku 5.5 · low",
+    "haiku55",
+    "low",
+    2.0,
+    0.000679,
+    0.7005,
+    0.582993,
+    0.78
+   ],
+   [
+    "Haiku 5.5 · low",
+    "haiku55",
+    "low",
+    5.0,
+    0.000679,
+    0.759565,
+    0.721874,
+    0.795675
+   ],
+   [
+    "Haiku 4.5 · no thinking",
+    "haiku45",
+    "off",
+    0.5,
+    0.005525,
+    0.12,
+    0.028746,
+    0.477003
+   ],
+   [
+    "Haiku 4.5 · no thinking",
+    "haiku45",
+    "off",
+    1.0,
+    0.005525,
+    0.444,
+    0.06665,
+    0.51
+   ],
+   [
+    "Haiku 4.5 · no thinking",
+    "haiku45",
+    "off",
+    2.0,
+    0.005525,
+    0.492,
+    0.431995,
+    0.562007
+   ],
+   [
+    "Haiku 4.5 · no thinking",
+    "haiku45",
+    "off",
+    5.0,
+    0.005525,
+    0.562747,
+    0.518126,
+    0.609281
+   ],
+   [
+    "GLM-5.3 · max (default)",
+    "glm53",
+    "max",
+    0.5,
+    0.014616,
+    0.585667,
+    0.128667,
+    0.692012
+   ],
+   [
+    "GLM-5.3 · max (default)",
+    "glm53",
+    "max",
+    1.0,
+    0.014616,
+    0.644,
+    0.556,
+    0.768012
+   ],
+   [
+    "GLM-5.3 · max (default)",
+    "glm53",
+    "max",
+    2.0,
+    0.014616,
+    0.762,
+    0.63878,
+    0.794848
+   ],
+   [
+    "GLM-5.3 · max (default)",
+    "glm53",
+    "max",
+    5.0,
+    0.014616,
+    0.769286,
+    0.733293,
+    0.803855
+   ],
+   [
+    "GLM-5.3 · high",
+    "glm53",
+    "high",
+    0.5,
+    0.001707,
+    0.373,
+    0.013333,
+    0.529445
+   ],
+   [
+    "GLM-5.3 · high",
+    "glm53",
+    "high",
+    1.0,
+    0.001707,
+    0.514,
+    0.34878,
+    0.55382
+   ],
+   [
+    "GLM-5.3 · high",
+    "glm53",
+    "high",
+    2.0,
+    0.001707,
+    0.518909,
+    0.473206,
+    0.563786
+   ],
+   [
+    "GLM-5.3 · high",
+    "glm53",
+    "high",
+    5.0,
+    0.001707,
+    0.533636,
+    0.492567,
+    0.57714
+   ],
+   [
+    "GLM-5.3 · low",
+    "glm53",
+    "low",
+    0.5,
+    0.000934,
+    0.34525,
+    0.0,
+    0.486516
+   ],
+   [
+    "GLM-5.3 · low",
+    "glm53",
+    "low",
+    1.0,
+    0.000934,
+    0.4415,
+    0.31795,
+    0.515003
+   ],
+   [
+    "GLM-5.3 · low",
+    "glm53",
+    "low",
+    2.0,
+    0.000934,
+    0.484211,
+    0.436333,
+    0.526019
+   ],
+   [
+    "GLM-5.3 · low",
+    "glm53",
+    "low",
+    5.0,
+    0.000934,
+    0.5,
+    0.458512,
+    0.541271
+   ],
+   [
+    "Qwen 3.8 Omni Flash · high",
+    "qwen38",
+    "high",
+    0.5,
+    0.000919,
+    0.145,
+    0.0,
+    0.650563
+   ],
+   [
+    "Qwen 3.8 Omni Flash · high",
+    "qwen38",
+    "high",
+    1.0,
+    0.000919,
+    0.6,
+    0.04795,
+    0.686
+   ],
+   [
+    "Qwen 3.8 Omni Flash · high",
+    "qwen38",
+    "high",
+    2.0,
+    0.000919,
+    0.6684,
+    0.604495,
+    0.737606
+   ],
+   [
+    "Qwen 3.8 Omni Flash · high",
+    "qwen38",
+    "high",
+    5.0,
+    0.000919,
+    0.725207,
+    0.684615,
+    0.763486
+   ],
+   [
+    "Qwen 3.8 Omni Flash · medium",
+    "qwen38",
+    "medium",
+    0.5,
+    0.000941,
+    0.0345,
+    0.0,
+    0.565716
+   ],
+   [
+    "Qwen 3.8 Omni Flash · medium",
+    "qwen38",
+    "medium",
+    1.0,
+    0.000941,
+    0.52,
+    0.024,
+    0.634
+   ],
+   [
+    "Qwen 3.8 Omni Flash · medium",
+    "qwen38",
+    "medium",
+    2.0,
+    0.000941,
+    0.626,
+    0.51595,
+    0.664
+   ],
+   [
+    "Qwen 3.8 Omni Flash · medium",
+    "qwen38",
+    "medium",
+    5.0,
+    0.000941,
+    0.637449,
+    0.598756,
+    0.678163
+   ],
+   [
+    "Qwen 3.8 Omni Flash · off",
+    "qwen38",
+    "off",
+    0.5,
+    0.000536,
+    0.1705,
+    0.006656,
+    0.448075
+   ],
+   [
+    "Qwen 3.8 Omni Flash · off",
+    "qwen38",
+    "off",
+    1.0,
+    0.000536,
+    0.3856,
+    0.142,
+    0.53
+   ],
+   [
+    "Qwen 3.8 Omni Flash · off",
+    "qwen38",
+    "off",
+    2.0,
+    0.000536,
+    0.512994,
+    0.394989,
+    0.552738
+   ],
+   [
+    "Qwen 3.8 Omni Flash · off",
+    "qwen38",
+    "off",
+    5.0,
+    0.000536,
+    0.527902,
+    0.486221,
+    0.568712
+   ],
+   [
+    "GPT-6 Luna · xhigh",
+    "luna",
+    "xhigh",
+    0.5,
+    0.000454,
+    0.366,
+    0.038333,
+    0.593012
+   ],
+   [
+    "GPT-6 Luna · xhigh",
+    "luna",
+    "xhigh",
+    1.0,
+    0.000454,
+    0.5525,
+    0.349317,
+    0.634753
+   ],
+   [
+    "GPT-6 Luna · xhigh",
+    "luna",
+    "xhigh",
+    2.0,
+    0.000454,
+    0.609593,
+    0.550746,
+    0.651567
+   ],
+   [
+    "GPT-6 Luna · xhigh",
+    "luna",
+    "xhigh",
+    5.0,
+    0.000454,
+    0.621545,
+    0.581846,
+    0.663465
+   ],
+   [
+    "GPT-6 Luna · high",
+    "luna",
+    "high",
+    0.5,
+    0.000374,
+    0.4055,
+    0.0275,
+    0.58643
+   ],
+   [
+    "GPT-6 Luna · high",
+    "luna",
+    "high",
+    1.0,
+    0.000374,
+    0.551333,
+    0.3873,
+    0.611569
+   ],
+   [
+    "GPT-6 Luna · high",
+    "luna",
+    "high",
+    2.0,
+    0.000374,
+    0.577449,
+    0.529738,
+    0.621859
+   ],
+   [
+    "GPT-6 Luna · high",
+    "luna",
+    "high",
+    5.0,
+    0.000374,
+    0.590385,
+    0.546966,
+    0.633434
+   ],
+   [
+    "GPT-6 Luna · medium (default)",
+    "luna",
+    "medium",
+    0.5,
+    0.000326,
+    0.412,
+    0.021667,
+    0.557343
+   ],
+   [
+    "GPT-6 Luna · medium (default)",
+    "luna",
+    "medium",
+    1.0,
+    0.000326,
+    0.515,
+    0.385325,
+    0.582671
+   ],
+   [
+    "GPT-6 Luna · medium (default)",
+    "luna",
+    "medium",
+    2.0,
+    0.000326,
+    0.549676,
+    0.502064,
+    0.59332
+   ],
+   [
+    "GPT-6 Luna · medium (default)",
+    "luna",
+    "medium",
+    5.0,
+    0.000326,
+    0.563462,
+    0.521169,
+    0.605769
+   ],
+   [
+    "GPT-6 Luna · low",
+    "luna",
+    "low",
+    0.5,
+    0.000267,
+    0.319,
+    0.011667,
+    0.490338
+   ],
+   [
+    "GPT-6 Luna · low",
+    "luna",
+    "low",
+    1.0,
+    0.000267,
+    0.428,
+    0.291975,
+    0.526956
+   ],
+   [
+    "GPT-6 Luna · low",
+    "luna",
+    "low",
+    2.0,
+    0.000267,
+    0.499067,
+    0.433589,
+    0.540937
+   ],
+   [
+    "GPT-6 Luna · low",
+    "luna",
+    "low",
+    5.0,
+    0.000267,
+    0.514402,
+    0.472211,
+    0.55743
+   ],
+   [
+    "GPT-6 Luna · off",
+    "luna",
+    "off",
+    0.5,
+    0.000188,
+    0.0875,
+    0.0,
+    0.405812
+   ],
+   [
+    "GPT-6 Luna · off",
+    "luna",
+    "off",
+    1.0,
+    0.000188,
+    0.388,
+    0.075317,
+    0.429153
+   ],
+   [
+    "GPT-6 Luna · off",
+    "luna",
+    "off",
+    2.0,
+    0.000188,
+    0.394182,
+    0.352641,
+    0.438028
+   ],
+   [
+    "GPT-6 Luna · off",
+    "luna",
+    "off",
+    5.0,
+    0.000188,
+    0.412727,
+    0.374342,
+    0.455231
+   ],
+   [
+    "gpt-oss-120b · high",
+    "gptoss",
+    "high",
+    0.5,
+    0.000347,
+    0.125,
+    0.0,
+    0.239212
+   ],
+   [
+    "gpt-oss-120b · high",
+    "gptoss",
+    "high",
+    1.0,
+    0.000347,
+    0.207,
+    0.1,
+    0.35005
+   ],
+   [
+    "gpt-oss-120b · high",
+    "gptoss",
+    "high",
+    2.0,
+    0.000347,
+    0.3295,
+    0.223574,
+    0.399624
+   ],
+   [
+    "gpt-oss-120b · high",
+    "gptoss",
+    "high",
+    5.0,
+    0.000347,
+    0.432851,
+    0.379699,
+    0.486095
+   ],
+   [
+    "gpt-oss-120b · medium (default)",
+    "gptoss",
+    "medium",
+    0.5,
+    0.000159,
+    0.0935,
+    0.0,
+    0.14481
+   ],
+   [
+    "gpt-oss-120b · medium (default)",
+    "gptoss",
+    "medium",
+    1.0,
+    0.000159,
+    0.124333,
+    0.076,
+    0.185739
+   ],
+   [
+    "gpt-oss-120b · medium (default)",
+    "gptoss",
+    "medium",
+    2.0,
+    0.000159,
+    0.196,
+    0.129075,
+    0.280599
+   ],
+   [
+    "gpt-oss-120b · medium (default)",
+    "gptoss",
+    "medium",
+    5.0,
+    0.000159,
+    0.411,
+    0.304255,
+    0.492008
+   ],
+   [
+    "gpt-oss-120b · low",
+    "gptoss",
+    "low",
+    0.5,
+    0.000119,
+    0.05,
+    0.0,
+    0.12412
+   ],
+   [
+    "gpt-oss-120b · low",
+    "gptoss",
+    "low",
+    1.0,
+    0.000119,
+    0.104,
+    0.039325,
+    0.147336
+   ],
+   [
+    "gpt-oss-120b · low",
+    "gptoss",
+    "low",
+    2.0,
+    0.000119,
+    0.145316,
+    0.09798,
+    0.19335
+   ],
+   [
+    "gpt-oss-120b · low",
+    "gptoss",
+    "low",
+    5.0,
+    0.000119,
+    0.269263,
+    0.206633,
+    0.350613
+   ],
+   [
+    "Gemma 4 26B-A4B",
+    "gemma4",
+    "default",
+    0.5,
+    0.000736,
+    0.227,
+    0.025,
+    0.332688
+   ],
+   [
+    "Gemma 4 26B-A4B",
+    "gemma4",
+    "default",
+    1.0,
+    0.000736,
+    0.307399,
+    0.206,
+    0.345339
+   ],
+   [
+    "Gemma 4 26B-A4B",
+    "gemma4",
+    "default",
+    2.0,
+    0.000736,
+    0.314395,
+    0.274355,
+    0.353239
+   ],
+   [
+    "Gemma 4 26B-A4B",
+    "gemma4",
+    "default",
+    5.0,
+    0.000736,
+    0.335383,
+    0.296579,
+    0.373038
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · off",
+    "gemini35lite",
+    "off",
+    0.5,
+    0.001114,
+    0.198,
+    0.0,
+    0.31008
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · off",
+    "gemini35lite",
+    "off",
+    1.0,
+    0.001114,
+    0.283448,
+    0.168,
+    0.322871
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · off",
+    "gemini35lite",
+    "off",
+    2.0,
+    0.001114,
+    0.290685,
+    0.252105,
+    0.331549
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · off",
+    "gemini35lite",
+    "off",
+    5.0,
+    0.001114,
+    0.312399,
+    0.275,
+    0.352012
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · low",
+    "gemini35lite",
+    "low",
+    0.5,
+    0.001513,
+    0.202801,
+    0.003333,
+    0.236767
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · low",
+    "gemini35lite",
+    "low",
+    1.0,
+    0.001513,
+    0.206807,
+    0.17134,
+    0.24307
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · low",
+    "gemini35lite",
+    "low",
+    2.0,
+    0.001513,
+    0.214819,
+    0.181365,
+    0.250716
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · low",
+    "gemini35lite",
+    "low",
+    5.0,
+    0.001513,
+    0.238855,
+    0.206426,
+    0.273653
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · medium",
+    "gemini35lite",
+    "medium",
+    0.5,
+    0.002114,
+    0.202801,
+    0.005,
+    0.23783
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · medium",
+    "gemini35lite",
+    "medium",
+    1.0,
+    0.002114,
+    0.206807,
+    0.17265,
+    0.24307
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · medium",
+    "gemini35lite",
+    "medium",
+    2.0,
+    0.002114,
+    0.214819,
+    0.181682,
+    0.250716
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · medium",
+    "gemini35lite",
+    "medium",
+    5.0,
+    0.002114,
+    0.238855,
+    0.206733,
+    0.273653
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · high",
+    "gemini35lite",
+    "high",
+    0.5,
+    0.002679,
+    0.192435,
+    0.046667,
+    0.22589
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · high",
+    "gemini35lite",
+    "high",
+    1.0,
+    0.002679,
+    0.196493,
+    0.164749,
+    0.230231
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · high",
+    "gemini35lite",
+    "high",
+    2.0,
+    0.002679,
+    0.204609,
+    0.173186,
+    0.238007
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · high",
+    "gemini35lite",
+    "high",
+    5.0,
+    0.002679,
+    0.228958,
+    0.198497,
+    0.261333
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "gemini35lite",
+    "xhigh",
+    0.5,
+    0.002714,
+    0.188447,
+    0.038333,
+    0.2239
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "gemini35lite",
+    "xhigh",
+    1.0,
+    0.002714,
+    0.192525,
+    0.159096,
+    0.227811
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "gemini35lite",
+    "xhigh",
+    2.0,
+    0.002714,
+    0.200681,
+    0.16759,
+    0.235611
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "gemini35lite",
+    "xhigh",
+    5.0,
+    0.002714,
+    0.22515,
+    0.193072,
+    0.25901
+   ],
+   [
+    "Gemma 3 4B",
+    "gemma3",
+    "default",
+    0.5,
+    8.6e-05,
+    0.00125,
+    0.0,
+    0.00375
+   ],
+   [
+    "Gemma 3 4B",
+    "gemma3",
+    "default",
+    1.0,
+    8.6e-05,
+    0.0025,
+    0.0,
+    0.0075
+   ],
+   [
+    "Gemma 3 4B",
+    "gemma3",
+    "default",
+    2.0,
+    8.6e-05,
+    0.005,
+    0.0,
+    0.017337
+   ],
+   [
+    "Gemma 3 4B",
+    "gemma3",
+    "default",
+    5.0,
+    8.6e-05,
+    0.0596,
+    0.011,
+    0.104
+   ],
+   [
+    "Gemma 3 27B",
+    "gemma3_27b",
+    "default",
+    0.5,
+    0.000143,
+    0.022,
+    0.0,
+    0.123279
+   ],
+   [
+    "Gemma 3 27B",
+    "gemma3_27b",
+    "default",
+    1.0,
+    0.000143,
+    0.076,
+    0.018,
+    0.166
+   ],
+   [
+    "Gemma 3 27B",
+    "gemma3_27b",
+    "default",
+    2.0,
+    0.000143,
+    0.1568,
+    0.086,
+    0.238
+   ],
+   [
+    "Gemma 3 27B",
+    "gemma3_27b",
+    "default",
+    5.0,
+    0.000143,
+    0.303929,
+    0.224,
+    0.3632
+   ],
+   [
+    "Mistral Large 4 · default",
+    "mistrallarge4",
+    "default",
+    0.5,
+    0.006203,
+    0.415,
+    0.036656,
+    0.520482
+   ],
+   [
+    "Mistral Large 4 · default",
+    "mistrallarge4",
+    "default",
+    1.0,
+    0.006203,
+    0.486076,
+    0.38665,
+    0.528952
+   ],
+   [
+    "Mistral Large 4 · default",
+    "mistrallarge4",
+    "default",
+    2.0,
+    0.006203,
+    0.491268,
+    0.450094,
+    0.534768
+   ],
+   [
+    "Mistral Large 4 · default",
+    "mistrallarge4",
+    "default",
+    5.0,
+    0.006203,
+    0.506841,
+    0.466928,
+    0.54901
+   ],
+   [
+    "Mistral Large 4 · high",
+    "mistrallarge4",
+    "high",
+    0.5,
+    0.00625,
+    0.323,
+    0.025,
+    0.487
+   ],
+   [
+    "Mistral Large 4 · high",
+    "mistrallarge4",
+    "high",
+    1.0,
+    0.00625,
+    0.468,
+    0.272,
+    0.504029
+   ],
+   [
+    "Mistral Large 4 · high",
+    "mistrallarge4",
+    "high",
+    2.0,
+    0.00625,
+    0.473374,
+    0.425517,
+    0.513968
+   ],
+   [
+    "Mistral Large 4 · high",
+    "mistrallarge4",
+    "high",
+    5.0,
+    0.00625,
+    0.489495,
+    0.444556,
+    0.528846
+   ],
+   [
+    "Ministral 14B",
+    "ministral14b",
+    "default",
+    0.5,
+    0.00043,
+    0.0025,
+    0.0,
+    0.035
+   ],
+   [
+    "Ministral 14B",
+    "ministral14b",
+    "default",
+    1.0,
+    0.00043,
+    0.0152,
+    0.0,
+    0.070572
+   ],
+   [
+    "Ministral 14B",
+    "ministral14b",
+    "default",
+    2.0,
+    0.00043,
+    0.063818,
+    0.019443,
+    0.097004
+   ],
+   [
+    "Ministral 14B",
+    "ministral14b",
+    "default",
+    5.0,
+    0.00043,
+    0.137,
+    0.081865,
+    0.205224
+   ]
+  ]
+ },
+ "facts": {
+  "no_cost": ""
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-high-tm-n500-strip.csv": "sha256:a60a51b2415ba673",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-low-tm-n500-strip.csv": "sha256:df0483e4077defa8",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-medium-tm-n500-strip.csv": "sha256:0e66fe6412044d6a",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip.csv": "sha256:1464354acd0c1eac",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-27b-tm-n500-strip.csv": "sha256:0fd529c0321e2b40",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma3-4b-tm-n500-strip.csv": "sha256:f61740693798daf0",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-efforthigh-tm-n500-strip.csv": "sha256:91ad04f265a32df6",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortlow-tm-n500-strip.csv": "sha256:887b7a9f8b6458c6",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-glm53-tm-n500-strip.csv": "sha256:21940d7538a860fd",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gpt6luna-tm-n500-strip.csv": "sha256:1bd4150a8317991e",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-high-tm-n500-strip.csv": "sha256:7d6358205499e8b5",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-low-tm-n500-strip.csv": "sha256:ab21d9005876f67f",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-gptoss120b-tm-n500-strip.csv": "sha256:27efb0e60c3a48b1",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku45-tm-n500-strip.csv": "sha256:db19f2e66f02248c",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip.csv": "sha256:812be9bae5ee289f",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortlow-tm-n500-strip.csv": "sha256:217621bd62368260",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip.csv": "sha256:1127f06477e2ab86",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-haiku55-tm-n500-strip.csv": "sha256:90128b48d21d6a52",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-high-tm-n500-strip.csv": "sha256:3edcfe1c36eebf3a",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-low-tm-n500-strip.csv": "sha256:768010c0dd6b9807",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-none-tm-n500-strip.csv": "sha256:c7db9cea6a75df52",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-luna-xhigh-tm-n500-strip.csv": "sha256:46e806313783bfdc",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-mistrallarge4-tm-n500-strip.csv": "sha256:b0a3877f4030fbf0",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip.csv": "sha256:af2ef7e80df20ec1",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:8ce58648701ae338",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:32ff7e0c9397cfa6",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-high-tm-strip.csv": "sha256:a976a26754d7d62f",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63",
+   "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
+  },
+  "code": "sha256:775c9d24590f2aa7",
+  "spec": "sha256:753029599e448705"
+ }
+}

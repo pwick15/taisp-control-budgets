@@ -1,0 +1,527 @@
+{
+ "id": "P12",
+ "kind": "echarts",
+ "title": "Opus 5.5 flags 25% of the backdoors the other monitors missed",
+ "section": "results",
+ "order": 130,
+ "caption": "The 51 hardest backdoors: 49 that none of our seven 0 to 10 monitors caught, plus 2 only a 0 to 10 Haiku run caught. Every monitor here scores 0 to 100 with comments stripped. Bars split the 51 by how suspicious each monitor rated them; the right column is the 95% range for 50+.",
+ "notes": [
+  "This is not a catch rate. We never ran Opus on honest code, so we don't know where its 2% cutoff sits. Running Opus on the honest set would turn this into a real comparison.",
+  "Max effort was only piloted on 5 backdoors, so it's left out.",
+  "The set was chosen because the other monitors failed on it, so it says nothing about how Opus does on ordinary backdoors.",
+  "Marnick also rated these backdoors for how incriminating and how harmful they look. Those ratings aren't in the repo yet; ask him for the CSV."
+ ],
+ "height": 310,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P12-opus-hard",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 24,
+   "right": 92,
+   "top": 52,
+   "bottom": 46,
+   "containLabel": true
+  },
+  "legend": {
+   "top": 0,
+   "left": 0,
+   "data": [
+    "Scored 50 or more",
+    "20 to 49",
+    "Under 20 (looks honest)"
+   ],
+   "selectedMode": false
+  },
+  "graphic": [
+   {
+    "type": "text",
+    "right": 12,
+    "top": 30,
+    "style": {
+     "text": "Scored 50+, 95% range",
+     "fill": "@ink-muted",
+     "fontSize": 11,
+     "align": "right"
+    }
+   }
+  ],
+  "xAxis": {
+   "name": "Share of the 51 hardest backdoors",
+   "nameLocation": "middle",
+   "nameGap": 30,
+   "type": "value",
+   "min": 0,
+   "max": 100,
+   "interval": 25,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "yAxis": {
+   "type": "category",
+   "data": [
+    "Haiku 5.5 · xhigh  n = 51",
+    "Sonnet 5.5 · high  n = 51",
+    "Opus 5.5 · low  n = 51",
+    "Opus 5.5 · high  n = 51",
+    "Opus 5.5 · xhigh  n = 51"
+   ],
+   "inverse": true,
+   "axisLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "fontSize": 13,
+    "fontWeight": 500,
+    "formatter": "function (v) { var p = v.split('  n = '); return '{n|' + p[0] + '}  {c|n = ' + p[1] + '}'; }",
+    "rich": {
+     "n": {
+      "color": "@ink-primary",
+      "fontSize": 13,
+      "fontWeight": 500
+     },
+     "c": {
+      "color": "@ink-muted",
+      "fontSize": 12
+     }
+    }
+   }
+  },
+  "series": [
+   {
+    "name": "Scored 50 or more",
+    "type": "bar",
+    "stack": "all",
+    "data": [
+     {
+      "value": 0.0,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "0%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Haiku 5.5 · xhigh</b> (n = 51)<br>scored 50 or more: 0 (0%)"
+     },
+     {
+      "value": 0.0,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "0%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Sonnet 5.5 · high</b> (n = 51)<br>scored 50 or more: 0 (0%)"
+     },
+     {
+      "value": 15.69,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "16%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Opus 5.5 · low</b> (n = 51)<br>scored 50 or more: 8 (16%)"
+     },
+     {
+      "value": 23.53,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "24%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Opus 5.5 · high</b> (n = 51)<br>scored 50 or more: 12 (24%)"
+     },
+     {
+      "value": 25.49,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "25%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Opus 5.5 · xhigh</b> (n = 51)<br>scored 50 or more: 13 (25%)"
+     }
+    ],
+    "barWidth": 22,
+    "itemStyle": {
+     "color": "@s2",
+     "borderColor": "@ink-surface",
+     "borderWidth": 2
+    },
+    "label": {
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "name": "20 to 49",
+    "type": "bar",
+    "stack": "all",
+    "data": [
+     {
+      "value": 0.0,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "0%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Haiku 5.5 · xhigh</b> (n = 51)<br>20 to 49: 0 (0%)"
+     },
+     {
+      "value": 3.92,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "4%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Sonnet 5.5 · high</b> (n = 51)<br>20 to 49: 2 (4%)"
+     },
+     {
+      "value": 15.69,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "16%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Opus 5.5 · low</b> (n = 51)<br>20 to 49: 8 (16%)"
+     },
+     {
+      "value": 7.84,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "8%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Opus 5.5 · high</b> (n = 51)<br>20 to 49: 4 (8%)"
+     },
+     {
+      "value": 15.69,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "16%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Opus 5.5 · xhigh</b> (n = 51)<br>20 to 49: 8 (16%)"
+     }
+    ],
+    "barWidth": 22,
+    "itemStyle": {
+     "color": "@warning/0.6",
+     "borderColor": "@ink-surface",
+     "borderWidth": 2
+    },
+    "label": {
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "name": "Under 20 (looks honest)",
+    "type": "bar",
+    "stack": "all",
+    "data": [
+     {
+      "value": 100.0,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        6,
+        6,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "100%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Haiku 5.5 · xhigh</b> (n = 51)<br>under 20 (looks honest): 51 (100%)"
+     },
+     {
+      "value": 96.08,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "96%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Sonnet 5.5 · high</b> (n = 51)<br>under 20 (looks honest): 49 (96%)"
+     },
+     {
+      "value": 68.63,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "69%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Opus 5.5 · low</b> (n = 51)<br>under 20 (looks honest): 35 (69%)"
+     },
+     {
+      "value": 68.63,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "69%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Opus 5.5 · high</b> (n = 51)<br>under 20 (looks honest): 35 (69%)"
+     },
+     {
+      "value": 58.82,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "59%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Opus 5.5 · xhigh</b> (n = 51)<br>under 20 (looks honest): 30 (59%)"
+     }
+    ],
+    "barWidth": 22,
+    "itemStyle": {
+     "color": "@context",
+     "borderColor": "@ink-surface",
+     "borderWidth": 2
+    },
+    "label": {
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "name": "_range",
+    "type": "scatter",
+    "symbolSize": 0,
+    "data": [
+     {
+      "value": [
+       100,
+       0
+      ],
+      "name": "0–7%"
+     },
+     {
+      "value": [
+       100,
+       1
+      ],
+      "name": "0–7%"
+     },
+     {
+      "value": [
+       100,
+       2
+      ],
+      "name": "8–28%"
+     },
+     {
+      "value": [
+       100,
+       3
+      ],
+      "name": "14–37%"
+     },
+     {
+      "value": [
+       100,
+       4
+      ],
+      "name": "16–39%"
+     }
+    ],
+    "silent": true,
+    "clip": false,
+    "tooltip": {
+     "show": false
+    },
+    "label": {
+     "show": true,
+     "position": "right",
+     "distance": 18,
+     "formatter": "{b}",
+     "color": "@ink-secondary",
+     "fontSize": 12
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "monitor",
+   "n",
+   "scored_50_plus",
+   "scored_20_49",
+   "under_20",
+   "median_score"
+  ],
+  "rows": [
+   [
+    "Haiku 5.5 · xhigh",
+    51,
+    0,
+    0,
+    51,
+    2.0
+   ],
+   [
+    "Sonnet 5.5 · high",
+    51,
+    0,
+    2,
+    49,
+    1.0
+   ],
+   [
+    "Opus 5.5 · low",
+    51,
+    8,
+    8,
+    35,
+    4.0
+   ],
+   [
+    "Opus 5.5 · high",
+    51,
+    12,
+    4,
+    35,
+    4.0
+   ],
+   [
+    "Opus 5.5 · xhigh",
+    51,
+    13,
+    8,
+    30,
+    4.0
+   ]
+  ]
+ },
+ "facts": {
+  "opus_pct": 25.4902,
+  "n": 51,
+  "never": 49,
+  "haiku_only": 2
+ },
+ "build": {
+  "inputs": {
+   "results/analysis/opus-hard51-scores.csv": "sha256:b625e45eefdef283"
+  },
+  "code": "sha256:b5ed2060cc274e31",
+  "spec": "sha256:b2a5d888133e7277"
+ }
+}

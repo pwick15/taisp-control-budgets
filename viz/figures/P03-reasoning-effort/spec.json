@@ -1,0 +1,2537 @@
+{
+ "id": "P03",
+ "kind": "echarts",
+ "title": "Turning up reasoning effort helps most models, not all",
+ "section": "results",
+ "order": 30,
+ "caption": "One line per model across the reasoning settings we ran; higher catches more backdoors. 'medium / default' holds each model's default where the provider names no level, and 'xhigh / max' holds the top setting each provider offers.",
+ "notes": [
+  "We agreed the framing: effort is a measured lever that depends on the model, not a rule. Most models gain, one is flat and one gets worse.",
+  "Flash-Lite gets one line, nothing more. It catches 20 to 29% at any setting, so nobody would deploy it.",
+  "Monitoring Monitorability already shows that more test-time compute helps weak monitors. What's new here is pricing it against a bigger sibling, and the counterexamples.",
+  "Effort labels aren't comparable across providers (see P04). Marnick's dose section re-plots the ladder against tokens actually spent, the fairer x-axis if a reviewer asks."
+ ],
+ "height": 480,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P03-reasoning-effort",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 58,
+   "right": 140,
+   "top": 16,
+   "bottom": 52
+  },
+  "xAxis": {
+   "name": "Reasoning effort setting",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "category",
+   "boundaryGap": false,
+   "data": [
+    "off",
+    "low",
+    "medium / default",
+    "high",
+    "xhigh / max"
+   ]
+  },
+  "yAxis": {
+   "name": "Backdoors caught",
+   "nameLocation": "middle",
+   "nameGap": 44,
+   "type": "value",
+   "min": 0,
+   "max": 100,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "series": [
+   {
+    "name": "Sonnet 5.5",
+    "type": "line",
+    "data": [
+     null,
+     {
+      "value": 84.67,
+      "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 84.7%<br>$0.0076 per program"
+     },
+     null,
+     {
+      "value": 87.58,
+      "tip": "<b>Sonnet 5.5 · high (default)</b><br>caught 87.6%<br>$0.0093 per program"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s0",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Haiku 5.5",
+    "type": "line",
+    "data": [
+     null,
+     {
+      "value": 70.05,
+      "tip": "<b>Haiku 5.5 · low</b><br>caught 70.0%<br>$0.00068 per program"
+     },
+     {
+      "value": 77.2,
+      "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 77.2%<br>$0.00076 per program"
+     },
+     {
+      "value": 81.49,
+      "tip": "<b>Haiku 5.5 · high</b><br>caught 81.5%<br>$0.0010 per program"
+     },
+     {
+      "value": 85.1,
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.1%<br>$0.0018 per program"
+     }
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s1",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s1",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "GLM-5.3",
+    "type": "line",
+    "data": [
+     null,
+     {
+      "value": 48.42,
+      "tip": "<b>GLM-5.3 · low</b><br>caught 48.4%<br>$0.00093 per program"
+     },
+     null,
+     {
+      "value": 51.89,
+      "tip": "<b>GLM-5.3 · high</b><br>caught 51.9%<br>$0.0017 per program"
+     },
+     {
+      "value": 76.2,
+      "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.2%<br>$0.0146 per program"
+     }
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s2",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s2",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Qwen 3.8",
+    "type": "line",
+    "data": [
+     {
+      "value": 51.3,
+      "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 51.3%<br>$0.00054 per program"
+     },
+     null,
+     {
+      "value": 62.6,
+      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 62.6%<br>$0.00094 per program"
+     },
+     {
+      "value": 66.84,
+      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 66.8%<br>$0.00092 per program"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "GPT-6 Luna",
+    "type": "line",
+    "data": [
+     {
+      "value": 39.42,
+      "tip": "<b>GPT-6 Luna · off</b><br>caught 39.4%<br>$0.00019 per program"
+     },
+     {
+      "value": 49.91,
+      "tip": "<b>GPT-6 Luna · low</b><br>caught 49.9%<br>$0.00027 per program"
+     },
+     {
+      "value": 54.97,
+      "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 55.0%<br>$0.00033 per program"
+     },
+     {
+      "value": 57.74,
+      "tip": "<b>GPT-6 Luna · high</b><br>caught 57.7%<br>$0.00037 per program"
+     },
+     {
+      "value": 60.96,
+      "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 61.0%<br>$0.00045 per program"
+     }
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Mistral Large 4",
+    "type": "line",
+    "data": [
+     null,
+     null,
+     {
+      "value": 49.13,
+      "tip": "<b>Mistral Large 4 · default</b><br>caught 49.1%<br>$0.0062 per program"
+     },
+     {
+      "value": 47.34,
+      "tip": "<b>Mistral Large 4 · high</b><br>caught 47.3%<br>$0.0062 per program"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "gpt-oss-120b",
+    "type": "line",
+    "data": [
+     null,
+     {
+      "value": 14.53,
+      "tip": "<b>gpt-oss-120b · low</b><br>caught 14.5%<br>$0.00012 per program"
+     },
+     {
+      "value": 19.6,
+      "tip": "<b>gpt-oss-120b · medium (default)</b><br>caught 19.6%<br>$0.00016 per program"
+     },
+     {
+      "value": 32.95,
+      "tip": "<b>gpt-oss-120b · high</b><br>caught 33.0%<br>$0.00035 per program"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Gemini Flash-Lite",
+    "type": "line",
+    "data": [
+     {
+      "value": 29.07,
+      "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>caught 29.1%<br>$0.0011 per program"
+     },
+     {
+      "value": 21.48,
+      "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>caught 21.5%<br>$0.0015 per program"
+     },
+     {
+      "value": 21.48,
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>caught 21.5%<br>$0.0021 per program"
+     },
+     {
+      "value": 20.46,
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>caught 20.5%<br>$0.0027 per program"
+     },
+     {
+      "value": 20.07,
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>caught 20.1%<br>$0.0027 per program"
+     }
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   }
+  ]
+ },
+ "dial": {
+  "label": "Audit budget",
+  "steps": [
+   "1%",
+   "2%",
+   "5%"
+  ],
+  "initial": 1,
+  "frames": [
+   {
+    "series": [
+     {
+      "name": "Sonnet 5.5",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 83.95,
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 83.9%<br>$0.0076 per program"
+       },
+       null,
+       {
+        "value": 86.8,
+        "tip": "<b>Sonnet 5.5 · high (default)</b><br>caught 86.8%<br>$0.0093 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 4,
+      "symbolSize": 8,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 57.17,
+        "tip": "<b>Haiku 5.5 · low</b><br>caught 57.2%<br>$0.00068 per program"
+       },
+       {
+        "value": 60.37,
+        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 60.4%<br>$0.00076 per program"
+       },
+       {
+        "value": 67.15,
+        "tip": "<b>Haiku 5.5 · high</b><br>caught 67.2%<br>$0.0010 per program"
+       },
+       {
+        "value": 74.8,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 74.8%<br>$0.0018 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 4,
+      "symbolSize": 8,
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 2.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 44.15,
+        "tip": "<b>GLM-5.3 · low</b><br>caught 44.1%<br>$0.00093 per program"
+       },
+       null,
+       {
+        "value": 51.4,
+        "tip": "<b>GLM-5.3 · high</b><br>caught 51.4%<br>$0.0017 per program"
+       },
+       {
+        "value": 64.4,
+        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 64.4%<br>$0.0146 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 4,
+      "symbolSize": 8,
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s2",
+       "width": 2.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Qwen 3.8",
+      "type": "line",
+      "data": [
+       {
+        "value": 38.56,
+        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 38.6%<br>$0.00054 per program"
+       },
+       null,
+       {
+        "value": 52.0,
+        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 52.0%<br>$0.00094 per program"
+       },
+       {
+        "value": 60.0,
+        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 60.0%<br>$0.00092 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GPT-6 Luna",
+      "type": "line",
+      "data": [
+       {
+        "value": 38.8,
+        "tip": "<b>GPT-6 Luna · off</b><br>caught 38.8%<br>$0.00019 per program"
+       },
+       {
+        "value": 42.8,
+        "tip": "<b>GPT-6 Luna · low</b><br>caught 42.8%<br>$0.00027 per program"
+       },
+       {
+        "value": 51.5,
+        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 51.5%<br>$0.00033 per program"
+       },
+       {
+        "value": 55.13,
+        "tip": "<b>GPT-6 Luna · high</b><br>caught 55.1%<br>$0.00037 per program"
+       },
+       {
+        "value": 55.25,
+        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 55.2%<br>$0.00045 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Mistral Large 4",
+      "type": "line",
+      "data": [
+       null,
+       null,
+       {
+        "value": 48.61,
+        "tip": "<b>Mistral Large 4 · default</b><br>caught 48.6%<br>$0.0062 per program"
+       },
+       {
+        "value": 46.8,
+        "tip": "<b>Mistral Large 4 · high</b><br>caught 46.8%<br>$0.0062 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "gpt-oss-120b",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 10.4,
+        "tip": "<b>gpt-oss-120b · low</b><br>caught 10.4%<br>$0.00012 per program"
+       },
+       {
+        "value": 12.43,
+        "tip": "<b>gpt-oss-120b · medium (default)</b><br>caught 12.4%<br>$0.00016 per program"
+       },
+       {
+        "value": 20.7,
+        "tip": "<b>gpt-oss-120b · high</b><br>caught 20.7%<br>$0.00035 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Gemini Flash-Lite",
+      "type": "line",
+      "data": [
+       {
+        "value": 28.34,
+        "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>caught 28.3%<br>$0.0011 per program"
+       },
+       {
+        "value": 20.68,
+        "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>caught 20.7%<br>$0.0015 per program"
+       },
+       {
+        "value": 20.68,
+        "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>caught 20.7%<br>$0.0021 per program"
+       },
+       {
+        "value": 19.65,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>caught 19.6%<br>$0.0027 per program"
+       },
+       {
+        "value": 19.25,
+        "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>caught 19.3%<br>$0.0027 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "Sonnet 5.5",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 84.67,
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 84.7%<br>$0.0076 per program"
+       },
+       null,
+       {
+        "value": 87.58,
+        "tip": "<b>Sonnet 5.5 · high (default)</b><br>caught 87.6%<br>$0.0093 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 4,
+      "symbolSize": 8,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 70.05,
+        "tip": "<b>Haiku 5.5 · low</b><br>caught 70.0%<br>$0.00068 per program"
+       },
+       {
+        "value": 77.2,
+        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 77.2%<br>$0.00076 per program"
+       },
+       {
+        "value": 81.49,
+        "tip": "<b>Haiku 5.5 · high</b><br>caught 81.5%<br>$0.0010 per program"
+       },
+       {
+        "value": 85.1,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.1%<br>$0.0018 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 4,
+      "symbolSize": 8,
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 2.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 48.42,
+        "tip": "<b>GLM-5.3 · low</b><br>caught 48.4%<br>$0.00093 per program"
+       },
+       null,
+       {
+        "value": 51.89,
+        "tip": "<b>GLM-5.3 · high</b><br>caught 51.9%<br>$0.0017 per program"
+       },
+       {
+        "value": 76.2,
+        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.2%<br>$0.0146 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 4,
+      "symbolSize": 8,
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s2",
+       "width": 2.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Qwen 3.8",
+      "type": "line",
+      "data": [
+       {
+        "value": 51.3,
+        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 51.3%<br>$0.00054 per program"
+       },
+       null,
+       {
+        "value": 62.6,
+        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 62.6%<br>$0.00094 per program"
+       },
+       {
+        "value": 66.84,
+        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 66.8%<br>$0.00092 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GPT-6 Luna",
+      "type": "line",
+      "data": [
+       {
+        "value": 39.42,
+        "tip": "<b>GPT-6 Luna · off</b><br>caught 39.4%<br>$0.00019 per program"
+       },
+       {
+        "value": 49.91,
+        "tip": "<b>GPT-6 Luna · low</b><br>caught 49.9%<br>$0.00027 per program"
+       },
+       {
+        "value": 54.97,
+        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 55.0%<br>$0.00033 per program"
+       },
+       {
+        "value": 57.74,
+        "tip": "<b>GPT-6 Luna · high</b><br>caught 57.7%<br>$0.00037 per program"
+       },
+       {
+        "value": 60.96,
+        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 61.0%<br>$0.00045 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Mistral Large 4",
+      "type": "line",
+      "data": [
+       null,
+       null,
+       {
+        "value": 49.13,
+        "tip": "<b>Mistral Large 4 · default</b><br>caught 49.1%<br>$0.0062 per program"
+       },
+       {
+        "value": 47.34,
+        "tip": "<b>Mistral Large 4 · high</b><br>caught 47.3%<br>$0.0062 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "gpt-oss-120b",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 14.53,
+        "tip": "<b>gpt-oss-120b · low</b><br>caught 14.5%<br>$0.00012 per program"
+       },
+       {
+        "value": 19.6,
+        "tip": "<b>gpt-oss-120b · medium (default)</b><br>caught 19.6%<br>$0.00016 per program"
+       },
+       {
+        "value": 32.95,
+        "tip": "<b>gpt-oss-120b · high</b><br>caught 33.0%<br>$0.00035 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Gemini Flash-Lite",
+      "type": "line",
+      "data": [
+       {
+        "value": 29.07,
+        "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>caught 29.1%<br>$0.0011 per program"
+       },
+       {
+        "value": 21.48,
+        "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>caught 21.5%<br>$0.0015 per program"
+       },
+       {
+        "value": 21.48,
+        "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>caught 21.5%<br>$0.0021 per program"
+       },
+       {
+        "value": 20.46,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>caught 20.5%<br>$0.0027 per program"
+       },
+       {
+        "value": 20.07,
+        "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>caught 20.1%<br>$0.0027 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "Sonnet 5.5",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 86.86,
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 86.9%<br>$0.0076 per program"
+       },
+       null,
+       {
+        "value": 89.92,
+        "tip": "<b>Sonnet 5.5 · high (default)</b><br>caught 89.9%<br>$0.0093 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 4,
+      "symbolSize": 8,
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Haiku 5.5",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 75.96,
+        "tip": "<b>Haiku 5.5 · low</b><br>caught 76.0%<br>$0.00068 per program"
+       },
+       {
+        "value": 78.03,
+        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 78.0%<br>$0.00076 per program"
+       },
+       {
+        "value": 82.2,
+        "tip": "<b>Haiku 5.5 · high</b><br>caught 82.2%<br>$0.0010 per program"
+       },
+       {
+        "value": 85.88,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.9%<br>$0.0018 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 4,
+      "symbolSize": 8,
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s1",
+       "width": 2.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GLM-5.3",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 50.0,
+        "tip": "<b>GLM-5.3 · low</b><br>caught 50.0%<br>$0.00093 per program"
+       },
+       null,
+       {
+        "value": 53.36,
+        "tip": "<b>GLM-5.3 · high</b><br>caught 53.4%<br>$0.0017 per program"
+       },
+       {
+        "value": 76.93,
+        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.9%<br>$0.0146 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 4,
+      "symbolSize": 8,
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@s2",
+       "width": 2.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Qwen 3.8",
+      "type": "line",
+      "data": [
+       {
+        "value": 52.79,
+        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 52.8%<br>$0.00054 per program"
+       },
+       null,
+       {
+        "value": 63.74,
+        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 63.7%<br>$0.00094 per program"
+       },
+       {
+        "value": 72.52,
+        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 72.5%<br>$0.00092 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "GPT-6 Luna",
+      "type": "line",
+      "data": [
+       {
+        "value": 41.27,
+        "tip": "<b>GPT-6 Luna · off</b><br>caught 41.3%<br>$0.00019 per program"
+       },
+       {
+        "value": 51.44,
+        "tip": "<b>GPT-6 Luna · low</b><br>caught 51.4%<br>$0.00027 per program"
+       },
+       {
+        "value": 56.35,
+        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 56.3%<br>$0.00033 per program"
+       },
+       {
+        "value": 59.04,
+        "tip": "<b>GPT-6 Luna · high</b><br>caught 59.0%<br>$0.00037 per program"
+       },
+       {
+        "value": 62.15,
+        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 62.2%<br>$0.00045 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Mistral Large 4",
+      "type": "line",
+      "data": [
+       null,
+       null,
+       {
+        "value": 50.68,
+        "tip": "<b>Mistral Large 4 · default</b><br>caught 50.7%<br>$0.0062 per program"
+       },
+       {
+        "value": 48.95,
+        "tip": "<b>Mistral Large 4 · high</b><br>caught 48.9%<br>$0.0062 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "gpt-oss-120b",
+      "type": "line",
+      "data": [
+       null,
+       {
+        "value": 26.93,
+        "tip": "<b>gpt-oss-120b · low</b><br>caught 26.9%<br>$0.00012 per program"
+       },
+       {
+        "value": 41.1,
+        "tip": "<b>gpt-oss-120b · medium (default)</b><br>caught 41.1%<br>$0.00016 per program"
+       },
+       {
+        "value": 43.29,
+        "tip": "<b>gpt-oss-120b · high</b><br>caught 43.3%<br>$0.00035 per program"
+       },
+       null
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     },
+     {
+      "name": "Gemini Flash-Lite",
+      "type": "line",
+      "data": [
+       {
+        "value": 31.24,
+        "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>caught 31.2%<br>$0.0011 per program"
+       },
+       {
+        "value": 23.89,
+        "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>caught 23.9%<br>$0.0015 per program"
+       },
+       {
+        "value": 23.89,
+        "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>caught 23.9%<br>$0.0021 per program"
+       },
+       {
+        "value": 22.9,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>caught 22.9%<br>$0.0027 per program"
+       },
+       {
+        "value": 22.52,
+        "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>caught 22.5%<br>$0.0027 per program"
+       }
+      ],
+      "connectNulls": true,
+      "z": 3,
+      "symbolSize": 6,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 1.5
+      },
+      "endLabel": {
+       "show": true,
+       "formatter": "{a}",
+       "color": "@ink-muted",
+       "fontSize": 11,
+       "fontWeight": 400,
+       "distance": 8
+      },
+      "labelLayout": {
+       "moveOverlap": "shiftY"
+      },
+      "emphasis": {
+       "focus": "series"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "data": {
+  "columns": [
+   "name",
+   "model",
+   "effort",
+   "budget_pct",
+   "safety_exact",
+   "cost"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5 · high (default)",
+    "sonnet55",
+    "high",
+    0.5,
+    0.807,
+    0.00931446
+   ],
+   [
+    "Sonnet 5.5 · high (default)",
+    "sonnet55",
+    "high",
+    1.0,
+    0.868,
+    0.00931446
+   ],
+   [
+    "Sonnet 5.5 · high (default)",
+    "sonnet55",
+    "high",
+    2.0,
+    0.875805,
+    0.00931446
+   ],
+   [
+    "Sonnet 5.5 · high (default)",
+    "sonnet55",
+    "high",
+    5.0,
+    0.89922,
+    0.00931446
+   ],
+   [
+    "Sonnet 5.5 · low (thinking off)",
+    "sonnet55",
+    "low",
+    0.5,
+    0.7595,
+    0.00762675
+   ],
+   [
+    "Sonnet 5.5 · low (thinking off)",
+    "sonnet55",
+    "low",
+    1.0,
+    0.839457,
+    0.00762675
+   ],
+   [
+    "Sonnet 5.5 · low (thinking off)",
+    "sonnet55",
+    "low",
+    2.0,
+    0.846743,
+    0.00762675
+   ],
+   [
+    "Sonnet 5.5 · low (thinking off)",
+    "sonnet55",
+    "low",
+    5.0,
+    0.8686,
+    0.00762675
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "haiku55",
+    "xhigh",
+    0.5,
+    0.541,
+    0.00177274
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "haiku55",
+    "xhigh",
+    1.0,
+    0.748,
+    0.00177274
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "haiku55",
+    "xhigh",
+    2.0,
+    0.851032,
+    0.00177274
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "haiku55",
+    "xhigh",
+    5.0,
+    0.858769,
+    0.00177274
+   ],
+   [
+    "Haiku 5.5 · high",
+    "haiku55",
+    "high",
+    0.5,
+    0.4845,
+    0.00100551
+   ],
+   [
+    "Haiku 5.5 · high",
+    "haiku55",
+    "high",
+    1.0,
+    0.6715,
+    0.00100551
+   ],
+   [
+    "Haiku 5.5 · high",
+    "haiku55",
+    "high",
+    2.0,
+    0.814941,
+    0.00100551
+   ],
+   [
+    "Haiku 5.5 · high",
+    "haiku55",
+    "high",
+    5.0,
+    0.821994,
+    0.00100551
+   ],
+   [
+    "Haiku 5.5 · medium (default)",
+    "haiku55",
+    "medium",
+    0.5,
+    0.4245,
+    0.00076453
+   ],
+   [
+    "Haiku 5.5 · medium (default)",
+    "haiku55",
+    "medium",
+    1.0,
+    0.603667,
+    0.00076453
+   ],
+   [
+    "Haiku 5.5 · medium (default)",
+    "haiku55",
+    "medium",
+    2.0,
+    0.772,
+    0.00076453
+   ],
+   [
+    "Haiku 5.5 · medium (default)",
+    "haiku55",
+    "medium",
+    5.0,
+    0.780321,
+    0.00076453
+   ],
+   [
+    "Haiku 5.5 · low",
+    "haiku55",
+    "low",
+    0.5,
+    0.4245,
+    0.00067892
+   ],
+   [
+    "Haiku 5.5 · low",
+    "haiku55",
+    "low",
+    1.0,
+    0.57175,
+    0.00067892
+   ],
+   [
+    "Haiku 5.5 · low",
+    "haiku55",
+    "low",
+    2.0,
+    0.7005,
+    0.00067892
+   ],
+   [
+    "Haiku 5.5 · low",
+    "haiku55",
+    "low",
+    5.0,
+    0.759565,
+    0.00067892
+   ],
+   [
+    "GLM-5.3 · max (default)",
+    "glm53",
+    "max",
+    0.5,
+    0.585667,
+    0.0146159
+   ],
+   [
+    "GLM-5.3 · max (default)",
+    "glm53",
+    "max",
+    1.0,
+    0.644,
+    0.0146159
+   ],
+   [
+    "GLM-5.3 · max (default)",
+    "glm53",
+    "max",
+    2.0,
+    0.762,
+    0.0146159
+   ],
+   [
+    "GLM-5.3 · max (default)",
+    "glm53",
+    "max",
+    5.0,
+    0.769286,
+    0.0146159
+   ],
+   [
+    "GLM-5.3 · high",
+    "glm53",
+    "high",
+    0.5,
+    0.373,
+    0.00170711
+   ],
+   [
+    "GLM-5.3 · high",
+    "glm53",
+    "high",
+    1.0,
+    0.514,
+    0.00170711
+   ],
+   [
+    "GLM-5.3 · high",
+    "glm53",
+    "high",
+    2.0,
+    0.518909,
+    0.00170711
+   ],
+   [
+    "GLM-5.3 · high",
+    "glm53",
+    "high",
+    5.0,
+    0.533636,
+    0.00170711
+   ],
+   [
+    "GLM-5.3 · low",
+    "glm53",
+    "low",
+    0.5,
+    0.34525,
+    0.0009335
+   ],
+   [
+    "GLM-5.3 · low",
+    "glm53",
+    "low",
+    1.0,
+    0.4415,
+    0.0009335
+   ],
+   [
+    "GLM-5.3 · low",
+    "glm53",
+    "low",
+    2.0,
+    0.484211,
+    0.0009335
+   ],
+   [
+    "GLM-5.3 · low",
+    "glm53",
+    "low",
+    5.0,
+    0.5,
+    0.0009335
+   ],
+   [
+    "Qwen 3.8 Omni Flash · high",
+    "qwen38",
+    "high",
+    0.5,
+    0.145,
+    0.00091852
+   ],
+   [
+    "Qwen 3.8 Omni Flash · high",
+    "qwen38",
+    "high",
+    1.0,
+    0.6,
+    0.00091852
+   ],
+   [
+    "Qwen 3.8 Omni Flash · high",
+    "qwen38",
+    "high",
+    2.0,
+    0.6684,
+    0.00091852
+   ],
+   [
+    "Qwen 3.8 Omni Flash · high",
+    "qwen38",
+    "high",
+    5.0,
+    0.725207,
+    0.00091852
+   ],
+   [
+    "Qwen 3.8 Omni Flash · medium",
+    "qwen38",
+    "medium",
+    0.5,
+    0.0345,
+    0.00094052
+   ],
+   [
+    "Qwen 3.8 Omni Flash · medium",
+    "qwen38",
+    "medium",
+    1.0,
+    0.52,
+    0.00094052
+   ],
+   [
+    "Qwen 3.8 Omni Flash · medium",
+    "qwen38",
+    "medium",
+    2.0,
+    0.626,
+    0.00094052
+   ],
+   [
+    "Qwen 3.8 Omni Flash · medium",
+    "qwen38",
+    "medium",
+    5.0,
+    0.637449,
+    0.00094052
+   ],
+   [
+    "Qwen 3.8 Omni Flash · off",
+    "qwen38",
+    "off",
+    0.5,
+    0.1705,
+    0.00053563
+   ],
+   [
+    "Qwen 3.8 Omni Flash · off",
+    "qwen38",
+    "off",
+    1.0,
+    0.3856,
+    0.00053563
+   ],
+   [
+    "Qwen 3.8 Omni Flash · off",
+    "qwen38",
+    "off",
+    2.0,
+    0.512994,
+    0.00053563
+   ],
+   [
+    "Qwen 3.8 Omni Flash · off",
+    "qwen38",
+    "off",
+    5.0,
+    0.527902,
+    0.00053563
+   ],
+   [
+    "GPT-6 Luna · xhigh",
+    "luna",
+    "xhigh",
+    0.5,
+    0.366,
+    0.00045383
+   ],
+   [
+    "GPT-6 Luna · xhigh",
+    "luna",
+    "xhigh",
+    1.0,
+    0.5525,
+    0.00045383
+   ],
+   [
+    "GPT-6 Luna · xhigh",
+    "luna",
+    "xhigh",
+    2.0,
+    0.609593,
+    0.00045383
+   ],
+   [
+    "GPT-6 Luna · xhigh",
+    "luna",
+    "xhigh",
+    5.0,
+    0.621545,
+    0.00045383
+   ],
+   [
+    "GPT-6 Luna · high",
+    "luna",
+    "high",
+    0.5,
+    0.4055,
+    0.00037436
+   ],
+   [
+    "GPT-6 Luna · high",
+    "luna",
+    "high",
+    1.0,
+    0.551333,
+    0.00037436
+   ],
+   [
+    "GPT-6 Luna · high",
+    "luna",
+    "high",
+    2.0,
+    0.577449,
+    0.00037436
+   ],
+   [
+    "GPT-6 Luna · high",
+    "luna",
+    "high",
+    5.0,
+    0.590385,
+    0.00037436
+   ],
+   [
+    "GPT-6 Luna · medium (default)",
+    "luna",
+    "medium",
+    0.5,
+    0.412,
+    0.0003258
+   ],
+   [
+    "GPT-6 Luna · medium (default)",
+    "luna",
+    "medium",
+    1.0,
+    0.515,
+    0.0003258
+   ],
+   [
+    "GPT-6 Luna · medium (default)",
+    "luna",
+    "medium",
+    2.0,
+    0.549676,
+    0.0003258
+   ],
+   [
+    "GPT-6 Luna · medium (default)",
+    "luna",
+    "medium",
+    5.0,
+    0.563462,
+    0.0003258
+   ],
+   [
+    "GPT-6 Luna · low",
+    "luna",
+    "low",
+    0.5,
+    0.319,
+    0.00026724
+   ],
+   [
+    "GPT-6 Luna · low",
+    "luna",
+    "low",
+    1.0,
+    0.428,
+    0.00026724
+   ],
+   [
+    "GPT-6 Luna · low",
+    "luna",
+    "low",
+    2.0,
+    0.499067,
+    0.00026724
+   ],
+   [
+    "GPT-6 Luna · low",
+    "luna",
+    "low",
+    5.0,
+    0.514402,
+    0.00026724
+   ],
+   [
+    "GPT-6 Luna · off",
+    "luna",
+    "off",
+    0.5,
+    0.0875,
+    0.000188
+   ],
+   [
+    "GPT-6 Luna · off",
+    "luna",
+    "off",
+    1.0,
+    0.388,
+    0.000188
+   ],
+   [
+    "GPT-6 Luna · off",
+    "luna",
+    "off",
+    2.0,
+    0.394182,
+    0.000188
+   ],
+   [
+    "GPT-6 Luna · off",
+    "luna",
+    "off",
+    5.0,
+    0.412727,
+    0.000188
+   ],
+   [
+    "gpt-oss-120b · high",
+    "gptoss",
+    "high",
+    0.5,
+    0.125,
+    0.00034724
+   ],
+   [
+    "gpt-oss-120b · high",
+    "gptoss",
+    "high",
+    1.0,
+    0.207,
+    0.00034724
+   ],
+   [
+    "gpt-oss-120b · high",
+    "gptoss",
+    "high",
+    2.0,
+    0.3295,
+    0.00034724
+   ],
+   [
+    "gpt-oss-120b · high",
+    "gptoss",
+    "high",
+    5.0,
+    0.432851,
+    0.00034724
+   ],
+   [
+    "gpt-oss-120b · medium (default)",
+    "gptoss",
+    "medium",
+    0.5,
+    0.0935,
+    0.00015922
+   ],
+   [
+    "gpt-oss-120b · medium (default)",
+    "gptoss",
+    "medium",
+    1.0,
+    0.124333,
+    0.00015922
+   ],
+   [
+    "gpt-oss-120b · medium (default)",
+    "gptoss",
+    "medium",
+    2.0,
+    0.196,
+    0.00015922
+   ],
+   [
+    "gpt-oss-120b · medium (default)",
+    "gptoss",
+    "medium",
+    5.0,
+    0.411,
+    0.00015922
+   ],
+   [
+    "gpt-oss-120b · low",
+    "gptoss",
+    "low",
+    0.5,
+    0.05,
+    0.00011886
+   ],
+   [
+    "gpt-oss-120b · low",
+    "gptoss",
+    "low",
+    1.0,
+    0.104,
+    0.00011886
+   ],
+   [
+    "gpt-oss-120b · low",
+    "gptoss",
+    "low",
+    2.0,
+    0.145316,
+    0.00011886
+   ],
+   [
+    "gpt-oss-120b · low",
+    "gptoss",
+    "low",
+    5.0,
+    0.269263,
+    0.00011886
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · off",
+    "gemini35lite",
+    "off",
+    0.5,
+    0.198,
+    0.00111362
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · off",
+    "gemini35lite",
+    "off",
+    1.0,
+    0.283448,
+    0.00111362
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · off",
+    "gemini35lite",
+    "off",
+    2.0,
+    0.290685,
+    0.00111362
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · off",
+    "gemini35lite",
+    "off",
+    5.0,
+    0.312399,
+    0.00111362
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · low",
+    "gemini35lite",
+    "low",
+    0.5,
+    0.202801,
+    0.00151342
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · low",
+    "gemini35lite",
+    "low",
+    1.0,
+    0.206807,
+    0.00151342
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · low",
+    "gemini35lite",
+    "low",
+    2.0,
+    0.214819,
+    0.00151342
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · low",
+    "gemini35lite",
+    "low",
+    5.0,
+    0.238855,
+    0.00151342
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · medium",
+    "gemini35lite",
+    "medium",
+    0.5,
+    0.202801,
+    0.00211379
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · medium",
+    "gemini35lite",
+    "medium",
+    1.0,
+    0.206807,
+    0.00211379
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · medium",
+    "gemini35lite",
+    "medium",
+    2.0,
+    0.214819,
+    0.00211379
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · medium",
+    "gemini35lite",
+    "medium",
+    5.0,
+    0.238855,
+    0.00211379
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · high",
+    "gemini35lite",
+    "high",
+    0.5,
+    0.192435,
+    0.00267878
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · high",
+    "gemini35lite",
+    "high",
+    1.0,
+    0.196493,
+    0.00267878
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · high",
+    "gemini35lite",
+    "high",
+    2.0,
+    0.204609,
+    0.00267878
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · high",
+    "gemini35lite",
+    "high",
+    5.0,
+    0.228958,
+    0.00267878
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "gemini35lite",
+    "xhigh",
+    0.5,
+    0.188447,
+    0.00271361
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "gemini35lite",
+    "xhigh",
+    1.0,
+    0.192525,
+    0.00271361
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "gemini35lite",
+    "xhigh",
+    2.0,
+    0.200681,
+    0.00271361
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "gemini35lite",
+    "xhigh",
+    5.0,
+    0.22515,
+    0.00271361
+   ],
+   [
+    "Mistral Large 4 · default",
+    "mistrallarge4",
+    "default",
+    0.5,
+    0.415,
+    0.00620319
+   ],
+   [
+    "Mistral Large 4 · default",
+    "mistrallarge4",
+    "default",
+    1.0,
+    0.486076,
+    0.00620319
+   ],
+   [
+    "Mistral Large 4 · default",
+    "mistrallarge4",
+    "default",
+    2.0,
+    0.491268,
+    0.00620319
+   ],
+   [
+    "Mistral Large 4 · default",
+    "mistrallarge4",
+    "default",
+    5.0,
+    0.506841,
+    0.00620319
+   ],
+   [
+    "Mistral Large 4 · high",
+    "mistrallarge4",
+    "high",
+    0.5,
+    0.323,
+    0.00624963
+   ],
+   [
+    "Mistral Large 4 · high",
+    "mistrallarge4",
+    "high",
+    1.0,
+    0.468,
+    0.00624963
+   ],
+   [
+    "Mistral Large 4 · high",
+    "mistrallarge4",
+    "high",
+    2.0,
+    0.473374,
+    0.00624963
+   ],
+   [
+    "Mistral Large 4 · high",
+    "mistrallarge4",
+    "high",
+    5.0,
+    0.489495,
+    0.00624963
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-high-tm-n500-strip.csv": "sha256:a60a51b2415ba673",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-low-tm-n500-strip.csv": "sha256:df0483e4077defa8",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-medium-tm-n500-strip.csv": "sha256:0e66fe6412044d6a",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip.csv": "sha256:1464354acd0c1eac",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-27b-tm-n500-strip.csv": "sha256:0fd529c0321e2b40",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma3-4b-tm-n500-strip.csv": "sha256:f61740693798daf0",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-efforthigh-tm-n500-strip.csv": "sha256:91ad04f265a32df6",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortlow-tm-n500-strip.csv": "sha256:887b7a9f8b6458c6",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-glm53-tm-n500-strip.csv": "sha256:21940d7538a860fd",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gpt6luna-tm-n500-strip.csv": "sha256:1bd4150a8317991e",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-high-tm-n500-strip.csv": "sha256:7d6358205499e8b5",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-low-tm-n500-strip.csv": "sha256:ab21d9005876f67f",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-gptoss120b-tm-n500-strip.csv": "sha256:27efb0e60c3a48b1",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku45-tm-n500-strip.csv": "sha256:db19f2e66f02248c",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip.csv": "sha256:812be9bae5ee289f",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortlow-tm-n500-strip.csv": "sha256:217621bd62368260",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip.csv": "sha256:1127f06477e2ab86",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-haiku55-tm-n500-strip.csv": "sha256:90128b48d21d6a52",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-high-tm-n500-strip.csv": "sha256:3edcfe1c36eebf3a",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-low-tm-n500-strip.csv": "sha256:768010c0dd6b9807",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-none-tm-n500-strip.csv": "sha256:c7db9cea6a75df52",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-luna-xhigh-tm-n500-strip.csv": "sha256:46e806313783bfdc",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-mistrallarge4-tm-n500-strip.csv": "sha256:b0a3877f4030fbf0",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip.csv": "sha256:af2ef7e80df20ec1",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:8ce58648701ae338",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:32ff7e0c9397cfa6",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-high-tm-strip.csv": "sha256:a976a26754d7d62f",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63",
+   "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
+  },
+  "code": "sha256:cf0ca86a8cdbe3f4",
+  "spec": "sha256:608f7b37a606d32d"
+ }
+}

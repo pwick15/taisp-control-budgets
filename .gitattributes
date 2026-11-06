@@ -1,0 +1,4 @@
+# viz/ build output. On a merge conflict, keep either side and rerun `uv run python -m viz build`:
+# merge=binary stops git writing conflict markers into the HTML. linguist-generated folds them in PR diffs.
+viz/gallery.html merge=binary linguist-generated=true -diff
+viz/figures/*/spec.json linguist-generated=true
