@@ -5,4 +5,4 @@ dataset-gemma3-4b-scale100-n500-strip,trusted_monitoring,500,500,2.0,0.0,1.0,"{"
 dataset-gemma3-4b-scale100-n500-strip,trusted_monitoring,500,500,5.0,0.044,1.0,"{""openai-api/litellm/deepinfra/google/gemma-3-4b-it"": 1578}",9.069e-05,1000,0,events,0.09069
 dataset-gemma3-4b-scale100-n500-strip,trusted_monitoring,500,500,10.0,0.18,1.0,"{""openai-api/litellm/deepinfra/google/gemma-3-4b-it"": 1578}",9.069e-05,1000,0,events,0.09069
 dataset-gemma3-4b-scale100-n500-strip,trusted_monitoring,500,500,20.0,0.302,1.0,"{""openai-api/litellm/deepinfra/google/gemma-3-4b-it"": 1578}",9.069e-05,1000,0,events,0.09069
-dataset-gemma3-4b-scale100-n500-strip,trusted_monitoring,500,500,50.0,0.534,1.0,"{""openai-api/litellm/deepinfra/google/gemma-3-4b-it"": 1578}",9.069e-05,1000,0,events,0.09069
+dataset-gemma3-4b-scale100-n500-strip,trusted_monitoring,500,500,50.0,0.536,1.0,"{""openai-api/litellm/deepinfra/google/gemma-3-4b-it"": 1578}",9.069e-05,1000,0,events,0.09069

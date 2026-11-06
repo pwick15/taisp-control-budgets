@@ -44,17 +44,18 @@ comparison suggests.
 Look at the third column. At 0.20% FPR on 500 honest rows the cutoff rests on
 **one observation**; at 0.60%, on three. A threshold estimated from one to three
 samples is barely estimated at all, and the paired bootstrap says so: the gap at
-0.60% is +26.0 points with a 95% interval of **[+1.0, +71.0]**.
+0.60% is +26.0 points with a 95% interval of **[+1.2, +71.0]**.
 
 So we apply two conditions before calling a pair separated: the interval must
 clear zero by more than one sample's worth, **and** the cutoff must rest on at
 least 5 honest rows. Under that test:
 
-- 37 monitors are compared against Sonnet at some shared FPR
-- **10 share an operating point resting on >=5 honest rows**
+- 40 monitors are compared against Sonnet at some shared FPR
+- **11 share an operating point resting on >=5 honest rows**
 - **Haiku 5.5 xhigh is among them**, through its wider-scale arms
-- nine of the ten sit at 1.00% on exactly 5 honest rows; the tenth is the one
-  comfortable rung in the study, and it belongs to the weakest monitor
+- **all eleven sit at 1.00% on exactly 5 honest rows.** There is no comfortably
+  powered comparison in the study any more, and the one there used to be is worth
+  a paragraph of its own below
 
 > **Updated 2026-11-01, and the original finding has been overturned by the fix
 > this document recommended.** As first written, only 3 monitors shared an
@@ -72,22 +73,38 @@ The pairs that survive the 5-honest-row bar, worst gap first:
 
 | other monitor | shared FPR | rows | Sonnet | other | gap | 95% CI |
 |---|---|---|---|---|---|---|
-| `haiku55-xhigh-scale200-n500-strip` | 1.00% | 5 | 86.8% | 78.0% | +8.8 | [+0.2, +27.2] |
-| `haiku55-xhigh-scale100-n500-strip` | 1.00% | 5 | 86.8% | 69.8% | +17.0 | [+1.6, +25.2] |
-| `glm53` | 1.00% | 5 | 86.8% | 64.4% | +22.4 | [+10.2, +31.4] |
-| `luna-scale100-n500-strip` | 1.00% | 5 | 86.8% | 55.4% | +31.4 | [+22.6, +43.6] |
-| `qwen38omniflash-medium` | 1.00% | 5 | 86.8% | 52.0% | +34.8 | [+22.8, +84.4] |
-| `glm53-efforthigh` | 1.00% | 5 | 86.8% | 51.2% | +35.6 | [+30.0, +51.0] |
-| `gemma426b-scale100-n500-strip` | 1.00% | 5 | 86.8% | 39.2% | +47.6 | [+34.0, +63.8] |
-| `luna-none` | 1.00% | 5 | 86.8% | 38.8% | +48.0 | [+41.4, +78.8] |
-| `gemma3-4b-scale100-n500-strip` | **9.20%** | **46** | 93.2% | 17.2% | +76.0 | [+64.8, +82.4] |
-| `gptoss120b-low` | 1.00% | 5 | 86.8% | 7.4% | +79.4 | [+72.0, +85.0] |
+| `haiku55-xhigh-scale200-n500-strip` | 1.00% | 5 | 86.8% | 78.0% | +8.8 | [+0.4, +27.4] |
+| `haiku55-xhigh-scale100-n500-strip` | 1.00% | 5 | 86.8% | 69.8% | +17.0 | [+1.4, +25.6] |
+| `glm53` | 1.00% | 5 | 86.8% | 64.4% | +22.4 | [+9.8, +31.2] |
+| `luna-scale100-n500-strip` | 1.00% | 5 | 86.8% | 55.4% | +31.4 | [+22.2, +42.0] |
+| `qwen38omniflash-medium` | 1.00% | 5 | 86.8% | 52.0% | +34.8 | [+23.0, +84.4] |
+| `glm53-efforthigh` | 1.00% | 5 | 86.8% | 51.4% | +35.4 | [+30.0, +51.2] |
+| `mistrallarge4-high` | 1.00% | 5 | 86.8% | 46.8% | +40.0 | [+34.4, +53.2] |
+| `haiku45` | 1.00% | 5 | 86.8% | 44.4% | +42.4 | [+35.2, +78.0] |
+| `gemma426b-scale100-n500-strip` | 1.00% | 5 | 86.8% | 39.2% | +47.6 | [+34.6, +66.2] |
+| `luna-none` | 1.00% | 5 | 86.8% | 38.8% | +48.0 | [+41.4, +79.4] |
+| `gptoss120b-low` | 1.00% | 5 | 86.8% | 10.4% | +76.4 | [+69.2, +83.6] |
 
-Nine of the ten rest on exactly 5 honest rows, which is the bar and not a
-comfortable margin, and the intervals are correspondingly wide. The two Haiku
+All eleven rest on exactly 5 honest rows, which is the bar and not a comfortable
+margin, and the intervals are correspondingly wide.
+
+> **The one comfortable rung was an artefact, and it is gone (2026-11-05).** This
+> table used to carry a twelfth row, `gemma3-4b-scale100-n500-strip` at a shared
+> **9.20%** on **46** honest rows, by far the best-powered comparison in the study
+> and the only one not sitting on the 5-row bar. It existed because one of that
+> arm's honest samples was recorded as `0.0` when the monitor had actually scored
+> it 78/100: ControlArena stored its default for a reply it could not parse. With
+> that row corrected the arm serves 9.4% rather than 9.2%, a shift of exactly one
+> honest row in 500, so it no longer shares a rate with the reference above 0.2%
+> and drops out of the test. The comparison was never powered by more data than
+> the others; it was powered by a grid alignment that a fabricated zero had
+> produced. Recorded because losing a result to a data fix is the kind of thing
+> that otherwise gets quietly re-derived later.
+
+The two Haiku
 entries are the interesting ones: at a matched 1.00% false-positive rate Sonnet
 leads its 0-100 arm by 17.0 points and its 0-200 arm by 8.8, both separated from
-zero but with lower bounds of +1.6 and +0.2. Treat them as "separated, barely"
+zero but with lower bounds of +1.4 and +0.4. Treat them as "separated, barely"
 rather than as a measured gap.
 
 The Gemma 3 4B row is the exception and it is instructive. It is the only pair in
