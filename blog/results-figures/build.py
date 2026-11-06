@@ -216,6 +216,180 @@ def fig_frontier(t: pd.DataFrame) -> dict:
                      "frames": frames}}
 
 
+TOP3 = [("Sonnet 5.5 (reasoning = high)", "dataset500-sonnet55-um-strip"),
+        ("Sonnet 5.5 (reasoning = off)", "dataset500-sonnet55-um-effortlow-v2-strip"),
+        ("Haiku 5.5 (reasoning = xhigh)", "dataset-haiku55-effortxhigh-tm-n500-strip")]
+
+
+def _ramp(x: float) -> str:
+    """0 = worst (red), 0.5 = middle (amber), 1 = best (green)."""
+    stops = [(0.0, (232, 100, 90)), (0.5, (242, 201, 76)), (1.0, (76, 184, 119))]
+    x = min(1.0, max(0.0, x))
+    for (a, ca), (b, cb) in zip(stops, stops[1:]):
+        if x <= b:
+            f = (x - a) / (b - a)
+            return "#%02x%02x%02x" % tuple(round(p + f * (q - p)) for p, q in zip(ca, cb))
+    return "#%02x%02x%02x" % stops[-1][1]
+
+
+def fig_top3(t: pd.DataFrame) -> dict:
+    """The three leading setups as a coloured table. Colour = position among every run we scored."""
+    cols = ["Backdoors caught (2% audit budget)", "Cost per program"]
+    n_runs = t.run.nunique()
+    data = []
+    for c, col in enumerate(cols):
+        if c == 0:
+            b = 2
+            allv = t[t.budget_pct == b].safety_exact
+            vals = [float(t[(t.run == r) & (t.budget_pct == b)].safety_exact.iloc[0]) for _, r in TOP3]
+            best = max(vals)
+            for i, v in enumerate(vals):
+                pos = (v - allv.min()) / (allv.max() - allv.min())
+                sub = "best of the three" if v == best else f"{100 * (best - v):.1f} points behind"
+                data.append({"value": [c, i, 1], "itemStyle": {"color": _ramp(pos)},
+                             "label": {"formatter": f"{{big|{100 * v:.1f}%}}\n{{small|{sub}}}"}})
+        else:
+            allc = np.log(t.drop_duplicates("run").cost.astype(float))
+            vals = [float(t[t.run == r].cost.iloc[0]) for _, r in TOP3]
+            cheap = min(vals)
+            for i, v in enumerate(vals):
+                pos = 1 - (np.log(v) - allc.min()) / (allc.max() - allc.min())
+                sub = "cheapest of the three" if v == cheap else f"{v / cheap:.1f}x the cheapest"
+                data.append({"value": [c, i, 1], "itemStyle": {"color": _ramp(pos)},
+                             "label": {"formatter": f"{{big|${v:.4f}}}\n{{small|{sub}}}"}})
+    opt = base_option(
+        tooltip={"show": False},
+        grid={"left": 230, "right": 20, "top": 44, "bottom": 52},
+        xAxis={"type": "category", "data": cols, "position": "top", "axisTick": {"show": False},
+               "axisLine": {"show": False}, "splitArea": {"show": False},
+               "axisLabel": {"color": "@ink-primary", "fontSize": 13, "fontWeight": "bold"}},
+        yAxis={"type": "category", "data": [n for n, _ in TOP3], "inverse": True, "axisTick": {"show": False},
+               "axisLine": {"show": False}, "axisLabel": {"color": "@ink-primary", "fontSize": 13}},
+        graphic=[{"type": "text", "left": "center", "bottom": 8, "style": {
+            "text": f"Colour shows where each value sits among all {n_runs} monitor setups we ran: green is the best of "
+                    f"them, red the worst. Cost is coloured on a log scale.",
+            "fill": "@ink-secondary", "fontSize": 12}}],
+        series=[{"type": "heatmap", "data": data, "silent": True,
+                 "itemStyle": {"borderColor": "@ink-surface", "borderWidth": 4, "borderRadius": 6},
+                 "label": {"show": True, "color": "#1a1a19", "rich": {
+                     "big": {"fontSize": 18, "fontWeight": "bold", "color": "#1a1a19", "lineHeight": 26},
+                     "small": {"fontSize": 12, "color": "#1a1a19"}}}}],
+    )
+    return {"option": opt, "height": 300, "dial": None}
+
+
+def tinted(fig: dict) -> dict:
+    """Same figure with a faint diagonal wash: green top left (cheap, catches a lot), red bottom right."""
+    import copy
+    out = copy.deepcopy(fig)
+    g = dict(out["option"]["grid"])
+    g.update({"show": True, "borderWidth": 0, "backgroundColor": {
+        "type": "linear", "x": 0, "y": 0, "x2": 1, "y2": 1, "colorStops": [
+            {"offset": 0, "color": "rgba(76, 184, 119, 0.16)"}, {"offset": 0.5, "color": "rgba(242, 201, 76, 0.05)"},
+            {"offset": 1, "color": "rgba(232, 100, 90, 0.14)"}]}})
+    out["option"]["grid"] = g
+    return out
+
+
+CELL = ("function (params, api) { var c = api.coord([api.value(0), api.value(1)]);"
+        " var w = api.size([1, 0])[0] * 0.62, h = api.size([0, 1])[1] * 0.66; var v = api.value(2);"
+        " var t = v < 0 ? 'not logged' : String(Math.round(v)).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');"
+        " return {type: 'group', children: [{type: 'rect', shape: {x: c[0] - w / 2, y: c[1] - h / 2, width: w, height: h, r: 6},"
+        " style: api.style()}, {type: 'text', silent: true, style: {text: t, x: c[0], y: c[1], align: 'center',"
+        " verticalAlign: 'middle', fontSize: v < 0 ? 12 : 15, fontWeight: v < 0 ? 'normal' : 'bold',"
+        " fill: v < 0 ? '#898781' : '#1a1a19'}}]}; }")
+
+JUMP = ("function (params, api) { var a = api.coord([api.value(0), api.value(2)]);"
+        " var b = api.coord([api.value(1), api.value(2)]); var w = api.size([1, 0])[0] * 0.31;"
+        " var x1 = a[0] + w, x2 = b[0] - w, d = api.value(3); var s = (d >= 0 ? '+' : '−') +"
+        " String(Math.abs(Math.round(d))).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',');"
+        " return {type: 'group', children: [{type: 'line', shape: {x1: x1 + 3, y1: a[1] + 9, x2: x2 - 3, y2: a[1] + 9},"
+        " style: {stroke: api.visual('color'), lineWidth: 1.2}},"
+        " {type: 'text', silent: true, style: {text: s, x: (x1 + x2) / 2, y: a[1] - 2, align: 'center',"
+        " verticalAlign: 'bottom', fontSize: 12, fontWeight: 'bold', fill: api.visual('color')}}]}; }")
+
+
+def median_reasoning(run: str) -> float:
+    d = pd.read_csv(M.RESULTS / f"{run}-samples.csv")
+    return float(d["reasoning_tokens"].median())
+
+
+def fig_reasoning(t: pd.DataFrame) -> dict:
+    """Median reasoning tokens per program at each effort setting we ran, with the jump between settings."""
+    ladder = {"haiku55": "Haiku 5.5", "glm53": "GLM-5.3", "gptoss": "gpt-oss-120b", "qwen38": "Qwen 3.8 Omni Flash",
+              "gemini35lite": "Gemini 3.5 Flash-Lite", "luna": "GPT-6 Luna",
+              "sonnet55": "Sonnet 5.5", "mistrallarge4": "Mistral Large 4"}
+    remap = {"max": "xhigh", "default": "medium"}
+    runs = t.drop_duplicates("run")
+    cells, jumps = [], []
+    for i, (model, label) in enumerate(ladder.items()):
+        by = {}
+        for _, r in runs[runs.model == model].iterrows():
+            by[EFFORT_ORDER.index(remap.get(r.effort, r.effort))] = median_reasoning(r.run)
+        logged = any(v > 0 for v in by.values())
+        cols = sorted(by)
+        for c in cols:
+            v = by[c] if logged else -1
+            cells.append({"value": [c, i, v], "itemStyle": {"color": "@seq150" if v > 0 else "@mid"}})
+        if logged:
+            for a, b in zip(cols, cols[1:]):
+                d = by[b] - by[a]
+                jumps.append({"value": [a, b, i, d], "itemStyle": {"color": "@ink-primary" if d >= 0 else "@s7"}})
+    opt = base_option(
+        tooltip={"show": False},
+        grid={"left": 170, "right": 24, "top": 44, "bottom": 40},
+        xAxis={"type": "category", "data": [EFFORT_LABEL[e] for e in EFFORT_ORDER], "position": "top",
+               "axisTick": {"show": False}, "axisLine": {"show": False},
+               "axisLabel": {"color": "@ink-primary", "fontSize": 13, "fontWeight": "bold"}},
+        yAxis={"type": "category", "data": list(ladder.values()), "inverse": True, "axisTick": {"show": False},
+               "axisLine": {"show": False}, "axisLabel": {"color": "@ink-primary", "fontSize": 13}},
+        graphic=[{"type": "text", "left": "center", "bottom": 6, "style": {
+            "text": "Median reasoning tokens per program at each setting we ran. Numbers between cells are the change "
+                    "from the previous setting. Empty cells: setting not run.",
+            "fill": "@ink-secondary", "fontSize": 12}}],
+        series=[{"type": "custom", "renderItem": CELL, "data": cells, "silent": True},
+                {"type": "custom", "renderItem": JUMP, "data": jumps, "silent": True}],
+    )
+    return {"option": opt, "height": 470, "dial": None}
+
+
+def fig_gap_table(t: pd.DataFrame, diff: pd.DataFrame, budgets=(5, 2, 1, 0.5)) -> dict:
+    """Sonnet high vs Haiku xhigh at four budgets, coloured like Figure 1b, with Sonnet's lead and its paired interval."""
+    pair = [("Sonnet 5.5 · high", M.SONNET), ("Haiku 5.5 · xhigh", M.HAIKU_X)]
+    cols = [p[0] for p in pair] + ["Sonnet's lead (points)"]
+    data = []
+    for i, b in enumerate(budgets):
+        allv = t[t.budget_pct == b].safety_exact
+        for c, (_, run) in enumerate(pair):
+            r = t[(t.run == run) & (t.budget_pct == b)].iloc[0]
+            pos = (r.safety_exact - allv.min()) / (allv.max() - allv.min())
+            data.append({"value": [c, i, 1], "itemStyle": {"color": _ramp(pos)},
+                         "label": {"formatter": f"{{big|{100 * r.safety_exact:.1f}%}}"}})
+        d = diff[diff.budget_pct == b].iloc[0]
+        shade = min(1.0, d["diff"] / 0.3)
+        col = "#%02x%02x%02x" % tuple(round(255 + shade * (q - 255)) for q in (140, 125, 220))
+        data.append({"value": [2, i, 1], "itemStyle": {"color": col},
+                     "label": {"formatter": f"{{big|+{100 * d['diff']:.1f}}}"}})
+    opt = base_option(
+        tooltip={"show": False},
+        grid={"left": 110, "right": 20, "top": 44, "bottom": 40},
+        xAxis={"type": "category", "data": cols, "position": "top", "axisTick": {"show": False},
+               "axisLine": {"show": False}, "axisLabel": {"color": "@ink-primary", "fontSize": 13, "fontWeight": "bold"}},
+        yAxis={"type": "category", "data": [f"{b:g}% budget" for b in budgets], "inverse": True,
+               "axisTick": {"show": False}, "axisLine": {"show": False},
+               "axisLabel": {"color": "@ink-primary", "fontSize": 13}},
+        graphic=[{"type": "text", "left": "center", "bottom": 8, "style": {
+            "text": "Colour: compared with all 32 monitors we ran (green best, red worst)",
+            "fill": "@ink-secondary", "fontSize": 12}}],
+        series=[{"type": "heatmap", "data": data, "silent": True,
+                 "itemStyle": {"borderColor": "@ink-surface", "borderWidth": 4, "borderRadius": 6},
+                 "label": {"show": True, "color": "#1a1a19", "rich": {
+                     "big": {"fontSize": 18, "fontWeight": "bold", "color": "#1a1a19", "lineHeight": 26},
+                     "small": {"fontSize": 12, "color": "#1a1a19"}}}}],
+    )
+    return {"option": opt, "height": 320, "dial": None}
+
+
 def fig_effort(t: pd.DataFrame) -> dict:
     ladder = {"sonnet55": "Sonnet 5.5", "haiku55": "Haiku 5.5", "glm53": "GLM-5.3", "qwen38": "Qwen 3.8 Omni Flash",
               "luna": "GPT-6 Luna", "mistrallarge4": "Mistral Large 4", "gptoss": "gpt-oss-120b",
@@ -745,9 +919,12 @@ def main() -> None:
     P = prose.Prose(t=t, cf=cf, diff=diff, at=at, R=R, disagree=D["disagree"], headline=HEADLINE)
 
     fr = fig_frontier(t)
-    figs.append({"id": "fig1-cost-vs-safety", **fr, **P.fig1(fr["no_cost"])})
+    figs.append({"id": "fig1-cost-vs-safety", **tinted(fr), **P.fig1(fr["no_cost"])})
+    figs.append({"id": "fig1b-top-three", **fig_top3(t), **P.fig1b()})
     figs.append({"id": "fig2-reasoning-effort", **fig_effort(t), **P.fig2()})
+    figs.append({"id": "fig2b-reasoning-tokens", **fig_reasoning(t), **P.fig2b()})
     figs.append({"id": "fig3-sonnet-vs-haiku", **fig_sonnet_haiku(D["curves"], diff), **P.fig3()})
+    figs.append({"id": "fig3b-gap-by-budget", **fig_gap_table(t, diff), **P.fig3b()})
     figs.append({"id": "fig4-ties-sonnet", **fig_squares(), **P.fig4_squares()})
     figs.append({"id": "fig4b-score-scale", **fig_scale(), **P.fig4b(scale_summary())})
     figs.append({"id": "s-tied-blocks", **fig_ties(), **P.fig4_ties(tie_choices())})

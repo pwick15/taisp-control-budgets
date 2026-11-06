@@ -1,48 +1,48 @@
 <svg width="960" height="440" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" baseProfile="full" viewBox="0 0 960 440">
 <rect width="960" height="440" x="0" y="0" fill="#ffffff"></rect>
-<path d="M96 370.5L460.8 370.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M96 307.5L460.8 307.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M96 244.5L460.8 244.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M96 181.5L460.8 181.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M96 119.5L460.8 119.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M96 56.5L460.8 56.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M576 370.5L940.8 370.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M576 307.5L940.8 307.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M576 244.5L940.8 244.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M576 181.5L940.8 181.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M576 119.5L940.8 119.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M576 56.5L940.8 56.5" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M96.5 56L96.5 370" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M278.5 56L278.5 370" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M461.5 56L461.5 370" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M576.5 56L576.5 370" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M758.5 56L758.5 370" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M941.5 56L941.5 370" fill="transparent" stroke="#e1e0d9" class="zr4-cls-29"></path>
-<path d="M96.5 370L96.5 56" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr4-cls-29"></path>
+<path d="M96 370.5L460.8 370.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M96 307.5L460.8 307.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M96 244.5L460.8 244.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M96 181.5L460.8 181.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M96 119.5L460.8 119.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M96 56.5L460.8 56.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M576 370.5L940.8 370.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M576 307.5L940.8 307.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M576 244.5L940.8 244.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M576 181.5L940.8 181.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M576 119.5L940.8 119.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M576 56.5L940.8 56.5" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M96.5 56L96.5 370" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M278.5 56L278.5 370" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M461.5 56L461.5 370" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M576.5 56L576.5 370" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M758.5 56L758.5 370" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M941.5 56L941.5 370" fill="transparent" stroke="#e1e0d9" class="zr7-cls-34"></path>
+<path d="M96.5 370L96.5 56" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr7-cls-34"></path>
 <text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="-6" transform="matrix(0,-1,1,0,56,213)" fill="#52514e">Backdoors caught (%)</text>
-<path d="M576.5 370L576.5 56" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr4-cls-29"></path>
-<path d="M96 370.5L460.8 370.5" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr4-cls-29"></path>
+<path d="M576.5 370L576.5 56" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr7-cls-34"></path>
+<path d="M96 370.5L460.8 370.5" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr7-cls-34"></path>
 <text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="6" transform="translate(278.4 402)" fill="#52514e">Share of honest programs audited (%, log scale)</text>
-<path d="M576 370.5L940.8 370.5" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr4-cls-29"></path>
+<path d="M576 370.5L940.8 370.5" fill="transparent" stroke="#c3c2b7" stroke-linecap="round" class="zr7-cls-34"></path>
 <text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="6" transform="translate(758.4 402)" fill="#52514e">Share of honest programs audited (%, log scale)</text>
-<path d="M96 370.5L91 370.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M96 307.5L91 307.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M96 244.5L91 244.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M96 181.5L91 181.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M96 119.5L91 119.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M96 56.5L91 56.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M576 370.5L571 370.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M576 307.5L571 307.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M576 244.5L571 244.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M576 181.5L571 181.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M576 119.5L571 119.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M576 56.5L571 56.5" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M96.5 370L96.5 375" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M278.5 370L278.5 375" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M461.5 370L461.5 375" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M576.5 370L576.5 375" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M758.5 370L758.5 375" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
-<path d="M941.5 370L941.5 375" fill="transparent" stroke="#c3c2b7" class="zr4-cls-29"></path>
+<path d="M96 370.5L91 370.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M96 307.5L91 307.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M96 244.5L91 244.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M96 181.5L91 181.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M96 119.5L91 119.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M96 56.5L91 56.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M576 370.5L571 370.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M576 307.5L571 307.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M576 244.5L571 244.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M576 181.5L571 181.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M576 119.5L571 119.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M576 56.5L571 56.5" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M96.5 370L96.5 375" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M278.5 370L278.5 375" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M461.5 370L461.5 375" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M576.5 370L576.5 375" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M758.5 370L758.5 375" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
+<path d="M941.5 370L941.5 375" fill="transparent" stroke="#c3c2b7" class="zr7-cls-34"></path>
 <text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(88 370)" fill="#52514e">0</text>
 <text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(88 307.2)" fill="#52514e">20</text>
 <text dominant-baseline="central" text-anchor="end" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" transform="translate(88 244.4)" fill="#52514e">40</text>
@@ -61,90 +61,90 @@
 <text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(576 378)" fill="#52514e">0.1</text>
 <text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(758.4 378)" fill="#52514e">1</text>
 <text dominant-baseline="central" text-anchor="middle" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" y="6" transform="translate(940.8 378)" fill="#52514e">10</text>
-<g clip-path="url(#zr4-c0)">
-<path d="M150.9 147.7L205.8 147.7L205.8 118.2L237.9 118.2L237.9 108.1L278.4 108.1L278.4 97.4L454.2 97.4L454.2 77.4" fill="transparent" stroke="#2a78d6" stroke-width="2" stroke-linejoin="bevel" class="zr4-cls-31"></path>
+<g clip-path="url(#zr7-c0)">
+<path d="M150.9 147.7L205.8 147.7L205.8 118.2L237.9 118.2L237.9 108.1L278.4 108.1L278.4 97.4L454.2 97.4L454.2 77.4" fill="transparent" stroke="#2a78d6" stroke-width="2" stroke-linejoin="bevel" class="zr7-cls-36"></path>
 </g>
-<g clip-path="url(#zr4-c1)">
-<path d="M150.9 121.9L237.9 121.9L237.9 105.6L260.7 105.6L260.7 100.6L292.8 100.6L292.8 95.6L333.3 95.6L333.3 87.4" fill="transparent" stroke="#eb6834" stroke-width="2" stroke-linejoin="bevel" class="zr4-cls-31"></path>
+<g clip-path="url(#zr7-c1)">
+<path d="M150.9 121.9L237.9 121.9L237.9 105.6L260.7 105.6L260.7 100.6L292.8 100.6L292.8 95.6L333.3 95.6L333.3 87.4" fill="transparent" stroke="#eb6834" stroke-width="2" stroke-linejoin="bevel" class="zr7-cls-36"></path>
 </g>
-<g clip-path="url(#zr4-c2)">
-<path d="M630.9 337.3L685.8 337.3L685.8 210.5L717.9 210.5L717.9 189.8L740.7 189.8L740.7 145.8L795.6 145.8L795.6 103.1" fill="transparent" stroke="#2a78d6" stroke-width="2" stroke-linejoin="bevel" class="zr4-cls-31"></path>
+<g clip-path="url(#zr7-c2)">
+<path d="M630.9 337.3L685.8 337.3L685.8 210.5L717.9 210.5L717.9 189.8L740.7 189.8L740.7 145.8L795.6 145.8L795.6 103.1" fill="transparent" stroke="#2a78d6" stroke-width="2" stroke-linejoin="bevel" class="zr7-cls-36"></path>
 </g>
-<g clip-path="url(#zr4-c3)">
-<path d="M630.9 277.1L685.8 277.1L685.8 172.2L717.9 172.2L717.9 169L740.7 169L740.7 156.5L758.4 156.5L758.4 150.8L772.8 150.8L772.8 138.9L785.1 138.9L785.1 130.7L795.6 130.7L795.6 125.1L805 125.1L805 109.4L820.9 109.4L820.9 103.7L859.9 103.7L859.9 91.2L923.1 91.2L923.1 84.3" fill="transparent" stroke="#eb6834" stroke-width="2" stroke-linejoin="bevel" class="zr4-cls-31"></path>
+<g clip-path="url(#zr7-c3)">
+<path d="M630.9 277.1L685.8 277.1L685.8 172.2L717.9 172.2L717.9 169L740.7 169L740.7 156.5L758.4 156.5L758.4 150.8L772.8 150.8L772.8 138.9L785.1 138.9L785.1 130.7L795.6 130.7L795.6 125.1L805 125.1L805 109.4L820.9 109.4L820.9 103.7L859.9 103.7L859.9 91.2L923.1 91.2L923.1 84.3" fill="transparent" stroke="#eb6834" stroke-width="2" stroke-linejoin="bevel" class="zr7-cls-36"></path>
 </g>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,150.9079,147.688)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,205.8157,118.172)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,237.9348,108.124)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,278.4,97.448)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,454.1949,77.352)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,150.9079,121.94)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,237.9348,105.612)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,260.7236,100.588)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,292.8427,95.564)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,333.3079,87.4)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,630.9079,337.344)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,685.8157,210.488)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,717.9348,189.764)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,740.7236,145.804)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,795.6315,103.1)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,630.9079,277.056)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,685.8157,172.18)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,717.9348,169.04)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,740.7236,156.48)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,758.4,150.828)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,772.8427,138.896)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,785.0538,130.732)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,795.6315,125.08)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="7" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,804.9617,109.38)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="8" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,820.8579,103.728)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="9" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,859.8696,91.168)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="10" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,923.1236,84.26)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="11" ecmeta_ssr_type="chart" class="zr4-cls-32"></path>
-<path d="M-5 -5l228.2 0l0 23.2l-228.2 0Z" transform="translate(370.92 421.8)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr4-cls-29"></path>
-<path d="M0 7L25 7" transform="translate(371.92 421.4)" fill="#000" stroke="#2a78d6" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10" class="zr4-cls-29"></path>
-<path d="M18.1 7A5.6 5.6 0 1 1 18.1 6.4A5.6 5.6 0 0 1 18.1 7" transform="translate(371.92 421.4)" fill="#fff" stroke="#2a78d6" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10" class="zr4-cls-29"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,150.9079,147.688)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,205.8157,118.172)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,237.9348,108.124)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,278.4,97.448)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,454.1949,77.352)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="0" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,150.9079,121.94)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,237.9348,105.612)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,260.7236,100.588)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,292.8427,95.564)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,333.3079,87.4)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="1" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,630.9079,337.344)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,685.8157,210.488)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,717.9348,189.764)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,740.7236,145.804)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,795.6315,103.1)" fill="#fff" stroke="#2a78d6" stroke-width="0.5714285714285714" ecmeta_series_index="2" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,630.9079,277.056)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="0" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,685.8157,172.18)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="1" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,717.9348,169.04)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="2" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,740.7236,156.48)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="3" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,758.4,150.828)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="4" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,772.8427,138.896)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="5" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,785.0538,130.732)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="6" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,795.6315,125.08)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="7" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,804.9617,109.38)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="8" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,820.8579,103.728)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="9" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,859.8696,91.168)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="10" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M1 0A1 1 0 1 1 1 -0.1A1 1 0 0 1 1 0" transform="matrix(3.5,0,0,3.5,923.1236,84.26)" fill="#fff" stroke="#eb6834" stroke-width="0.5714285714285714" ecmeta_series_index="3" ecmeta_data_index="11" ecmeta_ssr_type="chart" class="zr7-cls-37"></path>
+<path d="M-5 -5l228.2 0l0 23.2l-228.2 0Z" transform="translate(370.92 421.8)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr7-cls-34"></path>
+<path d="M0 7L25 7" transform="translate(371.92 421.4)" fill="#000" stroke="#2a78d6" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10" class="zr7-cls-34"></path>
+<path d="M18.1 7A5.6 5.6 0 1 1 18.1 6.4A5.6 5.6 0 0 1 18.1 7" transform="translate(371.92 421.4)" fill="#fff" stroke="#2a78d6" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10" class="zr7-cls-34"></path>
 <text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="30" y="7" transform="translate(371.92 421.4)" fill="#52514e">0 to 10 score</text>
-<path d="M-1 0.4l100.7 0l0 13.2l-100.7 0Z" transform="translate(371.92 421.4)" fill="transparent" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr4-cls-33"></path>
-<path d="M0 7L25 7" transform="translate(482.64 421.4)" fill="#000" stroke="#eb6834" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10" class="zr4-cls-29"></path>
-<path d="M18.1 7A5.6 5.6 0 1 1 18.1 6.4A5.6 5.6 0 0 1 18.1 7" transform="translate(482.64 421.4)" fill="#fff" stroke="#eb6834" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10" class="zr4-cls-29"></path>
+<path d="M-1 0.4l100.7 0l0 13.2l-100.7 0Z" transform="translate(371.92 421.4)" fill="transparent" ecmeta_series_index="0" ecmeta_data_index="0" ecmeta_ssr_type="legend" class="zr7-cls-38"></path>
+<path d="M0 7L25 7" transform="translate(482.64 421.4)" fill="#000" stroke="#eb6834" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10" class="zr7-cls-34"></path>
+<path d="M18.1 7A5.6 5.6 0 1 1 18.1 6.4A5.6 5.6 0 0 1 18.1 7" transform="translate(482.64 421.4)" fill="#fff" stroke="#eb6834" stroke-width="2" stroke-linecap="butt" stroke-miterlimit="10" class="zr7-cls-34"></path>
 <text dominant-baseline="central" text-anchor="start" style="font-size:12px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" x="30" y="7" transform="translate(482.64 421.4)" fill="#52514e">0 to 100 score</text>
-<path d="M-1 0.4l107.4 0l0 13.2l-107.4 0Z" transform="translate(482.64 421.4)" fill="transparent" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr4-cls-33"></path>
-<path d="M-144.9 -5l289.8 0l0 44l-289.8 0Z" transform="translate(283.4 5)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr4-cls-29"></path>
-<path d="M-148 -5l296 0l0 44l-296 0Z" transform="translate(763.4 5)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr4-cls-29"></path>
+<path d="M-1 0.4l107.4 0l0 13.2l-107.4 0Z" transform="translate(482.64 421.4)" fill="transparent" ecmeta_series_index="1" ecmeta_data_index="1" ecmeta_ssr_type="legend" class="zr7-cls-38"></path>
+<path d="M-144.9 -5l289.8 0l0 44l-289.8 0Z" transform="translate(283.4 5)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr7-cls-34"></path>
+<path d="M-148 -5l296 0l0 44l-296 0Z" transform="translate(763.4 5)" fill="rgb(0,0,0)" fill-opacity="0" stroke="#ccc" stroke-width="0" class="zr7-cls-34"></path>
 <text dominant-baseline="central" text-anchor="middle" style="font-size:13px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-weight:bold;" xml:space="preserve" y="6.5" transform="translate(283.4 5)" fill="#0b0b0b">Sonnet 5.5</text>
 <text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="28.5" transform="translate(283.4 5)" fill="#52514e">usable cutoffs at 5% or below: 4 on 0 to 10, 5 on 0 to 100</text>
 <text dominant-baseline="central" text-anchor="middle" style="font-size:13px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;font-weight:bold;" xml:space="preserve" y="6.5" transform="translate(763.4 5)" fill="#0b0b0b">Haiku 5.5 · xhigh</text>
 <text dominant-baseline="central" text-anchor="middle" style="font-size:11px;font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;" xml:space="preserve" y="28.5" transform="translate(763.4 5)" fill="#52514e">usable cutoffs at 5% or below: 5 on 0 to 10, 11 on 0 to 100</text>
 <defs >
-<clipPath id="zr4-c0">
-<path d="M95 55l367 0l0 316l-367 0Z" fill="#000" class="zr4-cls-30"></path>
+<clipPath id="zr7-c0">
+<path d="M95 55l367 0l0 316l-367 0Z" fill="#000" class="zr7-cls-35"></path>
 </clipPath>
-<clipPath id="zr4-c1">
-<path d="M95 55l367 0l0 316l-367 0Z" fill="#000" class="zr4-cls-30"></path>
+<clipPath id="zr7-c1">
+<path d="M95 55l367 0l0 316l-367 0Z" fill="#000" class="zr7-cls-35"></path>
 </clipPath>
-<clipPath id="zr4-c2">
-<path d="M575 55l367 0l0 316l-367 0Z" fill="#000" class="zr4-cls-30"></path>
+<clipPath id="zr7-c2">
+<path d="M575 55l367 0l0 316l-367 0Z" fill="#000" class="zr7-cls-35"></path>
 </clipPath>
-<clipPath id="zr4-c3">
-<path d="M575 55l367 0l0 316l-367 0Z" fill="#000" class="zr4-cls-30"></path>
+<clipPath id="zr7-c3">
+<path d="M575 55l367 0l0 316l-367 0Z" fill="#000" class="zr7-cls-35"></path>
 </clipPath>
 </defs>
 <style ><![CDATA[
-.zr4-cls-29:hover {
+.zr7-cls-34:hover {
 pointer-events:none;
 }
-.zr4-cls-30:hover {
+.zr7-cls-35:hover {
 cursor:pointer;
 fill:rgba(0,0,0,1);
 }
-.zr4-cls-31:hover {
+.zr7-cls-36:hover {
 cursor:pointer;
 }
-.zr4-cls-32:hover {
+.zr7-cls-37:hover {
 cursor:pointer;
 fill:rgba(255,255,255,1);
 }
-.zr4-cls-33:hover {
+.zr7-cls-38:hover {
 cursor:pointer;
 fill:rgba(0,0,0,0);
 }

@@ -80,6 +80,21 @@ class Prose:
             ],
         }
 
+    def fig1b(self):
+        return {
+            "num": "1b", "kind": "main", "source": "ours", "confirm": False,
+            "title": "The three leading monitors side by side",
+            "question": "Which of the top three monitors is best on each measure, and by how much?",
+            "shows": (
+                "The three best monitors from Figure 1. Each cell's colour shows where that value sits among every monitor "
+                "setup we ran: green is the best of them, red the worst. So a green cell is good against the whole field, "
+                "not just against the other two rows. The small text compares the three rows with each other."),
+            "takeaway": (
+                "<p>All three catch backdoors about as well as anything we ran at a 2% budget. Sonnet with reasoning on is "
+                "best, but only by 2.5 points over Haiku xhigh, which costs about a fifth as much.</p>"),
+            "debate": [],
+        }
+
     def fig2(self):
         R = self.R
         rows = [
@@ -133,6 +148,25 @@ class Prose:
             ],
         }
 
+    def fig2b(self):
+        return {
+            "num": "2b", "kind": "main", "source": "ours", "confirm": False,
+            "title": "The same effort setting means very different amounts of thinking",
+            "question": "How much extra reasoning does each step up in effort actually buy, model by model?",
+            "shows": (
+                "Rows are the models from Figure 2, columns the effort settings. Each cell is the median number of reasoning "
+                "tokens the monitor spent per program at that setting; empty cells are settings we didn't run. The number "
+                "between two cells is the change from one setting to the next one we ran, red if it went down."),
+            "takeaway": (
+                "<p>Effort settings aren't comparable across models. Going from lowest to highest added about 340 reasoning "
+                "tokens per program for GPT-6 Luna but about 2,400 for GLM-5.3. Steps inside one model vary too: GLM's "
+                "low to high step adds 58 tokens, its high to max step about 2,400. Qwen's medium setting thinks more than "
+                "its high.</p>"
+                "<p>Sonnet 5.5 and Mistral Large 4 log no reasoning tokens at any setting, so we can't say what their "
+                "settings changed.</p>"),
+            "debate": [],
+        }
+
     def fig3(self):
         dis = self.dis
         s2, h2 = dis["S_caught@2"], dis["H_caught@2"]
@@ -178,6 +212,21 @@ class Prose:
                 "Below 1%, the cutoff rests on 5 honest programs or fewer, so the bands are wide. The gap there is real but "
                 "its size is not well measured.",
             ],
+        }
+
+    def fig3b(self):
+        return {
+            "num": "3b", "kind": "main", "source": "ours", "confirm": False,
+            "title": "Sonnet's lead over Haiku xhigh grows as the budget tightens",
+            "question": "How far ahead is Sonnet at each audit budget?",
+            "shows": (
+                "The numbers behind Figure 3 at four budgets. The first two columns are coloured by where each catch rate "
+                "sits among all 32 monitor setups at that budget. The last column is Sonnet's lead with a paired 95% interval."),
+            "takeaway": (
+                "<p>Sonnet leads at every budget, and every paired interval excludes zero. The lead is small at 5% and 2% "
+                "(about 2.5 to 4 points) and grows to 12 points at 1% and 27 at 0.5%. The intervals widen as the budget "
+                "tightens, so the size of the lead at 0.5% is uncertain even though its direction isn't.</p>"),
+            "debate": [],
         }
 
     def fig4_squares(self):
