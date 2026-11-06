@@ -413,6 +413,71 @@ def fig_scale() -> dict:
     return {"option": opt, "height": 440, "dial": None}
 
 
+SQUARE = ("function (params, api) { var a = api.coord([api.value(0), api.value(1)]);"
+          " var b = api.coord([api.value(0) + 1, api.value(1)]); var h = api.size([0, 1])[1] * 0.5;"
+          " var w = (b[0] - a[0]) * 0.86; var v = api.value(2);"
+          " return {type: 'group', children: [{type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: w, height: h, r: 2},"
+          " style: api.style()}, {type: 'text', silent: true, style: {text: String(v), x: a[0] + w / 2, y: a[1],"
+          " align: 'center', verticalAlign: 'middle', fontSize: v > 9 ? 9 : 11,"
+          " fill: api.value(3) ? '#ffffff' : '#1a1a19'}}]}; }")
+
+SQ_ROWS = [("0 to 10 score", M.SONNET, 10), ("0 to 100 score", SCALE_PAIRS[0][2], 100)]
+
+
+def fig_squares(budgets=(1, 2, 5), initial=2, show=50) -> dict:
+    """Sonnet's most suspicious honest programs, one square each, labelled with its score."""
+    rows = []
+    for label, run, scale in SQ_ROWS:
+        h, _ = M.load_scores(run)
+        vals = sorted((round(v * scale) for v in h.values), reverse=True)
+        rows.append((label, vals, len(h)))
+    cats = [r[0] for r in rows]
+
+    def frame(b):
+        aud, cut, rest, notes = [], [], [], []
+        for i, (label, vals, n) in enumerate(rows):
+            k = round(b / 100 * n)
+            above, upto = sum(v > vals[k - 1] for v in vals), sum(v >= vals[k - 1] for v in vals)
+            for j, v in enumerate(vals[:show]):
+                item = {"value": [j, i, v], "tip": f"<b>{label}</b><br>honest program ranked {j + 1}, scored {v}"}
+                if upto == k:
+                    (aud if j < k else rest).append(item)
+                else:
+                    (aud if j < above else cut if j < upto else rest).append(item)
+            notes.append({"name": (f"audits exactly {k}" if upto == k else f"audits {above} or {upto}, not {k}"),
+                          "value": [show, i]})
+        for it in aud:
+            it["value"].append(1)
+        for it in cut + rest:
+            it["value"].append(0)
+        sq = lambda name, color, data: {"name": name, "type": "custom", "renderItem": SQUARE, "data": data,
+                                         "clip": False, "itemStyle": {"color": color}}
+        return {"series": [
+            sq("Audited", "@s0", aud), sq("Tied: all or none", "@warning", cut), sq("Not audited", "@ink-grid", rest),
+            {"name": "notes", "type": "scatter", "symbolSize": 0, "data": notes, "silent": True, "clip": False,
+             "label": {"show": True, "position": "right", "distance": 10, "formatter": "{b}",
+                       "color": "@ink-primary", "fontSize": 13, "fontWeight": "bold"},
+             "markLine": {"silent": True, "symbol": "none", "data": [{"xAxis": round(b / 100 * rows[0][2]) - 0.07}],
+                          "lineStyle": {"color": "@ink-primary", "type": "dashed", "width": 2},
+                          "label": {"formatter": f"budget {b:g}% = {round(b / 100 * rows[0][2])} programs",
+                                    "position": "start", "color": "@ink-primary", "fontSize": 12}}},
+        ]}
+
+    frames = [frame(b) for b in budgets]
+    opt = base_option(
+        grid={"left": 120, "right": 190, "top": 40, "bottom": 46},
+        xAxis={"type": "value", "min": 0, "max": show, "show": False},
+        yAxis={"type": "category", "data": cats, "inverse": True, "axisTick": {"show": False},
+               "axisLine": {"show": False}, "axisLabel": {"color": "@ink-primary", "fontSize": 13}},
+        legend={"bottom": 0, "textStyle": {"color": "@ink-secondary"},
+                "data": ["Audited", "Tied: all or none", "Not audited"]},
+        **frames[budgets.index(initial)],
+    )
+    dial = {"label": "Audit budget", "kind": "choice", "steps": [f"{b:g}%" for b in budgets],
+            "initial": budgets.index(initial), "frames": frames}
+    return {"option": opt, "height": 230, "dial": dial}
+
+
 BLOCK = ("function (params, api) { var a = api.coord([api.value(0), api.value(2)]);"
          " var b = api.coord([api.value(1), api.value(2)]); var h = api.size([0, 1])[1] * 0.62;"
          " return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 1), height: h},"
@@ -683,8 +748,9 @@ def main() -> None:
     figs.append({"id": "fig1-cost-vs-safety", **fr, **P.fig1(fr["no_cost"])})
     figs.append({"id": "fig2-reasoning-effort", **fig_effort(t), **P.fig2()})
     figs.append({"id": "fig3-sonnet-vs-haiku", **fig_sonnet_haiku(D["curves"], diff), **P.fig3()})
-    figs.append({"id": "fig4-tied-blocks", **fig_ties(), **P.fig4_ties(tie_choices())})
+    figs.append({"id": "fig4-ties-sonnet", **fig_squares(), **P.fig4_squares()})
     figs.append({"id": "fig4b-score-scale", **fig_scale(), **P.fig4b(scale_summary())})
+    figs.append({"id": "s-tied-blocks", **fig_ties(), **P.fig4_ties(tie_choices())})
     figs.append({"id": "s-score-pileup",
                  **fig_scores([(M.SONNET, "Sonnet 5.5"), (M.HAIKU_X, "Haiku 5.5 · xhigh")]), **P.fig4()})
     figs.append({"id": "s-score-pileup-100",

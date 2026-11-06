@@ -180,6 +180,27 @@ class Prose:
             ],
         }
 
+    def fig4_squares(self):
+        return {
+            "num": 4, "kind": "main", "source": "ours", "confirm": False,
+            "title": "A 2% budget lands in the middle of a tie",
+            "question": "Can you audit exactly 2% of programs when the monitor only uses a few scores?",
+            "shows": (
+                "Sonnet 5.5's 50 most suspicious honest programs, out of 500. Each square is one program, with the score "
+                "Sonnet gave it. A 2% budget means auditing the top 10. Top row: the default 0 to 10 score. Bottom row: "
+                "the same monitor asked for 0 to 100."),
+            "takeaway": (
+                "<p>On 0 to 10, 41 programs tie on a score of 1, right where the budget line falls. You can't audit "
+                "part of a tie by score, so you audit 5 programs or 46, not 10. On 0 to 100 the ties break up and you "
+                "can audit exactly 10.</p>"
+                "<p>Our fix for any scale: audit everything above the tie, then pick the rest at random from the tie. "
+                "Every number in Figures 1 to 3 does this.</p>"),
+            "debate": [
+                "The previous four-row version of this figure (both Sonnet and Haiku, both scales) is kept in the "
+                "supporting section. Haiku's 0 to 10 tie is worse: 221 programs on one score.",
+            ],
+        }
+
     def fig4_ties(self, ch):
         t2 = self.t[self.t.budget_pct == 2]
         movers = t2.assign(delta=t2.safety_exact - t2.safety_reported).sort_values("delta", ascending=False).head(6)
@@ -190,7 +211,7 @@ class Prose:
         s10, h10 = ch["Sonnet 5.5, 0 to 10"], ch["Haiku 5.5 · xhigh, 0 to 10"]
         s100, h100 = ch["Sonnet 5.5, 0 to 100"], ch["Haiku 5.5 · xhigh, 0 to 100"]
         return {
-            "num": 4, "kind": "main", "source": "ours", "confirm": False,
+            "num": None, "kind": "support", "source": "ours", "confirm": False,
             "title": "A 2% budget usually lands in the middle of a tie",
             "question": "Can you actually audit 2% of programs when the monitor only uses a few scores?",
             "shows": (
