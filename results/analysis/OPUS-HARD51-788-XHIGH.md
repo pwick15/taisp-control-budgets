@@ -45,10 +45,23 @@ The reason text is stored exactly as the pipeline produced it, which is why it b
 
 A second pass is the intended way to repair an incomplete execution, but this one is not a
 recovery of the original reply, it is a fresh draw from a non-deterministic model. The
-xhigh column is now 50 first-pass values and 1 second-pass value. Re-rolling only the
-sample that failed is also a selection on outcome. At one sample out of 51 neither matters
-for any conclusion the arm supports, and the alternative was a permanent hole, but the
-column is no longer a single pass and should not be described as one.
+xhigh column is now 50 first-pass values and 1 second-pass value.
+
+Re-running only the sample that failed is a weaker objection than it first looks, and the
+distinction is worth stating because it decides what repairs are allowed. Selection on
+outcome means choosing which measurements to redo **by their value** and keeping whatever
+comes back: that biases the arm upward however few cells you touch. This cell was not
+chosen for being low. It was chosen for having no recorded value at all, which is a
+property of the parser, not of the score. Re-measuring a cell that was never measured is
+filling a hole, not re-rolling a draw.
+
+The residual risk is real but narrower: the selection rule is "the reply failed to parse",
+and that can correlate with the value rather than being independent of it. There is direct
+evidence it can. Across the gpt-oss arms the model broke format precisely when it wanted
+to express a value just above zero, so the lost scores were concentrated at the low end.
+If the same holds here, the one re-measured cell is not a random draw from the arm. At one
+sample in 51 that moves nothing, and the alternative was a permanent hole, but the column
+is no longer a single pass and should not be described as one.
 
 ## The three report figures predate this repair
 

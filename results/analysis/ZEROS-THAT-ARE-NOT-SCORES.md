@@ -53,12 +53,29 @@ measurement that was never made. A missing value would be the honest record. Und
 project's rule that a run named `n500` delivers 500 scored samples, marking them missing
 makes the arm incomplete, so the clean resolution is a re-run rather than an edit.
 
-## What not to do
+## Repair these twelve cells, not these four arms
 
-Do not re-score only these twelve. Picking out the rows that came back wrong and
-re-rolling them is selection on outcome, the same objection recorded for sample 788 in
-`OPUS-HARD51-788-XHIGH.md`. A re-run has to be a fresh pass over a whole arm.
+Re-scoring only the affected cells is the right repair, and `CLAUDE.md` already says so:
+executing a configuration in several passes "is fine and is the intended way to repair
+one". The worked example in that rule generated exactly the samples that were missing and
+replayed the rest.
 
-Until then: the twelve are worth at most 0.4 points on the Sonnet reference and about 1.2
+The objection to a partial repair is selection on outcome, and it does not have much grip
+here. Selection on outcome means choosing cells **by their value** and keeping the
+replacement; that biases the arm however few cells you touch. These cells were chosen for
+having no recorded value, which is a property of the logging and the parser rather than of
+the score. What remains is a missing-data risk: the failure that selected them may itself
+correlate with the value, and in the gpt-oss arms it demonstrably did, since the model
+broke format exactly when it wanted a value just above zero. So the repaired cells may not
+be a random draw from their arm, and that should be disclosed per cell rather than paid
+for at a thousand times the cost.
+
+A fresh pass over a whole arm removes the selection, and buys it badly. It replaces 994 to
+999 measurements that were never in question, costs about $21.55 across these four arms
+against roughly $0.04 for the cells, and for `dataset500-sonnet55-um-strip` it redraws the
+study's reference arm, which would rewrite every gap, interval and verdict in
+`MATCHED-FPR.md` as a side effect of fixing two cells.
+
+Meanwhile: the twelve are worth at most 0.4 points on the Sonnet reference and about 1.2
 on `gemma426b`, so they overturn nothing, but they are fabrications and should not be
 quoted as measurements.
