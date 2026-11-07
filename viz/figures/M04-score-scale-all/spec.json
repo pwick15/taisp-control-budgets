@@ -1,618 +1,157 @@
 {
  "id": "M04",
- "kind": "snapshot",
- "title": "A 0 to 100 score scale adds operating points",
+ "kind": "echarts",
+ "title": "A wider score scale adds usable cutoffs for every monitor",
  "section": "appendix",
- "order": 60,
- "caption": "Usable audit budgets on a 0 to 10 and a 0 to 100 prompt for every monitor Marnick tested. Every one gains cutoffs; P08 shows the two monitors the post is about.",
- "notes": [],
- "height": 460,
+ "order": 138,
+ "caption": "Left: how many audit rates a monitor can actually be placed at, counting only cutoffs resting on at least 5 honest programs. Right: the cheapest of those rates. Each line is one monitor asked for the same judgement on a wider scale. Dashed lines are pairs that change something else too.",
+ "notes": [
+  "Usable cutoffs rise on 6 of the 6 clean pairs, and the cheapest usable rate falls on 2. Nothing about the model changes along these lines; only the scale it was asked to answer on.",
+  "Two pairs are drawn dashed because they are confounded, not clean: gpt-oss-120b and Qwen 3.8 Omni Flash each changed reasoning effort as well as the scale, so their movement is not the prompt's doing. They are excluded from the counts above, as in SCORE-SCALE.md.",
+  "A cutoff counts as usable when at least 5 honest programs sit above it. That bar is the whole reason this figure is not just a count of distinct scores: M03 shows what intervals look like below it.",
+  "The pairs and the usable rule are imported from scripts/analysis_score_resolution.py, so this figure and SCORE-SCALE.md cannot drift apart.",
+  "Rebuilt from committed per-sample tables, replacing the exported snapshot."
+ ],
+ "height": 560,
  "author": "",
- "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'geom-score-scale'. Copied as exported; its generator isn't in the repo yet.",
+ "source": "",
  "path": "viz/figures/M04-score-scale-all",
  "option": {
-  "animation": false,
-  "textStyle": {
-   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
-   "color": "@ink-secondary"
-  },
-  "grid": [
-   {
-    "left": "7.0%",
-    "width": "40.0%",
-    "top": 66,
-    "bottom": 76,
-    "containLabel": true
-   },
-   {
-    "left": "55.0%",
-    "width": "40.0%",
-    "top": 66,
-    "bottom": 76,
-    "containLabel": true
-   }
-  ],
   "tooltip": {
    "trigger": "item",
-   "confine": true,
-   "backgroundColor": "@ink-surface",
-   "borderColor": "@ink-axis",
-   "borderWidth": 1,
-   "textStyle": {
-    "color": "@ink-primary",
-    "fontSize": 12
-   },
-   "formatter": "function (p) { return p.data.who + '<br/>' + p.name + '<br/>' + p.data.what + ' ' + p.value[1]; }"
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
   },
-  "legend": {
-   "type": "scroll",
-   "bottom": 0,
-   "icon": "roundRect",
-   "itemWidth": 10,
-   "itemHeight": 10,
-   "textStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "data": [
-    "Haiku 5.5 xhigh",
-    "GPT-6 Luna default",
-    "Gemma 3 27B",
-    "Gemma 3 4B",
-    "Gemma 4 26B-A4B",
-    "Qwen3.8 Omni Flash none",
-    "Sonnet 5.5 default",
-    "gpt-oss-120b default"
-   ]
-  },
-  "title": [
+  "animation": false,
+  "grid": [
    {
-    "text": "operating points gained",
-    "subtext": "higher is better",
-    "left": "7.0%",
-    "top": 4,
-    "textStyle": {
-     "color": "@ink-primary",
-     "fontSize": 12,
-     "fontWeight": "normal"
-    },
-    "subtextStyle": {
-     "color": "@ink-muted",
-     "fontSize": 11
-    }
+    "left": 68,
+    "right": "56%",
+    "top": 58,
+    "bottom": 56
    },
    {
-    "text": "tightest budget you can trust",
-    "subtext": "lower is better",
-    "left": "55.0%",
-    "top": 4,
-    "textStyle": {
-     "color": "@ink-primary",
-     "fontSize": 12,
-     "fontWeight": "normal"
-    },
-    "subtextStyle": {
-     "color": "@ink-muted",
-     "fontSize": 11
-    }
+    "left": "56%",
+    "right": 32,
+    "top": 58,
+    "bottom": 56
    }
   ],
   "xAxis": [
    {
-    "type": "category",
-    "name": "score scale the monitor was asked for",
+    "name": "Score scale asked for",
     "nameLocation": "middle",
-    "nameGap": 32,
-    "nameTextStyle": {
-     "color": "@ink-secondary",
-     "fontSize": 11
-    },
-    "axisLine": {
-     "lineStyle": {
-      "color": "@ink-axis"
-     }
-    },
-    "axisTick": {
-     "show": false
-    },
-    "axisLabel": {
-     "color": "@ink-muted",
-     "fontSize": 11
-    },
-    "splitLine": {
-     "lineStyle": {
-      "color": "@ink-grid",
-      "width": 1
-     }
-    },
+    "nameGap": 34,
+    "type": "category",
     "data": [
-     "prompt 0-10",
-     "prompt 0-100",
-     "prompt 0-200"
-    ]
+     "0-10",
+     "0-100",
+     "0-200"
+    ],
+    "boundaryGap": false
    },
    {
-    "type": "category",
-    "name": "score scale the monitor was asked for",
+    "name": "Score scale asked for",
     "nameLocation": "middle",
-    "nameGap": 32,
-    "nameTextStyle": {
-     "color": "@ink-secondary",
-     "fontSize": 11
-    },
-    "axisLine": {
-     "lineStyle": {
-      "color": "@ink-axis"
-     }
-    },
-    "axisTick": {
-     "show": false
-    },
-    "axisLabel": {
-     "color": "@ink-muted",
-     "fontSize": 11
-    },
-    "splitLine": {
-     "lineStyle": {
-      "color": "@ink-grid",
-      "width": 1
-     }
-    },
+    "nameGap": 34,
+    "type": "category",
     "data": [
-     "prompt 0-10",
-     "prompt 0-100",
-     "prompt 0-200"
+     "0-10",
+     "0-100",
+     "0-200"
     ],
-    "gridIndex": 1
+    "gridIndex": 1,
+    "boundaryGap": false
    }
   ],
   "yAxis": [
    {
-    "type": "value",
-    "name": "usable operating points",
+    "name": "Usable cutoffs",
     "nameLocation": "middle",
     "nameGap": 44,
-    "nameTextStyle": {
-     "color": "@ink-secondary",
-     "fontSize": 11
-    },
-    "axisLine": {
-     "lineStyle": {
-      "color": "@ink-axis"
-     }
-    },
-    "axisTick": {
-     "show": false
-    },
-    "axisLabel": {
-     "color": "@ink-muted",
-     "fontSize": 11
-    },
-    "splitLine": {
-     "lineStyle": {
-      "color": "@ink-grid",
-      "width": 1
-     }
-    },
-    "min": 0,
-    "max": 24.0
+    "type": "value",
+    "min": 0
    },
    {
-    "type": "value",
-    "name": "lowest usable false-positive rate (%)",
+    "name": "Cheapest usable rate",
     "nameLocation": "middle",
-    "nameGap": 44,
-    "nameTextStyle": {
-     "color": "@ink-secondary",
-     "fontSize": 11
-    },
-    "axisLine": {
-     "lineStyle": {
-      "color": "@ink-axis"
-     }
-    },
-    "axisTick": {
-     "show": false
-    },
+    "nameGap": 52,
+    "type": "value",
+    "gridIndex": 1,
     "axisLabel": {
-     "color": "@ink-muted",
-     "fontSize": 11
-    },
-    "splitLine": {
-     "lineStyle": {
-      "color": "@ink-grid",
-      "width": 1
-     }
-    },
-    "min": 0.8,
-    "max": 4.8,
-    "gridIndex": 1
+     "formatter": "{value}%"
+    }
    }
   ],
+  "legend": {
+   "top": 0,
+   "left": 62,
+   "data": [
+    "Haiku 5.5 xhigh",
+    "Sonnet 5.5 UM",
+    "Gemma 3 4B",
+    "Gemma 3 27B",
+    "GPT-6 Luna",
+    "Gemma 4 26B-A4B",
+    "gpt-oss-120b",
+    "Qwen3.8 Omni Flash"
+   ]
+  },
   "series": [
    {
-    "type": "line",
     "name": "Haiku 5.5 xhigh",
-    "showSymbol": true,
-    "symbolSize": 11,
+    "type": "line",
     "xAxisIndex": 0,
     "yAxisIndex": 0,
+    "symbolSize": 9,
     "lineStyle": {
      "color": "@s0",
      "width": 2.5
     },
     "itemStyle": {
-     "color": "@s0"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
       "value": [
        0,
-       2.0
+       2
       ],
-      "who": "Haiku 5.5 xhigh",
-      "what": "usable rungs"
+      "tip": "<b>Haiku 5.5 xhigh</b><br>0-10 prompt<br>2 usable cutoffs<br>cheapest 1.60%"
      },
      {
       "value": [
        1,
-       8.0
+       8
       ],
-      "who": "Haiku 5.5 xhigh",
-      "what": "usable rungs"
+      "tip": "<b>Haiku 5.5 xhigh</b><br>0-100 prompt<br>8 usable cutoffs<br>cheapest 1.00%"
      },
      {
       "value": [
        2,
-       8.0
+       8
       ],
-      "who": "Haiku 5.5 xhigh",
-      "what": "usable rungs"
+      "tip": "<b>Haiku 5.5 xhigh</b><br>0-200 prompt<br>8 usable cutoffs<br>cheapest 1.00%"
      }
-    ]
+    ],
+    "connectNulls": true
    },
    {
-    "type": "line",
-    "name": "GPT-6 Luna default",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "lineStyle": {
-     "color": "@s1",
-     "width": 2.5
-    },
-    "itemStyle": {
-     "color": "@s1"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
-    },
-    "data": [
-     {
-      "value": [
-       0,
-       1.0
-      ],
-      "who": "GPT-6 Luna default",
-      "what": "usable rungs"
-     },
-     {
-      "value": [
-       1,
-       4.0
-      ],
-      "who": "GPT-6 Luna default",
-      "what": "usable rungs",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s1"
-      }
-     }
-    ]
-   },
-   {
-    "type": "line",
-    "name": "Gemma 3 27B",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "lineStyle": {
-     "color": "@s2",
-     "width": 2.5
-    },
-    "itemStyle": {
-     "color": "@s2"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
-    },
-    "data": [
-     {
-      "value": [
-       0,
-       6.0
-      ],
-      "who": "Gemma 3 27B",
-      "what": "usable rungs"
-     },
-     {
-      "value": [
-       1,
-       18.0
-      ],
-      "who": "Gemma 3 27B",
-      "what": "usable rungs",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s2"
-      }
-     }
-    ]
-   },
-   {
-    "type": "line",
-    "name": "Gemma 3 4B",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "lineStyle": {
-     "color": "@s3",
-     "width": 2.5
-    },
-    "itemStyle": {
-     "color": "@s3"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
-    },
-    "data": [
-     {
-      "value": [
-       0,
-       9.0
-      ],
-      "who": "Gemma 3 4B",
-      "what": "usable rungs"
-     },
-     {
-      "value": [
-       1,
-       23.0
-      ],
-      "who": "Gemma 3 4B",
-      "what": "usable rungs",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s3"
-      }
-     }
-    ]
-   },
-   {
-    "type": "line",
-    "name": "Gemma 4 26B-A4B",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "lineStyle": {
-     "color": "@s4",
-     "width": 2.5
-    },
-    "itemStyle": {
-     "color": "@s4"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
-    },
-    "data": [
-     {
-      "value": [
-       0,
-       0.0
-      ],
-      "who": "Gemma 4 26B-A4B",
-      "what": "usable rungs"
-     },
-     {
-      "value": [
-       1,
-       2.0
-      ],
-      "who": "Gemma 4 26B-A4B",
-      "what": "usable rungs",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s4"
-      }
-     }
-    ]
-   },
-   {
-    "type": "line",
-    "name": "Qwen3.8 Omni Flash none",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "lineStyle": {
-     "color": "@s5",
-     "width": 2.5
-    },
-    "itemStyle": {
-     "color": "@s5"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
-    },
-    "data": [
-     {
-      "value": [
-       0,
-       1.0
-      ],
-      "who": "Qwen3.8 Omni Flash none",
-      "what": "usable rungs"
-     },
-     {
-      "value": [
-       1,
-       7.0
-      ],
-      "who": "Qwen3.8 Omni Flash none",
-      "what": "usable rungs",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s5"
-      }
-     }
-    ]
-   },
-   {
-    "type": "line",
-    "name": "Sonnet 5.5 default",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "lineStyle": {
-     "color": "@s6",
-     "width": 2.5
-    },
-    "itemStyle": {
-     "color": "@s6"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
-    },
-    "data": [
-     {
-      "value": [
-       0,
-       2.0
-      ],
-      "who": "Sonnet 5.5 default",
-      "what": "usable rungs"
-     },
-     {
-      "value": [
-       1,
-       3.0
-      ],
-      "who": "Sonnet 5.5 default",
-      "what": "usable rungs",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s6"
-      }
-     }
-    ]
-   },
-   {
-    "type": "line",
-    "name": "gpt-oss-120b default",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "lineStyle": {
-     "color": "@s7",
-     "width": 2.5
-    },
-    "itemStyle": {
-     "color": "@s7"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
-    },
-    "data": [
-     {
-      "value": [
-       0,
-       3.0
-      ],
-      "who": "gpt-oss-120b default",
-      "what": "usable rungs"
-     },
-     {
-      "value": [
-       1,
-       6.0
-      ],
-      "who": "gpt-oss-120b default",
-      "what": "usable rungs",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s7"
-      }
-     }
-    ]
-   },
-   {
-    "type": "line",
     "name": "Haiku 5.5 xhigh",
-    "showSymbol": true,
-    "symbolSize": 11,
+    "type": "line",
     "xAxisIndex": 1,
     "yAxisIndex": 1,
+    "symbolSize": 9,
     "lineStyle": {
      "color": "@s0",
      "width": 2.5
     },
     "itemStyle": {
-     "color": "@s0"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
@@ -620,137 +159,138 @@
        0,
        1.6
       ],
-      "who": "Haiku 5.5 xhigh",
-      "what": "floor, % FPR"
+      "tip": "<b>Haiku 5.5 xhigh</b><br>0-10 prompt<br>2 usable cutoffs<br>cheapest 1.60%"
      },
      {
       "value": [
        1,
        1.0
       ],
-      "who": "Haiku 5.5 xhigh",
-      "what": "floor, % FPR"
+      "tip": "<b>Haiku 5.5 xhigh</b><br>0-100 prompt<br>8 usable cutoffs<br>cheapest 1.00%"
      },
      {
       "value": [
        2,
        1.0
       ],
-      "who": "Haiku 5.5 xhigh",
-      "what": "floor, % FPR"
+      "tip": "<b>Haiku 5.5 xhigh</b><br>0-200 prompt<br>8 usable cutoffs<br>cheapest 1.00%"
      }
-    ]
+    ],
+    "connectNulls": true
    },
    {
+    "name": "Sonnet 5.5 UM",
     "type": "line",
-    "name": "GPT-6 Luna default",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 9,
     "lineStyle": {
      "color": "@s1",
      "width": 2.5
     },
     "itemStyle": {
-     "color": "@s1"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
+     "color": "@s1",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
       "value": [
        0,
-       1.2
+       2
       ],
-      "who": "GPT-6 Luna default",
-      "what": "floor, % FPR"
+      "tip": "<b>Sonnet 5.5 UM</b><br>0-10 prompt<br>2 usable cutoffs<br>cheapest 1.00%"
      },
      {
       "value": [
        1,
-       1.0
+       3
       ],
-      "who": "GPT-6 Luna default",
-      "what": "floor, % FPR",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s1"
-      }
+      "tip": "<b>Sonnet 5.5 UM</b><br>0-100 prompt<br>3 usable cutoffs<br>cheapest 1.20%"
      }
-    ]
+    ],
+    "connectNulls": true
    },
    {
+    "name": "Sonnet 5.5 UM",
     "type": "line",
-    "name": "Gemma 3 27B",
-    "showSymbol": true,
-    "symbolSize": 11,
     "xAxisIndex": 1,
     "yAxisIndex": 1,
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@s1",
+     "width": 2.5
+    },
+    "itemStyle": {
+     "color": "@s1",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       0,
+       1.0
+      ],
+      "tip": "<b>Sonnet 5.5 UM</b><br>0-10 prompt<br>2 usable cutoffs<br>cheapest 1.00%"
+     },
+     {
+      "value": [
+       1,
+       1.2
+      ],
+      "tip": "<b>Sonnet 5.5 UM</b><br>0-100 prompt<br>3 usable cutoffs<br>cheapest 1.20%"
+     }
+    ],
+    "connectNulls": true
+   },
+   {
+    "name": "Gemma 3 4B",
+    "type": "line",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 9,
     "lineStyle": {
      "color": "@s2",
      "width": 2.5
     },
     "itemStyle": {
-     "color": "@s2"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
+     "color": "@s2",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
       "value": [
        0,
-       1.2
+       9
       ],
-      "who": "Gemma 3 27B",
-      "what": "floor, % FPR"
+      "tip": "<b>Gemma 3 4B</b><br>0-10 prompt<br>9 usable cutoffs<br>cheapest 2.40%"
      },
      {
       "value": [
        1,
-       1.2
+       23
       ],
-      "who": "Gemma 3 27B",
-      "what": "floor, % FPR",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s2"
-      }
+      "tip": "<b>Gemma 3 4B</b><br>0-100 prompt<br>23 usable cutoffs<br>cheapest 2.60%"
      }
-    ]
+    ],
+    "connectNulls": true
    },
    {
-    "type": "line",
     "name": "Gemma 3 4B",
-    "showSymbol": true,
-    "symbolSize": 11,
+    "type": "line",
     "xAxisIndex": 1,
     "yAxisIndex": 1,
+    "symbolSize": 9,
     "lineStyle": {
-     "color": "@s3",
+     "color": "@s2",
      "width": 2.5
     },
     "itemStyle": {
-     "color": "@s3"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
+     "color": "@s2",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
@@ -758,195 +298,344 @@
        0,
        2.4
       ],
-      "who": "Gemma 3 4B",
-      "what": "floor, % FPR"
+      "tip": "<b>Gemma 3 4B</b><br>0-10 prompt<br>9 usable cutoffs<br>cheapest 2.40%"
      },
      {
       "value": [
        1,
        2.6
       ],
-      "who": "Gemma 3 4B",
-      "what": "floor, % FPR",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s3"
-      }
+      "tip": "<b>Gemma 3 4B</b><br>0-100 prompt<br>23 usable cutoffs<br>cheapest 2.60%"
      }
-    ]
+    ],
+    "connectNulls": true
    },
    {
+    "name": "Gemma 3 27B",
     "type": "line",
-    "name": "Gemma 4 26B-A4B",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
-    "lineStyle": {
-     "color": "@s4",
-     "width": 2.5
-    },
-    "itemStyle": {
-     "color": "@s4"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
-    },
-    "data": [
-     {
-      "value": [
-       1,
-       1.0
-      ],
-      "who": "Gemma 4 26B-A4B",
-      "what": "floor, % FPR",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s4"
-      }
-     }
-    ]
-   },
-   {
-    "type": "line",
-    "name": "Qwen3.8 Omni Flash none",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
-    "lineStyle": {
-     "color": "@s5",
-     "width": 2.5
-    },
-    "itemStyle": {
-     "color": "@s5"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
-    },
-    "data": [
-     {
-      "value": [
-       0,
-       1.8
-      ],
-      "who": "Qwen3.8 Omni Flash none",
-      "what": "floor, % FPR"
-     },
-     {
-      "value": [
-       1,
-       1.2
-      ],
-      "who": "Qwen3.8 Omni Flash none",
-      "what": "floor, % FPR",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s5"
-      }
-     }
-    ]
-   },
-   {
-    "type": "line",
-    "name": "Sonnet 5.5 default",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 9,
     "lineStyle": {
      "color": "@s6",
      "width": 2.5
     },
     "itemStyle": {
-     "color": "@s6"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
+     "color": "@s6",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
       "value": [
        0,
-       1.0
+       6
       ],
-      "who": "Sonnet 5.5 default",
-      "what": "floor, % FPR"
+      "tip": "<b>Gemma 3 27B</b><br>0-10 prompt<br>6 usable cutoffs<br>cheapest 1.20%"
+     },
+     {
+      "value": [
+       1,
+       18
+      ],
+      "tip": "<b>Gemma 3 27B</b><br>0-100 prompt<br>18 usable cutoffs<br>cheapest 1.20%"
+     }
+    ],
+    "connectNulls": true
+   },
+   {
+    "name": "Gemma 3 27B",
+    "type": "line",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@s6",
+     "width": 2.5
+    },
+    "itemStyle": {
+     "color": "@s6",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       0,
+       1.2
+      ],
+      "tip": "<b>Gemma 3 27B</b><br>0-10 prompt<br>6 usable cutoffs<br>cheapest 1.20%"
      },
      {
       "value": [
        1,
        1.2
       ],
-      "who": "Sonnet 5.5 default",
-      "what": "floor, % FPR",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s6"
-      }
+      "tip": "<b>Gemma 3 27B</b><br>0-100 prompt<br>18 usable cutoffs<br>cheapest 1.20%"
      }
-    ]
+    ],
+    "connectNulls": true
    },
    {
+    "name": "GPT-6 Luna",
     "type": "line",
-    "name": "gpt-oss-120b default",
-    "showSymbol": true,
-    "symbolSize": 11,
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 9,
     "lineStyle": {
-     "color": "@s7",
+     "color": "@s4",
      "width": 2.5
     },
     "itemStyle": {
-     "color": "@s7"
-    },
-    "label": {
-     "show": true,
-     "position": "top",
-     "fontSize": 11,
-     "color": "@ink-secondary",
-     "formatter": "function (p) { return p.value[1]; }"
+     "color": "@s4",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
       "value": [
        0,
-       4.6
+       1
       ],
-      "who": "gpt-oss-120b default",
-      "what": "floor, % FPR"
+      "tip": "<b>GPT-6 Luna</b><br>0-10 prompt<br>1 usable cutoffs<br>cheapest 1.20%"
      },
      {
       "value": [
        1,
+       4
+      ],
+      "tip": "<b>GPT-6 Luna</b><br>0-100 prompt<br>4 usable cutoffs<br>cheapest 1.00%"
+     }
+    ],
+    "connectNulls": true
+   },
+   {
+    "name": "GPT-6 Luna",
+    "type": "line",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@s4",
+     "width": 2.5
+    },
+    "itemStyle": {
+     "color": "@s4",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       0,
+       1.2
+      ],
+      "tip": "<b>GPT-6 Luna</b><br>0-10 prompt<br>1 usable cutoffs<br>cheapest 1.20%"
+     },
+     {
+      "value": [
+       1,
+       1.0
+      ],
+      "tip": "<b>GPT-6 Luna</b><br>0-100 prompt<br>4 usable cutoffs<br>cheapest 1.00%"
+     }
+    ],
+    "connectNulls": true
+   },
+   {
+    "name": "Gemma 4 26B-A4B",
+    "type": "line",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@s3",
+     "width": 2.5
+    },
+    "itemStyle": {
+     "color": "@s3",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       0,
+       0
+      ],
+      "tip": "<b>Gemma 4 26B-A4B</b><br>0-10 prompt<br>0 usable cutoffs"
+     },
+     {
+      "value": [
+       1,
+       2
+      ],
+      "tip": "<b>Gemma 4 26B-A4B</b><br>0-100 prompt<br>2 usable cutoffs<br>cheapest 1.00%"
+     }
+    ],
+    "connectNulls": true
+   },
+   {
+    "name": "Gemma 4 26B-A4B",
+    "type": "line",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@s3",
+     "width": 2.5
+    },
+    "itemStyle": {
+     "color": "@s3",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       1,
+       1.0
+      ],
+      "tip": "<b>Gemma 4 26B-A4B</b><br>0-100 prompt<br>2 usable cutoffs<br>cheapest 1.00%"
+     }
+    ],
+    "connectNulls": true
+   },
+   {
+    "name": "gpt-oss-120b",
+    "type": "line",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 2.5,
+     "type": "dashed"
+    },
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       0,
+       4
+      ],
+      "tip": "<b>gpt-oss-120b</b><br>0-10 prompt<br>4 usable cutoffs<br>cheapest 5.60%<br>confounded: reasoning 283 tok/sample on 0-10, none on 0-100"
+     },
+     {
+      "value": [
+       1,
+       6
+      ],
+      "tip": "<b>gpt-oss-120b</b><br>0-100 prompt<br>6 usable cutoffs<br>cheapest 2.00%<br>confounded: reasoning 283 tok/sample on 0-10, none on 0-100"
+     }
+    ],
+    "connectNulls": true
+   },
+   {
+    "name": "gpt-oss-120b",
+    "type": "line",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 2.5,
+     "type": "dashed"
+    },
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       0,
+       5.6
+      ],
+      "tip": "<b>gpt-oss-120b</b><br>0-10 prompt<br>4 usable cutoffs<br>cheapest 5.60%<br>confounded: reasoning 283 tok/sample on 0-10, none on 0-100"
+     },
+     {
+      "value": [
+       1,
+       2.0
+      ],
+      "tip": "<b>gpt-oss-120b</b><br>0-100 prompt<br>6 usable cutoffs<br>cheapest 2.00%<br>confounded: reasoning 283 tok/sample on 0-10, none on 0-100"
+     }
+    ],
+    "connectNulls": true
+   },
+   {
+    "name": "Qwen3.8 Omni Flash",
+    "type": "line",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 2.5,
+     "type": "dashed"
+    },
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       0,
+       1
+      ],
+      "tip": "<b>Qwen3.8 Omni Flash</b><br>0-10 prompt<br>1 usable cutoffs<br>cheapest 1.80%<br>confounded: reasoning none on 0-10, 1281 tok/sample on 0-100"
+     },
+     {
+      "value": [
+       1,
+       7
+      ],
+      "tip": "<b>Qwen3.8 Omni Flash</b><br>0-100 prompt<br>7 usable cutoffs<br>cheapest 1.20%<br>confounded: reasoning none on 0-10, 1281 tok/sample on 0-100"
+     }
+    ],
+    "connectNulls": true
+   },
+   {
+    "name": "Qwen3.8 Omni Flash",
+    "type": "line",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 2.5,
+     "type": "dashed"
+    },
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     {
+      "value": [
+       0,
        1.8
       ],
-      "who": "gpt-oss-120b default",
-      "what": "floor, % FPR",
-      "itemStyle": {
-       "color": "@ink-surface",
-       "borderWidth": 2,
-       "borderColor": "@s7"
-      }
+      "tip": "<b>Qwen3.8 Omni Flash</b><br>0-10 prompt<br>1 usable cutoffs<br>cheapest 1.80%<br>confounded: reasoning none on 0-10, 1281 tok/sample on 0-100"
+     },
+     {
+      "value": [
+       1,
+       1.2
+      ],
+      "tip": "<b>Qwen3.8 Omni Flash</b><br>0-100 prompt<br>7 usable cutoffs<br>cheapest 1.20%<br>confounded: reasoning none on 0-10, 1281 tok/sample on 0-100"
      }
-    ]
+    ],
+    "connectNulls": true
    }
   ]
  },
@@ -954,92 +643,178 @@
  "data": {
   "columns": [
    "monitor",
-   "usable rungs, prompt 0-10",
-   "usable rungs, prompt 0-100",
-   "usable rungs, prompt 0-200",
-   "lowest usable FPR, prompt 0-10",
-   "lowest usable FPR, prompt 0-100",
-   "lowest usable FPR, prompt 0-200"
+   "scale",
+   "run",
+   "usable_cutoffs",
+   "cheapest_usable_pct",
+   "confounded"
   ],
   "rows": [
    [
     "Haiku 5.5 xhigh",
-    "2",
-    "8",
-    "8",
-    "1.6%",
-    "1.0%",
-    "1.0%"
+    "0-10",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    2,
+    1.6,
+    false
    ],
    [
-    "GPT-6 Luna default",
-    "1",
-    "4",
-    "no arm run",
-    "1.2%",
-    "1.0%",
-    "no arm run"
+    "Haiku 5.5 xhigh",
+    "0-100",
+    "dataset-haiku55-xhigh-scale100-n500-strip",
+    8,
+    1.0,
+    false
    ],
    [
-    "Gemma 3 27B",
-    "6",
-    "18",
-    "no arm run",
-    "1.2%",
-    "1.2%",
-    "no arm run"
+    "Haiku 5.5 xhigh",
+    "0-200",
+    "dataset-haiku55-xhigh-scale200-n500-strip",
+    8,
+    1.0,
+    false
+   ],
+   [
+    "Sonnet 5.5 UM",
+    "0-10",
+    "dataset500-sonnet55-um-strip",
+    2,
+    1.0,
+    false
+   ],
+   [
+    "Sonnet 5.5 UM",
+    "0-100",
+    "dataset500-sonnet55-um-scale100-strip",
+    3,
+    1.2,
+    false
    ],
    [
     "Gemma 3 4B",
-    "9",
-    "23",
-    "no arm run",
-    "2.4%",
-    "2.6%",
-    "no arm run"
+    "0-10",
+    "dataset-gemma3-4b-tm-n500-strip",
+    9,
+    2.4,
+    false
+   ],
+   [
+    "Gemma 3 4B",
+    "0-100",
+    "dataset-gemma3-4b-scale100-n500-strip",
+    23,
+    2.6,
+    false
+   ],
+   [
+    "Gemma 3 27B",
+    "0-10",
+    "dataset-gemma3-27b-tm-n500-strip",
+    6,
+    1.2,
+    false
+   ],
+   [
+    "Gemma 3 27B",
+    "0-100",
+    "dataset-gemma3-27b-scale100-n500-strip",
+    18,
+    1.2,
+    false
+   ],
+   [
+    "GPT-6 Luna",
+    "0-10",
+    "dataset-gpt6luna-tm-n500-strip",
+    1,
+    1.2,
+    false
+   ],
+   [
+    "GPT-6 Luna",
+    "0-100",
+    "dataset-luna-scale100-n500-strip",
+    4,
+    1.0,
+    false
    ],
    [
     "Gemma 4 26B-A4B",
-    "0",
-    "2",
-    "no arm run",
-    "no usable rung",
-    "1.0%",
-    "no arm run"
+    "0-10",
+    "dataset500-gemma426b-tm-strip",
+    0,
+    null,
+    false
    ],
    [
-    "Qwen3.8 Omni Flash none",
-    "1",
-    "7",
-    "no arm run",
-    "1.8%",
-    "1.2%",
-    "no arm run"
+    "Gemma 4 26B-A4B",
+    "0-100",
+    "dataset-gemma426b-scale100-n500-strip",
+    2,
+    1.0,
+    false
    ],
    [
-    "Sonnet 5.5 default",
-    "2",
-    "3",
-    "no arm run",
-    "1.0%",
-    "1.2%",
-    "no arm run"
+    "gpt-oss-120b",
+    "0-10",
+    "dataset-gptoss120b-tm-n500-strip",
+    4,
+    5.6,
+    true
    ],
    [
-    "gpt-oss-120b default",
-    "3",
-    "6",
-    "no arm run",
-    "4.6%",
-    "1.8%",
-    "no arm run"
+    "gpt-oss-120b",
+    "0-100",
+    "dataset-gptoss120b-scale100-n500-strip",
+    6,
+    2.0,
+    true
+   ],
+   [
+    "Qwen3.8 Omni Flash",
+    "0-10",
+    "dataset-qwen38omniflash-none-tm-n500-strip",
+    1,
+    1.8,
+    true
+   ],
+   [
+    "Qwen3.8 Omni Flash",
+    "0-100",
+    "dataset-qwen38-scale100-n500-strip",
+    7,
+    1.2,
+    true
    ]
   ]
  },
- "facts": {},
+ "facts": {
+  "bar": 5,
+  "n_clean": 6,
+  "n_up": 6,
+  "n_lower": 2
+ },
  "build": {
-  "inputs": {},
-  "code": "sha256:4473c3b6ec0063d3",
-  "spec": "sha256:cd15ff42a0a29a3a"
+  "inputs": {
+   "results/dataset-gemma3-27b-scale100-n500-strip-samples.csv": "sha256:d1d643249f9888b7",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-4b-scale100-n500-strip-samples.csv": "sha256:26bc1f00893a78d4",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma426b-scale100-n500-strip-samples.csv": "sha256:fb1d594503683bda",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gptoss120b-scale100-n500-strip-samples.csv": "sha256:71346b2cb532a567",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-xhigh-scale100-n500-strip-samples.csv": "sha256:1271c66323a3a3d7",
+   "results/dataset-haiku55-xhigh-scale200-n500-strip-samples.csv": "sha256:b45d2a54b978eec8",
+   "results/dataset-luna-scale100-n500-strip-samples.csv": "sha256:0f35bf14c005f353",
+   "results/dataset-qwen38-scale100-n500-strip-samples.csv": "sha256:9ee19673f160ab64",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-sonnet55-um-scale100-strip-samples.csv": "sha256:1c7d31048163d394",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea"
+  },
+  "code": "sha256:1fdee3e4ba3bb8ca",
+  "spec": "sha256:2bc152fdb9eb3bd8"
  }
 }

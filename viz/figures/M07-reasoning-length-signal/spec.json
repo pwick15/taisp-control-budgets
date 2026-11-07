@@ -1,438 +1,351 @@
 {
  "id": "M07",
- "kind": "snapshot",
- "title": "How long the monitor thinks is a second signal",
+ "kind": "echarts",
+ "title": "Thinking length only beats the score where the score has collapsed",
  "section": "appendix",
- "order": 90,
- "caption": "Thinking length and suspicion score compared as detectors on the same files. Length beats the score only for weak monitors whose scores collapse.",
- "notes": [],
- "height": 460,
+ "order": 137,
+ "caption": "One dot per run that emits hidden reasoning: how well the suspicion score separates backdoored from clean programs across, how well the number of reasoning tokens does it up. Both are areas under the ROC curve, where a half is a coin flip. Above the diagonal, length is the better signal.",
+ "notes": [
+  "Length wins in 9 of 35 runs and loses in 26. The winners are not a random subset: their suspicion AUC runs 0.592 to 0.753, the bottom of the study. Length rescues a collapsed score rather than beating a working one.",
+  "The best-separating arms are far from the diagonal in the other direction. The score is a much stronger signal exactly where the monitor is any good, so this is not a free second opinion.",
+  "A monitor that does not reason has no tie-break available at all, so runs reporting no tokens are left out. A zero can mean the model did not think or that the tokens were never recorded, and those two are not distinguishable from the committed tables.",
+  "Length is cheap in the sense that it is already paid for, but M20 shows how large that payment is: on some runs the hidden reasoning is most of the bill.",
+  "Rebuilt from committed per-sample tables, replacing the exported snapshot. The AUC is the Mann-Whitney statistic with midranks, the same one scripts/analysis_reasoning_tokens.py uses."
+ ],
+ "height": 540,
  "author": "",
- "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'free-auc-reason-vs-suspicion'. Copied as exported; its generator isn't in the repo yet.",
+ "source": "",
  "path": "viz/figures/M07-reasoning-length-signal",
  "option": {
-  "animation": false,
-  "textStyle": {
-   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
-   "color": "@ink-secondary"
-  },
-  "grid": {
-   "left": 62,
-   "right": 36,
-   "top": 28,
-   "bottom": 72,
-   "containLabel": true
-  },
   "tooltip": {
    "trigger": "item",
-   "confine": true,
-   "backgroundColor": "@ink-surface",
-   "borderColor": "@ink-axis",
-   "borderWidth": 1,
-   "textStyle": {
-    "color": "@ink-primary",
-    "fontSize": 12
-   },
-   "formatter": "function (p) { if (!p.name) { return ''; } return p.name + '<br/>suspicion AUC ' + p.value[0].toFixed(3) + '<br/>thinking-length AUC ' + p.value[1].toFixed(3); }"
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
   },
-  "legend": {
-   "type": "scroll",
-   "bottom": 0,
-   "icon": "roundRect",
-   "itemWidth": 10,
-   "itemHeight": 10,
-   "textStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   }
+  "animation": false,
+  "grid": {
+   "left": 76,
+   "right": 32,
+   "top": 40,
+   "bottom": 58
   },
   "xAxis": {
-   "type": "value",
-   "name": "AUC of the suspicion score the monitor was asked for",
+   "name": "Suspicion score, area under the ROC curve",
    "nameLocation": "middle",
-   "nameGap": 32,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
-   "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
-   "min": 0.5,
-   "max": 1.0
+   "nameGap": 34,
+   "type": "value",
+   "min": 0.56,
+   "max": 1
   },
   "yAxis": {
-   "type": "value",
-   "name": "AUC of the monitor's hidden thinking length",
+   "name": "Reasoning length, same measure",
    "nameLocation": "middle",
-   "nameGap": 46,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
-   "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
-   "min": 0.45,
-   "max": 1.0
+   "nameGap": 52,
+   "type": "value",
+   "min": 0.56,
+   "max": 1
+  },
+  "legend": {
+   "top": 0,
+   "left": 70,
+   "data": [
+    "length separates better",
+    "the score separates better"
+   ]
   },
   "series": [
    {
+    "name": "equal",
     "type": "line",
-    "name": "above this line, thinking length is the better detector",
     "symbol": "none",
-    "z": 1,
-    "data": [
-     [
-      0.5,
-      0.5
-     ],
-     [
-      1.0,
-      1.0
-     ]
-    ],
+    "silent": true,
     "lineStyle": {
      "color": "@ink-muted",
-     "width": 1.5,
-     "type": "dashed"
+     "type": "dashed",
+     "width": 1.5
     },
-    "itemStyle": {
-     "color": "@ink-muted"
-    },
-    "areaStyle": {
-     "color": "@mid",
-     "opacity": 0.6,
-     "origin": "end"
+    "data": [
+     [
+      0.561868,
+      0.561868
+     ],
+     [
+      1,
+      1
+     ]
+    ],
+    "tooltip": {
+     "show": false
     }
    },
    {
+    "name": "length separates better",
     "type": "scatter",
-    "name": "thinking length wins, and the score has collapsed",
-    "symbolSize": 13,
-    "z": 4,
+    "symbolSize": 11,
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.2
+    },
     "data": [
-     {
-      "value": [
-       0.7346,
-       0.8398
-      ],
-      "name": "GLM-5.3 / low"
-     },
-     {
-      "value": [
-       0.7517,
-       0.825
-      ],
-      "name": "GLM-5.3 / high"
-     },
      {
       "value": [
        0.5939,
        0.7109
       ],
-      "name": "Gemini 3.5 Flash-Lite / high"
-     },
-     {
-      "value": [
-       0.5919,
-       0.7109
-      ],
-      "name": "Gemini 3.5 Flash-Lite / xhigh"
-     },
-     {
-      "value": [
-       0.599,
-       0.6974
-      ],
-      "name": "Gemini 3.5 Flash-Lite / medium"
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>score AUC 0.594<br>length AUC 0.711"
      },
      {
       "value": [
        0.5989,
        0.6857
       ],
-      "name": "Gemini 3.5 Flash-Lite / low"
+      "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>score AUC 0.599<br>length AUC 0.686"
+     },
+     {
+      "value": [
+       0.599,
+       0.6974
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>score AUC 0.599<br>length AUC 0.697"
+     },
+     {
+      "value": [
+       0.5919,
+       0.7109
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>score AUC 0.592<br>length AUC 0.711"
+     },
+     {
+      "value": [
+       0.7527,
+       0.825
+      ],
+      "tip": "<b>GLM-5.3 · high</b><br>score AUC 0.753<br>length AUC 0.825"
+     },
+     {
+      "value": [
+       0.7346,
+       0.8398
+      ],
+      "tip": "<b>GLM-5.3 · low</b><br>score AUC 0.735<br>length AUC 0.840"
+     },
+     {
+      "value": [
+       0.649,
+       0.7817
+      ],
+      "tip": "<b>Gemma 4 26B</b><br>score AUC 0.649<br>length AUC 0.782"
+     },
+     {
+      "value": [
+       0.7109,
+       0.9507
+      ],
+      "tip": "<b>Haiku 4.5</b><br>score AUC 0.711<br>length AUC 0.951"
+     },
+     {
+      "value": [
+       0.7037,
+       0.9507
+      ],
+      "tip": "<b>Haiku 4.5</b><br>score AUC 0.704<br>length AUC 0.951"
      }
-    ],
-    "itemStyle": {
-     "color": "@s1",
-     "borderColor": "@ink-surface",
-     "borderWidth": 2
-    },
-    "markLine": {
-     "silent": true,
-     "symbol": "none",
-     "lineStyle": {
-      "color": "@ink-muted",
-      "width": 1,
-      "type": "dashed"
-     },
-     "label": {
-      "formatter": "every win is left of here",
-      "color": "@ink-secondary",
-      "fontSize": 10,
-      "position": "insideEndTop"
-     },
-     "data": [
-      {
-       "xAxis": 0.7517
-      }
-     ]
-    }
+    ]
    },
    {
+    "name": "the score separates better",
     "type": "scatter",
-    "name": "the suspicion score wins",
     "symbolSize": 11,
-    "z": 3,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.2
+    },
     "data": [
      {
       "value": [
        0.8753,
        0.815
       ],
-      "name": "GLM-5.3 / max (default)"
+      "tip": "<b>GLM-5.3</b><br>score AUC 0.875<br>length AUC 0.815"
      },
      {
       "value": [
        0.7683,
        0.7126
       ],
-      "name": "GPT-6 Luna / default"
+      "tip": "<b>GPT-6 Luna</b><br>score AUC 0.768<br>length AUC 0.713"
      },
      {
       "value": [
-       0.8351,
+       0.8493,
        0.5964
       ],
-      "name": "gpt-oss-120b / high"
+      "tip": "<b>gpt-oss-120b · high</b><br>score AUC 0.849<br>length AUC 0.596"
      },
      {
       "value": [
-       0.7066,
+       0.7461,
        0.6957
       ],
-      "name": "gpt-oss-120b / low"
+      "tip": "<b>gpt-oss-120b · low</b><br>score AUC 0.746<br>length AUC 0.696"
      },
      {
       "value": [
-       0.7593,
+       0.8237,
        0.6544
       ],
-      "name": "gpt-oss-120b / default"
+      "tip": "<b>gpt-oss-120b</b><br>score AUC 0.824<br>length AUC 0.654"
      },
      {
       "value": [
        0.9169,
        0.7501
       ],
-      "name": "Haiku 5.5 / high"
+      "tip": "<b>Haiku 5.5 · high</b><br>score AUC 0.917<br>length AUC 0.750"
      },
      {
       "value": [
        0.8821,
        0.7596
       ],
-      "name": "Haiku 5.5 / low"
+      "tip": "<b>Haiku 5.5 · low</b><br>score AUC 0.882<br>length AUC 0.760"
      },
      {
       "value": [
        0.9422,
        0.7474
       ],
-      "name": "Haiku 5.5 / xhigh"
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>score AUC 0.942<br>length AUC 0.747"
+     },
+     {
+      "value": [
+       0.9642,
+       0.7316
+      ],
+      "tip": "<b>Haiku 5.5 · batch 2 · xhigh</b><br>score AUC 0.964<br>length AUC 0.732"
      },
      {
       "value": [
        0.8959,
        0.7564
       ],
-      "name": "Haiku 5.5 / default"
+      "tip": "<b>Haiku 5.5</b><br>score AUC 0.896<br>length AUC 0.756"
      },
      {
       "value": [
        0.9762,
        0.6772
       ],
-      "name": "Haiku 5.5 / xhigh / comments kept"
+      "tip": "<b>Haiku 5.5 · comments kept · xhigh</b><br>score AUC 0.976<br>length AUC 0.677"
      },
      {
       "value": [
        0.9481,
        0.7399
       ],
-      "name": "Haiku 5.5 / xhigh / scale 100"
+      "tip": "<b>Haiku 5.5 · 0-100 · xhigh</b><br>score AUC 0.948<br>length AUC 0.740"
+     },
+     {
+      "value": [
+       0.9771,
+       0.7174
+      ],
+      "tip": "<b>Haiku 5.5 · batch 2 · 0-100 · xhigh</b><br>score AUC 0.977<br>length AUC 0.717"
      },
      {
       "value": [
        0.9534,
        0.7473
       ],
-      "name": "Haiku 5.5 / xhigh / scale 200"
+      "tip": "<b>Haiku 5.5 · 0-200 · xhigh</b><br>score AUC 0.953<br>length AUC 0.747"
      },
      {
       "value": [
        0.7824,
        0.6917
       ],
-      "name": "GPT-6 Luna / high"
+      "tip": "<b>GPT-6 Luna · high</b><br>score AUC 0.782<br>length AUC 0.692"
      },
      {
       "value": [
        0.7421,
        0.6548
       ],
-      "name": "GPT-6 Luna / low"
+      "tip": "<b>GPT-6 Luna · low</b><br>score AUC 0.742<br>length AUC 0.655"
      },
      {
       "value": [
        0.9107,
        0.6842
       ],
-      "name": "GPT-6 Luna / default / scale 100"
+      "tip": "<b>GPT-6 Luna · 0-100</b><br>score AUC 0.911<br>length AUC 0.684"
      },
      {
       "value": [
        0.7981,
        0.7165
       ],
-      "name": "GPT-6 Luna / xhigh"
+      "tip": "<b>GPT-6 Luna · xhigh</b><br>score AUC 0.798<br>length AUC 0.717"
      },
      {
       "value": [
        0.8969,
        0.7419
       ],
-      "name": "Qwen3.8 Omni Flash / none / scale 100"
+      "tip": "<b>Qwen 3.8 · 0-100</b><br>score AUC 0.897<br>length AUC 0.742"
      },
      {
       "value": [
-       0.9593,
+       0.8499,
+       0.774
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>score AUC 0.850<br>length AUC 0.774"
+     },
+     {
+      "value": [
+       0.8045,
+       0.7858
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>score AUC 0.805<br>length AUC 0.786"
+     },
+     {
+      "value": [
+       0.9612,
        0.6318
       ],
-      "name": "Sonnet 5.5 / default / scale 100"
+      "tip": "<b>Sonnet 5.5 UM · 0-100</b><br>score AUC 0.961<br>length AUC 0.632"
+     },
+     {
+      "value": [
+       0.9577,
+       0.6295
+      ],
+      "tip": "<b>Sonnet 5.5 UM</b><br>score AUC 0.958<br>length AUC 0.630"
+     },
+     {
+      "value": [
+       0.9771,
+       0.6145
+      ],
+      "tip": "<b>Sonnet 5.5 UM · batch 2 · 0-100</b><br>score AUC 0.977<br>length AUC 0.614"
+     },
+     {
+      "value": [
+       0.9738,
+       0.6164
+      ],
+      "tip": "<b>Sonnet 5.5 UM · batch 2</b><br>score AUC 0.974<br>length AUC 0.616"
+     },
+     {
+      "value": [
+       0.9633,
+       0.9507
+      ],
+      "tip": "<b>Sonnet 5.5 UM</b><br>score AUC 0.963<br>length AUC 0.951"
      }
-    ],
-    "itemStyle": {
-     "color": "@s0",
-     "borderColor": "@ink-surface",
-     "borderWidth": 2
-    }
-   },
-   {
-    "type": "scatter",
-    "name": "no reasoning tokens at all, so 0.5 is a floor",
-    "symbol": "diamond",
-    "symbolSize": 11,
-    "z": 2,
-    "data": [
-     {
-      "value": [
-       0.7263,
-       0.5
-      ],
-      "name": "Gemma 3 27B / none / scale 100"
-     },
-     {
-      "value": [
-       0.7151,
-       0.5
-      ],
-      "name": "Gemma 3 27B / none"
-     },
-     {
-      "value": [
-       0.6078,
-       0.5
-      ],
-      "name": "Gemma 3 4B / none / scale 100"
-     },
-     {
-      "value": [
-       0.6171,
-       0.5
-      ],
-      "name": "Gemma 3 4B / none"
-     },
-     {
-      "value": [
-       0.7336,
-       0.5
-      ],
-      "name": "Gemma 4 26B-A4B / none / scale 100"
-     },
-     {
-      "value": [
-       0.875,
-       0.5
-      ],
-      "name": "GLM-5.3 / none (not an ablation)"
-     },
-     {
-      "value": [
-       0.8316,
-       0.5
-      ],
-      "name": "gpt-oss-120b / default / scale 100"
-     },
-     {
-      "value": [
-       0.6886,
-       0.5
-      ],
-      "name": "GPT-6 Luna / none"
-     },
-     {
-      "value": [
-       0.7477,
-       0.5
-      ],
-      "name": "Qwen3.8 Omni Flash / none"
-     },
-     {
-      "value": [
-       0.9557,
-       0.5
-      ],
-      "name": "Sonnet 5.5 / low"
-     }
-    ],
-    "itemStyle": {
-     "color": "@ink-muted",
-     "borderColor": "@ink-surface",
-     "borderWidth": 2
-    }
+    ]
    }
   ]
  },
@@ -440,291 +353,326 @@
  "data": {
   "columns": [
    "run",
-   "AUC of suspicion",
-   "AUC of thinking length",
-   "AUC of total output",
-   "winner",
-   "note"
+   "monitor",
+   "auc_suspicion",
+   "auc_reasoning_tokens",
+   "length_wins"
   ],
   "rows": [
    [
-    "Haiku 5.5 / xhigh / comments kept",
-    0.976,
-    0.677,
-    0.699,
-    "suspicion score",
-    ""
+    "dataset-gemini35fl-high-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · high",
+    0.5939,
+    0.7109,
+    true
    ],
    [
-    "Sonnet 5.5 / default / scale 100",
-    0.959,
-    0.632,
-    0.747,
-    "suspicion score",
-    ""
+    "dataset-gemini35fl-low-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · low",
+    0.5989,
+    0.6857,
+    true
    ],
    [
-    "Sonnet 5.5 / low",
-    0.956,
-    0.5,
-    0.749,
-    "suspicion score",
-    "no reasoning tokens emitted"
+    "dataset-gemini35fl-medium-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · medium",
+    0.599,
+    0.6974,
+    true
    ],
    [
-    "Haiku 5.5 / xhigh / scale 200",
-    0.953,
-    0.747,
-    0.755,
-    "suspicion score",
-    ""
+    "dataset-gemini35fl-xhigh-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · xhigh",
+    0.5919,
+    0.7109,
+    true
    ],
    [
-    "Haiku 5.5 / xhigh / scale 100",
-    0.948,
-    0.74,
-    0.748,
-    "suspicion score",
-    ""
-   ],
-   [
-    "Haiku 5.5 / xhigh",
-    0.942,
-    0.747,
-    0.756,
-    "suspicion score",
-    ""
-   ],
-   [
-    "Haiku 5.5 / high",
-    0.917,
-    0.75,
-    0.772,
-    "suspicion score",
-    ""
-   ],
-   [
-    "GPT-6 Luna / default / scale 100",
-    0.911,
-    0.684,
-    0.722,
-    "suspicion score",
-    ""
-   ],
-   [
-    "Qwen3.8 Omni Flash / none / scale 100",
-    0.897,
-    0.742,
-    0.758,
-    "suspicion score",
-    ""
-   ],
-   [
-    "Haiku 5.5 / default",
-    0.896,
-    0.756,
-    0.791,
-    "suspicion score",
-    ""
-   ],
-   [
-    "Haiku 5.5 / low",
-    0.882,
-    0.76,
-    0.797,
-    "suspicion score",
-    ""
-   ],
-   [
-    "GLM-5.3 / max (default)",
-    0.875,
-    0.815,
-    0.818,
-    "suspicion score",
-    ""
-   ],
-   [
-    "GLM-5.3 / none (not an ablation)",
-    0.875,
-    0.5,
-    0.813,
-    "suspicion score",
-    "thinking relocated into visible output"
-   ],
-   [
-    "gpt-oss-120b / high",
-    0.835,
-    0.596,
-    0.617,
-    "suspicion score",
-    ""
-   ],
-   [
-    "gpt-oss-120b / default / scale 100",
-    0.832,
-    0.5,
-    0.7,
-    "suspicion score",
-    "no reasoning tokens emitted"
-   ],
-   [
-    "GPT-6 Luna / xhigh",
-    0.798,
-    0.717,
-    0.735,
-    "suspicion score",
-    ""
-   ],
-   [
-    "GPT-6 Luna / high",
-    0.782,
-    0.692,
-    0.718,
-    "suspicion score",
-    ""
-   ],
-   [
-    "GPT-6 Luna / default",
-    0.768,
-    0.713,
-    0.74,
-    "suspicion score",
-    ""
-   ],
-   [
-    "gpt-oss-120b / default",
-    0.759,
-    0.654,
-    0.704,
-    "suspicion score",
-    ""
-   ],
-   [
-    "GLM-5.3 / high",
-    0.752,
+    "dataset-glm53-efforthigh-tm-n500-strip",
+    "GLM-5.3 · high",
+    0.7527,
     0.825,
-    0.796,
-    "thinking length",
-    ""
+    true
    ],
    [
-    "Qwen3.8 Omni Flash / none",
-    0.748,
-    0.5,
-    0.691,
-    "suspicion score",
-    "no reasoning tokens emitted"
+    "dataset-glm53-effortlow-tm-n500-strip",
+    "GLM-5.3 · low",
+    0.7346,
+    0.8398,
+    true
    ],
    [
-    "GPT-6 Luna / low",
-    0.742,
-    0.655,
-    0.7,
-    "suspicion score",
-    ""
+    "dataset-glm53-tm-n500-strip",
+    "GLM-5.3",
+    0.8753,
+    0.815,
+    false
    ],
    [
-    "GLM-5.3 / low",
-    0.735,
-    0.84,
-    0.84,
-    "thinking length",
-    ""
+    "dataset-gpt6luna-tm-n500-strip",
+    "GPT-6 Luna",
+    0.7683,
+    0.7126,
+    false
    ],
    [
-    "Gemma 4 26B-A4B / none / scale 100",
-    0.734,
-    0.5,
-    0.675,
-    "suspicion score",
-    "no reasoning tokens emitted"
+    "dataset-gptoss120b-high-tm-n500-strip",
+    "gpt-oss-120b · high",
+    0.8493,
+    0.5964,
+    false
    ],
    [
-    "Gemma 3 27B / none / scale 100",
-    0.726,
-    0.5,
-    0.67,
-    "suspicion score",
-    "no reasoning tokens emitted"
+    "dataset-gptoss120b-low-tm-n500-strip",
+    "gpt-oss-120b · low",
+    0.7461,
+    0.6957,
+    false
    ],
    [
-    "Gemma 3 27B / none",
-    0.715,
-    0.5,
-    0.659,
-    "suspicion score",
-    "no reasoning tokens emitted"
+    "dataset-gptoss120b-tm-n500-strip",
+    "gpt-oss-120b",
+    0.8237,
+    0.6544,
+    false
    ],
    [
-    "gpt-oss-120b / low",
-    0.707,
-    0.696,
-    0.691,
-    "suspicion score",
-    ""
+    "dataset-haiku55-efforthigh-tm-n500-strip",
+    "Haiku 5.5 · high",
+    0.9169,
+    0.7501,
+    false
    ],
    [
-    "GPT-6 Luna / none",
-    0.689,
-    0.5,
-    0.702,
-    "suspicion score",
-    "no reasoning tokens emitted"
+    "dataset-haiku55-effortlow-tm-n500-strip",
+    "Haiku 5.5 · low",
+    0.8821,
+    0.7596,
+    false
    ],
    [
-    "Gemma 3 4B / none",
-    0.617,
-    0.5,
-    0.64,
-    "suspicion score",
-    "no reasoning tokens emitted"
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    "Haiku 5.5 · xhigh",
+    0.9422,
+    0.7474,
+    false
    ],
    [
-    "Gemma 3 4B / none / scale 100",
-    0.608,
-    0.5,
-    0.631,
-    "suspicion score",
-    "no reasoning tokens emitted"
+    "dataset-haiku55-effortxhigh-tm-n500b2-strip",
+    "Haiku 5.5 · batch 2 · xhigh",
+    0.9642,
+    0.7316,
+    false
    ],
    [
-    "Gemini 3.5 Flash-Lite / medium",
-    0.599,
-    0.697,
-    0.684,
-    "thinking length",
-    ""
+    "dataset-haiku55-tm-n500-strip",
+    "Haiku 5.5",
+    0.8959,
+    0.7564,
+    false
    ],
    [
-    "Gemini 3.5 Flash-Lite / low",
-    0.599,
-    0.686,
-    0.674,
-    "thinking length",
-    ""
+    "dataset-haiku55-xhigh-nostrip-n500",
+    "Haiku 5.5 · comments kept · xhigh",
+    0.9762,
+    0.6772,
+    false
    ],
    [
-    "Gemini 3.5 Flash-Lite / high",
-    0.594,
-    0.711,
-    0.699,
-    "thinking length",
-    ""
+    "dataset-haiku55-xhigh-scale100-n500-strip",
+    "Haiku 5.5 · 0-100 · xhigh",
+    0.9481,
+    0.7399,
+    false
    ],
    [
-    "Gemini 3.5 Flash-Lite / xhigh",
-    0.592,
-    0.711,
-    0.7,
-    "thinking length",
-    ""
+    "dataset-haiku55-xhigh-scale100-n500b2-strip",
+    "Haiku 5.5 · batch 2 · 0-100 · xhigh",
+    0.9771,
+    0.7174,
+    false
+   ],
+   [
+    "dataset-haiku55-xhigh-scale200-n500-strip",
+    "Haiku 5.5 · 0-200 · xhigh",
+    0.9534,
+    0.7473,
+    false
+   ],
+   [
+    "dataset-luna-high-tm-n500-strip",
+    "GPT-6 Luna · high",
+    0.7824,
+    0.6917,
+    false
+   ],
+   [
+    "dataset-luna-low-tm-n500-strip",
+    "GPT-6 Luna · low",
+    0.7421,
+    0.6548,
+    false
+   ],
+   [
+    "dataset-luna-scale100-n500-strip",
+    "GPT-6 Luna · 0-100",
+    0.9107,
+    0.6842,
+    false
+   ],
+   [
+    "dataset-luna-xhigh-tm-n500-strip",
+    "GPT-6 Luna · xhigh",
+    0.7981,
+    0.7165,
+    false
+   ],
+   [
+    "dataset-qwen38-scale100-n500-strip",
+    "Qwen 3.8 · 0-100",
+    0.8969,
+    0.7419,
+    false
+   ],
+   [
+    "dataset500-gemma426b-tm-strip",
+    "Gemma 4 26B",
+    0.649,
+    0.7817,
+    true
+   ],
+   [
+    "dataset500-qwen38omniflash-high-tm-strip",
+    "Qwen 3.8 Omni Flash · high",
+    0.8499,
+    0.774,
+    false
+   ],
+   [
+    "dataset500-qwen38omniflash-medium-tm-strip",
+    "Qwen 3.8 Omni Flash · medium",
+    0.8045,
+    0.7858,
+    false
+   ],
+   [
+    "dataset500-sonnet55-um-scale100-strip",
+    "Sonnet 5.5 UM · 0-100",
+    0.9612,
+    0.6318,
+    false
+   ],
+   [
+    "dataset500-sonnet55-um-strip",
+    "Sonnet 5.5 UM",
+    0.9577,
+    0.6295,
+    false
+   ],
+   [
+    "dataset500b2-sonnet55-um-scale100-strip",
+    "Sonnet 5.5 UM · batch 2 · 0-100",
+    0.9771,
+    0.6145,
+    false
+   ],
+   [
+    "dataset500b2-sonnet55-um-strip",
+    "Sonnet 5.5 UM · batch 2",
+    0.9738,
+    0.6164,
+    false
+   ],
+   [
+    "sonnet55-n100-haiku45",
+    "Haiku 4.5",
+    0.7109,
+    0.9507,
+    true
+   ],
+   [
+    "sonnet55-n100-haiku45-strip",
+    "Haiku 4.5",
+    0.7037,
+    0.9507,
+    true
+   ],
+   [
+    "sonnet55-n100-sonnet55-um-strip",
+    "Sonnet 5.5 UM",
+    0.9633,
+    0.9507,
+    false
    ]
   ]
  },
- "facts": {},
+ "facts": {
+  "n": 35,
+  "n_win": 9,
+  "n_lose": 26,
+  "w_lo": 0.592,
+  "w_hi": 0.753
+ },
  "build": {
-  "inputs": {},
-  "code": "sha256:71a6f946856bd639",
-  "spec": "sha256:a20f2140bd93137e"
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemma3-27b-scale100-n500-strip-samples.csv": "sha256:d1d643249f9888b7",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-4b-scale100-n500-strip-samples.csv": "sha256:26bc1f00893a78d4",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma426b-scale100-n500-strip-samples.csv": "sha256:fb1d594503683bda",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip-samples.csv": "sha256:89fa32c0112dd470",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-gpt6luna-tm-n30-samples.csv": "sha256:3d23004001f335d4",
+   "results/dataset-gpt6luna-tm-n30-strip-samples.csv": "sha256:5ddd5c5eb21ae48c",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-scale100-n500-strip-samples.csv": "sha256:71346b2cb532a567",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-haiku45-tm-n30-samples.csv": "sha256:869b056ccc0f7925",
+   "results/dataset-haiku45-tm-n30-strip-samples.csv": "sha256:5170311ed3cd2296",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-effortxhigh-tm-n500b2-strip-samples.csv": "sha256:037564c532113877",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-haiku55-xhigh-nostrip-n500-samples.csv": "sha256:822a2fe624aa4c68",
+   "results/dataset-haiku55-xhigh-scale100-n500-strip-samples.csv": "sha256:1271c66323a3a3d7",
+   "results/dataset-haiku55-xhigh-scale100-n500b2-strip-samples.csv": "sha256:0903d3e33a26577f",
+   "results/dataset-haiku55-xhigh-scale200-n500-strip-samples.csv": "sha256:b45d2a54b978eec8",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-scale100-n500-strip-samples.csv": "sha256:0f35bf14c005f353",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-qwen38-scale100-n500-strip-samples.csv": "sha256:9ee19673f160ab64",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-sonnet55-um-n30-samples.csv": "sha256:8f2fa088c5bb1d10",
+   "results/dataset-sonnet55-um-n30-strip-samples.csv": "sha256:fad7d8c0711da669",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-scale100-strip-samples.csv": "sha256:1c7d31048163d394",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
+   "results/dataset500b2-sonnet55-um-scale100-strip-samples.csv": "sha256:71c299a8e9535652",
+   "results/dataset500b2-sonnet55-um-strip-samples.csv": "sha256:0c01b9ed04f6988b",
+   "results/sonnet55-n100-haiku45-samples.csv": "sha256:2b0692b9c27bf710",
+   "results/sonnet55-n100-haiku45-strip-samples.csv": "sha256:d0c7dce0921e63e6",
+   "results/sonnet55-n100-sonnet55-um-strip-samples.csv": "sha256:9c922d475b5cecca"
+  },
+  "code": "sha256:f5a82afa278aaf77",
+  "spec": "sha256:f003a18972bd0a06"
  }
 }
