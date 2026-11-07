@@ -64,7 +64,7 @@ def cmd_new(letter: str, slug: str, section: str) -> int:
     fid = f"{letter}{n:02d}"
     path = core.FIGURES / f"{fid}-{slug}"
     path.mkdir(parents=True)
-    (path / "figure.py").write_text(TEMPLATE.format(id=fid, section=section))
+    (path / "figure.py").write_text(TEMPLATE.format(id=fid, section=section), encoding="utf-8", newline="\n")
     print(f"created {path.relative_to(core.ROOT)}/figure.py. Edit it, then: uv run python -m viz build {fid}")
     return 0
 
@@ -72,7 +72,7 @@ def cmd_new(letter: str, slug: str, section: str) -> int:
 def cmd_list() -> int:
     import json
     for fd in core.discover():
-        s = json.loads(fd.spec_path.read_text()) if fd.spec_path.exists() else {}
+        s = json.loads(fd.spec_path.read_text(encoding="utf-8")) if fd.spec_path.exists() else {}
         print(f"{fd.id:<5} {s.get('section', '?'):<16} {s.get('kind', '?'):<9} {s.get('title', '(not built)')}")
     return 0
 

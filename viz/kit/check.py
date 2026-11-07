@@ -31,7 +31,8 @@ DECIMAL = re.compile(r"(?<![\w{.:])\d+\.\d+")
 # the typed-number check. Add a family here if a new model's name trips it.
 MODEL_NAME = re.compile(r"(?i)\b(sonnet|haiku|opus|claude|qwen|gemini|glm|gpt|gemma|llama|mistral|ministral|"
                         r"large|flash|deepseek|grok|luna)[\s-]*\d+(?:\.\d+)+")
-COLOUR = re.compile(r"#[0-9a-fA-F]{3}(?:[0-9a-fA-F]{3})?(?:[0-9a-fA-F]{2})?\b|\brgba?\(|\bhsla?\(")
+# Hex colours have 3, 4, 6 or 8 digits, so an issue number like "#97660" (5 digits) isn't one.
+COLOUR = re.compile(r"#(?:[0-9a-fA-F]{8}|[0-9a-fA-F]{6}|[0-9a-fA-F]{3,4})\b|\brgba?\(|\bhsla?\(")
 FN = re.compile(r"^\s*(function\s*\(|\([^)]*\)\s*=>|[A-Za-z_$][\w$]*\s*=>)")
 
 
@@ -189,7 +190,7 @@ def check_static(figs: list[core.FigDir], f: Findings, strict: bool) -> dict[str
         if not fd.spec_path.exists():
             f.err(fid, f"not built. Run `uv run python -m viz build {fid}`")
             continue
-        spec = json.loads(fd.spec_path.read_text())
+        spec = json.loads(fd.spec_path.read_text(encoding="utf-8"))
         specs[fid] = spec
         b = spec.get("build", {})
         if core.spec_hash(spec) != b.get("spec"):
@@ -216,9 +217,11 @@ def check_static(figs: list[core.FigDir], f: Findings, strict: bool) -> dict[str
         if kind == "echarts":
             lint_option(fid, spec.get("option") or {}, spec.get("dial"), f)
             frames = [spec.get("option") or {}] + list((spec.get("dial") or {}).get("frames") or [])
-            if not any(s.get("data") for fr in frames for s in (fr.get("series") or [])):
+            # A diagram (graphic elements and no series at all, like A04) has no data by design.
+            diagram = not any(fr.get("series") for fr in frames) and any(fr.get("graphic") for fr in frames)
+            if not diagram and not any(s.get("data") for fr in frames for s in (fr.get("series") or [])):
                 f.err(fid, "the chart has no data: every series is empty")
-            if not spec.get("data"):
+            if not spec.get("data") and not diagram:
                 f.warn(fid, "no data table: build() returned no Figure.data, so there's no CSV button")
         elif kind == "snapshot":
             sub = Findings()
@@ -237,10 +240,10 @@ def check_static(figs: list[core.FigDir], f: Findings, strict: bool) -> dict[str
 def check_browser(ids: list[str], specs: dict[str, dict], f: Findings, strict: bool) -> list[str]:
     from . import browser
     core.OUT.mkdir(exist_ok=True)
-    for old in core.OUT.glob("*.png"):
+    for old in [*core.OUT.glob("*.png"), *core.OUT.glob("*.gif")]:
         if not ids or old.name.split("-")[0] in ids:
             old.unlink()
-    results, page_errors, shots = browser.run(ids)
+    results, page_errors, shots, gifs = browser.run(ids)
     for e in page_errors:
         f.err("*", f"gallery page error: {e}")
     saved = []
@@ -270,6 +273,16 @@ def check_browser(ids: list[str], specs: dict[str, dict], f: Findings, strict: b
                 step = "-" + re.sub(r"[^A-Za-z0-9.]+", "", str(spec["dial"]["steps"][r["step"]]))
             out = core.OUT / f"{fid}{step}-{r['mode']}.png"
             out.write_bytes(base64.b64decode(r["png"].split(",", 1)[1]))
+            saved.append(out.relative_to(core.ROOT).as_posix())
+    for fid, g in gifs.items():
+        steps = len(specs.get(fid, {}).get("dial", {}).get("steps", []))
+        if g.get("error"):
+            f.err(fid, f"GIF export failed: {g['error']}")
+        elif g["frames"] < steps:
+            f.err(fid, f"GIF export has {g['frames']} frames for {steps} dial positions")
+        else:
+            out = core.OUT / f"{fid}-light.gif"
+            out.write_bytes(base64.b64decode(g["gif"]))
             saved.append(out.relative_to(core.ROOT).as_posix())
     for (fid, theme_name), png in shots.items():
         out = core.OUT / f"{fid}-{theme_name}.png"
@@ -316,6 +329,6 @@ def run(ids: list[str] | None, strict: bool = False, browser: bool = True) -> in
     for lv, msg in by_fig.get("*", []):
         print(f"  {'x' if lv == 'error' else '!'} {msg}")
     if saved:
-        print(f"\nScreenshots: {len(saved)} PNGs in viz/.out/. Open them and look before calling a figure done.")
+        print(f"\nScreenshots: {len(saved)} PNGs and GIFs in viz/.out/. Open them and look before calling a figure done.")
     print(f"\n{n_err} error{'s' if n_err != 1 else ''}, {n_warn} warning{'s' if n_warn != 1 else ''}.")
     return 1 if n_err else 0

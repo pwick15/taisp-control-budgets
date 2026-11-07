@@ -82,6 +82,8 @@ finding is about; everything else is regular.
 | counts at each score | histogram on a log scale | P14 |
 | individual units | one square per unit (`renderItem`) | P07 |
 | a matrix with gaps | custom cells (`renderItem`) | P04 |
+| a process or protocol | diagram from `graphic` elements, no series | A04 |
+| the same events seen two ways | dots with a gliding dial (series `id`s) | A05 |
 
 Copy the worked example's `figure.py` and change the data; that's faster and keeps figures consistent.
 
