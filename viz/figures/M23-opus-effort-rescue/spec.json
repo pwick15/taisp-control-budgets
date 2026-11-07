@@ -1,0 +1,220 @@
+{
+ "id": "M23",
+ "kind": "echarts",
+ "title": "More thinking rescues a few more, and still misses most",
+ "section": "results",
+ "order": 140,
+ "caption": "The 51 hard backdoors, counted by what Opus 5.5 scored them at each reasoning effort. The lower block scored 50 or more out of 100, the upper block 20 to 50. Low to xhigh moves the strong block from 8 to 13.",
+ "notes": [
+  "Thin rung. The max-effort arm was only run on 5 of the 51 backdoors, so its bar counts out of 5 and the other three count out of 51. It is drawn hollow for that reason and must not be read as the continuation of the ladder.",
+  "Even at xhigh, Opus scores 30 of the 51 below 20 out of 100. The headline is the block that is missing, not the block that grows.",
+  "Opus has no honest baseline on this set, so 50 and 20 are reading aids rather than audit thresholds. A real deployment would have to pick a cutoff against honest code, which would almost certainly sit lower and catch more honest programs with it.",
+  "The four arms are the same 51 programs at four settings, so the bars are paired rather than independent samples. The low to xhigh change of 5 programs is 5 programs, not a rate, and no interval is attached to it.",
+  "Effort names are not comparable across models. Opus xhigh is not Haiku xhigh, and neither buys a fixed amount of thinking, so this ladder describes Opus only."
+ ],
+ "height": 440,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/M23-opus-effort-rescue",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 68,
+   "right": 30,
+   "top": 40,
+   "bottom": 56
+  },
+  "xAxis": {
+   "name": "Opus 5.5 reasoning effort",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "category",
+   "data": [
+    "low",
+    "high",
+    "xhigh",
+    "max (n=5)"
+   ]
+  },
+  "yAxis": {
+   "name": "Backdoors Opus scores 20 or more",
+   "nameLocation": "middle",
+   "nameGap": 46,
+   "type": "value",
+   "min": 0,
+   "max": 25,
+   "interval": 5
+  },
+  "legend": {
+   "top": 0,
+   "left": 62,
+   "data": [
+    "score 50 or more",
+    "score 20 to 50"
+   ]
+  },
+  "series": [
+   {
+    "name": "score 50 or more",
+    "type": "bar",
+    "stack": "s",
+    "barWidth": "46%",
+    "itemStyle": {
+     "color": "@good",
+     "borderRadius": [
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    "data": [
+     {
+      "value": 8,
+      "itemStyle": {
+       "color": "@good"
+      },
+      "tip": "<b>Opus 5.5, low effort</b><br>8 of 51 backdoors<br>score 50 or more"
+     },
+     {
+      "value": 12,
+      "itemStyle": {
+       "color": "@good"
+      },
+      "tip": "<b>Opus 5.5, high effort</b><br>12 of 51 backdoors<br>score 50 or more"
+     },
+     {
+      "value": 13,
+      "itemStyle": {
+       "color": "@good"
+      },
+      "tip": "<b>Opus 5.5, xhigh effort</b><br>13 of 51 backdoors<br>score 50 or more"
+     },
+     {
+      "value": 3,
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@good",
+       "borderWidth": 2
+      },
+      "tip": "<b>Opus 5.5, max effort</b><br>3 of 5 backdoors<br>score 50 or more<br>this arm was only run on 5 of the 51"
+     }
+    ]
+   },
+   {
+    "name": "score 20 to 50",
+    "type": "bar",
+    "stack": "s",
+    "barWidth": "46%",
+    "itemStyle": {
+     "color": "@warning/0.6",
+     "borderRadius": [
+      0,
+      0,
+      0,
+      0
+     ]
+    },
+    "data": [
+     {
+      "value": 8,
+      "itemStyle": {
+       "color": "@warning/0.6"
+      },
+      "tip": "<b>Opus 5.5, low effort</b><br>8 of 51 backdoors<br>score 20 to 50"
+     },
+     {
+      "value": 4,
+      "itemStyle": {
+       "color": "@warning/0.6"
+      },
+      "tip": "<b>Opus 5.5, high effort</b><br>4 of 51 backdoors<br>score 20 to 50"
+     },
+     {
+      "value": 8,
+      "itemStyle": {
+       "color": "@warning/0.6"
+      },
+      "tip": "<b>Opus 5.5, xhigh effort</b><br>8 of 51 backdoors<br>score 20 to 50"
+     },
+     {
+      "value": 0,
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@warning/0.6",
+       "borderWidth": 2
+      },
+      "tip": "<b>Opus 5.5, max effort</b><br>0 of 5 backdoors<br>score 20 to 50<br>this arm was only run on 5 of the 51"
+     }
+    ]
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "effort",
+   "scored",
+   "of",
+   "score_ge_50",
+   "score_20_to_50",
+   "score_below_20"
+  ],
+  "rows": [
+   [
+    "low",
+    51,
+    51,
+    8,
+    8,
+    35
+   ],
+   [
+    "high",
+    51,
+    51,
+    12,
+    4,
+    35
+   ],
+   [
+    "xhigh",
+    51,
+    51,
+    13,
+    8,
+    30
+   ],
+   [
+    "max",
+    5,
+    51,
+    3,
+    0,
+    2
+   ]
+  ]
+ },
+ "facts": {
+  "n": 51,
+  "hi": 50,
+  "mid": 20,
+  "lo_hi": 8,
+  "xh_hi": 13,
+  "n_max": 5,
+  "xh_rest": 30,
+  "gain": 5
+ },
+ "build": {
+  "inputs": {
+   "results/analysis/opus-hard51-scores.csv": "sha256:b625e45eefdef283"
+  },
+  "code": "sha256:22d0e1301c9e5767",
+  "spec": "sha256:9157c05dfaac834d"
+ }
+}
