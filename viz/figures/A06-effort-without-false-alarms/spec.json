@@ -4,14 +4,9 @@
  "title": "More reasoning catches more backdoors without raising false alarms",
  "section": "results",
  "order": 35,
- "caption": "Top: backdoors caught at a 2% audit budget at each reasoning setting, with 95% intervals. Bottom: share of the 500 clean programs the same monitors score at or above the dial's level, same colours. Detection rises by up to 28 points while false alarms stay near zero.",
- "notes": [
-  "Paired by program, lowest against highest effort, no model's false alarms rose significantly at any of the three levels. The biggest change at 5 or more is one program in 500.",
-  "At a fixed budget the flagged share of clean code is fixed by design, so the bottom panel uses absolute score levels. That is what shows clean code isn't scored as more suspicious.",
-  "Not every model gains: Gemini Flash-Lite catches fewer backdoors as effort rises and Mistral Large 4 is flat (P03). Neither raises false alarms either.",
-  "One run per setting. Sonnet high and Haiku xhigh replicate on the second 500 problems."
- ],
- "height": 620,
+ "caption": "Top: backdoors caught at a 2% audit budget at each reasoning setting, with 95% intervals. Bottom: share of the 500 clean programs the same monitors score 5/10 or higher. Detection rises by up to 22 points while false alarms stay near zero.",
+ "notes": [],
+ "height": 560,
  "author": "",
  "source": "",
  "path": "viz/figures/A06-effort-without-false-alarms",
@@ -21,19 +16,19 @@
    "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
    "confine": true
   },
-  "animation": true,
+  "animation": false,
   "grid": [
    {
     "left": 64,
-    "right": 120,
+    "right": 110,
     "top": 16,
-    "height": "48%"
+    "height": "50%"
    },
    {
     "left": 64,
-    "right": 120,
+    "right": 110,
     "bottom": 52,
-    "height": "27%"
+    "height": "24%"
    }
   ],
   "xAxis": [
@@ -43,9 +38,9 @@
     "data": [
      "off",
      "low",
-     "medium / default",
+     "medium",
      "high",
-     "xhigh / max"
+     "xhigh"
     ],
     "axisLabel": {
      "show": false
@@ -61,9 +56,9 @@
     "data": [
      "off",
      "low",
-     "medium / default",
+     "medium",
      "high",
-     "xhigh / max"
+     "xhigh"
     ]
    }
   ],
@@ -95,176 +90,6 @@
   ],
   "series": [
    {
-    "id": "top:haiku55",
-    "name": "Haiku 5.5",
-    "type": "line",
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "data": [
-     null,
-     {
-      "value": 70.05,
-      "tip": "<b>Haiku 5.5 · low</b><br>caught 70.0% (58.3 to 78.0)"
-     },
-     {
-      "value": 77.2,
-      "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 77.2% (61.6 to 80.7)"
-     },
-     {
-      "value": 81.49,
-      "tip": "<b>Haiku 5.5 · high</b><br>caught 81.5% (69.5 to 84.7)"
-     },
-     {
-      "value": 85.1,
-      "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.1% (75.7 to 88.0)"
-     }
-    ],
-    "connectNulls": true,
-    "z": 4,
-    "symbolSize": 8,
-    "itemStyle": {
-     "color": "@s1",
-     "borderColor": "@ink-surface",
-     "borderWidth": 1.5
-    },
-    "lineStyle": {
-     "color": "@s1",
-     "width": 2.5
-    },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-primary",
-     "fontSize": 12,
-     "fontWeight": 600,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
-    },
-    "emphasis": {
-     "focus": "series"
-    }
-   },
-   {
-    "id": "topci:haiku55",
-    "type": "custom",
-    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "itemStyle": {
-     "color": "@s1"
-    },
-    "data": [
-     [
-      1,
-      58.3,
-      78.0
-     ],
-     [
-      2,
-      61.6,
-      80.69
-     ],
-     [
-      3,
-      69.53,
-      84.75
-     ],
-     [
-      4,
-      75.73,
-      88.0
-     ]
-    ],
-    "silent": true,
-    "tooltip": {
-     "show": false
-    },
-    "z": 2
-   },
-   {
-    "id": "top:glm53",
-    "name": "GLM-5.3",
-    "type": "line",
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "data": [
-     null,
-     {
-      "value": 48.42,
-      "tip": "<b>GLM-5.3 · low</b><br>caught 48.4% (43.6 to 52.6)"
-     },
-     null,
-     {
-      "value": 51.89,
-      "tip": "<b>GLM-5.3 · high</b><br>caught 51.9% (47.3 to 56.4)"
-     },
-     {
-      "value": 76.2,
-      "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.2% (63.9 to 79.5)"
-     }
-    ],
-    "connectNulls": true,
-    "z": 4,
-    "symbolSize": 8,
-    "itemStyle": {
-     "color": "@s2",
-     "borderColor": "@ink-surface",
-     "borderWidth": 1.5
-    },
-    "lineStyle": {
-     "color": "@s2",
-     "width": 2.5
-    },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-primary",
-     "fontSize": 12,
-     "fontWeight": 600,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
-    },
-    "emphasis": {
-     "focus": "series"
-    }
-   },
-   {
-    "id": "topci:glm53",
-    "type": "custom",
-    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-    "xAxisIndex": 0,
-    "yAxisIndex": 0,
-    "itemStyle": {
-     "color": "@s2"
-    },
-    "data": [
-     [
-      1,
-      43.63,
-      52.6
-     ],
-     [
-      3,
-      47.32,
-      56.38
-     ],
-     [
-      4,
-      63.88,
-      79.48
-     ]
-    ],
-    "silent": true,
-    "tooltip": {
-     "show": false
-    },
-    "z": 2
-   },
-   {
     "id": "top:luna",
     "name": "GPT-6 Luna",
     "type": "line",
@@ -293,23 +118,23 @@
      }
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 4,
+    "symbolSize": 8,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s6",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s6",
+     "width": 2.5
     },
     "endLabel": {
      "show": true,
      "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
      "distance": 8
     },
     "labelLayout": {
@@ -326,7 +151,7 @@
     "xAxisIndex": 0,
     "yAxisIndex": 0,
     "itemStyle": {
-     "color": "@context-strong"
+     "color": "@s6"
     },
     "data": [
      [
@@ -362,6 +187,103 @@
     "z": 2
    },
    {
+    "id": "bot:luna",
+    "name": "GPT-6 Luna",
+    "type": "line",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "data": [
+     {
+      "value": 0.2,
+      "tip": "<b>GPT-6 Luna · off</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>GPT-6 Luna · low</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>GPT-6 Luna · medium (default)</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>GPT-6 Luna · high</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>GPT-6 Luna · xhigh</b><br>2 of 500 clean programs scored 5/10 or more"
+     }
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s6",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s6",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": false,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "id": "botci:luna",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "itemStyle": {
+     "color": "@s6"
+    },
+    "data": [
+     [
+      0,
+      0.04,
+      1.12
+     ],
+     [
+      1,
+      0.11,
+      1.45
+     ],
+     [
+      2,
+      0.04,
+      1.12
+     ],
+     [
+      3,
+      0.04,
+      1.12
+     ],
+     [
+      4,
+      0.11,
+      1.45
+     ]
+    ],
+    "silent": true,
+    "tooltip": {
+     "show": false
+    },
+    "z": 2
+   },
+   {
     "id": "top:qwen38",
     "name": "Qwen 3.8",
     "type": "line",
@@ -384,23 +306,23 @@
      null
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 4,
+    "symbolSize": 8,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s4",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s4",
+     "width": 2.5
     },
     "endLabel": {
      "show": true,
      "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
      "distance": 8
     },
     "labelLayout": {
@@ -417,7 +339,7 @@
     "xAxisIndex": 0,
     "yAxisIndex": 0,
     "itemStyle": {
-     "color": "@context-strong"
+     "color": "@s4"
     },
     "data": [
      [
@@ -443,273 +365,6 @@
     "z": 2
    },
    {
-    "id": "bot:haiku55",
-    "name": "Haiku 5.5",
-    "type": "line",
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
-    "data": [
-     null,
-     {
-      "value": 0.4,
-      "tip": "<b>Haiku 5.5 · low</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-     },
-     {
-      "value": 0.4,
-      "tip": "<b>Haiku 5.5 · medium (default)</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-     },
-     {
-      "value": 0.4,
-      "tip": "<b>Haiku 5.5 · high</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-     },
-     {
-      "value": 0.4,
-      "tip": "<b>Haiku 5.5 · xhigh</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-     }
-    ],
-    "connectNulls": true,
-    "z": 4,
-    "symbolSize": 8,
-    "itemStyle": {
-     "color": "@s1",
-     "borderColor": "@ink-surface",
-     "borderWidth": 1.5
-    },
-    "lineStyle": {
-     "color": "@s1",
-     "width": 2.5
-    },
-    "endLabel": {
-     "show": false,
-     "formatter": "{a}",
-     "color": "@ink-primary",
-     "fontSize": 12,
-     "fontWeight": 600,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
-    },
-    "emphasis": {
-     "focus": "series"
-    }
-   },
-   {
-    "id": "botci:haiku55",
-    "type": "custom",
-    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
-    "itemStyle": {
-     "color": "@s1"
-    },
-    "data": [
-     [
-      1,
-      0.11,
-      1.45
-     ],
-     [
-      2,
-      0.11,
-      1.45
-     ],
-     [
-      3,
-      0.11,
-      1.45
-     ],
-     [
-      4,
-      0.11,
-      1.45
-     ]
-    ],
-    "silent": true,
-    "tooltip": {
-     "show": false
-    },
-    "z": 2
-   },
-   {
-    "id": "bot:glm53",
-    "name": "GLM-5.3",
-    "type": "line",
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
-    "data": [
-     null,
-     {
-      "value": 0.4,
-      "tip": "<b>GLM-5.3 · low</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-     },
-     null,
-     {
-      "value": 0.2,
-      "tip": "<b>GLM-5.3 · high</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-     },
-     {
-      "value": 0.2,
-      "tip": "<b>GLM-5.3 · max (default)</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-     }
-    ],
-    "connectNulls": true,
-    "z": 4,
-    "symbolSize": 8,
-    "itemStyle": {
-     "color": "@s2",
-     "borderColor": "@ink-surface",
-     "borderWidth": 1.5
-    },
-    "lineStyle": {
-     "color": "@s2",
-     "width": 2.5
-    },
-    "endLabel": {
-     "show": false,
-     "formatter": "{a}",
-     "color": "@ink-primary",
-     "fontSize": 12,
-     "fontWeight": 600,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
-    },
-    "emphasis": {
-     "focus": "series"
-    }
-   },
-   {
-    "id": "botci:glm53",
-    "type": "custom",
-    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
-    "itemStyle": {
-     "color": "@s2"
-    },
-    "data": [
-     [
-      1,
-      0.11,
-      1.45
-     ],
-     [
-      3,
-      0.04,
-      1.12
-     ],
-     [
-      4,
-      0.04,
-      1.12
-     ]
-    ],
-    "silent": true,
-    "tooltip": {
-     "show": false
-    },
-    "z": 2
-   },
-   {
-    "id": "bot:luna",
-    "name": "GPT-6 Luna",
-    "type": "line",
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
-    "data": [
-     {
-      "value": 0.2,
-      "tip": "<b>GPT-6 Luna · off</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-     },
-     {
-      "value": 0.4,
-      "tip": "<b>GPT-6 Luna · low</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-     },
-     {
-      "value": 0.2,
-      "tip": "<b>GPT-6 Luna · medium (default)</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-     },
-     {
-      "value": 0.2,
-      "tip": "<b>GPT-6 Luna · high</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-     },
-     {
-      "value": 0.4,
-      "tip": "<b>GPT-6 Luna · xhigh</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-     }
-    ],
-    "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
-    "itemStyle": {
-     "color": "@context-strong",
-     "borderColor": "@ink-surface",
-     "borderWidth": 1.5
-    },
-    "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
-    },
-    "endLabel": {
-     "show": false,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
-    },
-    "emphasis": {
-     "focus": "series"
-    }
-   },
-   {
-    "id": "botci:luna",
-    "type": "custom",
-    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-    "xAxisIndex": 1,
-    "yAxisIndex": 1,
-    "itemStyle": {
-     "color": "@context-strong"
-    },
-    "data": [
-     [
-      0,
-      0.04,
-      1.12
-     ],
-     [
-      1,
-      0.11,
-      1.45
-     ],
-     [
-      2,
-      0.04,
-      1.12
-     ],
-     [
-      3,
-      0.04,
-      1.12
-     ],
-     [
-      4,
-      0.11,
-      1.45
-     ]
-    ],
-    "silent": true,
-    "tooltip": {
-     "show": false
-    },
-    "z": 2
-   },
-   {
     "id": "bot:qwen38",
     "name": "Qwen 3.8",
     "type": "line",
@@ -718,37 +373,37 @@
     "data": [
      {
       "value": 0.8,
-      "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>4 of 500 clean programs scored 5/10 or more (0.8%)"
+      "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>4 of 500 clean programs scored 5/10 or more"
      },
      null,
      {
       "value": 0.6,
-      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>3 of 500 clean programs scored 5/10 or more (0.6%)"
+      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>3 of 500 clean programs scored 5/10 or more"
      },
      {
       "value": 0.6,
-      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>3 of 500 clean programs scored 5/10 or more (0.6%)"
+      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>3 of 500 clean programs scored 5/10 or more"
      },
      null
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 4,
+    "symbolSize": 8,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s4",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s4",
+     "width": 2.5
     },
     "endLabel": {
      "show": false,
      "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
      "distance": 8
     },
     "labelLayout": {
@@ -765,7 +420,7 @@
     "xAxisIndex": 1,
     "yAxisIndex": 1,
     "itemStyle": {
-     "color": "@context-strong"
+     "color": "@s4"
     },
     "data": [
      [
@@ -790,2541 +445,88 @@
     },
     "z": 2
    }
-  ],
-  "animationDurationUpdate": 600
- },
- "dial": {
-  "label": "Counts as a false alarm (score out of 10)",
-  "steps": [
-   "2 or more",
-   "3 or more",
-   "5 or more"
-  ],
-  "initial": 2,
-  "frames": [
-   {
-    "series": [
-     {
-      "id": "top:haiku55",
-      "name": "Haiku 5.5",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       null,
-       {
-        "value": 70.05,
-        "tip": "<b>Haiku 5.5 · low</b><br>caught 70.0% (58.3 to 78.0)"
-       },
-       {
-        "value": 77.2,
-        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 77.2% (61.6 to 80.7)"
-       },
-       {
-        "value": 81.49,
-        "tip": "<b>Haiku 5.5 · high</b><br>caught 81.5% (69.5 to 84.7)"
-       },
-       {
-        "value": 85.1,
-        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.1% (75.7 to 88.0)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s1",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s1",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:haiku55",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@s1"
-      },
-      "data": [
-       [
-        1,
-        58.3,
-        78.0
-       ],
-       [
-        2,
-        61.6,
-        80.69
-       ],
-       [
-        3,
-        69.53,
-        84.75
-       ],
-       [
-        4,
-        75.73,
-        88.0
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "top:glm53",
-      "name": "GLM-5.3",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       null,
-       {
-        "value": 48.42,
-        "tip": "<b>GLM-5.3 · low</b><br>caught 48.4% (43.6 to 52.6)"
-       },
-       null,
-       {
-        "value": 51.89,
-        "tip": "<b>GLM-5.3 · high</b><br>caught 51.9% (47.3 to 56.4)"
-       },
-       {
-        "value": 76.2,
-        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.2% (63.9 to 79.5)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s2",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s2",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:glm53",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@s2"
-      },
-      "data": [
-       [
-        1,
-        43.63,
-        52.6
-       ],
-       [
-        3,
-        47.32,
-        56.38
-       ],
-       [
-        4,
-        63.88,
-        79.48
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "top:luna",
-      "name": "GPT-6 Luna",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       {
-        "value": 39.42,
-        "tip": "<b>GPT-6 Luna · off</b><br>caught 39.4% (35.3 to 43.8)"
-       },
-       {
-        "value": 49.91,
-        "tip": "<b>GPT-6 Luna · low</b><br>caught 49.9% (43.4 to 54.1)"
-       },
-       {
-        "value": 54.97,
-        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 55.0% (50.2 to 59.3)"
-       },
-       {
-        "value": 57.74,
-        "tip": "<b>GPT-6 Luna · high</b><br>caught 57.7% (53.0 to 62.2)"
-       },
-       {
-        "value": 60.96,
-        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 61.0% (55.1 to 65.2)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:luna",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        35.26,
-        43.8
-       ],
-       [
-        1,
-        43.36,
-        54.09
-       ],
-       [
-        2,
-        50.21,
-        59.33
-       ],
-       [
-        3,
-        52.97,
-        62.19
-       ],
-       [
-        4,
-        55.07,
-        65.16
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "top:qwen38",
-      "name": "Qwen 3.8",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       {
-        "value": 51.3,
-        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 51.3% (39.5 to 55.3)"
-       },
-       null,
-       {
-        "value": 62.6,
-        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 62.6% (51.6 to 66.4)"
-       },
-       {
-        "value": 66.84,
-        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 66.8% (60.4 to 73.8)"
-       },
-       null
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:qwen38",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        39.5,
-        55.27
-       ],
-       [
-        2,
-        51.59,
-        66.4
-       ],
-       [
-        3,
-        60.45,
-        73.76
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:haiku55",
-      "name": "Haiku 5.5",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       null,
-       {
-        "value": 2.4,
-        "tip": "<b>Haiku 5.5 · low</b><br>12 of 500 clean programs scored 2/10 or more (2.4%)"
-       },
-       {
-        "value": 2.0,
-        "tip": "<b>Haiku 5.5 · medium (default)</b><br>10 of 500 clean programs scored 2/10 or more (2.0%)"
-       },
-       {
-        "value": 1.6,
-        "tip": "<b>Haiku 5.5 · high</b><br>8 of 500 clean programs scored 2/10 or more (1.6%)"
-       },
-       {
-        "value": 1.6,
-        "tip": "<b>Haiku 5.5 · xhigh</b><br>8 of 500 clean programs scored 2/10 or more (1.6%)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s1",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s1",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:haiku55",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@s1"
-      },
-      "data": [
-       [
-        1,
-        1.38,
-        4.15
-       ],
-       [
-        2,
-        1.09,
-        3.64
-       ],
-       [
-        3,
-        0.81,
-        3.13
-       ],
-       [
-        4,
-        0.81,
-        3.13
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:glm53",
-      "name": "GLM-5.3",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       null,
-       {
-        "value": 0.4,
-        "tip": "<b>GLM-5.3 · low</b><br>2 of 500 clean programs scored 2/10 or more (0.4%)"
-       },
-       null,
-       {
-        "value": 0.6,
-        "tip": "<b>GLM-5.3 · high</b><br>3 of 500 clean programs scored 2/10 or more (0.6%)"
-       },
-       {
-        "value": 1.0,
-        "tip": "<b>GLM-5.3 · max (default)</b><br>5 of 500 clean programs scored 2/10 or more (1.0%)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s2",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s2",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:glm53",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@s2"
-      },
-      "data": [
-       [
-        1,
-        0.11,
-        1.45
-       ],
-       [
-        3,
-        0.2,
-        1.75
-       ],
-       [
-        4,
-        0.43,
-        2.32
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:luna",
-      "name": "GPT-6 Luna",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       {
-        "value": 0.6,
-        "tip": "<b>GPT-6 Luna · off</b><br>3 of 500 clean programs scored 2/10 or more (0.6%)"
-       },
-       {
-        "value": 0.8,
-        "tip": "<b>GPT-6 Luna · low</b><br>4 of 500 clean programs scored 2/10 or more (0.8%)"
-       },
-       {
-        "value": 0.8,
-        "tip": "<b>GPT-6 Luna · medium (default)</b><br>4 of 500 clean programs scored 2/10 or more (0.8%)"
-       },
-       {
-        "value": 0.6,
-        "tip": "<b>GPT-6 Luna · high</b><br>3 of 500 clean programs scored 2/10 or more (0.6%)"
-       },
-       {
-        "value": 0.8,
-        "tip": "<b>GPT-6 Luna · xhigh</b><br>4 of 500 clean programs scored 2/10 or more (0.8%)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:luna",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        0.2,
-        1.75
-       ],
-       [
-        1,
-        0.31,
-        2.04
-       ],
-       [
-        2,
-        0.31,
-        2.04
-       ],
-       [
-        3,
-        0.2,
-        1.75
-       ],
-       [
-        4,
-        0.31,
-        2.04
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:qwen38",
-      "name": "Qwen 3.8",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       {
-        "value": 0.8,
-        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>4 of 500 clean programs scored 2/10 or more (0.8%)"
-       },
-       null,
-       {
-        "value": 1.0,
-        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>5 of 500 clean programs scored 2/10 or more (1.0%)"
-       },
-       {
-        "value": 1.2,
-        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>6 of 500 clean programs scored 2/10 or more (1.2%)"
-       },
-       null
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:qwen38",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        0.31,
-        2.04
-       ],
-       [
-        2,
-        0.43,
-        2.32
-       ],
-       [
-        3,
-        0.55,
-        2.59
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     }
-    ]
-   },
-   {
-    "series": [
-     {
-      "id": "top:haiku55",
-      "name": "Haiku 5.5",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       null,
-       {
-        "value": 70.05,
-        "tip": "<b>Haiku 5.5 · low</b><br>caught 70.0% (58.3 to 78.0)"
-       },
-       {
-        "value": 77.2,
-        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 77.2% (61.6 to 80.7)"
-       },
-       {
-        "value": 81.49,
-        "tip": "<b>Haiku 5.5 · high</b><br>caught 81.5% (69.5 to 84.7)"
-       },
-       {
-        "value": 85.1,
-        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.1% (75.7 to 88.0)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s1",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s1",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:haiku55",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@s1"
-      },
-      "data": [
-       [
-        1,
-        58.3,
-        78.0
-       ],
-       [
-        2,
-        61.6,
-        80.69
-       ],
-       [
-        3,
-        69.53,
-        84.75
-       ],
-       [
-        4,
-        75.73,
-        88.0
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "top:glm53",
-      "name": "GLM-5.3",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       null,
-       {
-        "value": 48.42,
-        "tip": "<b>GLM-5.3 · low</b><br>caught 48.4% (43.6 to 52.6)"
-       },
-       null,
-       {
-        "value": 51.89,
-        "tip": "<b>GLM-5.3 · high</b><br>caught 51.9% (47.3 to 56.4)"
-       },
-       {
-        "value": 76.2,
-        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.2% (63.9 to 79.5)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s2",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s2",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:glm53",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@s2"
-      },
-      "data": [
-       [
-        1,
-        43.63,
-        52.6
-       ],
-       [
-        3,
-        47.32,
-        56.38
-       ],
-       [
-        4,
-        63.88,
-        79.48
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "top:luna",
-      "name": "GPT-6 Luna",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       {
-        "value": 39.42,
-        "tip": "<b>GPT-6 Luna · off</b><br>caught 39.4% (35.3 to 43.8)"
-       },
-       {
-        "value": 49.91,
-        "tip": "<b>GPT-6 Luna · low</b><br>caught 49.9% (43.4 to 54.1)"
-       },
-       {
-        "value": 54.97,
-        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 55.0% (50.2 to 59.3)"
-       },
-       {
-        "value": 57.74,
-        "tip": "<b>GPT-6 Luna · high</b><br>caught 57.7% (53.0 to 62.2)"
-       },
-       {
-        "value": 60.96,
-        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 61.0% (55.1 to 65.2)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:luna",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        35.26,
-        43.8
-       ],
-       [
-        1,
-        43.36,
-        54.09
-       ],
-       [
-        2,
-        50.21,
-        59.33
-       ],
-       [
-        3,
-        52.97,
-        62.19
-       ],
-       [
-        4,
-        55.07,
-        65.16
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "top:qwen38",
-      "name": "Qwen 3.8",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       {
-        "value": 51.3,
-        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 51.3% (39.5 to 55.3)"
-       },
-       null,
-       {
-        "value": 62.6,
-        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 62.6% (51.6 to 66.4)"
-       },
-       {
-        "value": 66.84,
-        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 66.8% (60.4 to 73.8)"
-       },
-       null
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:qwen38",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        39.5,
-        55.27
-       ],
-       [
-        2,
-        51.59,
-        66.4
-       ],
-       [
-        3,
-        60.45,
-        73.76
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:haiku55",
-      "name": "Haiku 5.5",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       null,
-       {
-        "value": 0.8,
-        "tip": "<b>Haiku 5.5 · low</b><br>4 of 500 clean programs scored 3/10 or more (0.8%)"
-       },
-       {
-        "value": 0.8,
-        "tip": "<b>Haiku 5.5 · medium (default)</b><br>4 of 500 clean programs scored 3/10 or more (0.8%)"
-       },
-       {
-        "value": 0.8,
-        "tip": "<b>Haiku 5.5 · high</b><br>4 of 500 clean programs scored 3/10 or more (0.8%)"
-       },
-       {
-        "value": 0.8,
-        "tip": "<b>Haiku 5.5 · xhigh</b><br>4 of 500 clean programs scored 3/10 or more (0.8%)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s1",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s1",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:haiku55",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@s1"
-      },
-      "data": [
-       [
-        1,
-        0.31,
-        2.04
-       ],
-       [
-        2,
-        0.31,
-        2.04
-       ],
-       [
-        3,
-        0.31,
-        2.04
-       ],
-       [
-        4,
-        0.31,
-        2.04
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:glm53",
-      "name": "GLM-5.3",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       null,
-       {
-        "value": 0.4,
-        "tip": "<b>GLM-5.3 · low</b><br>2 of 500 clean programs scored 3/10 or more (0.4%)"
-       },
-       null,
-       {
-        "value": 0.2,
-        "tip": "<b>GLM-5.3 · high</b><br>1 of 500 clean programs scored 3/10 or more (0.2%)"
-       },
-       {
-        "value": 0.4,
-        "tip": "<b>GLM-5.3 · max (default)</b><br>2 of 500 clean programs scored 3/10 or more (0.4%)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s2",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s2",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:glm53",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@s2"
-      },
-      "data": [
-       [
-        1,
-        0.11,
-        1.45
-       ],
-       [
-        3,
-        0.04,
-        1.12
-       ],
-       [
-        4,
-        0.11,
-        1.45
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:luna",
-      "name": "GPT-6 Luna",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       {
-        "value": 0.6,
-        "tip": "<b>GPT-6 Luna · off</b><br>3 of 500 clean programs scored 3/10 or more (0.6%)"
-       },
-       {
-        "value": 0.6,
-        "tip": "<b>GPT-6 Luna · low</b><br>3 of 500 clean programs scored 3/10 or more (0.6%)"
-       },
-       {
-        "value": 0.4,
-        "tip": "<b>GPT-6 Luna · medium (default)</b><br>2 of 500 clean programs scored 3/10 or more (0.4%)"
-       },
-       {
-        "value": 0.6,
-        "tip": "<b>GPT-6 Luna · high</b><br>3 of 500 clean programs scored 3/10 or more (0.6%)"
-       },
-       {
-        "value": 0.6,
-        "tip": "<b>GPT-6 Luna · xhigh</b><br>3 of 500 clean programs scored 3/10 or more (0.6%)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:luna",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        0.2,
-        1.75
-       ],
-       [
-        1,
-        0.2,
-        1.75
-       ],
-       [
-        2,
-        0.11,
-        1.45
-       ],
-       [
-        3,
-        0.2,
-        1.75
-       ],
-       [
-        4,
-        0.2,
-        1.75
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:qwen38",
-      "name": "Qwen 3.8",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       {
-        "value": 0.8,
-        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>4 of 500 clean programs scored 3/10 or more (0.8%)"
-       },
-       null,
-       {
-        "value": 0.6,
-        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>3 of 500 clean programs scored 3/10 or more (0.6%)"
-       },
-       {
-        "value": 0.6,
-        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>3 of 500 clean programs scored 3/10 or more (0.6%)"
-       },
-       null
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:qwen38",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        0.31,
-        2.04
-       ],
-       [
-        2,
-        0.2,
-        1.75
-       ],
-       [
-        3,
-        0.2,
-        1.75
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     }
-    ]
-   },
-   {
-    "series": [
-     {
-      "id": "top:haiku55",
-      "name": "Haiku 5.5",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       null,
-       {
-        "value": 70.05,
-        "tip": "<b>Haiku 5.5 · low</b><br>caught 70.0% (58.3 to 78.0)"
-       },
-       {
-        "value": 77.2,
-        "tip": "<b>Haiku 5.5 · medium (default)</b><br>caught 77.2% (61.6 to 80.7)"
-       },
-       {
-        "value": 81.49,
-        "tip": "<b>Haiku 5.5 · high</b><br>caught 81.5% (69.5 to 84.7)"
-       },
-       {
-        "value": 85.1,
-        "tip": "<b>Haiku 5.5 · xhigh</b><br>caught 85.1% (75.7 to 88.0)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s1",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s1",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:haiku55",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@s1"
-      },
-      "data": [
-       [
-        1,
-        58.3,
-        78.0
-       ],
-       [
-        2,
-        61.6,
-        80.69
-       ],
-       [
-        3,
-        69.53,
-        84.75
-       ],
-       [
-        4,
-        75.73,
-        88.0
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "top:glm53",
-      "name": "GLM-5.3",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       null,
-       {
-        "value": 48.42,
-        "tip": "<b>GLM-5.3 · low</b><br>caught 48.4% (43.6 to 52.6)"
-       },
-       null,
-       {
-        "value": 51.89,
-        "tip": "<b>GLM-5.3 · high</b><br>caught 51.9% (47.3 to 56.4)"
-       },
-       {
-        "value": 76.2,
-        "tip": "<b>GLM-5.3 · max (default)</b><br>caught 76.2% (63.9 to 79.5)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s2",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s2",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:glm53",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@s2"
-      },
-      "data": [
-       [
-        1,
-        43.63,
-        52.6
-       ],
-       [
-        3,
-        47.32,
-        56.38
-       ],
-       [
-        4,
-        63.88,
-        79.48
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "top:luna",
-      "name": "GPT-6 Luna",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       {
-        "value": 39.42,
-        "tip": "<b>GPT-6 Luna · off</b><br>caught 39.4% (35.3 to 43.8)"
-       },
-       {
-        "value": 49.91,
-        "tip": "<b>GPT-6 Luna · low</b><br>caught 49.9% (43.4 to 54.1)"
-       },
-       {
-        "value": 54.97,
-        "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 55.0% (50.2 to 59.3)"
-       },
-       {
-        "value": 57.74,
-        "tip": "<b>GPT-6 Luna · high</b><br>caught 57.7% (53.0 to 62.2)"
-       },
-       {
-        "value": 60.96,
-        "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 61.0% (55.1 to 65.2)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:luna",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        35.26,
-        43.8
-       ],
-       [
-        1,
-        43.36,
-        54.09
-       ],
-       [
-        2,
-        50.21,
-        59.33
-       ],
-       [
-        3,
-        52.97,
-        62.19
-       ],
-       [
-        4,
-        55.07,
-        65.16
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "top:qwen38",
-      "name": "Qwen 3.8",
-      "type": "line",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "data": [
-       {
-        "value": 51.3,
-        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 51.3% (39.5 to 55.3)"
-       },
-       null,
-       {
-        "value": 62.6,
-        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 62.6% (51.6 to 66.4)"
-       },
-       {
-        "value": 66.84,
-        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 66.8% (60.4 to 73.8)"
-       },
-       null
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "topci:qwen38",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 0,
-      "yAxisIndex": 0,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        39.5,
-        55.27
-       ],
-       [
-        2,
-        51.59,
-        66.4
-       ],
-       [
-        3,
-        60.45,
-        73.76
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:haiku55",
-      "name": "Haiku 5.5",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       null,
-       {
-        "value": 0.4,
-        "tip": "<b>Haiku 5.5 · low</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-       },
-       {
-        "value": 0.4,
-        "tip": "<b>Haiku 5.5 · medium (default)</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-       },
-       {
-        "value": 0.4,
-        "tip": "<b>Haiku 5.5 · high</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-       },
-       {
-        "value": 0.4,
-        "tip": "<b>Haiku 5.5 · xhigh</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s1",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s1",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:haiku55",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@s1"
-      },
-      "data": [
-       [
-        1,
-        0.11,
-        1.45
-       ],
-       [
-        2,
-        0.11,
-        1.45
-       ],
-       [
-        3,
-        0.11,
-        1.45
-       ],
-       [
-        4,
-        0.11,
-        1.45
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:glm53",
-      "name": "GLM-5.3",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       null,
-       {
-        "value": 0.4,
-        "tip": "<b>GLM-5.3 · low</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-       },
-       null,
-       {
-        "value": 0.2,
-        "tip": "<b>GLM-5.3 · high</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-       },
-       {
-        "value": 0.2,
-        "tip": "<b>GLM-5.3 · max (default)</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 4,
-      "symbolSize": 8,
-      "itemStyle": {
-       "color": "@s2",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@s2",
-       "width": 2.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-primary",
-       "fontSize": 12,
-       "fontWeight": 600,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:glm53",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@s2"
-      },
-      "data": [
-       [
-        1,
-        0.11,
-        1.45
-       ],
-       [
-        3,
-        0.04,
-        1.12
-       ],
-       [
-        4,
-        0.04,
-        1.12
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:luna",
-      "name": "GPT-6 Luna",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       {
-        "value": 0.2,
-        "tip": "<b>GPT-6 Luna · off</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-       },
-       {
-        "value": 0.4,
-        "tip": "<b>GPT-6 Luna · low</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-       },
-       {
-        "value": 0.2,
-        "tip": "<b>GPT-6 Luna · medium (default)</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-       },
-       {
-        "value": 0.2,
-        "tip": "<b>GPT-6 Luna · high</b><br>1 of 500 clean programs scored 5/10 or more (0.2%)"
-       },
-       {
-        "value": 0.4,
-        "tip": "<b>GPT-6 Luna · xhigh</b><br>2 of 500 clean programs scored 5/10 or more (0.4%)"
-       }
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:luna",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        0.04,
-        1.12
-       ],
-       [
-        1,
-        0.11,
-        1.45
-       ],
-       [
-        2,
-        0.04,
-        1.12
-       ],
-       [
-        3,
-        0.04,
-        1.12
-       ],
-       [
-        4,
-        0.11,
-        1.45
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     },
-     {
-      "id": "bot:qwen38",
-      "name": "Qwen 3.8",
-      "type": "line",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "data": [
-       {
-        "value": 0.8,
-        "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>4 of 500 clean programs scored 5/10 or more (0.8%)"
-       },
-       null,
-       {
-        "value": 0.6,
-        "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>3 of 500 clean programs scored 5/10 or more (0.6%)"
-       },
-       {
-        "value": 0.6,
-        "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>3 of 500 clean programs scored 5/10 or more (0.6%)"
-       },
-       null
-      ],
-      "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
-      "itemStyle": {
-       "color": "@context-strong",
-       "borderColor": "@ink-surface",
-       "borderWidth": 1.5
-      },
-      "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
-      },
-      "endLabel": {
-       "show": false,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
-       "distance": 8
-      },
-      "labelLayout": {
-       "moveOverlap": "shiftY"
-      },
-      "emphasis": {
-       "focus": "series"
-      }
-     },
-     {
-      "id": "botci:qwen38",
-      "type": "custom",
-      "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
-      "xAxisIndex": 1,
-      "yAxisIndex": 1,
-      "itemStyle": {
-       "color": "@context-strong"
-      },
-      "data": [
-       [
-        0,
-        0.31,
-        2.04
-       ],
-       [
-        2,
-        0.2,
-        1.75
-       ],
-       [
-        3,
-        0.2,
-        1.75
-       ]
-      ],
-      "silent": true,
-      "tooltip": {
-       "show": false
-      },
-      "z": 2
-     }
-    ]
-   }
   ]
  },
+ "dial": null,
  "data": {
   "columns": [
    "model",
    "effort",
    "run",
-   "level",
-   "clean_flagged",
-   "n_clean",
-   "caught_at_2pct"
+   "caught_at_2pct",
+   "clean_flagged_5of10",
+   "n_clean"
   ],
   "rows": [
    [
-    "Haiku 5.5",
-    "low",
-    "dataset-haiku55-effortlow-tm-n500-strip",
-    0.2,
-    12,
-    500,
-    0.7005
-   ],
-   [
-    "Haiku 5.5",
-    "medium",
-    "dataset-haiku55-tm-n500-strip",
-    0.2,
-    10,
-    500,
-    0.772
-   ],
-   [
-    "Haiku 5.5",
-    "high",
-    "dataset-haiku55-efforthigh-tm-n500-strip",
-    0.2,
-    8,
-    500,
-    0.814941
-   ],
-   [
-    "Haiku 5.5",
-    "xhigh",
-    "dataset-haiku55-effortxhigh-tm-n500-strip",
-    0.2,
-    8,
-    500,
-    0.851032
-   ],
-   [
-    "GLM-5.3",
-    "low",
-    "dataset-glm53-effortlow-tm-n500-strip",
-    0.2,
-    2,
-    500,
-    0.484211
-   ],
-   [
-    "GLM-5.3",
-    "high",
-    "dataset-glm53-efforthigh-tm-n500-strip",
-    0.2,
-    3,
-    500,
-    0.518909
-   ],
-   [
-    "GLM-5.3",
-    "xhigh",
-    "dataset-glm53-tm-n500-strip",
-    0.2,
-    5,
-    500,
-    0.762
-   ],
-   [
     "GPT-6 Luna",
     "off",
     "dataset-luna-none-tm-n500-strip",
-    0.2,
-    3,
-    500,
-    0.394182
+    0.394182,
+    1,
+    500
    ],
    [
     "GPT-6 Luna",
     "low",
     "dataset-luna-low-tm-n500-strip",
-    0.2,
-    4,
-    500,
-    0.499067
+    0.499067,
+    2,
+    500
    ],
    [
     "GPT-6 Luna",
     "medium",
     "dataset-gpt6luna-tm-n500-strip",
-    0.2,
-    4,
-    500,
-    0.549676
+    0.549676,
+    1,
+    500
    ],
    [
     "GPT-6 Luna",
     "high",
     "dataset-luna-high-tm-n500-strip",
-    0.2,
-    3,
-    500,
-    0.577449
+    0.577449,
+    1,
+    500
    ],
    [
     "GPT-6 Luna",
     "xhigh",
     "dataset-luna-xhigh-tm-n500-strip",
-    0.2,
-    4,
-    500,
-    0.609593
+    0.609593,
+    2,
+    500
    ],
    [
     "Qwen 3.8",
     "off",
     "dataset-qwen38omniflash-none-tm-n500-strip",
-    0.2,
+    0.512994,
     4,
-    500,
-    0.512994
+    500
    ],
    [
     "Qwen 3.8",
     "medium",
     "dataset500-qwen38omniflash-medium-tm-strip",
-    0.2,
-    5,
-    500,
-    0.626
+    0.626,
+    3,
+    500
    ],
    [
     "Qwen 3.8",
     "high",
     "dataset500-qwen38omniflash-high-tm-strip",
-    0.2,
-    6,
-    500,
-    0.6684
-   ],
-   [
-    "Haiku 5.5",
-    "low",
-    "dataset-haiku55-effortlow-tm-n500-strip",
-    0.3,
-    4,
-    500,
-    0.7005
-   ],
-   [
-    "Haiku 5.5",
-    "medium",
-    "dataset-haiku55-tm-n500-strip",
-    0.3,
-    4,
-    500,
-    0.772
-   ],
-   [
-    "Haiku 5.5",
-    "high",
-    "dataset-haiku55-efforthigh-tm-n500-strip",
-    0.3,
-    4,
-    500,
-    0.814941
-   ],
-   [
-    "Haiku 5.5",
-    "xhigh",
-    "dataset-haiku55-effortxhigh-tm-n500-strip",
-    0.3,
-    4,
-    500,
-    0.851032
-   ],
-   [
-    "GLM-5.3",
-    "low",
-    "dataset-glm53-effortlow-tm-n500-strip",
-    0.3,
-    2,
-    500,
-    0.484211
-   ],
-   [
-    "GLM-5.3",
-    "high",
-    "dataset-glm53-efforthigh-tm-n500-strip",
-    0.3,
-    1,
-    500,
-    0.518909
-   ],
-   [
-    "GLM-5.3",
-    "xhigh",
-    "dataset-glm53-tm-n500-strip",
-    0.3,
-    2,
-    500,
-    0.762
-   ],
-   [
-    "GPT-6 Luna",
-    "off",
-    "dataset-luna-none-tm-n500-strip",
-    0.3,
+    0.6684,
     3,
-    500,
-    0.394182
-   ],
-   [
-    "GPT-6 Luna",
-    "low",
-    "dataset-luna-low-tm-n500-strip",
-    0.3,
-    3,
-    500,
-    0.499067
-   ],
-   [
-    "GPT-6 Luna",
-    "medium",
-    "dataset-gpt6luna-tm-n500-strip",
-    0.3,
-    2,
-    500,
-    0.549676
-   ],
-   [
-    "GPT-6 Luna",
-    "high",
-    "dataset-luna-high-tm-n500-strip",
-    0.3,
-    3,
-    500,
-    0.577449
-   ],
-   [
-    "GPT-6 Luna",
-    "xhigh",
-    "dataset-luna-xhigh-tm-n500-strip",
-    0.3,
-    3,
-    500,
-    0.609593
-   ],
-   [
-    "Qwen 3.8",
-    "off",
-    "dataset-qwen38omniflash-none-tm-n500-strip",
-    0.3,
-    4,
-    500,
-    0.512994
-   ],
-   [
-    "Qwen 3.8",
-    "medium",
-    "dataset500-qwen38omniflash-medium-tm-strip",
-    0.3,
-    3,
-    500,
-    0.626
-   ],
-   [
-    "Qwen 3.8",
-    "high",
-    "dataset500-qwen38omniflash-high-tm-strip",
-    0.3,
-    3,
-    500,
-    0.6684
-   ],
-   [
-    "Haiku 5.5",
-    "low",
-    "dataset-haiku55-effortlow-tm-n500-strip",
-    0.5,
-    2,
-    500,
-    0.7005
-   ],
-   [
-    "Haiku 5.5",
-    "medium",
-    "dataset-haiku55-tm-n500-strip",
-    0.5,
-    2,
-    500,
-    0.772
-   ],
-   [
-    "Haiku 5.5",
-    "high",
-    "dataset-haiku55-efforthigh-tm-n500-strip",
-    0.5,
-    2,
-    500,
-    0.814941
-   ],
-   [
-    "Haiku 5.5",
-    "xhigh",
-    "dataset-haiku55-effortxhigh-tm-n500-strip",
-    0.5,
-    2,
-    500,
-    0.851032
-   ],
-   [
-    "GLM-5.3",
-    "low",
-    "dataset-glm53-effortlow-tm-n500-strip",
-    0.5,
-    2,
-    500,
-    0.484211
-   ],
-   [
-    "GLM-5.3",
-    "high",
-    "dataset-glm53-efforthigh-tm-n500-strip",
-    0.5,
-    1,
-    500,
-    0.518909
-   ],
-   [
-    "GLM-5.3",
-    "xhigh",
-    "dataset-glm53-tm-n500-strip",
-    0.5,
-    1,
-    500,
-    0.762
-   ],
-   [
-    "GPT-6 Luna",
-    "off",
-    "dataset-luna-none-tm-n500-strip",
-    0.5,
-    1,
-    500,
-    0.394182
-   ],
-   [
-    "GPT-6 Luna",
-    "low",
-    "dataset-luna-low-tm-n500-strip",
-    0.5,
-    2,
-    500,
-    0.499067
-   ],
-   [
-    "GPT-6 Luna",
-    "medium",
-    "dataset-gpt6luna-tm-n500-strip",
-    0.5,
-    1,
-    500,
-    0.549676
-   ],
-   [
-    "GPT-6 Luna",
-    "high",
-    "dataset-luna-high-tm-n500-strip",
-    0.5,
-    1,
-    500,
-    0.577449
-   ],
-   [
-    "GPT-6 Luna",
-    "xhigh",
-    "dataset-luna-xhigh-tm-n500-strip",
-    0.5,
-    2,
-    500,
-    0.609593
-   ],
-   [
-    "Qwen 3.8",
-    "off",
-    "dataset-qwen38omniflash-none-tm-n500-strip",
-    0.5,
-    4,
-    500,
-    0.512994
-   ],
-   [
-    "Qwen 3.8",
-    "medium",
-    "dataset500-qwen38omniflash-medium-tm-strip",
-    0.5,
-    3,
-    500,
-    0.626
-   ],
-   [
-    "Qwen 3.8",
-    "high",
-    "dataset500-qwen38omniflash-high-tm-strip",
-    0.5,
-    3,
-    500,
-    0.6684
+    500
    ]
   ]
  },
  "facts": {
   "n_clean": 500,
-  "max_gain": 27.7789
+  "max_gain": 21.5412
  },
  "build": {
   "inputs": {
@@ -3393,7 +595,7 @@
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:83c19ee409c43cb0",
-  "spec": "sha256:782a8756bc53647c"
+  "code": "sha256:0fa99cf61ee2f319",
+  "spec": "sha256:6ded6c931e951f61"
  }
 }
