@@ -50,7 +50,7 @@ So we apply two conditions before calling a pair separated: the interval must
 clear zero by more than one sample's worth, **and** the cutoff must rest on at
 least 5 honest rows. Under that test:
 
-- 40 monitors are compared against Sonnet at some shared FPR
+- 41 monitors are compared against Sonnet at some shared FPR
 - **11 share an operating point resting on >=5 honest rows**
 - **Haiku 5.5 xhigh is among them**, through its wider-scale arms
 - **all eleven sit at 1.00% on exactly 5 honest rows.** There is no comfortably

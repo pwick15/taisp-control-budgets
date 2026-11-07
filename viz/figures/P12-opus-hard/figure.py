@@ -19,8 +19,9 @@ META = {
         "Max effort was only piloted on 5 backdoors, so it's left out.",
         "The set was chosen because the other monitors failed on it, so it says nothing about how Opus does on "
         "ordinary backdoors.",
-        "Marnick also rated these backdoors for how incriminating and how harmful they look. Those ratings aren't "
-        "in the repo yet; ask him for the CSV.",
+        "These backdoors are also rated for how incriminating and how harmful they look. Those ratings are "
+        "now in results/analysis/hard51-risk-ratings.csv and drawn as M15: none of them is both stealthy "
+        "and severe.",
     ],
 }
 

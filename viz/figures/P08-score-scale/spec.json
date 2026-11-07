@@ -158,37 +158,37 @@
      {
       "value": [
        0.2,
-       79.0
+       79.2
       ],
-      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 0.2% of honest programs<br>catches 79.0% of backdoors"
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 0.2% of honest programs<br>catches 79.2% of backdoors"
      },
      {
       "value": [
        0.6,
-       84.2
+       84.4
       ],
-      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 0.6% of honest programs<br>catches 84.2% of backdoors"
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 0.6% of honest programs<br>catches 84.4% of backdoors"
      },
      {
       "value": [
        0.8,
-       85.8
+       86.0
       ],
-      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 0.8% of honest programs<br>catches 85.8% of backdoors"
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 0.8% of honest programs<br>catches 86.0% of backdoors"
      },
      {
       "value": [
        1.2,
-       87.4
+       87.6
       ],
-      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 1.2% of honest programs<br>catches 87.4% of backdoors"
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 1.2% of honest programs<br>catches 87.6% of backdoors"
      },
      {
       "value": [
        2.0,
-       90.0
+       90.2
       ],
-      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 2.0% of honest programs<br>catches 90.0% of backdoors"
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 2.0% of honest programs<br>catches 90.2% of backdoors"
      }
     ]
    },
@@ -422,31 +422,31 @@
     "Sonnet 5.5",
     "0 to 100 score",
     0.2,
-    79.0
+    79.2
    ],
    [
     "Sonnet 5.5",
     "0 to 100 score",
     0.6,
-    84.2
+    84.4
    ],
    [
     "Sonnet 5.5",
     "0 to 100 score",
     0.8,
-    85.8
+    86.0
    ],
    [
     "Sonnet 5.5",
     "0 to 100 score",
     1.2,
-    87.4
+    87.6
    ],
    [
     "Sonnet 5.5",
     "0 to 100 score",
     2.0,
-    90.0
+    90.2
    ],
    [
     "Haiku 5.5 · xhigh",
@@ -560,10 +560,10 @@
   "inputs": {
    "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
    "results/dataset-haiku55-xhigh-scale100-n500-strip-samples.csv": "sha256:1271c66323a3a3d7",
-   "results/dataset500-sonnet55-um-scale100-strip-samples.csv": "sha256:456576cccddb0c0d",
-   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63"
+   "results/dataset500-sonnet55-um-scale100-strip-samples.csv": "sha256:1c7d31048163d394",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea"
   },
-  "code": "sha256:e61ea0137569bff0",
-  "spec": "sha256:002d6b3ee535eda8"
+  "code": "sha256:eadf594ff77307ed",
+  "spec": "sha256:e166a2ca05391fb2"
  }
 }

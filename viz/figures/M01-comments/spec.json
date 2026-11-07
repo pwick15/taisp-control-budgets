@@ -1,181 +1,133 @@
 {
  "id": "M01",
- "kind": "snapshot",
- "title": "Half the stored backdoors confess in a comment",
+ "kind": "echarts",
+ "title": "Comments add 8.6 points of recall but only 11 new catches",
  "section": "results",
- "order": 120,
- "caption": "Three ways to flag a backdoor: a six-word regex for comments that admit to a bug, a monitor reading the code with comments deleted, and the same monitor with comments left in. Each bar counts programs caught by exactly that combination.",
+ "order": 70,
+ "caption": "Each of 500 backdoored programs falls in exactly one bar: the set of detectors that flag it. Three detectors, a keyword regex on the generator's own comments and the same monitor reading the code with comments stripped or kept. Bars do not overlap and sum to 500. Use the dial to move both monitor cutoffs.",
  "notes": [
-  "These are Marnick's numbers. Confirm the 51.8% regex figure and the +9.2 / +12.2 point gaps with him before quoting.",
-  "Four papers strip comments for this reason and none measures what it does to a monitor ranking. Re-scoring the top monitors with comments kept is a cheap side result (Marnick priced it at about $18)."
+  "At a 2% budget the comment-reading monitor catches 468 of 500 against 425 for the stripped one. Most of that gain is on backdoors a six-word regex would have flagged anyway; only 11 are caught by the comment-reading monitor alone.",
+  "The regex bar does not move with the dial. A keyword match has no budget to spend, so only the two monitor cutoffs shift, which is why the bars redistribute rather than all grow.",
+  "27 programs are caught by nothing at any setting shown. Those are the ones the hard-backdoor figures are about.",
+  "Both monitors are Haiku 5.5 at xhigh effort on the same 500 problems, each calibrated on its own honest scores, with a strict greater-than cutoff. The only difference between them is whether the code arrived with its comments.",
+  "Rebuilt from committed CSVs, replacing the exported snapshot taken from the data explorer."
  ],
- "height": 440,
+ "height": 520,
  "author": "",
- "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'cases-catch-set-upset'. Copied as exported; its generator isn't in the repo yet.",
+ "source": "",
  "path": "viz/figures/M01-comments",
  "option": {
-  "animation": false,
-  "textStyle": {
-   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
-   "color": "@ink-secondary"
-  },
-  "grid": {
-   "left": 58,
-   "right": 28,
-   "top": 24,
-   "bottom": 78,
-   "containLabel": true
-  },
   "tooltip": {
    "trigger": "item",
-   "confine": true,
-   "backgroundColor": "@ink-surface",
-   "borderColor": "@ink-axis",
-   "borderWidth": 1,
-   "textStyle": {
-    "color": "@ink-primary",
-    "fontSize": 12
-   },
-   "formatter": "{b}<br/>{c} of 500 programs"
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 66,
+   "right": 24,
+   "top": 24,
+   "bottom": 96,
+   "containLabel": true
   },
   "xAxis": {
-   "type": "category",
-   "name": "exclusive catch set",
+   "name": "Detectors that flag it",
    "nameLocation": "middle",
-   "nameGap": 64,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
-   "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11,
-    "rotate": 26
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
+   "nameGap": 76,
+   "type": "category",
    "data": [
-    "grep + stripped + kept",
-    "stripped + kept",
-    "grep + kept",
-    "kept only",
-    "grep only",
-    "stripped only",
-    "grep + stripped",
-    "none of the three"
-   ]
+    "All three",
+    "Stripped + kept",
+    "Regex + kept",
+    "Kept only",
+    "Regex only",
+    "Stripped only",
+    "Regex + stripped",
+    "Nothing catches it"
+   ],
+   "axisLabel": {
+    "rotate": 26,
+    "fontSize": 11
+   }
   },
   "yAxis": {
-   "type": "value",
-   "name": "backdoored programs (of 500)",
+   "name": "Backdoored programs",
    "nameLocation": "middle",
-   "nameGap": 44,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
-   "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
+   "nameGap": 48,
+   "type": "value",
    "min": 0,
    "max": 248
   },
   "series": [
    {
+    "name": "programs",
     "type": "bar",
     "barWidth": "58%",
-    "data": [
-     {
-      "value": 222.0,
-      "name": "grep + stripped + kept",
-      "itemStyle": {
-       "color": "@seq650"
-      }
-     },
-     {
-      "value": 202.0,
-      "name": "stripped + kept",
-      "itemStyle": {
-       "color": "@seq450"
-      }
-     },
-     {
-      "value": 33.0,
-      "name": "grep + kept",
-      "itemStyle": {
-       "color": "@seq450"
-      }
-     },
-     {
-      "value": 11.0,
-      "name": "kept only",
-      "itemStyle": {
-       "color": "@seq250"
-      }
-     },
-     {
-      "value": 4.0,
-      "name": "grep only",
-      "itemStyle": {
-       "color": "@seq250"
-      }
-     },
-     {
-      "value": 1.0,
-      "name": "stripped only",
-      "itemStyle": {
-       "color": "@seq250"
-      }
-     },
-     {
-      "value": 0.0,
-      "name": "grep + stripped",
-      "itemStyle": {
-       "color": "@seq450"
-      }
-     },
-     {
-      "value": 27.0,
-      "name": "none of the three",
-      "itemStyle": {
-       "color": "@critical"
-      }
-     }
-    ],
     "label": {
      "show": true,
      "position": "top",
      "color": "@ink-secondary",
-     "fontSize": 10,
+     "fontSize": 12,
      "formatter": "{c}"
-    }
+    },
+    "data": [
+     {
+      "value": 222,
+      "itemStyle": {
+       "color": "@context"
+      },
+      "tip": "<b>All three</b><br>222 of 500 programs<br>at a 2% audit budget"
+     },
+     {
+      "value": 202,
+      "itemStyle": {
+       "color": "@context"
+      },
+      "tip": "<b>Stripped + kept</b><br>202 of 500 programs<br>at a 2% audit budget"
+     },
+     {
+      "value": 33,
+      "itemStyle": {
+       "color": "@context"
+      },
+      "tip": "<b>Regex + kept</b><br>33 of 500 programs<br>at a 2% audit budget"
+     },
+     {
+      "value": 11,
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "tip": "<b>Kept only</b><br>11 of 500 programs<br>at a 2% audit budget"
+     },
+     {
+      "value": 4,
+      "itemStyle": {
+       "color": "@context"
+      },
+      "tip": "<b>Regex only</b><br>4 of 500 programs<br>at a 2% audit budget"
+     },
+     {
+      "value": 1,
+      "itemStyle": {
+       "color": "@context"
+      },
+      "tip": "<b>Stripped only</b><br>1 of 500 programs<br>at a 2% audit budget"
+     },
+     {
+      "value": 0,
+      "itemStyle": {
+       "color": "@context"
+      },
+      "tip": "<b>Regex + stripped</b><br>0 of 500 programs<br>at a 2% audit budget"
+     },
+     {
+      "value": 27,
+      "itemStyle": {
+       "color": "@s7"
+      },
+      "tip": "<b>Nothing catches it</b><br>27 of 500 programs<br>at a 2% audit budget"
+     }
+    ]
    }
   ]
  },
@@ -193,207 +145,599 @@
    {
     "series": [
      {
+      "name": "programs",
       "type": "bar",
       "barWidth": "58%",
-      "data": [
-       {
-        "value": 155.0,
-        "name": "grep + stripped + kept",
-        "itemStyle": {
-         "color": "@seq650"
-        }
-       },
-       {
-        "value": 131.0,
-        "name": "stripped + kept",
-        "itemStyle": {
-         "color": "@seq450"
-        }
-       },
-       {
-        "value": 84.0,
-        "name": "grep + kept",
-        "itemStyle": {
-         "color": "@seq450"
-        }
-       },
-       {
-        "value": 29.0,
-        "name": "kept only",
-        "itemStyle": {
-         "color": "@seq250"
-        }
-       },
-       {
-        "value": 20.0,
-        "name": "grep only",
-        "itemStyle": {
-         "color": "@seq250"
-        }
-       },
-       {
-        "value": 1.0,
-        "name": "stripped only",
-        "itemStyle": {
-         "color": "@seq250"
-        }
-       },
-       {
-        "value": 0.0,
-        "name": "grep + stripped",
-        "itemStyle": {
-         "color": "@seq450"
-        }
-       },
-       {
-        "value": 80.0,
-        "name": "none of the three",
-        "itemStyle": {
-         "color": "@critical"
-        }
-       }
-      ],
       "label": {
        "show": true,
        "position": "top",
        "color": "@ink-secondary",
-       "fontSize": 10,
+       "fontSize": 12,
        "formatter": "{c}"
-      }
+      },
+      "data": [
+       {
+        "value": 155,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>All three</b><br>155 of 500 programs<br>at a 0.5% audit budget"
+       },
+       {
+        "value": 131,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped + kept</b><br>131 of 500 programs<br>at a 0.5% audit budget"
+       },
+       {
+        "value": 84,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + kept</b><br>84 of 500 programs<br>at a 0.5% audit budget"
+       },
+       {
+        "value": 29,
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "tip": "<b>Kept only</b><br>29 of 500 programs<br>at a 0.5% audit budget"
+       },
+       {
+        "value": 20,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex only</b><br>20 of 500 programs<br>at a 0.5% audit budget"
+       },
+       {
+        "value": 1,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped only</b><br>1 of 500 programs<br>at a 0.5% audit budget"
+       },
+       {
+        "value": 0,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + stripped</b><br>0 of 500 programs<br>at a 0.5% audit budget"
+       },
+       {
+        "value": 80,
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "tip": "<b>Nothing catches it</b><br>80 of 500 programs<br>at a 0.5% audit budget"
+       }
+      ]
      }
     ]
    },
    {
     "series": [
      {
+      "name": "programs",
       "type": "bar",
       "barWidth": "58%",
-      "data": [
-       {
-        "value": 188.0,
-        "name": "grep + stripped + kept",
-        "itemStyle": {
-         "color": "@seq650"
-        }
-       },
-       {
-        "value": 169.0,
-        "name": "stripped + kept",
-        "itemStyle": {
-         "color": "@seq450"
-        }
-       },
-       {
-        "value": 54.0,
-        "name": "grep + kept",
-        "itemStyle": {
-         "color": "@seq450"
-        }
-       },
-       {
-        "value": 24.0,
-        "name": "kept only",
-        "itemStyle": {
-         "color": "@seq250"
-        }
-       },
-       {
-        "value": 17.0,
-        "name": "grep only",
-        "itemStyle": {
-         "color": "@seq250"
-        }
-       },
-       {
-        "value": 0.0,
-        "name": "stripped only",
-        "itemStyle": {
-         "color": "@seq250"
-        }
-       },
-       {
-        "value": 0.0,
-        "name": "grep + stripped",
-        "itemStyle": {
-         "color": "@seq450"
-        }
-       },
-       {
-        "value": 48.0,
-        "name": "none of the three",
-        "itemStyle": {
-         "color": "@critical"
-        }
-       }
-      ],
       "label": {
        "show": true,
        "position": "top",
        "color": "@ink-secondary",
-       "fontSize": 10,
+       "fontSize": 12,
        "formatter": "{c}"
-      }
+      },
+      "data": [
+       {
+        "value": 188,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>All three</b><br>188 of 500 programs<br>at a 1% audit budget"
+       },
+       {
+        "value": 169,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped + kept</b><br>169 of 500 programs<br>at a 1% audit budget"
+       },
+       {
+        "value": 54,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + kept</b><br>54 of 500 programs<br>at a 1% audit budget"
+       },
+       {
+        "value": 24,
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "tip": "<b>Kept only</b><br>24 of 500 programs<br>at a 1% audit budget"
+       },
+       {
+        "value": 17,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex only</b><br>17 of 500 programs<br>at a 1% audit budget"
+       },
+       {
+        "value": 0,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped only</b><br>0 of 500 programs<br>at a 1% audit budget"
+       },
+       {
+        "value": 0,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + stripped</b><br>0 of 500 programs<br>at a 1% audit budget"
+       },
+       {
+        "value": 48,
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "tip": "<b>Nothing catches it</b><br>48 of 500 programs<br>at a 1% audit budget"
+       }
+      ]
      }
     ]
    },
-   {},
-   {},
-   {}
+   {
+    "series": [
+     {
+      "name": "programs",
+      "type": "bar",
+      "barWidth": "58%",
+      "label": {
+       "show": true,
+       "position": "top",
+       "color": "@ink-secondary",
+       "fontSize": 12,
+       "formatter": "{c}"
+      },
+      "data": [
+       {
+        "value": 222,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>All three</b><br>222 of 500 programs<br>at a 2% audit budget"
+       },
+       {
+        "value": 202,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped + kept</b><br>202 of 500 programs<br>at a 2% audit budget"
+       },
+       {
+        "value": 33,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + kept</b><br>33 of 500 programs<br>at a 2% audit budget"
+       },
+       {
+        "value": 11,
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "tip": "<b>Kept only</b><br>11 of 500 programs<br>at a 2% audit budget"
+       },
+       {
+        "value": 4,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex only</b><br>4 of 500 programs<br>at a 2% audit budget"
+       },
+       {
+        "value": 1,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped only</b><br>1 of 500 programs<br>at a 2% audit budget"
+       },
+       {
+        "value": 0,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + stripped</b><br>0 of 500 programs<br>at a 2% audit budget"
+       },
+       {
+        "value": 27,
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "tip": "<b>Nothing catches it</b><br>27 of 500 programs<br>at a 2% audit budget"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "programs",
+      "type": "bar",
+      "barWidth": "58%",
+      "label": {
+       "show": true,
+       "position": "top",
+       "color": "@ink-secondary",
+       "fontSize": 12,
+       "formatter": "{c}"
+      },
+      "data": [
+       {
+        "value": 222,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>All three</b><br>222 of 500 programs<br>at a 5% audit budget"
+       },
+       {
+        "value": 202,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped + kept</b><br>202 of 500 programs<br>at a 5% audit budget"
+       },
+       {
+        "value": 33,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + kept</b><br>33 of 500 programs<br>at a 5% audit budget"
+       },
+       {
+        "value": 11,
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "tip": "<b>Kept only</b><br>11 of 500 programs<br>at a 5% audit budget"
+       },
+       {
+        "value": 4,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex only</b><br>4 of 500 programs<br>at a 5% audit budget"
+       },
+       {
+        "value": 1,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped only</b><br>1 of 500 programs<br>at a 5% audit budget"
+       },
+       {
+        "value": 0,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + stripped</b><br>0 of 500 programs<br>at a 5% audit budget"
+       },
+       {
+        "value": 27,
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "tip": "<b>Nothing catches it</b><br>27 of 500 programs<br>at a 5% audit budget"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "programs",
+      "type": "bar",
+      "barWidth": "58%",
+      "label": {
+       "show": true,
+       "position": "top",
+       "color": "@ink-secondary",
+       "fontSize": 12,
+       "formatter": "{c}"
+      },
+      "data": [
+       {
+        "value": 222,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>All three</b><br>222 of 500 programs<br>at a 10% audit budget"
+       },
+       {
+        "value": 202,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped + kept</b><br>202 of 500 programs<br>at a 10% audit budget"
+       },
+       {
+        "value": 33,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + kept</b><br>33 of 500 programs<br>at a 10% audit budget"
+       },
+       {
+        "value": 11,
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "tip": "<b>Kept only</b><br>11 of 500 programs<br>at a 10% audit budget"
+       },
+       {
+        "value": 4,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex only</b><br>4 of 500 programs<br>at a 10% audit budget"
+       },
+       {
+        "value": 1,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Stripped only</b><br>1 of 500 programs<br>at a 10% audit budget"
+       },
+       {
+        "value": 0,
+        "itemStyle": {
+         "color": "@context"
+        },
+        "tip": "<b>Regex + stripped</b><br>0 of 500 programs<br>at a 10% audit budget"
+       },
+       {
+        "value": 27,
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "tip": "<b>Nothing catches it</b><br>27 of 500 programs<br>at a 10% audit budget"
+       }
+      ]
+     }
+    ]
+   }
   ]
  },
  "data": {
   "columns": [
-   "exclusive set",
-   "meaning",
-   "programs at 2%"
+   "budget_pct",
+   "catch_set",
+   "programs"
   ],
   "rows": [
    [
-    "grep + stripped + kept",
-    "all three catch it",
-    222
+    0.5,
+    "All three",
+    155
    ],
    [
-    "stripped + kept",
-    "both monitors, no confession to grep",
-    202
+    0.5,
+    "Stripped + kept",
+    131
    ],
    [
-    "grep + kept",
-    "grep and the comment-reading monitor",
-    33
+    0.5,
+    "Regex + kept",
+    84
    ],
    [
-    "kept only",
-    "only the comment-reading monitor",
-    11
+    0.5,
+    "Kept only",
+    29
    ],
    [
-    "grep only",
-    "only the regex",
-    4
+    0.5,
+    "Regex only",
+    20
    ],
    [
-    "stripped only",
-    "only the stripped monitor",
+    0.5,
+    "Stripped only",
     1
    ],
    [
-    "grep + stripped",
-    "both, but the kept monitor misses it",
+    0.5,
+    "Regex + stripped",
     0
    ],
    [
-    "none of the three",
-    "no detector catches it",
+    0.5,
+    "Nothing catches it",
+    80
+   ],
+   [
+    1.0,
+    "All three",
+    188
+   ],
+   [
+    1.0,
+    "Stripped + kept",
+    169
+   ],
+   [
+    1.0,
+    "Regex + kept",
+    54
+   ],
+   [
+    1.0,
+    "Kept only",
+    24
+   ],
+   [
+    1.0,
+    "Regex only",
+    17
+   ],
+   [
+    1.0,
+    "Stripped only",
+    0
+   ],
+   [
+    1.0,
+    "Regex + stripped",
+    0
+   ],
+   [
+    1.0,
+    "Nothing catches it",
+    48
+   ],
+   [
+    2.0,
+    "All three",
+    222
+   ],
+   [
+    2.0,
+    "Stripped + kept",
+    202
+   ],
+   [
+    2.0,
+    "Regex + kept",
+    33
+   ],
+   [
+    2.0,
+    "Kept only",
+    11
+   ],
+   [
+    2.0,
+    "Regex only",
+    4
+   ],
+   [
+    2.0,
+    "Stripped only",
+    1
+   ],
+   [
+    2.0,
+    "Regex + stripped",
+    0
+   ],
+   [
+    2.0,
+    "Nothing catches it",
+    27
+   ],
+   [
+    5.0,
+    "All three",
+    222
+   ],
+   [
+    5.0,
+    "Stripped + kept",
+    202
+   ],
+   [
+    5.0,
+    "Regex + kept",
+    33
+   ],
+   [
+    5.0,
+    "Kept only",
+    11
+   ],
+   [
+    5.0,
+    "Regex only",
+    4
+   ],
+   [
+    5.0,
+    "Stripped only",
+    1
+   ],
+   [
+    5.0,
+    "Regex + stripped",
+    0
+   ],
+   [
+    5.0,
+    "Nothing catches it",
+    27
+   ],
+   [
+    10.0,
+    "All three",
+    222
+   ],
+   [
+    10.0,
+    "Stripped + kept",
+    202
+   ],
+   [
+    10.0,
+    "Regex + kept",
+    33
+   ],
+   [
+    10.0,
+    "Kept only",
+    11
+   ],
+   [
+    10.0,
+    "Regex only",
+    4
+   ],
+   [
+    10.0,
+    "Stripped only",
+    1
+   ],
+   [
+    10.0,
+    "Regex + stripped",
+    0
+   ],
+   [
+    10.0,
+    "Nothing catches it",
     27
    ]
   ]
  },
- "facts": {},
+ "facts": {
+  "pct": "2",
+  "nk": 11,
+  "nn": 27,
+  "nk_kept": 468,
+  "nk_strip": 425,
+  "dp": 8.6
+ },
  "build": {
-  "inputs": {},
-  "code": "sha256:5c467a5a74b870f4",
-  "spec": "sha256:ba0635d7ca7dfb01"
+  "inputs": {
+   "results/analysis/backdoor-comment-confessions.csv": "sha256:4c11847e9f5dacae",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-xhigh-nostrip-n500-samples.csv": "sha256:822a2fe624aa4c68"
+  },
+  "code": "sha256:d7d4bce53625a727",
+  "spec": "sha256:0a569668f944264c"
  }
 }

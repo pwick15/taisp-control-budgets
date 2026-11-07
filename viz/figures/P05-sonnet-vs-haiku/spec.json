@@ -111,21 +111,21 @@
        0.2,
        70.8
       ],
-      "tip": "<b>Sonnet 5.5</b><br>0.2% budget: 70.8% (8.5 to 86.4)"
+      "tip": "<b>Sonnet 5.5</b><br>0.2% budget: 70.8% (8.4 to 86.4)"
      },
      {
       "value": [
        0.3,
        74.0
       ],
-      "tip": "<b>Sonnet 5.5</b><br>0.3% budget: 74.0% (12.6 to 87.0)"
+      "tip": "<b>Sonnet 5.5</b><br>0.3% budget: 74.0% (12.5 to 87.0)"
      },
      {
       "value": [
        0.5,
        80.7
       ],
-      "tip": "<b>Sonnet 5.5</b><br>0.5% budget: 80.7% (20.9 to 88.3)"
+      "tip": "<b>Sonnet 5.5</b><br>0.5% budget: 80.7% (20.8 to 88.3)"
      },
      {
       "value": [
@@ -212,23 +212,23 @@
     "data": [
      [
       0.2,
-      8.53,
+      8.4,
       86.4,
       0.3,
-      12.6,
+      12.5,
       87.01
      ],
      [
       0.3,
-      12.6,
+      12.5,
       87.01,
       0.5,
-      20.87,
+      20.83,
       88.3
      ],
      [
       0.5,
-      20.87,
+      20.83,
       88.3,
       0.75,
       72.25,
@@ -682,14 +682,14 @@
        0.2,
        60.4
       ],
-      "tip": "<b>Sonnet's lead</b><br>0.2% budget: +60.4 points (+8.0 to +70.4)"
+      "tip": "<b>Sonnet's lead</b><br>0.2% budget: +60.4 points (+7.8 to +70.4)"
      },
      {
       "value": [
        0.3,
        55.2
       ],
-      "tip": "<b>Sonnet's lead</b><br>0.3% budget: +55.2 points (+9.6 to +64.8)"
+      "tip": "<b>Sonnet's lead</b><br>0.3% budget: +55.2 points (+9.5 to +64.8)"
      },
      {
       "value": [
@@ -799,15 +799,15 @@
     "data": [
      [
       0.2,
-      8.0,
+      7.8,
       70.4,
       0.3,
-      9.62,
+      9.46,
       64.8
      ],
      [
       0.3,
-      9.62,
+      9.46,
       64.8,
       0.5,
       6.4,
@@ -927,21 +927,21 @@
     "Sonnet 5.5",
     0.2,
     0.708,
-    0.0853333,
+    0.084,
     0.864
    ],
    [
     "Sonnet 5.5",
     0.3,
     0.74,
-    0.126,
+    0.125,
     0.870103
    ],
    [
     "Sonnet 5.5",
     0.5,
     0.807,
-    0.208658,
+    0.208333,
     0.883
    ],
    [
@@ -1200,14 +1200,14 @@
     "Sonnet's lead",
     0.2,
     0.604,
-    0.0799833,
+    0.0779833,
     0.70405
    ],
    [
     "Sonnet's lead",
     0.3,
     0.552,
-    0.0962487,
+    0.094577,
     0.648
    ],
    [
@@ -1294,9 +1294,9 @@
   "inputs": {
    "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
    "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
-   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63"
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea"
   },
-  "code": "sha256:313e3b529a974b31",
-  "spec": "sha256:2715b40ce8f1f850"
+  "code": "sha256:edef47aa3fd32a23",
+  "spec": "sha256:619b89018284edfc"
  }
 }
