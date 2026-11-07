@@ -4,12 +4,12 @@
  "title": "More reasoning doesn't raise false alarms on clean code",
  "section": "results",
  "order": 35,
- "caption": "Share of the 500 clean programs each monitor scores 5/10 or higher, at each reasoning setting. Each step on the axis is one program. Every model stays between 0.2% and 0.8% at every setting, while P03 shows 6 of 8 catching more backdoors as effort rises.",
+ "caption": "Share of the 500 clean programs each monitor scores 5/10 or higher, at each reasoning setting. Coloured lines are the three models in focus, grey the other five. Every model stays between 0.2% and 0.8% at every setting, while P03 shows 6 of 8 catching more backdoors.",
  "notes": [
   "At a fixed audit budget the false-positive rate is fixed by construction: 2% of clean code gets audited whatever the monitor. This asks a different question: does more reasoning push clean code's scores up? It doesn't; Haiku 5.5's mean clean score even falls as effort rises.",
   "Extends A06's false-alarm panel from two models to all eight."
  ],
- "height": 440,
+ "height": 380,
  "author": "",
  "source": "",
  "path": "viz/figures/P17-effort-and-false-alarms",
@@ -22,9 +22,18 @@
   "animation": false,
   "grid": {
    "left": 58,
-   "right": 140,
-   "top": 16,
+   "right": 40,
+   "top": 40,
    "bottom": 52
+  },
+  "legend": {
+   "top": 0,
+   "left": 50,
+   "data": [
+    "Sonnet 5.5",
+    "Haiku 5.5",
+    "GLM-5.3"
+   ]
   },
   "xAxis": {
    "name": "Reasoning effort setting",
@@ -46,8 +55,8 @@
    "nameGap": 44,
    "type": "value",
    "min": 0,
-   "max": 1,
-   "interval": 0.2,
+   "max": 3,
+   "interval": 1,
    "axisLabel": {
     "formatter": "{value}%"
    }
@@ -80,17 +89,6 @@
     "lineStyle": {
      "color": "@s0",
      "width": 2.5
-    },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-primary",
-     "fontSize": 12,
-     "fontWeight": 600,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
     },
     "emphasis": {
      "focus": "series"
@@ -130,17 +128,6 @@
      "color": "@s1",
      "width": 2.5
     },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-primary",
-     "fontSize": 12,
-     "fontWeight": 600,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
-    },
     "emphasis": {
      "focus": "series"
     }
@@ -176,17 +163,6 @@
      "color": "@s2",
      "width": 2.5
     },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-primary",
-     "fontSize": 12,
-     "fontWeight": 600,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
-    },
     "emphasis": {
      "focus": "series"
     }
@@ -221,17 +197,6 @@
     "lineStyle": {
      "color": "@context-strong",
      "width": 1.5
-    },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
     },
     "emphasis": {
      "focus": "series"
@@ -274,17 +239,6 @@
      "color": "@context-strong",
      "width": 1.5
     },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
-    },
     "emphasis": {
      "focus": "series"
     }
@@ -316,17 +270,6 @@
     "lineStyle": {
      "color": "@context-strong",
      "width": 1.5
-    },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
     },
     "emphasis": {
      "focus": "series"
@@ -362,17 +305,6 @@
     "lineStyle": {
      "color": "@context-strong",
      "width": 1.5
-    },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
     },
     "emphasis": {
      "focus": "series"
@@ -414,17 +346,6 @@
     "lineStyle": {
      "color": "@context-strong",
      "width": 1.5
-    },
-    "endLabel": {
-     "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
-     "distance": 8
-    },
-    "labelLayout": {
-     "moveOverlap": "shiftY"
     },
     "emphasis": {
      "focus": "series"
@@ -705,7 +626,7 @@
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:258ea9782591abea",
-  "spec": "sha256:08dc2afb88f536af"
+  "code": "sha256:baa6e7b66a97c6dd",
+  "spec": "sha256:8a9d7227ceab5bd7"
  }
 }

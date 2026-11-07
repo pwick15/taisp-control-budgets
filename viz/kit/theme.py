@@ -73,6 +73,8 @@ SCALES: dict[str, dict[str, list[str]]] = {
     "goodbad": {"light": ["#f3a99d", "#f1ebdb", "#93d4ae"], "dark": ["#7c2f28", "#353229", "#1e6444"]},
     # Plain magnitude, pale to mid blue.
     "seq": {"light": ["#eef4fc", "#a9cbf4"], "dark": ["#1c2735", "#24589a"]},
+    # Magnitude with a wide range, pale to strong blue. Put @on-pale text below 0.55 and @on-strong above.
+    "deep": {"light": ["#eef4fc", "#9ec5f4", "#256abf"], "dark": ["#1c2735", "#24589a", "#4a8fe0"]},
 }
 
 # Each model keeps one colour in every figure. Anything not listed is @context grey.
