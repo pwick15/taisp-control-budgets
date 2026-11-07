@@ -43,7 +43,7 @@ def main() -> None:
                - set(re.findall(r"\d{2,}", honest.get(sid, ""))) - {"10", "100", "1000"})
         rows.append((sid, int(bool(new))))
     rows.sort(key=lambda r: int(r[0]) if r[0].isdigit() else r[0])
-    with open(OUT, "w", newline="") as f:
+    with open(OUT, "w", newline="", encoding="utf-8") as f:
         w = csv.writer(f, lineterminator="\n")
         w.writerow(["sample_id", "magic_number"])
         w.writerows(rows)

@@ -190,7 +190,7 @@ def check_static(figs: list[core.FigDir], f: Findings, strict: bool) -> dict[str
         if not fd.spec_path.exists():
             f.err(fid, f"not built. Run `uv run python -m viz build {fid}`")
             continue
-        spec = json.loads(fd.spec_path.read_text())
+        spec = json.loads(fd.spec_path.read_text(encoding="utf-8"))
         specs[fid] = spec
         b = spec.get("build", {})
         if core.spec_hash(spec) != b.get("spec"):
