@@ -35,6 +35,7 @@ GALLERY = VIZ / "gallery.html"
 OUT = VIZ / ".out"
 REPORT = VIZ / "report.toml"
 ECHARTS = KIT / "vendor" / "echarts-5.5.1.min.js"
+GIFENC = KIT / "vendor" / "gifenc-1.0.3.js"
 FONT = KIT / "fonts" / "inter-latin-wght-normal.woff2"
 
 # Code outside viz/ that generators depend on: viz/lib/safety.py loads the run list from it.
@@ -92,16 +93,21 @@ def _audit(event: str, args: tuple) -> None:
     if event != "open" or not _stack:
         return
     path, mode = args[0], args[1] if len(args) > 1 else None
+    flags = args[2] if len(args) > 2 else 0
     if not isinstance(path, (str, bytes, os.PathLike)):
         return
     if isinstance(mode, str) and any(c in mode for c in "wax+"):
+        return
+    # os.open (how Python writes a fresh __pycache__ file) passes no mode, only flags.
+    if isinstance(flags, int) and flags & (os.O_WRONLY | os.O_RDWR | os.O_CREAT):
         return
     try:
         p = Path(os.fsdecode(path)).resolve()
         rel = p.relative_to(ROOT)
     except (ValueError, OSError):
         return
-    if p.suffix in (".py", ".pyc") or rel.parts[0] in (".venv", ".git") or rel.parts[:2] == ("viz", "kit"):
+    if p.suffix in (".py", ".pyc") or "__pycache__" in rel.parts or rel.parts[0] in (".venv", ".git") \
+            or rel.parts[:2] == ("viz", "kit"):
         return
     for s in _stack:
         s.add(rel.as_posix())
@@ -180,7 +186,7 @@ def spec_hash(spec: dict) -> str:
 # ------------------------------------------------------------------ report config and discovery
 
 def report() -> dict:
-    cfg = tomllib.loads(REPORT.read_text())
+    cfg = tomllib.loads(REPORT.read_text(encoding="utf-8"))
     cfg.setdefault("retired", [])
     ids = [s["id"] for s in cfg["sections"]]
     if "appendix" not in ids:
@@ -258,7 +264,7 @@ def fill(text: str, facts: dict, where: str) -> str:
 
 def build_one(fd: FigDir) -> dict:
     """Run one generator and return its spec (not yet written)."""
-    prev = json.loads(fd.spec_path.read_text()) if fd.spec_path.exists() else None
+    prev = json.loads(fd.spec_path.read_text(encoding="utf-8")) if fd.spec_path.exists() else None
     with recording() as reads:
         mod = load_module(fd)
         meta = dict(getattr(mod, "META", None) or {})
@@ -328,9 +334,9 @@ def build(ids: list[str] | None = None, quiet: bool = False) -> int:
             print(f"  FAIL {fd.id}: {e}", file=sys.stderr)
             continue
         text = dumps(spec)
-        old = fd.spec_path.read_text() if fd.spec_path.exists() else None
+        old = fd.spec_path.read_text(encoding="utf-8") if fd.spec_path.exists() else None
         if text != old:
-            fd.spec_path.write_text(text)
+            fd.spec_path.write_text(text, encoding="utf-8", newline="\n")
             if not quiet:
                 print(f"  wrote {fd.rel}/spec.json")
         elif not quiet:
@@ -398,6 +404,9 @@ def card(spec: dict, people: dict) -> str:
     actions = ("<button type='button' data-act='copy' class='primary'>Copy image</button>"
                "<button type='button' data-act='png'>PNG</button><button type='button' data-act='svg'>SVG</button>"
                if can_export else "")
+    if can_export and spec.get("dial"):
+        # A figure with a dial animates: the GIF steps through every dial position, with the transitions.
+        actions += "<button type='button' data-act='gif' title='Animated GIF that steps through the dial'>GIF</button>"
     if spec.get("data"):
         actions += "<button type='button' data-act='csv'>CSV</button>"
     return (f"<article class='fig' id='{fid}' data-id='{fid}' data-search='{_e((fid + ' ' + spec['title'] + ' ' + spec['caption']).lower())}'>"
@@ -411,9 +420,9 @@ def card(spec: dict, people: dict) -> str:
 def write_gallery() -> bool:
     """Write viz/gallery.html if it changed. Returns True if it was rewritten."""
     page = gallery_html()
-    if GALLERY.exists() and GALLERY.read_text() == page:
+    if GALLERY.exists() and GALLERY.read_text(encoding="utf-8") == page:
         return False
-    GALLERY.write_text(page)
+    GALLERY.write_text(page, encoding="utf-8", newline="\n")
     return True
 
 
@@ -423,9 +432,9 @@ def gallery_html() -> str:
     specs = []
     for fd in discover():
         if fd.spec_path.exists():
-            s = json.loads(fd.spec_path.read_text())
+            s = json.loads(fd.spec_path.read_text(encoding="utf-8"))
             if s.get("kind") == "html":
-                s["html"] = (fd.path / "figure.html").read_text()
+                s["html"] = (fd.path / "figure.html").read_text(encoding="utf-8")
             specs.append(s)
     order = {s["id"]: i for i, s in enumerate(cfg["sections"])}
     specs.sort(key=lambda s: (order.get(s["section"], len(order)), s.get("order", 100), s["id"]))
@@ -449,16 +458,17 @@ def gallery_html() -> str:
     font_b64 = base64.b64encode(FONT.read_bytes()).decode()
     payload = {"theme": theme.as_json(), "figures": specs, "font": font_b64}
     data = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
-    echarts_js = ECHARTS.read_text()
-    js = (KIT / "page" / "gallery.js").read_text()
-    for name, src in (("echarts", echarts_js), ("gallery.js", js)):
+    echarts_js = ECHARTS.read_text(encoding="utf-8")
+    gifenc_js = GIFENC.read_text(encoding="utf-8")
+    js = (KIT / "page" / "gallery.js").read_text(encoding="utf-8")
+    for name, src in (("echarts", echarts_js), ("gifenc", gifenc_js), ("gallery.js", js)):
         if "</script" in src.lower():
             raise BuildError(f"{name} contains </script>, can't inline it")
     snapshots = sum(1 for s in specs if s["kind"] == "snapshot")
     stats = f"{len(specs)} figures" + (f" · {snapshots} snapshots" if snapshots else "")
-    vals = {"FONT": font_b64, "VARS": css_vars(), "CSS": (KIT / "page" / "gallery.css").read_text(),
+    vals = {"FONT": font_b64, "VARS": css_vars(), "CSS": (KIT / "page" / "gallery.css").read_text(encoding="utf-8"),
             "NAV": "".join(nav), "SECTIONS": "".join(sections_html), "STATS": _e(stats),
-            "ECHARTS": echarts_js, "DATA": data, "JS": js}
-    template = (KIT / "page" / "template.html").read_text()
+            "ECHARTS": echarts_js, "GIFENC": gifenc_js, "DATA": data, "JS": js}
+    template = (KIT / "page" / "template.html").read_text(encoding="utf-8")
     # One pass over the template, so text inside a value is never treated as a placeholder.
     return re.sub(r"\{\{([A-Z]+)\}\}", lambda m: vals[m.group(1)], template)

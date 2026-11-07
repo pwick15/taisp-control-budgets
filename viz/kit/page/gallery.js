@@ -150,7 +150,23 @@
     var o = {};
     for (var k in f.option) o[k] = f.option[k];
     if (f.dial && f.dial.frames) { var fr = f.dial.frames[step] || {}; for (var j in fr) o[j] = fr[j]; }
-    return resolve(o, m);
+    o = resolve(o, m);
+    if (o.graphic) o.graphic = graphicFont(o.graphic);
+    return o;
+  }
+  // Graphic text doesn't inherit the theme's textStyle, so give it the theme font here (figures may not set fonts).
+  function graphicFont(g) {
+    if (Array.isArray(g)) return g.map(graphicFont);
+    if (!g || typeof g !== 'object') return g;
+    var c = {};
+    for (var k in g) c[k] = g[k];
+    if (c.type === 'text') {
+      c.style = Object.assign({}, c.style);
+      if (!c.style.fontFamily && !c.style.font) c.style.fontFamily = FONT;
+    }
+    if (c.children) c.children = graphicFont(c.children);
+    if (c.elements) c.elements = graphicFont(c.elements);
+    return c;
   }
   function mount(el) {
     var f = FIGS[el.dataset.id];
@@ -170,10 +186,26 @@
     });
     live[f.id] = { inst: null, el: el, html: true };
   }
+  // A dial figure "glides" when every series in its frames has an id (A05 does): then swapping only the
+  // keys the dial changes lets each dot or bar move to its new place. Any other dial figure redraws
+  // from scratch, as before, because a series without an id would re-run its entry animation.
+  function dialKeys(f) {
+    var keys = {};
+    ((f.dial && f.dial.frames) || []).forEach(function (fr) { for (var k in fr) keys[k] = true; });
+    return Object.keys(keys);
+  }
+  function glides(f) {
+    var frames = (f.dial && f.dial.frames) || [], any = false;
+    var ok = frames.every(function (fr) {
+      return (fr.series || []).every(function (s) { any = true; return s.id != null; });
+    });
+    return ok && any;
+  }
   function repaint(id) {
     var f = FIGS[id], L = live[id];
     if (!L || L.html) return;
-    L.inst.setOption(optionFor(f, stepOf(f), mode()), true);
+    if (glides(f)) L.inst.setOption(optionFor(f, stepOf(f), mode()), { replaceMerge: dialKeys(f) });
+    else L.inst.setOption(optionFor(f, stepOf(f), mode()), true);
   }
   function remountAll() { Object.keys(live).forEach(function (id) { mount(live[id].el); }); }
 
@@ -223,6 +255,80 @@
     var dial = f.dial ? '-' + String(f.dial.steps[step]).replace(/[^A-Za-z0-9.]+/g, '') : '';
     return slug + dial + (m ? '-dark' : '');
   }
+  // ---------------------------------------------------------------- GIF export
+
+  // A GIF steps through every dial position and back to the start, holding each one. For a figure that
+  // glides (see glides()), it also records the movement between positions; others cut straight across.
+  var GIF_HOLD = 1600, GIF_TWEEN = 750, GIF_TICK = 50, GIF_RATIO = 1;
+  function sleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+  function gifFrames(f, m) {
+    var n = f.dial ? f.dial.steps.length : 1;
+    var div = document.createElement('div');
+    div.style.cssText = 'position:fixed;left:-30000px;top:0;width:' + EXPORT_W + 'px;height:' + f.height + 'px;';
+    document.body.appendChild(div);
+    var inst = echarts.init(div, m ? 'viz-dark' : 'viz-light',
+      { renderer: 'canvas', width: EXPORT_W, height: f.height, devicePixelRatio: GIF_RATIO });
+    var bg = tokenValue('@ink-surface', m), keys = dialKeys(f), tween = glides(f), frames = [];
+    function opt(step, animate) {
+      var o = optionFor(f, step, m);
+      o.backgroundColor = bg;
+      o.animation = animate;
+      o.animationDurationUpdate = GIF_TWEEN;
+      o.animationEasingUpdate = o.animationEasingUpdate || 'cubicOut';
+      return o;
+    }
+    function grab(delay) {
+      var c = inst.getRenderedCanvas({ pixelRatio: GIF_RATIO, backgroundColor: bg });
+      frames.push({ data: c.getContext('2d').getImageData(0, 0, c.width, c.height).data, w: c.width, h: c.height, delay: delay });
+    }
+    var chain = Promise.resolve().then(function () { inst.setOption(opt(0, false), true); grab(GIF_HOLD); });
+    for (var i = 1; i <= n; i++) {
+      (function (step, last) {
+        chain = chain.then(function () {
+          if (!tween) return;
+          inst.setOption(opt(step, true), { replaceMerge: keys });
+          var t0 = performance.now();
+          function tick() {
+            return sleep(GIF_TICK).then(function () {
+              if (performance.now() - t0 >= GIF_TWEEN) return;
+              grab(GIF_TICK);
+              return tick();
+            });
+          }
+          return tick();
+        }).then(function () {
+          if (last) return;   // back at the start: the loop's first frame is the hold
+          inst.setOption(opt(step, false), true);   // land exactly on the dial position
+          grab(GIF_HOLD);
+        });
+      })(i % n, i === n);
+    }
+    return chain.then(function () { return frames; }, function (e) { throw e; })
+      .finally(function () { inst.dispose(); div.remove(); });
+  }
+  function same(a, b) {
+    if (a.length !== b.length) return false;
+    for (var i = 0; i < a.length; i += 4) { if (a[i] !== b[i] || a[i + 1] !== b[i + 1] || a[i + 2] !== b[i + 2]) return false; }
+    return true;
+  }
+  function encodeGif(frames) {
+    // A chart whose series don't glide repeats the same picture during a transition: fold repeats into one frame.
+    var kept = [];
+    frames.forEach(function (fr) {
+      var prev = kept[kept.length - 1];
+      if (prev && same(prev.data, fr.data)) prev.delay += fr.delay;
+      else kept.push({ data: fr.data, w: fr.w, h: fr.h, delay: fr.delay });
+    });
+    var g = gifenc.GIFEncoder();
+    kept.forEach(function (fr) {
+      var palette = gifenc.quantize(fr.data, 256);
+      g.writeFrame(gifenc.applyPalette(fr.data, palette), fr.w, fr.h, { palette: palette, delay: fr.delay, repeat: 0 });
+    });
+    g.finish();
+    return new Blob([g.bytes()], { type: 'image/gif' });
+  }
+  function gifBlob(f, m) { return gifFrames(f, m).then(encodeGif); }
+
   function act(id, what) {
     var f = FIGS[id], m = mode(), s = stepOf(f), base = fileName(f, s, m);
     if (what === 'copy') {
@@ -235,6 +341,12 @@
       dataURLBlob(pngURL(f, s, m)).then(function (b) { save(b, base + '.png'); });
     } else if (what === 'svg') {
       save(new Blob([svgText(f, s, m)], { type: 'image/svg+xml' }), base + '.svg');
+    } else if (what === 'gif') {
+      if (!f.dial) { toast(id + ' has no dial to animate'); return; }
+      toast('Recording ' + id + ' as a GIF…');
+      var gifName = ((f.path || '').split('/').pop() || f.id) + (m ? '-dark' : '') + '.gif';
+      gifBlob(f, m).then(function (b) { save(b, gifName); toast('Saved ' + id + ' as a GIF'); },
+        function (e) { toast('GIF failed: ' + (e && e.message ? e.message : e)); console.error(e); });
     } else if (what === 'csv') {
       save(new Blob([csv(f.data)], { type: 'text/csv' }), (f.path || id).split('/').pop() + '.csv');
     }
@@ -312,7 +424,18 @@
     });
     return out;
   }
-  window.__viz = { ready: false, checkAll: checkAll, setTheme: function (t) { pref = t; applyPref(); remountAll(); } };
+  // GIF export for the check: resolves to {bytes, frames, w, h}.
+  function checkGif(id, dark) {
+    var f = FIGS[id];
+    return gifFrames(f, dark ? 1 : 0).then(function (fr) {
+      return encodeGif(fr).arrayBuffer().then(function (buf) {
+        var u = new Uint8Array(buf), s = '';
+        for (var i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000));
+        return { gif: btoa(s), frames: fr.length, w: fr[0].w, h: fr[0].h };
+      });
+    });
+  }
+  window.__viz = { ready: false, checkAll: checkAll, checkGif: checkGif, setTheme: function (t) { pref = t; applyPref(); remountAll(); } };
 
   // ---------------------------------------------------------------- page wiring
 

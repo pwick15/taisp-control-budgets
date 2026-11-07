@@ -1,0 +1,601 @@
+{
+ "id": "A06",
+ "kind": "echarts",
+ "title": "More reasoning catches more backdoors without raising false alarms",
+ "section": "results",
+ "order": 35,
+ "caption": "Top: backdoors caught at a 2% audit budget at each reasoning setting, with 95% intervals. Bottom: share of the 500 clean programs the same monitors score 5/10 or higher. Detection rises by up to 22 points while false alarms stay near zero.",
+ "notes": [],
+ "height": 560,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/A06-effort-without-false-alarms",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": [
+   {
+    "left": 64,
+    "right": 110,
+    "top": 16,
+    "height": "50%"
+   },
+   {
+    "left": 64,
+    "right": 110,
+    "bottom": 52,
+    "height": "24%"
+   }
+  ],
+  "xAxis": [
+   {
+    "type": "category",
+    "boundaryGap": false,
+    "data": [
+     "off",
+     "low",
+     "medium",
+     "high",
+     "xhigh"
+    ],
+    "axisLabel": {
+     "show": false
+    }
+   },
+   {
+    "name": "Reasoning effort setting",
+    "nameLocation": "middle",
+    "nameGap": 34,
+    "gridIndex": 1,
+    "type": "category",
+    "boundaryGap": false,
+    "data": [
+     "off",
+     "low",
+     "medium",
+     "high",
+     "xhigh"
+    ]
+   }
+  ],
+  "yAxis": [
+   {
+    "name": "Backdoors caught",
+    "nameLocation": "middle",
+    "nameGap": 46,
+    "type": "value",
+    "min": 0,
+    "max": 100,
+    "axisLabel": {
+     "formatter": "{value}%"
+    }
+   },
+   {
+    "name": "Clean flagged",
+    "nameLocation": "middle",
+    "nameGap": 46,
+    "type": "value",
+    "gridIndex": 1,
+    "min": 0,
+    "max": 5,
+    "interval": 2.5,
+    "axisLabel": {
+     "formatter": "{value}%"
+    }
+   }
+  ],
+  "series": [
+   {
+    "id": "top:luna",
+    "name": "GPT-6 Luna",
+    "type": "line",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "data": [
+     {
+      "value": 39.42,
+      "tip": "<b>GPT-6 Luna · off</b><br>caught 39.4% (35.3 to 43.8)"
+     },
+     {
+      "value": 49.91,
+      "tip": "<b>GPT-6 Luna · low</b><br>caught 49.9% (43.4 to 54.1)"
+     },
+     {
+      "value": 54.97,
+      "tip": "<b>GPT-6 Luna · medium (default)</b><br>caught 55.0% (50.2 to 59.3)"
+     },
+     {
+      "value": 57.74,
+      "tip": "<b>GPT-6 Luna · high</b><br>caught 57.7% (53.0 to 62.2)"
+     },
+     {
+      "value": 60.96,
+      "tip": "<b>GPT-6 Luna · xhigh</b><br>caught 61.0% (55.1 to 65.2)"
+     }
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s6",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s6",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "id": "topci:luna",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "itemStyle": {
+     "color": "@s6"
+    },
+    "data": [
+     [
+      0,
+      35.26,
+      43.8
+     ],
+     [
+      1,
+      43.36,
+      54.09
+     ],
+     [
+      2,
+      50.21,
+      59.33
+     ],
+     [
+      3,
+      52.97,
+      62.19
+     ],
+     [
+      4,
+      55.07,
+      65.16
+     ]
+    ],
+    "silent": true,
+    "tooltip": {
+     "show": false
+    },
+    "z": 2
+   },
+   {
+    "id": "bot:luna",
+    "name": "GPT-6 Luna",
+    "type": "line",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "data": [
+     {
+      "value": 0.2,
+      "tip": "<b>GPT-6 Luna · off</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>GPT-6 Luna · low</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>GPT-6 Luna · medium (default)</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>GPT-6 Luna · high</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>GPT-6 Luna · xhigh</b><br>2 of 500 clean programs scored 5/10 or more"
+     }
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s6",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s6",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": false,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "id": "botci:luna",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "itemStyle": {
+     "color": "@s6"
+    },
+    "data": [
+     [
+      0,
+      0.04,
+      1.12
+     ],
+     [
+      1,
+      0.11,
+      1.45
+     ],
+     [
+      2,
+      0.04,
+      1.12
+     ],
+     [
+      3,
+      0.04,
+      1.12
+     ],
+     [
+      4,
+      0.11,
+      1.45
+     ]
+    ],
+    "silent": true,
+    "tooltip": {
+     "show": false
+    },
+    "z": 2
+   },
+   {
+    "id": "top:qwen38",
+    "name": "Qwen 3.8",
+    "type": "line",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "data": [
+     {
+      "value": 51.3,
+      "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>caught 51.3% (39.5 to 55.3)"
+     },
+     null,
+     {
+      "value": 62.6,
+      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>caught 62.6% (51.6 to 66.4)"
+     },
+     {
+      "value": 66.84,
+      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>caught 66.8% (60.4 to 73.8)"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s4",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s4",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "id": "topci:qwen38",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "itemStyle": {
+     "color": "@s4"
+    },
+    "data": [
+     [
+      0,
+      39.5,
+      55.27
+     ],
+     [
+      2,
+      51.59,
+      66.4
+     ],
+     [
+      3,
+      60.45,
+      73.76
+     ]
+    ],
+    "silent": true,
+    "tooltip": {
+     "show": false
+    },
+    "z": 2
+   },
+   {
+    "id": "bot:qwen38",
+    "name": "Qwen 3.8",
+    "type": "line",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "data": [
+     {
+      "value": 0.8,
+      "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>4 of 500 clean programs scored 5/10 or more"
+     },
+     null,
+     {
+      "value": 0.6,
+      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>3 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.6,
+      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>3 of 500 clean programs scored 5/10 or more"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s4",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s4",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": false,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "id": "botci:qwen38",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "itemStyle": {
+     "color": "@s4"
+    },
+    "data": [
+     [
+      0,
+      0.31,
+      2.04
+     ],
+     [
+      2,
+      0.2,
+      1.75
+     ],
+     [
+      3,
+      0.2,
+      1.75
+     ]
+    ],
+    "silent": true,
+    "tooltip": {
+     "show": false
+    },
+    "z": 2
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "model",
+   "effort",
+   "run",
+   "caught_at_2pct",
+   "clean_flagged_5of10",
+   "n_clean"
+  ],
+  "rows": [
+   [
+    "GPT-6 Luna",
+    "off",
+    "dataset-luna-none-tm-n500-strip",
+    0.394182,
+    1,
+    500
+   ],
+   [
+    "GPT-6 Luna",
+    "low",
+    "dataset-luna-low-tm-n500-strip",
+    0.499067,
+    2,
+    500
+   ],
+   [
+    "GPT-6 Luna",
+    "medium",
+    "dataset-gpt6luna-tm-n500-strip",
+    0.549676,
+    1,
+    500
+   ],
+   [
+    "GPT-6 Luna",
+    "high",
+    "dataset-luna-high-tm-n500-strip",
+    0.577449,
+    1,
+    500
+   ],
+   [
+    "GPT-6 Luna",
+    "xhigh",
+    "dataset-luna-xhigh-tm-n500-strip",
+    0.609593,
+    2,
+    500
+   ],
+   [
+    "Qwen 3.8",
+    "off",
+    "dataset-qwen38omniflash-none-tm-n500-strip",
+    0.512994,
+    4,
+    500
+   ],
+   [
+    "Qwen 3.8",
+    "medium",
+    "dataset500-qwen38omniflash-medium-tm-strip",
+    0.626,
+    3,
+    500
+   ],
+   [
+    "Qwen 3.8",
+    "high",
+    "dataset500-qwen38omniflash-high-tm-strip",
+    0.6684,
+    3,
+    500
+   ]
+  ]
+ },
+ "facts": {
+  "n_clean": 500,
+  "max_gain": 21.5412
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-high-tm-n500-strip.csv": "sha256:a60a51b2415ba673",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-low-tm-n500-strip.csv": "sha256:df0483e4077defa8",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-medium-tm-n500-strip.csv": "sha256:0e66fe6412044d6a",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip.csv": "sha256:1464354acd0c1eac",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-27b-tm-n500-strip.csv": "sha256:0fd529c0321e2b40",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma3-4b-tm-n500-strip.csv": "sha256:f61740693798daf0",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-efforthigh-tm-n500-strip.csv": "sha256:91ad04f265a32df6",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortlow-tm-n500-strip.csv": "sha256:887b7a9f8b6458c6",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-glm53-tm-n500-strip.csv": "sha256:21940d7538a860fd",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gpt6luna-tm-n500-strip.csv": "sha256:1bd4150a8317991e",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-high-tm-n500-strip.csv": "sha256:7d6358205499e8b5",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-low-tm-n500-strip.csv": "sha256:ab21d9005876f67f",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-gptoss120b-tm-n500-strip.csv": "sha256:27efb0e60c3a48b1",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku45-tm-n500-strip.csv": "sha256:db19f2e66f02248c",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip.csv": "sha256:812be9bae5ee289f",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortlow-tm-n500-strip.csv": "sha256:217621bd62368260",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip.csv": "sha256:1127f06477e2ab86",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-haiku55-tm-n500-strip.csv": "sha256:90128b48d21d6a52",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-high-tm-n500-strip.csv": "sha256:3edcfe1c36eebf3a",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-low-tm-n500-strip.csv": "sha256:768010c0dd6b9807",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-none-tm-n500-strip.csv": "sha256:c7db9cea6a75df52",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-luna-xhigh-tm-n500-strip.csv": "sha256:46e806313783bfdc",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-mistrallarge4-tm-n500-strip.csv": "sha256:b0a3877f4030fbf0",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip.csv": "sha256:af2ef7e80df20ec1",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:c3616d9920823db0",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-high-tm-strip.csv": "sha256:a976a26754d7d62f",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
+   "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
+  },
+  "code": "sha256:0fa99cf61ee2f319",
+  "spec": "sha256:6ded6c931e951f61"
+ }
+}

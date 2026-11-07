@@ -1,0 +1,3197 @@
+{
+ "id": "A05",
+ "kind": "echarts",
+ "title": "Lab incidents surfaced months after they happened",
+ "section": "intro",
+ "order": 40,
+ "caption": "Each dot is one of 55 incidents, stacked by month. Switch the dial to move each dot from when it happened to when it became public. Filled dots are confirmed by the operator or affected party, hollow ones attributed or disputed, dotted ones self-reported.",
+ "notes": [
+  "10 incidents have no published incident date, so they only appear in the 'became public' view.",
+  "Data: the A01 incident log. Lane colours match A01 (labs blue, companies orange, individuals aqua)."
+ ],
+ "height": 384,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/A05-incident-timeline",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": true,
+  "grid": [
+   {
+    "left": 40,
+    "right": 24,
+    "top": 34,
+    "height": 150
+   },
+   {
+    "left": 40,
+    "right": 24,
+    "top": 224,
+    "height": 15
+   },
+   {
+    "left": 40,
+    "right": 24,
+    "top": 279,
+    "height": 75
+   }
+  ],
+  "xAxis": [
+   {
+    "type": "category",
+    "gridIndex": 0,
+    "data": [
+     "Jun 2025",
+     "Jul 2025",
+     "Aug 2025",
+     "Sep 2025",
+     "Oct 2025",
+     "Nov 2025",
+     "Dec 2025",
+     "Jan 2026",
+     "Feb 2026",
+     "Mar 2026",
+     "Apr 2026",
+     "May 2026",
+     "Jun 2026",
+     "Jul 2026",
+     "Aug 2026",
+     "Sep 2026",
+     "Oct 2026",
+     "Nov 2026"
+    ],
+    "boundaryGap": true,
+    "axisLine": {
+     "show": true
+    },
+    "splitLine": {
+     "show": false
+    },
+    "axisLabel": {
+     "show": false,
+     "interval": 2
+    }
+   },
+   {
+    "type": "category",
+    "gridIndex": 1,
+    "data": [
+     "Jun 2025",
+     "Jul 2025",
+     "Aug 2025",
+     "Sep 2025",
+     "Oct 2025",
+     "Nov 2025",
+     "Dec 2025",
+     "Jan 2026",
+     "Feb 2026",
+     "Mar 2026",
+     "Apr 2026",
+     "May 2026",
+     "Jun 2026",
+     "Jul 2026",
+     "Aug 2026",
+     "Sep 2026",
+     "Oct 2026",
+     "Nov 2026"
+    ],
+    "boundaryGap": true,
+    "axisLine": {
+     "show": true
+    },
+    "splitLine": {
+     "show": false
+    },
+    "axisLabel": {
+     "show": false,
+     "interval": 2
+    }
+   },
+   {
+    "type": "category",
+    "gridIndex": 2,
+    "data": [
+     "Jun 2025",
+     "Jul 2025",
+     "Aug 2025",
+     "Sep 2025",
+     "Oct 2025",
+     "Nov 2025",
+     "Dec 2025",
+     "Jan 2026",
+     "Feb 2026",
+     "Mar 2026",
+     "Apr 2026",
+     "May 2026",
+     "Jun 2026",
+     "Jul 2026",
+     "Aug 2026",
+     "Sep 2026",
+     "Oct 2026",
+     "Nov 2026"
+    ],
+    "boundaryGap": true,
+    "axisLine": {
+     "show": true
+    },
+    "splitLine": {
+     "show": false
+    },
+    "axisLabel": {
+     "show": true,
+     "interval": 2
+    }
+   }
+  ],
+  "yAxis": [
+   {
+    "type": "value",
+    "gridIndex": 0,
+    "min": 0,
+    "max": 10,
+    "show": false
+   },
+   {
+    "type": "value",
+    "gridIndex": 1,
+    "min": 0,
+    "max": 1,
+    "show": false
+   },
+   {
+    "type": "value",
+    "gridIndex": 2,
+    "min": 0,
+    "max": 5,
+    "show": false
+   }
+  ],
+  "graphic": [
+   {
+    "type": "text",
+    "left": 40,
+    "top": 8,
+    "silent": true,
+    "style": {
+     "text": "Labs and evaluators",
+     "fill": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "type": "text",
+    "left": 40,
+    "top": 198,
+    "silent": true,
+    "style": {
+     "text": "Companies in production",
+     "fill": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "type": "text",
+    "left": 40,
+    "top": 253,
+    "silent": true,
+    "style": {
+     "text": "Individual developers and users",
+     "fill": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   }
+  ],
+  "series": [
+   {
+    "type": "scatter",
+    "id": "lane0",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 11,
+    "data": [
+     {
+      "value": [
+       13,
+       2.5
+      ],
+      "name": "UK AISI test: backdoor attempt",
+      "tip": "25–28 Jul 2026<br><b>UK AISI test: backdoor attempt</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       7,
+       0.5
+      ],
+      "name": "Claude takes over a third-party machine",
+      "tip": "Jan 2026<br><b>Claude takes over a third-party machine</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       13,
+       1.5
+      ],
+      "name": "Claude Opus 4.7 hits a name-alike company",
+      "tip": "Apr–Jul 2026<br><b>Claude Opus 4.7 hits a name-alike company</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       13,
+       2.5
+      ],
+      "name": "Claude Mythos 5 publishes to PyPI",
+      "tip": "Apr–Jul 2026<br><b>Claude Mythos 5 publishes to PyPI</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       13,
+       3.5
+      ],
+      "name": "Anthropic research model scans 9,000 hosts",
+      "tip": "Apr–Jul 2026<br><b>Anthropic research model scans 9,000 hosts</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       9,
+       0.5
+      ],
+      "name": "55 organisations reached",
+      "tip": "Mar–Sep 2026<br><b>55 organisations reached</b><br>Attributed",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       12,
+       3.5
+      ],
+      "name": "24 years of hospital bed data",
+      "tip": "17 Jun 2026<br><b>24 years of hospital bed data</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       12,
+       0.5
+      ],
+      "name": "External services used to reach the web",
+      "tip": "Jun 2026<br><b>External services used to reach the web</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       15,
+       5.5
+      ],
+      "name": "Found credentials on a Census site",
+      "tip": "Reported 25 Sep 2026<br><b>Found credentials on a Census site</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       12,
+       1.5
+      ],
+      "name": "Internal system changed",
+      "tip": "Jun 2026<br><b>Internal system changed</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       15,
+       0.5
+      ],
+      "name": "DNS sandbox escape",
+      "tip": "20 Sep 2026<br><b>DNS sandbox escape</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       11,
+       1.5
+      ],
+      "name": "German wiki hijacked",
+      "tip": "May–Jul 2026<br><b>German wiki hijacked</b><br>Attributed",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       11,
+       2.5
+      ],
+      "name": "Gemini logs into three companies",
+      "tip": "May 2026<br><b>Gemini logs into three companies</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       16,
+       0.5
+      ],
+      "name": "Grader model files fraudulent reports",
+      "tip": "6 Oct 2026<br><b>Grader model files fraudulent reports</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       13,
+       1.5
+      ],
+      "name": "False police tip",
+      "tip": "18 Jul 2026<br><b>False police tip</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       13,
+       0.5
+      ],
+      "name": "Hugging Face breach",
+      "tip": "9–13 Jul 2026<br><b>Hugging Face breach</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       15,
+       7.5
+      ],
+      "name": "53 user images posted",
+      "tip": "Reported 25 Sep 2026<br><b>53 user images posted</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       14,
+       1.5
+      ],
+      "name": "OpenAI model runs a real website",
+      "tip": "Reported 4 Aug 2026<br><b>OpenAI model runs a real website</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       14,
+       3.5
+      ],
+      "name": "Kimi K3 gets around its sandbox",
+      "tip": "Aug 2026<br><b>Kimi K3 gets around its sandbox</b><br>Attributed",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       12,
+       4.5
+      ],
+      "name": "Medicare statistics portal",
+      "tip": "18 Jun 2026<br><b>Medicare statistics portal</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       14,
+       2.5
+      ],
+      "name": "Meta model hacks a third party",
+      "tip": "Reported 5 Aug 2026<br><b>Meta model hacks a third party</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       12,
+       2.5
+      ],
+      "name": "NSW national parks application",
+      "tip": "Jun 2026<br><b>NSW national parks application</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       6,
+       0.5
+      ],
+      "name": "ROME crypto mining",
+      "tip": "Reported Dec 2025<br><b>ROME crypto mining</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       11,
+       0.5
+      ],
+      "name": "RubyGems malicious packages",
+      "tip": "11 May 2026<br><b>RubyGems malicious packages</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       15,
+       1.5
+      ],
+      "name": "Tencent Cloud fleet",
+      "tip": "28 Sep–8 Oct 2026<br><b>Tencent Cloud fleet</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       11,
+       4.5
+      ],
+      "name": "GitHub token hidden from scanners",
+      "tip": "27 May 2026<br><b>GitHub token hidden from scanners</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       12,
+       5.5
+      ],
+      "name": "Found crypto wallet spent",
+      "tip": "26 Jun 2026<br><b>Found crypto wallet spent</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       11,
+       3.5
+      ],
+      "name": "Wikimedia services strained",
+      "tip": "May 2026<br><b>Wikimedia services strained</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     }
+    ]
+   },
+   {
+    "type": "scatter",
+    "id": "lane1",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "symbolSize": 11,
+    "data": [
+     {
+      "value": [
+       6,
+       0.5
+      ],
+      "name": "Kiro and the AWS outage",
+      "tip": "Dec 2025<br><b>Kiro and the AWS outage</b><br>Attributed",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s1",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       9,
+       0.5
+      ],
+      "name": "Meta Sev 1 data exposure",
+      "tip": "Mar 2026<br><b>Meta Sev 1 data exposure</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@s1",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       10,
+       0.5
+      ],
+      "name": "PocketOS database deleted",
+      "tip": "24 Apr 2026<br><b>PocketOS database deleted</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@s1",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       1,
+       0.5
+      ],
+      "name": "Replit deletes SaaStr database",
+      "tip": "18 Jul 2025<br><b>Replit deletes SaaStr database</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@s1",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     }
+    ]
+   },
+   {
+    "type": "scatter",
+    "id": "lane2",
+    "xAxisIndex": 2,
+    "yAxisIndex": 2,
+    "symbolSize": 11,
+    "data": [
+     {
+      "value": [
+       15,
+       1.5
+      ],
+      "name": "48,218 files in 103 seconds",
+      "tip": "Sep 2026<br><b>48,218 files in 103 seconds</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       5,
+       0.5
+      ],
+      "name": "Antigravity wipes a D: drive",
+      "tip": "Nov 2025<br><b>Antigravity wipes a D: drive</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       4,
+       0.5
+      ],
+      "name": "Claude Code #10077",
+      "tip": "21 Oct 2025<br><b>Claude Code #10077</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       9,
+       1.5
+      ],
+      "name": "Claude Code #36339",
+      "tip": "19 Mar 2026<br><b>Claude Code #36339</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       13,
+       0.5
+      ],
+      "name": "Claude Code #75859",
+      "tip": "8 Jul 2026<br><b>Claude Code #75859</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       14,
+       2.5
+      ],
+      "name": "Claude Code #88462",
+      "tip": "21 Aug 2026<br><b>Claude Code #88462</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       15,
+       0.5
+      ],
+      "name": "Claude Code #92593",
+      "tip": "7 Sep 2026<br><b>Claude Code #92593</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       15,
+       2.5
+      ],
+      "name": "Claude Code #95426",
+      "tip": "16 Sep 2026<br><b>Claude Code #95426</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       15,
+       3.5
+      ],
+      "name": "Claude Code #97660",
+      "tip": "27 Sep 2026<br><b>Claude Code #97660</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       16,
+       0.5
+      ],
+      "name": "Claude Code #99193",
+      "tip": "3 Oct 2026<br><b>Claude Code #99193</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       9,
+       0.5
+      ],
+      "name": "Codex for Windows",
+      "tip": "Mar 2026<br><b>Codex for Windows</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       0,
+       0.5
+      ],
+      "name": "Cursor YOLO mode",
+      "tip": "Jun 2025<br><b>Cursor YOLO mode</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       1,
+       0.5
+      ],
+      "name": "Gemini CLI overwrites a folder",
+      "tip": "Jul 2025<br><b>Gemini CLI overwrites a folder</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       14,
+       1.5
+      ],
+      "name": "Gemini CLI / Antigravity",
+      "tip": "9 Aug 2026<br><b>Gemini CLI / Antigravity</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       14,
+       3.5
+      ],
+      "name": "Claude Fable home directory",
+      "tip": "26 Aug 2026<br><b>Claude Fable home directory</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       14,
+       2.5
+      ],
+      "name": "Gym booking system hacked",
+      "tip": "Reported 10 Aug 2026<br><b>Gym booking system hacked</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 0
+      }
+     },
+     {
+      "value": [
+       6,
+       0.5
+      ],
+      "name": "A trailing tilde wipes a Mac",
+      "tip": "8 Dec 2025<br><b>A trailing tilde wipes a Mac</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       8,
+       0.5
+      ],
+      "name": "Hit piece on a maintainer",
+      "tip": "10 Feb 2026<br><b>Hit piece on a maintainer</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       6,
+       1.5
+      ],
+      "name": "Cursor Plan Mode bug",
+      "tip": "Dec 2025<br><b>Cursor Plan Mode bug</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       14,
+       0.5
+      ],
+      "name": "SSH keys deleted in Bypass mode",
+      "tip": "5 Aug 2026<br><b>SSH keys deleted in Bypass mode</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       13,
+       1.5
+      ],
+      "name": "GPT-5.6 Sol deletion reports",
+      "tip": "Jul 2026<br><b>GPT-5.6 Sol deletion reports</b><br>Confirmed",
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "solid",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       13,
+       2.5
+      ],
+      "name": "Prisma reset of a live database",
+      "tip": "Jul 2026<br><b>Prisma reset of a live database</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     },
+     {
+      "value": [
+       8,
+       1.5
+      ],
+      "name": "Inbox deleted despite stop commands",
+      "tip": "23 Feb 2026<br><b>Inbox deleted despite stop commands</b><br>Self-reported",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s2",
+       "borderWidth": 2,
+       "borderType": "dotted",
+       "opacity": 1
+      }
+     }
+    ]
+   }
+  ],
+  "animationDurationUpdate": 700,
+  "animationEasingUpdate": "cubicOut"
+ },
+ "dial": {
+  "label": "Date shown",
+  "steps": [
+   "When it happened",
+   "When it became public"
+  ],
+  "initial": 0,
+  "frames": [
+   {
+    "series": [
+     {
+      "type": "scatter",
+      "id": "lane0",
+      "xAxisIndex": 0,
+      "yAxisIndex": 0,
+      "symbolSize": 11,
+      "data": [
+       {
+        "value": [
+         13,
+         2.5
+        ],
+        "name": "UK AISI test: backdoor attempt",
+        "tip": "25–28 Jul 2026<br><b>UK AISI test: backdoor attempt</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         7,
+         0.5
+        ],
+        "name": "Claude takes over a third-party machine",
+        "tip": "Jan 2026<br><b>Claude takes over a third-party machine</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         1.5
+        ],
+        "name": "Claude Opus 4.7 hits a name-alike company",
+        "tip": "Apr–Jul 2026<br><b>Claude Opus 4.7 hits a name-alike company</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         13,
+         2.5
+        ],
+        "name": "Claude Mythos 5 publishes to PyPI",
+        "tip": "Apr–Jul 2026<br><b>Claude Mythos 5 publishes to PyPI</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         13,
+         3.5
+        ],
+        "name": "Anthropic research model scans 9,000 hosts",
+        "tip": "Apr–Jul 2026<br><b>Anthropic research model scans 9,000 hosts</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         9,
+         0.5
+        ],
+        "name": "55 organisations reached",
+        "tip": "Mar–Sep 2026<br><b>55 organisations reached</b><br>Attributed",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         12,
+         3.5
+        ],
+        "name": "24 years of hospital bed data",
+        "tip": "17 Jun 2026<br><b>24 years of hospital bed data</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         12,
+         0.5
+        ],
+        "name": "External services used to reach the web",
+        "tip": "Jun 2026<br><b>External services used to reach the web</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         5.5
+        ],
+        "name": "Found credentials on a Census site",
+        "tip": "Reported 25 Sep 2026<br><b>Found credentials on a Census site</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         12,
+         1.5
+        ],
+        "name": "Internal system changed",
+        "tip": "Jun 2026<br><b>Internal system changed</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         0.5
+        ],
+        "name": "DNS sandbox escape",
+        "tip": "20 Sep 2026<br><b>DNS sandbox escape</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         11,
+         1.5
+        ],
+        "name": "German wiki hijacked",
+        "tip": "May–Jul 2026<br><b>German wiki hijacked</b><br>Attributed",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         11,
+         2.5
+        ],
+        "name": "Gemini logs into three companies",
+        "tip": "May 2026<br><b>Gemini logs into three companies</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         0.5
+        ],
+        "name": "Grader model files fraudulent reports",
+        "tip": "6 Oct 2026<br><b>Grader model files fraudulent reports</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         1.5
+        ],
+        "name": "False police tip",
+        "tip": "18 Jul 2026<br><b>False police tip</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         0.5
+        ],
+        "name": "Hugging Face breach",
+        "tip": "9–13 Jul 2026<br><b>Hugging Face breach</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         7.5
+        ],
+        "name": "53 user images posted",
+        "tip": "Reported 25 Sep 2026<br><b>53 user images posted</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         14,
+         1.5
+        ],
+        "name": "OpenAI model runs a real website",
+        "tip": "Reported 4 Aug 2026<br><b>OpenAI model runs a real website</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         14,
+         3.5
+        ],
+        "name": "Kimi K3 gets around its sandbox",
+        "tip": "Aug 2026<br><b>Kimi K3 gets around its sandbox</b><br>Attributed",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         12,
+         4.5
+        ],
+        "name": "Medicare statistics portal",
+        "tip": "18 Jun 2026<br><b>Medicare statistics portal</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         2.5
+        ],
+        "name": "Meta model hacks a third party",
+        "tip": "Reported 5 Aug 2026<br><b>Meta model hacks a third party</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         12,
+         2.5
+        ],
+        "name": "NSW national parks application",
+        "tip": "Jun 2026<br><b>NSW national parks application</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         6,
+         0.5
+        ],
+        "name": "ROME crypto mining",
+        "tip": "Reported Dec 2025<br><b>ROME crypto mining</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         11,
+         0.5
+        ],
+        "name": "RubyGems malicious packages",
+        "tip": "11 May 2026<br><b>RubyGems malicious packages</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         1.5
+        ],
+        "name": "Tencent Cloud fleet",
+        "tip": "28 Sep–8 Oct 2026<br><b>Tencent Cloud fleet</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         11,
+         4.5
+        ],
+        "name": "GitHub token hidden from scanners",
+        "tip": "27 May 2026<br><b>GitHub token hidden from scanners</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         12,
+         5.5
+        ],
+        "name": "Found crypto wallet spent",
+        "tip": "26 Jun 2026<br><b>Found crypto wallet spent</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         11,
+         3.5
+        ],
+        "name": "Wikimedia services strained",
+        "tip": "May 2026<br><b>Wikimedia services strained</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       }
+      ]
+     },
+     {
+      "type": "scatter",
+      "id": "lane1",
+      "xAxisIndex": 1,
+      "yAxisIndex": 1,
+      "symbolSize": 11,
+      "data": [
+       {
+        "value": [
+         6,
+         0.5
+        ],
+        "name": "Kiro and the AWS outage",
+        "tip": "Dec 2025<br><b>Kiro and the AWS outage</b><br>Attributed",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s1",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         9,
+         0.5
+        ],
+        "name": "Meta Sev 1 data exposure",
+        "tip": "Mar 2026<br><b>Meta Sev 1 data exposure</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s1",
+         "borderColor": "@s1",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         10,
+         0.5
+        ],
+        "name": "PocketOS database deleted",
+        "tip": "24 Apr 2026<br><b>PocketOS database deleted</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s1",
+         "borderColor": "@s1",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         1,
+         0.5
+        ],
+        "name": "Replit deletes SaaStr database",
+        "tip": "18 Jul 2025<br><b>Replit deletes SaaStr database</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s1",
+         "borderColor": "@s1",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       }
+      ]
+     },
+     {
+      "type": "scatter",
+      "id": "lane2",
+      "xAxisIndex": 2,
+      "yAxisIndex": 2,
+      "symbolSize": 11,
+      "data": [
+       {
+        "value": [
+         15,
+         1.5
+        ],
+        "name": "48,218 files in 103 seconds",
+        "tip": "Sep 2026<br><b>48,218 files in 103 seconds</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         5,
+         0.5
+        ],
+        "name": "Antigravity wipes a D: drive",
+        "tip": "Nov 2025<br><b>Antigravity wipes a D: drive</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         4,
+         0.5
+        ],
+        "name": "Claude Code #10077",
+        "tip": "21 Oct 2025<br><b>Claude Code #10077</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         9,
+         1.5
+        ],
+        "name": "Claude Code #36339",
+        "tip": "19 Mar 2026<br><b>Claude Code #36339</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         0.5
+        ],
+        "name": "Claude Code #75859",
+        "tip": "8 Jul 2026<br><b>Claude Code #75859</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         2.5
+        ],
+        "name": "Claude Code #88462",
+        "tip": "21 Aug 2026<br><b>Claude Code #88462</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         0.5
+        ],
+        "name": "Claude Code #92593",
+        "tip": "7 Sep 2026<br><b>Claude Code #92593</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         2.5
+        ],
+        "name": "Claude Code #95426",
+        "tip": "16 Sep 2026<br><b>Claude Code #95426</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         3.5
+        ],
+        "name": "Claude Code #97660",
+        "tip": "27 Sep 2026<br><b>Claude Code #97660</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         0.5
+        ],
+        "name": "Claude Code #99193",
+        "tip": "3 Oct 2026<br><b>Claude Code #99193</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         9,
+         0.5
+        ],
+        "name": "Codex for Windows",
+        "tip": "Mar 2026<br><b>Codex for Windows</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         0,
+         0.5
+        ],
+        "name": "Cursor YOLO mode",
+        "tip": "Jun 2025<br><b>Cursor YOLO mode</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         1,
+         0.5
+        ],
+        "name": "Gemini CLI overwrites a folder",
+        "tip": "Jul 2025<br><b>Gemini CLI overwrites a folder</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         1.5
+        ],
+        "name": "Gemini CLI / Antigravity",
+        "tip": "9 Aug 2026<br><b>Gemini CLI / Antigravity</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         3.5
+        ],
+        "name": "Claude Fable home directory",
+        "tip": "26 Aug 2026<br><b>Claude Fable home directory</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         2.5
+        ],
+        "name": "Gym booking system hacked",
+        "tip": "Reported 10 Aug 2026<br><b>Gym booking system hacked</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 0
+        }
+       },
+       {
+        "value": [
+         6,
+         0.5
+        ],
+        "name": "A trailing tilde wipes a Mac",
+        "tip": "8 Dec 2025<br><b>A trailing tilde wipes a Mac</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         8,
+         0.5
+        ],
+        "name": "Hit piece on a maintainer",
+        "tip": "10 Feb 2026<br><b>Hit piece on a maintainer</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         6,
+         1.5
+        ],
+        "name": "Cursor Plan Mode bug",
+        "tip": "Dec 2025<br><b>Cursor Plan Mode bug</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s2",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         0.5
+        ],
+        "name": "SSH keys deleted in Bypass mode",
+        "tip": "5 Aug 2026<br><b>SSH keys deleted in Bypass mode</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         1.5
+        ],
+        "name": "GPT-5.6 Sol deletion reports",
+        "tip": "Jul 2026<br><b>GPT-5.6 Sol deletion reports</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s2",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         2.5
+        ],
+        "name": "Prisma reset of a live database",
+        "tip": "Jul 2026<br><b>Prisma reset of a live database</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         8,
+         1.5
+        ],
+        "name": "Inbox deleted despite stop commands",
+        "tip": "23 Feb 2026<br><b>Inbox deleted despite stop commands</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "type": "scatter",
+      "id": "lane0",
+      "xAxisIndex": 0,
+      "yAxisIndex": 0,
+      "symbolSize": 11,
+      "data": [
+       {
+        "value": [
+         14,
+         0.5
+        ],
+        "name": "UK AISI test: backdoor attempt",
+        "tip": "25–28 Jul 2026<br><b>UK AISI test: backdoor attempt</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         1.5
+        ],
+        "name": "Claude takes over a third-party machine",
+        "tip": "Jan 2026<br><b>Claude takes over a third-party machine</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         1.5
+        ],
+        "name": "Claude Opus 4.7 hits a name-alike company",
+        "tip": "Apr–Jul 2026<br><b>Claude Opus 4.7 hits a name-alike company</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         2.5
+        ],
+        "name": "Claude Mythos 5 publishes to PyPI",
+        "tip": "Apr–Jul 2026<br><b>Claude Mythos 5 publishes to PyPI</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         3.5
+        ],
+        "name": "Anthropic research model scans 9,000 hosts",
+        "tip": "Apr–Jul 2026<br><b>Anthropic research model scans 9,000 hosts</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         0.5
+        ],
+        "name": "55 organisations reached",
+        "tip": "Mar–Sep 2026<br><b>55 organisations reached</b><br>Attributed",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         5.5
+        ],
+        "name": "24 years of hospital bed data",
+        "tip": "17 Jun 2026<br><b>24 years of hospital bed data</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         6.5
+        ],
+        "name": "External services used to reach the web",
+        "tip": "Jun 2026<br><b>External services used to reach the web</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         5.5
+        ],
+        "name": "Found credentials on a Census site",
+        "tip": "Reported 25 Sep 2026<br><b>Found credentials on a Census site</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         7.5
+        ],
+        "name": "Internal system changed",
+        "tip": "Jun 2026<br><b>Internal system changed</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         6.5
+        ],
+        "name": "DNS sandbox escape",
+        "tip": "20 Sep 2026<br><b>DNS sandbox escape</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         0.5
+        ],
+        "name": "German wiki hijacked",
+        "tip": "May–Jul 2026<br><b>German wiki hijacked</b><br>Attributed",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         3.5
+        ],
+        "name": "Gemini logs into three companies",
+        "tip": "May 2026<br><b>Gemini logs into three companies</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         8.5
+        ],
+        "name": "Grader model files fraudulent reports",
+        "tip": "6 Oct 2026<br><b>Grader model files fraudulent reports</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         4.5
+        ],
+        "name": "False police tip",
+        "tip": "18 Jul 2026<br><b>False police tip</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         0.5
+        ],
+        "name": "Hugging Face breach",
+        "tip": "9–13 Jul 2026<br><b>Hugging Face breach</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         7.5
+        ],
+        "name": "53 user images posted",
+        "tip": "Reported 25 Sep 2026<br><b>53 user images posted</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         1.5
+        ],
+        "name": "OpenAI model runs a real website",
+        "tip": "Reported 4 Aug 2026<br><b>OpenAI model runs a real website</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         3.5
+        ],
+        "name": "Kimi K3 gets around its sandbox",
+        "tip": "Aug 2026<br><b>Kimi K3 gets around its sandbox</b><br>Attributed",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         4.5
+        ],
+        "name": "Medicare statistics portal",
+        "tip": "18 Jun 2026<br><b>Medicare statistics portal</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         2.5
+        ],
+        "name": "Meta model hacks a third party",
+        "tip": "Reported 5 Aug 2026<br><b>Meta model hacks a third party</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         1.5
+        ],
+        "name": "NSW national parks application",
+        "tip": "Jun 2026<br><b>NSW national parks application</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         6,
+         0.5
+        ],
+        "name": "ROME crypto mining",
+        "tip": "Reported Dec 2025<br><b>ROME crypto mining</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         2.5
+        ],
+        "name": "RubyGems malicious packages",
+        "tip": "11 May 2026<br><b>RubyGems malicious packages</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         2.5
+        ],
+        "name": "Tencent Cloud fleet",
+        "tip": "28 Sep–8 Oct 2026<br><b>Tencent Cloud fleet</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         8.5
+        ],
+        "name": "GitHub token hidden from scanners",
+        "tip": "27 May 2026<br><b>GitHub token hidden from scanners</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         9.5
+        ],
+        "name": "Found crypto wallet spent",
+        "tip": "26 Jun 2026<br><b>Found crypto wallet spent</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         3.5
+        ],
+        "name": "Wikimedia services strained",
+        "tip": "May 2026<br><b>Wikimedia services strained</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s0",
+         "borderColor": "@s0",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       }
+      ]
+     },
+     {
+      "type": "scatter",
+      "id": "lane1",
+      "xAxisIndex": 1,
+      "yAxisIndex": 1,
+      "symbolSize": 11,
+      "data": [
+       {
+        "value": [
+         8,
+         0.5
+        ],
+        "name": "Kiro and the AWS outage",
+        "tip": "Dec 2025<br><b>Kiro and the AWS outage</b><br>Attributed",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s1",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         9,
+         0.5
+        ],
+        "name": "Meta Sev 1 data exposure",
+        "tip": "Mar 2026<br><b>Meta Sev 1 data exposure</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s1",
+         "borderColor": "@s1",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         10,
+         0.5
+        ],
+        "name": "PocketOS database deleted",
+        "tip": "24 Apr 2026<br><b>PocketOS database deleted</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s1",
+         "borderColor": "@s1",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         1,
+         0.5
+        ],
+        "name": "Replit deletes SaaStr database",
+        "tip": "18 Jul 2025<br><b>Replit deletes SaaStr database</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s1",
+         "borderColor": "@s1",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       }
+      ]
+     },
+     {
+      "type": "scatter",
+      "id": "lane2",
+      "xAxisIndex": 2,
+      "yAxisIndex": 2,
+      "symbolSize": 11,
+      "data": [
+       {
+        "value": [
+         15,
+         2.5
+        ],
+        "name": "48,218 files in 103 seconds",
+        "tip": "Sep 2026<br><b>48,218 files in 103 seconds</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         6,
+         0.5
+        ],
+        "name": "Antigravity wipes a D: drive",
+        "tip": "Nov 2025<br><b>Antigravity wipes a D: drive</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         4,
+         0.5
+        ],
+        "name": "Claude Code #10077",
+        "tip": "21 Oct 2025<br><b>Claude Code #10077</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         9,
+         1.5
+        ],
+        "name": "Claude Code #36339",
+        "tip": "19 Mar 2026<br><b>Claude Code #36339</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         0.5
+        ],
+        "name": "Claude Code #75859",
+        "tip": "8 Jul 2026<br><b>Claude Code #75859</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         3.5
+        ],
+        "name": "Claude Code #88462",
+        "tip": "21 Aug 2026<br><b>Claude Code #88462</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         0.5
+        ],
+        "name": "Claude Code #92593",
+        "tip": "7 Sep 2026<br><b>Claude Code #92593</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         1.5
+        ],
+        "name": "Claude Code #95426",
+        "tip": "16 Sep 2026<br><b>Claude Code #95426</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         15,
+         3.5
+        ],
+        "name": "Claude Code #97660",
+        "tip": "27 Sep 2026<br><b>Claude Code #97660</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         16,
+         0.5
+        ],
+        "name": "Claude Code #99193",
+        "tip": "3 Oct 2026<br><b>Claude Code #99193</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         9,
+         0.5
+        ],
+        "name": "Codex for Windows",
+        "tip": "Mar 2026<br><b>Codex for Windows</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         0,
+         0.5
+        ],
+        "name": "Cursor YOLO mode",
+        "tip": "Jun 2025<br><b>Cursor YOLO mode</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         1,
+         0.5
+        ],
+        "name": "Gemini CLI overwrites a folder",
+        "tip": "Jul 2025<br><b>Gemini CLI overwrites a folder</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         1.5
+        ],
+        "name": "Gemini CLI / Antigravity",
+        "tip": "9 Aug 2026<br><b>Gemini CLI / Antigravity</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         4.5
+        ],
+        "name": "Claude Fable home directory",
+        "tip": "26 Aug 2026<br><b>Claude Fable home directory</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         2.5
+        ],
+        "name": "Gym booking system hacked",
+        "tip": "Reported 10 Aug 2026<br><b>Gym booking system hacked</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         6,
+         1.5
+        ],
+        "name": "A trailing tilde wipes a Mac",
+        "tip": "8 Dec 2025<br><b>A trailing tilde wipes a Mac</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         8,
+         0.5
+        ],
+        "name": "Hit piece on a maintainer",
+        "tip": "10 Feb 2026<br><b>Hit piece on a maintainer</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         6,
+         2.5
+        ],
+        "name": "Cursor Plan Mode bug",
+        "tip": "Dec 2025<br><b>Cursor Plan Mode bug</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s2",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         14,
+         0.5
+        ],
+        "name": "SSH keys deleted in Bypass mode",
+        "tip": "5 Aug 2026<br><b>SSH keys deleted in Bypass mode</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         1.5
+        ],
+        "name": "GPT-5.6 Sol deletion reports",
+        "tip": "Jul 2026<br><b>GPT-5.6 Sol deletion reports</b><br>Confirmed",
+        "itemStyle": {
+         "color": "@s2",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "solid",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         13,
+         2.5
+        ],
+        "name": "Prisma reset of a live database",
+        "tip": "Jul 2026<br><b>Prisma reset of a live database</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       },
+       {
+        "value": [
+         8,
+         1.5
+        ],
+        "name": "Inbox deleted despite stop commands",
+        "tip": "23 Feb 2026<br><b>Inbox deleted despite stop commands</b><br>Self-reported",
+        "itemStyle": {
+         "color": "@ink-surface",
+         "borderColor": "@s2",
+         "borderWidth": 2,
+         "borderType": "dotted",
+         "opacity": 1
+        }
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "data": {
+  "columns": [
+   "incident",
+   "lane",
+   "evidence",
+   "occurred",
+   "public"
+  ],
+  "rows": [
+   [
+    "48,218 files in 103 seconds",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-09-15",
+    "2026-09-19"
+   ],
+   [
+    "UK AISI test: backdoor attempt",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-07-25",
+    "2026-08-04"
+   ],
+   [
+    "Claude takes over a third-party machine",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-01-15",
+    "2026-09-09"
+   ],
+   [
+    "Claude Opus 4.7 hits a name-alike company",
+    "Labs and evaluators",
+    "Confirmed",
+    null,
+    "2026-07-30"
+   ],
+   [
+    "Claude Mythos 5 publishes to PyPI",
+    "Labs and evaluators",
+    "Confirmed",
+    null,
+    "2026-07-30"
+   ],
+   [
+    "Anthropic research model scans 9,000 hosts",
+    "Labs and evaluators",
+    "Confirmed",
+    null,
+    "2026-07-30"
+   ],
+   [
+    "Antigravity wipes a D: drive",
+    "Individual developers and users",
+    "Self-reported",
+    "2025-11-27",
+    "2025-12-02"
+   ],
+   [
+    "55 organisations reached",
+    "Labs and evaluators",
+    "Attributed",
+    "2026-03-15",
+    "2026-10-01"
+   ],
+   [
+    "24 years of hospital bed data",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-06-17",
+    "2026-10-16"
+   ],
+   [
+    "External services used to reach the web",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-06-15",
+    "2026-10-16"
+   ],
+   [
+    "Claude Code #10077",
+    "Individual developers and users",
+    "Self-reported",
+    "2025-10-21",
+    "2025-10-21"
+   ],
+   [
+    "Claude Code #36339",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-03-19",
+    "2026-03-19"
+   ],
+   [
+    "Claude Code #75859",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-07-08",
+    "2026-07-08"
+   ],
+   [
+    "Claude Code #88462",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-08-21",
+    "2026-08-21"
+   ],
+   [
+    "Claude Code #92593",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-09-07",
+    "2026-09-07"
+   ],
+   [
+    "Claude Code #95426",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-09-16",
+    "2026-09-18"
+   ],
+   [
+    "Claude Code #97660",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-09-27",
+    "2026-09-27"
+   ],
+   [
+    "Claude Code #99193",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-10-03",
+    "2026-10-03"
+   ],
+   [
+    "Found credentials on a Census site",
+    "Labs and evaluators",
+    "Confirmed",
+    null,
+    "2026-09-25"
+   ],
+   [
+    "Codex for Windows",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-03-07",
+    "2026-03-07"
+   ],
+   [
+    "Cursor YOLO mode",
+    "Individual developers and users",
+    "Self-reported",
+    "2025-06-15",
+    "2025-06-20"
+   ],
+   [
+    "Internal system changed",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-06-15",
+    "2026-10-16"
+   ],
+   [
+    "DNS sandbox escape",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-09-20",
+    "2026-09-25"
+   ],
+   [
+    "German wiki hijacked",
+    "Labs and evaluators",
+    "Attributed",
+    "2026-05-15",
+    "2026-09-04"
+   ],
+   [
+    "Gemini logs into three companies",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-05-15",
+    "2026-09-18"
+   ],
+   [
+    "Gemini CLI overwrites a folder",
+    "Individual developers and users",
+    "Self-reported",
+    "2025-07-21",
+    "2025-07-21"
+   ],
+   [
+    "Gemini CLI / Antigravity",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-08-09",
+    "2026-08-09"
+   ],
+   [
+    "Grader model files fraudulent reports",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-10-06",
+    "2026-10-16"
+   ],
+   [
+    "Claude Fable home directory",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-08-26",
+    "2026-08-26"
+   ],
+   [
+    "Gym booking system hacked",
+    "Individual developers and users",
+    "Self-reported",
+    null,
+    "2026-08-10"
+   ],
+   [
+    "False police tip",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-07-18",
+    "2026-10-09"
+   ],
+   [
+    "Hugging Face breach",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-07-09",
+    "2026-07-16"
+   ],
+   [
+    "53 user images posted",
+    "Labs and evaluators",
+    "Confirmed",
+    null,
+    "2026-09-25"
+   ],
+   [
+    "OpenAI model runs a real website",
+    "Labs and evaluators",
+    "Confirmed",
+    null,
+    "2026-08-04"
+   ],
+   [
+    "Kimi K3 gets around its sandbox",
+    "Labs and evaluators",
+    "Attributed",
+    null,
+    "2026-08-07"
+   ],
+   [
+    "Kiro and the AWS outage",
+    "Companies in production",
+    "Attributed",
+    "2025-12-15",
+    "2026-02-20"
+   ],
+   [
+    "A trailing tilde wipes a Mac",
+    "Individual developers and users",
+    "Self-reported",
+    "2025-12-08",
+    "2025-12-08"
+   ],
+   [
+    "Hit piece on a maintainer",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-02-10",
+    "2026-02-12"
+   ],
+   [
+    "Medicare statistics portal",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-06-18",
+    "2026-09-24"
+   ],
+   [
+    "Meta model hacks a third party",
+    "Labs and evaluators",
+    "Confirmed",
+    null,
+    "2026-08-05"
+   ],
+   [
+    "Meta Sev 1 data exposure",
+    "Companies in production",
+    "Confirmed",
+    "2026-03-15",
+    "2026-03-18"
+   ],
+   [
+    "NSW national parks application",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-06-15",
+    "2026-10-02"
+   ],
+   [
+    "Cursor Plan Mode bug",
+    "Individual developers and users",
+    "Confirmed",
+    "2025-12-15",
+    "2025-12-15"
+   ],
+   [
+    "PocketOS database deleted",
+    "Companies in production",
+    "Confirmed",
+    "2026-04-24",
+    "2026-04-25"
+   ],
+   [
+    "SSH keys deleted in Bypass mode",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-08-05",
+    "2026-08-05"
+   ],
+   [
+    "Replit deletes SaaStr database",
+    "Companies in production",
+    "Confirmed",
+    "2025-07-18",
+    "2025-07-21"
+   ],
+   [
+    "ROME crypto mining",
+    "Labs and evaluators",
+    "Confirmed",
+    null,
+    "2025-12-15"
+   ],
+   [
+    "RubyGems malicious packages",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-05-11",
+    "2026-09-11"
+   ],
+   [
+    "GPT-5.6 Sol deletion reports",
+    "Individual developers and users",
+    "Confirmed",
+    "2026-07-12",
+    "2026-07-14"
+   ],
+   [
+    "Prisma reset of a live database",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-07-15",
+    "2026-07-15"
+   ],
+   [
+    "Tencent Cloud fleet",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-09-28",
+    "2026-10-04"
+   ],
+   [
+    "GitHub token hidden from scanners",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-05-27",
+    "2026-09-25"
+   ],
+   [
+    "Found crypto wallet spent",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-06-26",
+    "2026-10-16"
+   ],
+   [
+    "Wikimedia services strained",
+    "Labs and evaluators",
+    "Confirmed",
+    "2026-05-15",
+    "2026-10-05"
+   ],
+   [
+    "Inbox deleted despite stop commands",
+    "Individual developers and users",
+    "Self-reported",
+    "2026-02-23",
+    "2026-02-23"
+   ]
+  ]
+ },
+ "facts": {
+  "n": 55,
+  "undated": 10
+ },
+ "build": {
+  "inputs": {
+   "viz/figures/A01-rogue-ai-incidents/figure.html": "sha256:e0b0fd9e1e7b08df"
+  },
+  "code": "sha256:1c6a99e22da8573c",
+  "spec": "sha256:22535100ea39ef14"
+ }
+}

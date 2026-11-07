@@ -1,0 +1,352 @@
+{
+ "id": "A02",
+ "kind": "echarts",
+ "title": "Lab incidents typically took 112 days to become public",
+ "section": "intro",
+ "order": 10,
+ "caption": "Days from each incident to its first public report, for the 17 lab incidents with a usable date. A ~ marks an incident date known only to the month, measured from mid-month. The dashed line is the median.",
+ "notes": [
+  "Incidents with no published date, or spanning several months, are left out. Data: the A01 incident log."
+ ],
+ "height": 512,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/A02-disclosure-delay",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 270,
+   "right": 56,
+   "top": 28,
+   "bottom": 28
+  },
+  "xAxis": {
+   "type": "value"
+  },
+  "yAxis": {
+   "type": "category",
+   "inverse": true,
+   "data": [
+    "Claude takes over a third-party machine",
+    "Wikimedia services strained",
+    "Gemini logs into three companies",
+    "External services used to reach the web",
+    "Internal system changed",
+    "RubyGems malicious packages",
+    "24 years of hospital bed data",
+    "GitHub token hidden from scanners",
+    "Found crypto wallet spent",
+    "NSW national parks application",
+    "Medicare statistics portal",
+    "False police tip",
+    "Grader files fraudulent reports",
+    "UK AISI backdoor test",
+    "Hugging Face breach",
+    "Tencent Cloud fleet",
+    "DNS sandbox escape"
+   ],
+   "axisLine": {
+    "show": false
+   },
+   "splitLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-primary",
+    "fontSize": 12,
+    "interval": 0
+   }
+  },
+  "series": [
+   {
+    "type": "bar",
+    "data": [
+     {
+      "value": 237,
+      "label": {
+       "formatter": "~237"
+      },
+      "tip": "Jan 2026<br><b>Claude takes over a third-party machine</b>: about 237 days"
+     },
+     {
+      "value": 143,
+      "label": {
+       "formatter": "~143"
+      },
+      "tip": "May 2026<br><b>Wikimedia services strained</b>: about 143 days"
+     },
+     {
+      "value": 126,
+      "label": {
+       "formatter": "~126"
+      },
+      "tip": "May 2026<br><b>Gemini logs into three companies</b>: about 126 days"
+     },
+     {
+      "value": 123,
+      "label": {
+       "formatter": "~123"
+      },
+      "tip": "Jun 2026<br><b>External services used to reach the web</b>: about 123 days"
+     },
+     {
+      "value": 123,
+      "label": {
+       "formatter": "~123"
+      },
+      "tip": "Jun 2026<br><b>Internal system changed</b>: about 123 days"
+     },
+     {
+      "value": 123,
+      "label": {
+       "formatter": "123"
+      },
+      "tip": "11 May 2026<br><b>RubyGems malicious packages</b>: 123 days"
+     },
+     {
+      "value": 121,
+      "label": {
+       "formatter": "121"
+      },
+      "tip": "17 Jun 2026<br><b>24 years of hospital bed data</b>: 121 days"
+     },
+     {
+      "value": 121,
+      "label": {
+       "formatter": "121"
+      },
+      "tip": "27 May 2026<br><b>GitHub token hidden from scanners</b>: 121 days"
+     },
+     {
+      "value": 112,
+      "label": {
+       "formatter": "112"
+      },
+      "tip": "26 Jun 2026<br><b>Found crypto wallet spent</b>: 112 days"
+     },
+     {
+      "value": 109,
+      "label": {
+       "formatter": "~109"
+      },
+      "tip": "Jun 2026<br><b>NSW national parks application</b>: about 109 days"
+     },
+     {
+      "value": 98,
+      "label": {
+       "formatter": "98"
+      },
+      "tip": "18 Jun 2026<br><b>Medicare statistics portal</b>: 98 days"
+     },
+     {
+      "value": 83,
+      "label": {
+       "formatter": "83"
+      },
+      "tip": "18 Jul 2026<br><b>False police tip</b>: 83 days"
+     },
+     {
+      "value": 10,
+      "label": {
+       "formatter": "10"
+      },
+      "tip": "6 Oct 2026<br><b>Grader model files fraudulent reports</b>: 10 days"
+     },
+     {
+      "value": 10,
+      "label": {
+       "formatter": "10"
+      },
+      "tip": "25–28 Jul 2026<br><b>UK AISI test: backdoor attempt</b>: 10 days"
+     },
+     {
+      "value": 7,
+      "label": {
+       "formatter": "7"
+      },
+      "tip": "9–13 Jul 2026<br><b>Hugging Face breach</b>: 7 days"
+     },
+     {
+      "value": 6,
+      "label": {
+       "formatter": "6"
+      },
+      "tip": "28 Sep–8 Oct 2026<br><b>Tencent Cloud fleet</b>: 6 days"
+     },
+     {
+      "value": 5,
+      "label": {
+       "formatter": "5"
+      },
+      "tip": "20 Sep 2026<br><b>DNS sandbox escape</b>: 5 days"
+     }
+    ],
+    "barWidth": 14,
+    "itemStyle": {
+     "color": "@s0",
+     "borderRadius": [
+      0,
+      4,
+      4,
+      0
+     ]
+    },
+    "label": {
+     "show": true,
+     "position": "right",
+     "color": "@ink-secondary",
+     "fontSize": 12
+    },
+    "markLine": {
+     "silent": true,
+     "symbol": "none",
+     "lineStyle": {
+      "type": "dashed",
+      "color": "@ink-muted",
+      "width": 1
+     },
+     "label": {
+      "position": "start",
+      "formatter": "Median",
+      "color": "@ink-secondary",
+      "fontSize": 12
+     },
+     "data": [
+      {
+       "xAxis": 112
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "incident",
+   "when",
+   "date_known_to_month_only",
+   "days"
+  ],
+  "rows": [
+   [
+    "Claude takes over a third-party machine",
+    "Jan 2026",
+    true,
+    237
+   ],
+   [
+    "Wikimedia services strained",
+    "May 2026",
+    true,
+    143
+   ],
+   [
+    "Gemini logs into three companies",
+    "May 2026",
+    true,
+    126
+   ],
+   [
+    "External services used to reach the web",
+    "Jun 2026",
+    true,
+    123
+   ],
+   [
+    "Internal system changed",
+    "Jun 2026",
+    true,
+    123
+   ],
+   [
+    "RubyGems malicious packages",
+    "11 May 2026",
+    false,
+    123
+   ],
+   [
+    "24 years of hospital bed data",
+    "17 Jun 2026",
+    false,
+    121
+   ],
+   [
+    "GitHub token hidden from scanners",
+    "27 May 2026",
+    false,
+    121
+   ],
+   [
+    "Found crypto wallet spent",
+    "26 Jun 2026",
+    false,
+    112
+   ],
+   [
+    "NSW national parks application",
+    "Jun 2026",
+    true,
+    109
+   ],
+   [
+    "Medicare statistics portal",
+    "18 Jun 2026",
+    false,
+    98
+   ],
+   [
+    "False police tip",
+    "18 Jul 2026",
+    false,
+    83
+   ],
+   [
+    "Grader model files fraudulent reports",
+    "6 Oct 2026",
+    false,
+    10
+   ],
+   [
+    "UK AISI test: backdoor attempt",
+    "25–28 Jul 2026",
+    false,
+    10
+   ],
+   [
+    "Hugging Face breach",
+    "9–13 Jul 2026",
+    false,
+    7
+   ],
+   [
+    "Tencent Cloud fleet",
+    "28 Sep–8 Oct 2026",
+    false,
+    6
+   ],
+   [
+    "DNS sandbox escape",
+    "20 Sep 2026",
+    false,
+    5
+   ]
+  ]
+ },
+ "facts": {
+  "median": 112,
+  "n": 17
+ },
+ "build": {
+  "inputs": {
+   "viz/figures/A01-rogue-ai-incidents/figure.html": "sha256:e0b0fd9e1e7b08df"
+  },
+  "code": "sha256:f472600786290754",
+  "spec": "sha256:a36d51691632fc9e"
+ }
+}
