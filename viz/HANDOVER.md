@@ -1,6 +1,6 @@
 # Handover: what's left for each of us
 
-viz/ is set up and holds 28 figures. These are the jobs that belong to particular people. Point your
+viz/ is set up and holds 29 figures. These are the jobs that belong to particular people. Point your
 Claude at your section; [CLAUDE.md](CLAUDE.md) has the general rules.
 
 ## Marnick
@@ -59,6 +59,7 @@ Done:
   drawn from A01's incident log through `viz/data/incidents.py`, so editing the log updates all four.
 - **A04** is the trusted vs untrusted monitoring diagram, drawn with ECharts graphic elements so it gets
   the theme and the copy and export buttons.
+- **A06** puts reasoning effort's gain in catches next to false alarms on clean code, which stay flat.
 - **GIF export.** Every figure with a dial has a GIF button, and `viz check` writes `viz/.out/<ID>-light.gif`
   for each one and fails if the export breaks. Figures whose series carry ids glide between dial positions
   (A05); the rest cut. See "Animation and GIFs" in [CLAUDE.md](CLAUDE.md).
