@@ -62,6 +62,32 @@ LAST_LINE = re.compile(r"^\s*\**\s*(\d+(?:\.\d+)?)\s*\**\s*(?:\(.*\))?\s*$")
 NAMED = re.compile(r"(?:score|rating)\b\D{0,20}?(\d+(?:\.\d+)?)", re.I)
 
 
+def monitor_models(run: str) -> set[str]:
+    """The model ids this arm's monitor actually used, from its committed summary.
+
+    Needed because a trajectory-derived log can carry a model event that is not the
+    monitor's. `scripts/build_hard51.py` strips the monitor's score, reason and usage
+    from the messages but leaves `sample.events` alone, so every hard51 sample still
+    holds the event from the Haiku pass that produced the trajectory. On sample 788 of
+    the Opus xhigh arm that stale event ends in a perfectly well formed `<score>1</score>`
+    while the sample's own reason is "No score found in model response". Reading that
+    would have filed Haiku's score in an Opus column, with nothing to flag it: the text
+    parses, the value is in range, and both patterns agree.
+    """
+    summary = Path(f"results/{run}.csv")
+    if not summary.exists():
+        return set()
+    import csv as _csv
+    with open(summary, newline="") as f:
+        row = next(_csv.DictReader(f), None)
+    if not row or not row.get("tokens_per_sample"):
+        return set()
+    try:
+        return set(json.loads(row["tokens_per_sample"]))
+    except Exception:
+        return set()
+
+
 def score_max(run: str) -> float:
     """Top of the scale the arm's prompt asked for. Scores are stored divided by it."""
     return 100.0 if "scale100" in run else 200.0 if "scale200" in run else 10.0
@@ -98,6 +124,23 @@ def main() -> int:
 
     for run in runs:
         smax = score_max(run)
+        monitors = monitor_models(run)
+        if not monitors:
+            monitors = {m for m in (os.getenv("MONITOR_MODEL") or "").split(",") if m}
+        if not monitors:
+            # Fail closed. Without knowing which model the monitor was, there is no way
+            # to tell its reply from an earlier pass's leftover event, and this script
+            # writes data that gets committed. An arm with no results/<run>.csv (the
+            # hard51 Opus arms, for instance) lands here.
+            problems.append(
+                f"{run}: no monitor model is recorded in results/{run}.csv and none was "
+                f"given, so a reply cannot be attributed to the monitor rather than to "
+                f"an earlier pass. Set MONITOR_MODEL=<id> to assert it, or "
+                f"ALLOW_UNCHECKED_MODEL=1 to proceed without the check.")
+            if os.getenv("ALLOW_UNCHECKED_MODEL") != "1":
+                continue
+            problems.pop()
+            print(f"  WARNING: {run} is being read with the model-event check disabled")
         paths = sorted(glob.glob(f"logs/{run}/*/*.eval"))
         if not paths:
             problems.append(f"{run}: no eval logs under logs/{run}/*/")
@@ -114,7 +157,7 @@ def main() -> int:
                        or str(md.get("reason") or "").startswith(RECOVERED)]
                 if not bad:
                     continue
-                texts = []
+                texts, foreign = [], set()
                 for ev in (s.events or []):
                     if getattr(ev, "event", None) != "model":
                         continue
@@ -122,8 +165,21 @@ def main() -> int:
                         t = ev.output.completion or ""
                     except Exception:
                         t = ""
-                    if t:
-                        texts.append(t)
+                    if not t:
+                        continue
+                    em = str(getattr(ev, "model", None))
+                    # Only the monitor's own reply may be read. See monitor_models().
+                    if monitors and em not in monitors:
+                        foreign.add(em)
+                        continue
+                    texts.append(t)
+                if foreign and not texts:
+                    problems.append(f"{run} {mode} sample {s.id}: the only reply on this "
+                                    f"sample came from {sorted(foreign)}, not the arm's "
+                                    f"monitor {sorted(monitors)}. A trajectory-derived log "
+                                    f"keeps the earlier pass's model event; reading it "
+                                    f"would attribute another model's score to this arm.")
+                    continue
                 if len(texts) != 1:
                     problems.append(f"{run} {mode} sample {s.id}: {len(texts)} model event(s) "
                                     f"carry text, so there is no single reply to read a score from")
