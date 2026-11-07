@@ -710,7 +710,7 @@
    "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea"
   },
-  "code": "sha256:94bad8c087a8d17e",
-  "spec": "sha256:2d6e51d95855151d"
+  "code": "sha256:992e56f841e4ab6b",
+  "spec": "sha256:49916d486060aae0"
  }
 }

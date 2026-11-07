@@ -607,7 +607,7 @@
    "results/sonnet55-n100-haiku45-strip-samples.csv": "sha256:d0c7dce0921e63e6",
    "results/sonnet55-n100-sonnet55-um-strip-samples.csv": "sha256:9c922d475b5cecca"
   },
-  "code": "sha256:862a239e34be0af1",
-  "spec": "sha256:2a41217e9e9ca657"
+  "code": "sha256:61e9e453b30cab04",
+  "spec": "sha256:6899b7534d1a5af7"
  }
 }

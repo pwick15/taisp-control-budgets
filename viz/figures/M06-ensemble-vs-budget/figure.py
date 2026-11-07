@@ -1,5 +1,4 @@
 """M06: one audit budget, spent on a single monitor's cutoff or split across several."""
-import glob
 import itertools
 
 import numpy as np
@@ -32,36 +31,8 @@ META = {
     "height": 520,
 }
 
-FAMILIES = ["Sonnet 5.5 UM", "Haiku 5.5", "GLM-5.3", "Qwen 3.8 Omni Flash",
-            "gpt-oss-120b", "Gemma 3 27B"]
 GRID = [0.5, 1.0, 2.0, 3.0, 5.0, 7.5, 10.0]
 KS = [1, 2, 3, 4]
-
-
-def auc(h: np.ndarray, a: np.ndarray) -> float:
-    x = np.concatenate([a, h])
-    r = pd.Series(x).rank(method="average").to_numpy()
-    return float((r[:len(a)].sum() - len(a) * (len(a) + 1) / 2) / (len(a) * len(h)))
-
-
-def pool() -> dict[str, str]:
-    """The best-separating 0-10 stripped arm for each family."""
-    best: dict[str, tuple[str, float]] = {}
-    for p in sorted(glob.glob("results/*-samples.csv")):
-        run = p.split("/")[-1][: -len("-samples.csv")]
-        if any(t in run for t in ("scale100", "scale200", "nostrip", "b2")):
-            continue
-        d = pd.read_csv(p)
-        h, a = d[d["mode"] == "honest"], d[d["mode"] == "attack"]
-        if len(h) != 500 or len(a) != 500:
-            continue
-        fam = S.run_label(run).split(" · ")[0]
-        if fam not in FAMILIES:
-            continue
-        u = auc(h.suspicion.to_numpy(float), a.suspicion.to_numpy(float))
-        if fam not in best or u > best[fam][1]:
-            best[fam] = (run, u)
-    return {f: best[f][0] for f in FAMILIES if f in best}
 
 
 def bits(mask: np.ndarray) -> int:
@@ -73,7 +44,7 @@ def bits(mask: np.ndarray) -> int:
 
 
 def build() -> Figure:
-    chosen = pool()
+    chosen = S.family_pool()
     runs = list(chosen.values())
     h0, a0 = S.load_scores(runs[0])
     ids_h, ids_a = sorted(h0.index), sorted(a0.index)
