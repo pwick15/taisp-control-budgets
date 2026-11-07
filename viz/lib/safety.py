@@ -18,6 +18,8 @@ import csv
 import importlib.util
 import zlib
 
+import re
+
 import numpy as np
 import pandas as pd
 
@@ -238,6 +240,28 @@ SCALE_RUNS = {
         "0-10": "dataset-haiku55-effortxhigh-tm-n500b2-strip",
         "0-100": "dataset-haiku55-xhigh-scale100-n500b2-strip"},
 }
+
+
+_RUN_SUFFIX = [
+    (r"^dataset500b2-|n500b2", " · batch 2"), (r"nostrip", " · comments kept"),
+    (r"scale200", " · 0-200"), (r"scale100", " · 0-100"),
+    (r"effortxhigh|xhigh", " · xhigh"), (r"efforthigh|-high-", " · high"),
+    (r"effortlow|-low-", " · low"), (r"-medium-", " · medium"),
+    (r"effortnone|-none-", " · effort none"),
+]
+_RUN_MODEL = [("sonnet55-um", "Sonnet 5.5 UM"), ("haiku55", "Haiku 5.5"), ("haiku45", "Haiku 4.5"),
+              ("glm53", "GLM-5.3"), ("gptoss120b", "gpt-oss-120b"), ("gpt6luna", "GPT-6 Luna"),
+              ("luna", "GPT-6 Luna"), ("qwen38omniflash", "Qwen 3.8 Omni Flash"), ("qwen38", "Qwen 3.8"),
+              ("gemma426b", "Gemma 4 26B"), ("gemma3-27b", "Gemma 3 27B"), ("gemma3-4b", "Gemma 3 4B"),
+              ("gemini35fl", "Gemini 3.5 Flash-Lite"), ("gemini35lite", "Gemini 3.5 Flash-Lite"),
+              ("ministral14b", "Ministral 14B"), ("ministral8b", "Ministral 8B"),
+              ("mistrallarge4", "Mistral Large 4")]
+
+
+def run_label(run: str) -> str:
+    """A readable name for a run, so every figure spells the same arm the same way."""
+    base = next((n for k, n in _RUN_MODEL if k in run), run)
+    return base + "".join(suf for pat, suf in _RUN_SUFFIX if re.search(pat, run))
 
 
 def resolution_curve(run: str) -> dict:

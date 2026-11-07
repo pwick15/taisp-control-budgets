@@ -1,4 +1,4 @@
-# 92% of the study's safety cells are reported at a price they did not pay
+# 93% of the study's safety cells are reported at a price they did not pay
 
 Reproduce with:
 
@@ -19,19 +19,19 @@ So: if every cell were re-keyed on the rate it actually **served**, what shape
 would the table be? The hope behind asking was that this is a relabelling job, a
 few hours of axis work. It is not.
 
-## The grid, over the 43 comparable n=500 runs
+## The grid, over the 47 comparable n=500 runs
 
-301 cells, 43 runs by 7 requested budgets.
+329 cells, 47 runs by 7 requested budgets.
 
 | | |
 |---|---|
-| distinct served rates across the 301 cells | **51** |
-| cells that served exactly the rate requested | **23 of 301 (8%)** |
-| cells resting on at least 5 honest rows | 183 of 301 (61%) |
+| distinct served rates across the 329 cells | **52** |
+| cells that served exactly the rate requested | **24 of 329 (7%)** |
+| cells resting on at least 5 honest rows | 194 of 329 (59%) |
 
-**Eight percent.** For the other 92%, the number in the column headed "safety at
+**Seven percent.** For the other 93%, the number in the column headed "safety at
 2%" was bought at some other price, and which price depends on the monitor. The
-table is not mislabelled by a rounding error; it is 51 different operating
+table is not mislabelled by a rounding error; it is 52 different operating
 points wearing 7 labels.
 
 ## Where the printable cells are
@@ -41,13 +41,13 @@ estimated rather than placed on one or two observations.
 
 | requested budget | runs with a printable cell | of |
 |---|---|---|
-| 0.5% | **0** | 43 |
-| 1% | 12 | 43 |
-| 2% | 30 | 43 |
-| 5% | 34 | 43 |
-| 10% | 35 | 43 |
-| 20% | 36 | 43 |
-| 50% | 36 | 43 |
+| 0.5% | **0** | 47 |
+| 1% | 12 | 47 |
+| 2% | 31 | 47 |
+| 5% | 35 | 47 |
+| 10% | 37 | 47 |
+| 20% | 39 | 47 |
+| 50% | 40 | 47 |
 
 The loss is positional, not uniform. **The cheapest column is empty for every
 run in the study**, which follows from arithmetic rather than from monitor
@@ -87,7 +87,7 @@ better: off 0.102, low 0.126, medium 0.150, high 0.190, xhigh 0.186.
 ## So what replaces it
 
 Not a re-keyed table. A served-FPR frontier over these runs is **not
-rectangular** and cannot be made so: 51 rates, no rate shared by all runs, and
+rectangular** and cannot be made so: 52 rates, no rate shared by all runs, and
 the cheapest requested budget reachable by none of them. Relabelling the axis
 would produce a grid with a different set of holes in every row.
 
@@ -96,9 +96,9 @@ The policy that follows, and that the rest of `results/analysis/` now uses:
 1. **A cell is printable only if its cutoff rests on at least 5 honest rows.**
    Otherwise report the rate it can serve, not the rate requested.
 2. **Label every cell with the rate it served**, never with the request. The two
-   agree in 8% of cells.
+   agree in 7% of cells.
 3. **Compare two runs only at rates both serve exactly.** That is what
-   `MATCHED-FPR.md` does, and it is why only 11 of 40 comparisons against Sonnet
+   `MATCHED-FPR.md` does, and it is why only 11 of 41 comparisons against Sonnet
    survive: the rest share no adequately powered rung, which is a fact about the
    monitors and not a gap in the analysis.
 4. **Treat "no printable cell" as a result.** Seven runs cannot be placed on a

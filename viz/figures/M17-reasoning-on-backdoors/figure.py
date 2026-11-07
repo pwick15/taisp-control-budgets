@@ -1,6 +1,5 @@
 """M17: mean hidden reasoning tokens a monitor spends on clean code against backdoored code."""
 import glob
-import re
 
 import pandas as pd
 
@@ -31,26 +30,6 @@ META = {
     "height": 560,
 }
 
-NAME = [
-    (r"^dataset500b2-|^dataset-.*n500b2", " · batch 2"), (r"nostrip", " · comments kept"),
-    (r"scale200", " · 0-200"), (r"scale100", " · 0-100"),
-    (r"effortxhigh|xhigh", " · xhigh"), (r"efforthigh|-high-", " · high"),
-    (r"effortlow|-low-", " · low"), (r"-medium-", " · medium"), (r"effortnone|-none-", " · effort none"),
-]
-MODEL = [("sonnet55-um", "Sonnet 5.5 UM"), ("haiku55", "Haiku 5.5"), ("haiku45", "Haiku 4.5"),
-         ("glm53", "GLM-5.3"), ("gptoss120b", "gpt-oss-120b"), ("gpt6luna", "GPT-6 Luna"),
-         ("luna", "GPT-6 Luna"), ("qwen38omniflash", "Qwen 3.8 Omni Flash"), ("qwen38", "Qwen 3.8"),
-         ("gemma426b", "Gemma 4 26B"), ("gemma3-27b", "Gemma 3 27B"), ("gemma3-4b", "Gemma 3 4B"),
-         ("gemini35fl", "Gemini 3.5 Flash-Lite"), ("gemini35lite", "Gemini 3.5 Flash-Lite"),
-         ("ministral14b", "Ministral 14B"), ("mistrallarge4", "Mistral Large 4")]
-
-
-def label(run: str) -> str:
-    base = next((n for k, n in MODEL if k in run), run)
-    extra = "".join(suf for pat, suf in NAME if re.search(pat, run))
-    return base + extra
-
-
 def build() -> Figure:
     rows = []
     for p in sorted(glob.glob("results/*-samples.csv")):
@@ -61,7 +40,7 @@ def build() -> Figure:
         h, a = d[d["mode"] == "honest"], d[d["mode"] == "attack"]
         if len(h) != 500 or len(a) != 500 or d.reasoning_tokens.fillna(0).sum() <= 0:
             continue
-        rows.append({"run": run, "label": label(run),
+        rows.append({"run": run, "label": S.run_label(run),
                      "honest": float(h.reasoning_tokens.fillna(0).mean()),
                      "attack": float(a.reasoning_tokens.fillna(0).mean())})
     t = pd.DataFrame(rows).sort_values("attack")

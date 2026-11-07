@@ -1,0 +1,885 @@
+{
+ "id": "M20",
+ "kind": "echarts",
+ "title": "Hidden reasoning you never read is most of some bills",
+ "section": "appendix",
+ "order": 136,
+ "caption": "The 14 most expensive runs, priced per million samples at the same rates src/analyze.py uses. Each bar splits into what you pay for: fresh input, cache writes, cache reads, the output you can read, and the reasoning you cannot.",
+ "notes": [
+  "Hidden reasoning reaches 87% of one run's bill. It never reaches the caller: the monitor returns a score and a sentence, and the rest is thinking you paid for and cannot read.",
+  "The clearest pair is GLM-5.3. Its default and its effort=none arm cost within a couple of percent of each other, but one books 87% of that as hidden reasoning and the other 0%. The thinking did not stop, it moved into the visible channel, which is what GLM-THINKING-TOGGLE.md argues from the token counts.",
+  "Data quality: this is drawn from eval logs, which are gitignored, so it reads a committed CSV derived by viz/data/derive_token_bill.py. Rerun that script when a run is added or its usage recovered, or these bars go stale without the check noticing.",
+  "Only the 14 dearest of 40 priced runs are drawn, to keep the labels readable. The CSV button carries all 40, and the n=100 pilots are left out because their three runs share one recorded generation pass and so report an identical bill.",
+  "Ministral 8B has no price in the table, so it has no bar. That absence is deliberate and src/analyze.py explains it."
+ ],
+ "height": 580,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/M20-token-bill",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 230,
+   "right": 40,
+   "top": 40,
+   "bottom": 56
+  },
+  "xAxis": {
+   "name": "US dollars per million samples",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "value"
+  },
+  "yAxis": {
+   "name": "",
+   "nameLocation": "middle",
+   "nameGap": 10,
+   "type": "category",
+   "data": [
+    "Haiku 5.5 · 0-100 · xhigh",
+    "Haiku 5.5 · 0-200 · xhigh",
+    "Haiku 5.5 · batch 2 · 0-100 · xhigh",
+    "Gemini 3.5 Flash-Lite · medium",
+    "Gemini 3.5 Flash-Lite · high",
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "Haiku 4.5",
+    "Mistral Large 4",
+    "Sonnet 5.5 UM · low",
+    "Sonnet 5.5 UM · batch 2",
+    "Sonnet 5.5 UM · 0-100",
+    "Sonnet 5.5 UM · batch 2 · 0-100",
+    "GLM-5.3",
+    "GLM-5.3 · effort none"
+   ],
+   "axisLabel": {
+    "fontSize": 11
+   },
+   "splitLine": {
+    "show": false
+   }
+  },
+  "legend": {
+   "top": 0,
+   "left": 224,
+   "data": [
+    "fresh input",
+    "cache write",
+    "cache read",
+    "output you read",
+    "hidden reasoning"
+   ]
+  },
+  "series": [
+   {
+    "name": "fresh input",
+    "type": "bar",
+    "stack": "bill",
+    "barWidth": "62%",
+    "itemStyle": {
+     "color": "@seq:0.25"
+    },
+    "data": [
+     {
+      "value": 0.4,
+      "tip": "<b>Haiku 5.5 · 0-100 · xhigh</b><br>fresh input: $0<br>0% of $1,891"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>Haiku 5.5 · 0-200 · xhigh</b><br>fresh input: $0<br>0% of $1,936"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>Haiku 5.5 · batch 2 · 0-100 · xhigh</b><br>fresh input: $0<br>0% of $1,947"
+     },
+     {
+      "value": 373.03,
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>fresh input: $373<br>18% of $2,114"
+     },
+     {
+      "value": 373.03,
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>fresh input: $373<br>14% of $2,679"
+     },
+     {
+      "value": 373.03,
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>fresh input: $373<br>14% of $2,714"
+     },
+     {
+      "value": 1316.68,
+      "tip": "<b>Haiku 4.5</b><br>fresh input: $1,317<br>24% of $5,525"
+     },
+     {
+      "value": 821.91,
+      "tip": "<b>Mistral Large 4</b><br>fresh input: $822<br>13% of $6,203"
+     },
+     {
+      "value": 8.0,
+      "tip": "<b>Sonnet 5.5 UM · low</b><br>fresh input: $8<br>0% of $7,627"
+     },
+     {
+      "value": 8.0,
+      "tip": "<b>Sonnet 5.5 UM · batch 2</b><br>fresh input: $8<br>0% of $9,645"
+     },
+     {
+      "value": 8.0,
+      "tip": "<b>Sonnet 5.5 UM · 0-100</b><br>fresh input: $8<br>0% of $9,985"
+     },
+     {
+      "value": 8.0,
+      "tip": "<b>Sonnet 5.5 UM · batch 2 · 0-100</b><br>fresh input: $8<br>0% of $10,255"
+     },
+     {
+      "value": 566.59,
+      "tip": "<b>GLM-5.3</b><br>fresh input: $567<br>4% of $14,616"
+     },
+     {
+      "value": 552.48,
+      "tip": "<b>GLM-5.3 · effort none</b><br>fresh input: $552<br>4% of $14,810"
+     }
+    ]
+   },
+   {
+    "name": "cache write",
+    "type": "bar",
+    "stack": "bill",
+    "barWidth": "62%",
+    "itemStyle": {
+     "color": "@seq:0.45"
+    },
+    "data": [
+     {
+      "value": 230.37,
+      "tip": "<b>Haiku 5.5 · 0-100 · xhigh</b><br>cache write: $230<br>12% of $1,891"
+     },
+     {
+      "value": 231.98,
+      "tip": "<b>Haiku 5.5 · 0-200 · xhigh</b><br>cache write: $232<br>12% of $1,936"
+     },
+     {
+      "value": 250.25,
+      "tip": "<b>Haiku 5.5 · batch 2 · 0-100 · xhigh</b><br>cache write: $250<br>13% of $1,947"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>cache write: $0<br>0% of $2,114"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>cache write: $0<br>0% of $2,679"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>cache write: $0<br>0% of $2,714"
+     },
+     {
+      "value": 6.88,
+      "tip": "<b>Haiku 4.5</b><br>cache write: $7<br>0% of $5,525"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Mistral Large 4</b><br>cache write: $0<br>0% of $6,203"
+     },
+     {
+      "value": 4248.26,
+      "tip": "<b>Sonnet 5.5 UM · low</b><br>cache write: $4,248<br>56% of $7,627"
+     },
+     {
+      "value": 4722.44,
+      "tip": "<b>Sonnet 5.5 UM · batch 2</b><br>cache write: $4,722<br>49% of $9,645"
+     },
+     {
+      "value": 4639.61,
+      "tip": "<b>Sonnet 5.5 UM · 0-100</b><br>cache write: $4,640<br>46% of $9,985"
+     },
+     {
+      "value": 5004.94,
+      "tip": "<b>Sonnet 5.5 UM · batch 2 · 0-100</b><br>cache write: $5,005<br>49% of $10,255"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>GLM-5.3</b><br>cache write: $0<br>0% of $14,616"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>GLM-5.3 · effort none</b><br>cache write: $0<br>0% of $14,810"
+     }
+    ]
+   },
+   {
+    "name": "cache read",
+    "type": "bar",
+    "stack": "bill",
+    "barWidth": "62%",
+    "itemStyle": {
+     "color": "@seq:0.68"
+    },
+    "data": [
+     {
+      "value": 0.13,
+      "tip": "<b>Haiku 5.5 · 0-100 · xhigh</b><br>cache read: $0<br>0% of $1,891"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Haiku 5.5 · 0-200 · xhigh</b><br>cache read: $0<br>0% of $1,936"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Haiku 5.5 · batch 2 · 0-100 · xhigh</b><br>cache read: $0<br>0% of $1,947"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>cache read: $0<br>0% of $2,114"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>cache read: $0<br>0% of $2,679"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>cache read: $0<br>0% of $2,714"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Haiku 4.5</b><br>cache read: $0<br>0% of $5,525"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Mistral Large 4</b><br>cache read: $0<br>0% of $6,203"
+     },
+     {
+      "value": 8.71,
+      "tip": "<b>Sonnet 5.5 UM · low</b><br>cache read: $9<br>0% of $7,627"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Sonnet 5.5 UM · batch 2</b><br>cache read: $0<br>0% of $9,645"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Sonnet 5.5 UM · 0-100</b><br>cache read: $0<br>0% of $9,985"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Sonnet 5.5 UM · batch 2 · 0-100</b><br>cache read: $0<br>0% of $10,255"
+     },
+     {
+      "value": 22.34,
+      "tip": "<b>GLM-5.3</b><br>cache read: $22<br>0% of $14,616"
+     },
+     {
+      "value": 25.48,
+      "tip": "<b>GLM-5.3 · effort none</b><br>cache read: $25<br>0% of $14,810"
+     }
+    ]
+   },
+   {
+    "name": "output you read",
+    "type": "bar",
+    "stack": "bill",
+    "barWidth": "62%",
+    "itemStyle": {
+     "color": "@s2"
+    },
+    "data": [
+     {
+      "value": 327.48,
+      "tip": "<b>Haiku 5.5 · 0-100 · xhigh</b><br>output you read: $327<br>17% of $1,891"
+     },
+     {
+      "value": 330.43,
+      "tip": "<b>Haiku 5.5 · 0-200 · xhigh</b><br>output you read: $330<br>17% of $1,936"
+     },
+     {
+      "value": 334.89,
+      "tip": "<b>Haiku 5.5 · batch 2 · 0-100 · xhigh</b><br>output you read: $335<br>17% of $1,947"
+     },
+     {
+      "value": 457.34,
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>output you read: $457<br>22% of $2,114"
+     },
+     {
+      "value": 472.84,
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>output you read: $473<br>18% of $2,679"
+     },
+     {
+      "value": 474.07,
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>output you read: $474<br>17% of $2,714"
+     },
+     {
+      "value": 4201.5,
+      "tip": "<b>Haiku 4.5</b><br>output you read: $4,202<br>76% of $5,525"
+     },
+     {
+      "value": 5381.28,
+      "tip": "<b>Mistral Large 4</b><br>output you read: $5,381<br>87% of $6,203"
+     },
+     {
+      "value": 3361.78,
+      "tip": "<b>Sonnet 5.5 UM · low</b><br>output you read: $3,362<br>44% of $7,627"
+     },
+     {
+      "value": 3870.32,
+      "tip": "<b>Sonnet 5.5 UM · batch 2</b><br>output you read: $3,870<br>40% of $9,645"
+     },
+     {
+      "value": 3781.25,
+      "tip": "<b>Sonnet 5.5 UM · 0-100</b><br>output you read: $3,781<br>38% of $9,985"
+     },
+     {
+      "value": 3793.85,
+      "tip": "<b>Sonnet 5.5 UM · batch 2 · 0-100</b><br>output you read: $3,794<br>37% of $10,255"
+     },
+     {
+      "value": 1257.15,
+      "tip": "<b>GLM-5.3</b><br>output you read: $1,257<br>9% of $14,616"
+     },
+     {
+      "value": 14232.3,
+      "tip": "<b>GLM-5.3 · effort none</b><br>output you read: $14,232<br>96% of $14,810"
+     }
+    ]
+   },
+   {
+    "name": "hidden reasoning",
+    "type": "bar",
+    "stack": "bill",
+    "barWidth": "62%",
+    "itemStyle": {
+     "color": "@s1"
+    },
+    "data": [
+     {
+      "value": 1332.33,
+      "tip": "<b>Haiku 5.5 · 0-100 · xhigh</b><br>hidden reasoning: $1,332<br>70% of $1,891"
+     },
+     {
+      "value": 1373.19,
+      "tip": "<b>Haiku 5.5 · 0-200 · xhigh</b><br>hidden reasoning: $1,373<br>71% of $1,936"
+     },
+     {
+      "value": 1361.27,
+      "tip": "<b>Haiku 5.5 · batch 2 · 0-100 · xhigh</b><br>hidden reasoning: $1,361<br>70% of $1,947"
+     },
+     {
+      "value": 1283.42,
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>hidden reasoning: $1,283<br>61% of $2,114"
+     },
+     {
+      "value": 1832.92,
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>hidden reasoning: $1,833<br>68% of $2,679"
+     },
+     {
+      "value": 1866.51,
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>hidden reasoning: $1,867<br>69% of $2,714"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Haiku 4.5</b><br>hidden reasoning: $0<br>0% of $5,525"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Mistral Large 4</b><br>hidden reasoning: $0<br>0% of $6,203"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>Sonnet 5.5 UM · low</b><br>hidden reasoning: $0<br>0% of $7,627"
+     },
+     {
+      "value": 1044.21,
+      "tip": "<b>Sonnet 5.5 UM · batch 2</b><br>hidden reasoning: $1,044<br>11% of $9,645"
+     },
+     {
+      "value": 1556.38,
+      "tip": "<b>Sonnet 5.5 UM · 0-100</b><br>hidden reasoning: $1,556<br>16% of $9,985"
+     },
+     {
+      "value": 1448.04,
+      "tip": "<b>Sonnet 5.5 UM · batch 2 · 0-100</b><br>hidden reasoning: $1,448<br>14% of $10,255"
+     },
+     {
+      "value": 12769.8,
+      "tip": "<b>GLM-5.3</b><br>hidden reasoning: $12,770<br>87% of $14,616"
+     },
+     {
+      "value": 0.0,
+      "tip": "<b>GLM-5.3 · effort none</b><br>hidden reasoning: $0<br>0% of $14,810"
+     }
+    ]
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "run",
+   "monitor",
+   "model",
+   "usd_input",
+   "usd_cache_write",
+   "usd_cache_read",
+   "usd_visible_output",
+   "usd_hidden_reasoning",
+   "usd_total"
+  ],
+  "rows": [
+   [
+    "dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip",
+    "GLM-5.3 · effort none",
+    "openai-api/litellm/deepinfra/zai-org/GLM-5.3",
+    552.48,
+    0.0,
+    25.48,
+    14232.3,
+    0.0,
+    14810.3
+   ],
+   [
+    "dataset-glm53-tm-n500-strip",
+    "GLM-5.3",
+    "openai-api/litellm/deepinfra/zai-org/GLM-5.3",
+    566.59,
+    0.0,
+    22.34,
+    1257.15,
+    12769.8,
+    14615.9
+   ],
+   [
+    "dataset500b2-sonnet55-um-scale100-strip",
+    "Sonnet 5.5 UM · batch 2 · 0-100",
+    "anthropic/claude-sonnet-5-5",
+    8.0,
+    5004.94,
+    0.0,
+    3793.85,
+    1448.04,
+    10254.8
+   ],
+   [
+    "dataset500-sonnet55-um-scale100-strip",
+    "Sonnet 5.5 UM · 0-100",
+    "anthropic/claude-sonnet-5-5",
+    8.0,
+    4639.61,
+    0.0,
+    3781.25,
+    1556.38,
+    9985.24
+   ],
+   [
+    "dataset500b2-sonnet55-um-strip",
+    "Sonnet 5.5 UM · batch 2",
+    "anthropic/claude-sonnet-5-5",
+    8.0,
+    4722.44,
+    0.0,
+    3870.32,
+    1044.21,
+    9644.97
+   ],
+   [
+    "dataset500-sonnet55-um-effortlow-v2-strip",
+    "Sonnet 5.5 UM · low",
+    "anthropic/claude-sonnet-5-5",
+    8.0,
+    4248.26,
+    8.71,
+    3361.78,
+    0.0,
+    7626.75
+   ],
+   [
+    "dataset-mistrallarge4-tm-n500-strip",
+    "Mistral Large 4",
+    "mistral/mistral-large-4",
+    821.91,
+    0.0,
+    0.0,
+    5381.28,
+    0.0,
+    6203.19
+   ],
+   [
+    "dataset-haiku45-tm-n500-strip",
+    "Haiku 4.5",
+    "anthropic/claude-haiku-4-5-20251001",
+    1316.68,
+    6.88,
+    0.0,
+    4201.5,
+    0.0,
+    5525.06
+   ],
+   [
+    "dataset-gemini35fl-xhigh-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "google/gemini-3.5-flash-lite",
+    373.03,
+    0.0,
+    0.0,
+    474.07,
+    1866.51,
+    2713.61
+   ],
+   [
+    "dataset-gemini35fl-high-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · high",
+    "google/gemini-3.5-flash-lite",
+    373.03,
+    0.0,
+    0.0,
+    472.84,
+    1832.92,
+    2678.79
+   ],
+   [
+    "dataset-gemini35fl-medium-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · medium",
+    "google/gemini-3.5-flash-lite",
+    373.03,
+    0.0,
+    0.0,
+    457.34,
+    1283.42,
+    2113.79
+   ],
+   [
+    "dataset-haiku55-xhigh-scale100-n500b2-strip",
+    "Haiku 5.5 · batch 2 · 0-100 · xhigh",
+    "anthropic/claude-haiku-5-5",
+    0.4,
+    250.25,
+    0.0,
+    334.89,
+    1361.27,
+    1946.81
+   ],
+   [
+    "dataset-haiku55-xhigh-scale200-n500-strip",
+    "Haiku 5.5 · 0-200 · xhigh",
+    "anthropic/claude-haiku-5-5",
+    0.4,
+    231.98,
+    0.0,
+    330.43,
+    1373.19,
+    1936.0
+   ],
+   [
+    "dataset-haiku55-xhigh-scale100-n500-strip",
+    "Haiku 5.5 · 0-100 · xhigh",
+    "anthropic/claude-haiku-5-5",
+    0.4,
+    230.37,
+    0.13,
+    327.48,
+    1332.33,
+    1890.71
+   ],
+   [
+    "dataset-haiku55-effortxhigh-tm-n500b2-strip",
+    "Haiku 5.5 · batch 2 · xhigh",
+    "anthropic/claude-haiku-5-5",
+    0.4,
+    236.12,
+    0.0,
+    334.95,
+    1241.38,
+    1812.85
+   ],
+   [
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    "Haiku 5.5 · xhigh",
+    "anthropic/claude-haiku-5-5",
+    0.4,
+    217.86,
+    0.0,
+    328.07,
+    1226.41,
+    1772.74
+   ],
+   [
+    "dataset-glm53-efforthigh-tm-n500-strip",
+    "GLM-5.3 · high",
+    "openai-api/litellm/deepinfra/zai-org/GLM-5.3",
+    488.94,
+    0.0,
+    39.6,
+    835.3,
+    343.27,
+    1707.11
+   ],
+   [
+    "dataset-haiku55-xhigh-nostrip-n500",
+    "Haiku 5.5 · comments kept · xhigh",
+    "anthropic/claude-haiku-5-5",
+    0.4,
+    221.25,
+    0.0,
+    332.01,
+    1042.99,
+    1596.65
+   ],
+   [
+    "dataset-gemini35fl-low-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · low",
+    "google/gemini-3.5-flash-lite",
+    373.03,
+    0.0,
+    0.0,
+    463.37,
+    677.03,
+    1513.43
+   ],
+   [
+    "dataset-haiku55-efforthigh-tm-n500-strip",
+    "Haiku 5.5 · high",
+    "anthropic/claude-haiku-5-5",
+    0.4,
+    217.86,
+    0.0,
+    284.96,
+    502.3,
+    1005.52
+   ],
+   [
+    "dataset-qwen38-scale100-n500-strip",
+    "Qwen 3.8 · 0-100",
+    "openai-api/litellm/vercel_ai_gateway/alibaba/qwen3.8-omni-flash",
+    205.91,
+    0.0,
+    0.0,
+    147.09,
+    601.97,
+    954.97
+   ],
+   [
+    "dataset-glm53-effortlow-tm-n500-strip",
+    "GLM-5.3 · low",
+    "openai-api/litellm/deepinfra/zai-org/GLM-5.3",
+    489.27,
+    0.0,
+    39.53,
+    347.17,
+    57.54,
+    933.51
+   ],
+   [
+    "dataset-haiku55-tm-n500-strip",
+    "Haiku 5.5",
+    "anthropic/claude-haiku-5-5",
+    0.4,
+    217.86,
+    0.0,
+    254.65,
+    291.63,
+    764.54
+   ],
+   [
+    "dataset-haiku55-effortlow-tm-n500-strip",
+    "Haiku 5.5 · low",
+    "anthropic/claude-haiku-5-5",
+    0.4,
+    217.86,
+    0.0,
+    234.72,
+    225.94,
+    678.92
+   ],
+   [
+    "dataset-qwen38omniflash-none-tm-n500-strip",
+    "Qwen 3.8 Omni Flash · effort none",
+    "openai-api/vercel/alibaba/qwen3.8-omni-flash",
+    186.26,
+    0.0,
+    0.0,
+    349.37,
+    0.0,
+    535.63
+   ],
+   [
+    "dataset-luna-xhigh-tm-n500-strip",
+    "GPT-6 Luna · xhigh",
+    "openai-api/litellm/openai/gpt-6-luna",
+    31.18,
+    85.54,
+    0.0,
+    77.4,
+    259.7,
+    453.82
+   ],
+   [
+    "dataset-luna-high-tm-n500-strip",
+    "GPT-6 Luna · high",
+    "openai-api/litellm/openai/gpt-6-luna",
+    31.18,
+    85.54,
+    0.0,
+    74.41,
+    183.23,
+    374.36
+   ],
+   [
+    "dataset-gptoss120b-high-tm-n500-strip",
+    "gpt-oss-120b · high",
+    "openai-api/litellm/deepinfra/openai/gpt-oss-120b",
+    44.96,
+    0.0,
+    0.0,
+    65.47,
+    236.81,
+    347.24
+   ],
+   [
+    "dataset-luna-scale100-n500-strip",
+    "GPT-6 Luna · 0-100",
+    "openai-api/litellm/openai/gpt-6-luna",
+    16.51,
+    108.51,
+    0.0,
+    74.08,
+    140.9,
+    340.0
+   ],
+   [
+    "dataset-gpt6luna-tm-n500-strip",
+    "GPT-6 Luna",
+    "openai-api/litellm/openai/gpt-6-luna",
+    31.18,
+    85.54,
+    0.0,
+    73.32,
+    135.75,
+    325.79
+   ],
+   [
+    "dataset-luna-low-tm-n500-strip",
+    "GPT-6 Luna · low",
+    "openai-api/litellm/openai/gpt-6-luna",
+    31.31,
+    85.41,
+    0.0,
+    72.59,
+    77.93,
+    267.24
+   ],
+   [
+    "dataset-gemma426b-scale100-n500-strip",
+    "Gemma 4 26B · 0-100",
+    "openai-api/litellm/deepinfra/google/gemma-4-26B-A4B-it",
+    94.18,
+    0.0,
+    0.0,
+    120.76,
+    0.0,
+    214.94
+   ],
+   [
+    "dataset-luna-none-tm-n500-strip",
+    "GPT-6 Luna · effort none",
+    "openai-api/litellm/openai/gpt-6-luna",
+    31.18,
+    85.54,
+    0.0,
+    71.28,
+    0.0,
+    188.0
+   ],
+   [
+    "dataset-gptoss120b-scale100-n500-strip",
+    "gpt-oss-120b · 0-100",
+    "openai-api/litellm/deepinfra/openai/gpt-oss-120b",
+    48.03,
+    0.0,
+    0.0,
+    118.44,
+    0.0,
+    166.47
+   ],
+   [
+    "dataset-gptoss120b-tm-n500-strip",
+    "gpt-oss-120b",
+    "openai-api/litellm/deepinfra/openai/gpt-oss-120b",
+    44.96,
+    0.0,
+    0.0,
+    66.23,
+    48.03,
+    159.22
+   ],
+   [
+    "dataset-gemma3-27b-scale100-n500-strip",
+    "Gemma 3 27B · 0-100",
+    "openai-api/litellm/deepinfra/google/gemma-3-27b-it",
+    107.31,
+    0.0,
+    0.0,
+    45.37,
+    0.0,
+    152.68
+   ],
+   [
+    "dataset-gemma3-27b-tm-n500-strip",
+    "Gemma 3 27B",
+    "openai-api/litellm/deepinfra/google/gemma-3-27b-it",
+    100.03,
+    0.0,
+    0.0,
+    43.4,
+    0.0,
+    143.43
+   ],
+   [
+    "dataset-gptoss120b-low-tm-n500-strip",
+    "gpt-oss-120b · low",
+    "openai-api/litellm/deepinfra/openai/gpt-oss-120b",
+    44.96,
+    0.0,
+    0.0,
+    65.52,
+    8.38,
+    118.86
+   ],
+   [
+    "dataset-gemma3-4b-scale100-n500-strip",
+    "Gemma 3 4B · 0-100",
+    "openai-api/litellm/deepinfra/google/gemma-3-4b-it",
+    67.07,
+    0.0,
+    0.0,
+    23.62,
+    0.0,
+    90.69
+   ],
+   [
+    "dataset-gemma3-4b-tm-n500-strip",
+    "Gemma 3 4B",
+    "openai-api/litellm/deepinfra/google/gemma-3-4b-it",
+    62.52,
+    0.0,
+    0.0,
+    23.41,
+    0.0,
+    85.93
+   ]
+  ]
+ },
+ "facts": {
+  "n_shown": 14,
+  "n_total": 40,
+  "max_share": 87,
+  "glm_max": 87,
+  "glm_none": 0
+ },
+ "build": {
+  "inputs": {
+   "viz/data/token-bill.csv": "sha256:ad1e0f538701aaa4"
+  },
+  "code": "sha256:bf1253f032e13936",
+  "spec": "sha256:8fd7699f2e65ba13"
+ }
+}
