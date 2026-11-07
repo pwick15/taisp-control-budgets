@@ -32,7 +32,8 @@ THRESH = 20
 def build() -> Figure:
     d = pd.read_csv(S.ANALYSIS / "opus-hard51-scores.csv")
     miss = d[d.group == "never_caught"].dropna(subset=[COL])
-    top = miss.sort_values(COL, ascending=False).head(10).iloc[::-1]
+    # Ties broken by problem id so every machine builds the same order.
+    top = miss.sort_values([COL, "sample_id"], ascending=[False, True], kind="stable").head(10).iloc[::-1]
     rest = miss.drop(top.index)
     labels = [f"{int(r.sample_id)}  ({r['Sonnet 5.5']:g} / {r['Haiku 5.5 xhigh']:g})" for _, r in top.iterrows()]
     option = C.base(

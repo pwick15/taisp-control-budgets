@@ -1,0 +1,711 @@
+{
+ "id": "P17",
+ "kind": "echarts",
+ "title": "More reasoning doesn't raise false alarms on clean code",
+ "section": "results",
+ "order": 35,
+ "caption": "Share of the 500 clean programs each monitor scores 5/10 or higher, at each reasoning setting. Each step on the axis is one program. Every model stays between 0.2% and 0.8% at every setting, while P03 shows 6 of 8 catching more backdoors as effort rises.",
+ "notes": [
+  "At a fixed audit budget the false-positive rate is fixed by construction: 2% of clean code gets audited whatever the monitor. This asks a different question: does more reasoning push clean code's scores up? It doesn't; Haiku 5.5's mean clean score even falls as effort rises.",
+  "Extends A06's false-alarm panel from two models to all eight."
+ ],
+ "height": 440,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P17-effort-and-false-alarms",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 58,
+   "right": 140,
+   "top": 16,
+   "bottom": 52
+  },
+  "xAxis": {
+   "name": "Reasoning effort setting",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "category",
+   "boundaryGap": false,
+   "data": [
+    "off",
+    "low",
+    "medium / default",
+    "high",
+    "xhigh / max"
+   ]
+  },
+  "yAxis": {
+   "name": "Clean programs flagged",
+   "nameLocation": "middle",
+   "nameGap": 44,
+   "type": "value",
+   "min": 0,
+   "max": 1,
+   "interval": 0.2,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "series": [
+   {
+    "name": "Sonnet 5.5",
+    "type": "line",
+    "data": [
+     null,
+     {
+      "value": 0.2,
+      "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     null,
+     {
+      "value": 0.4,
+      "tip": "<b>Sonnet 5.5 · high (default)</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s0",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Haiku 5.5",
+    "type": "line",
+    "data": [
+     null,
+     {
+      "value": 0.4,
+      "tip": "<b>Haiku 5.5 · low</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>Haiku 5.5 · medium (default)</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>Haiku 5.5 · high</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>2 of 500 clean programs scored 5/10 or more"
+     }
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s1",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s1",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "GLM-5.3",
+    "type": "line",
+    "data": [
+     null,
+     {
+      "value": 0.4,
+      "tip": "<b>GLM-5.3 · low</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     null,
+     {
+      "value": 0.2,
+      "tip": "<b>GLM-5.3 · high</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>GLM-5.3 · max (default)</b><br>1 of 500 clean programs scored 5/10 or more"
+     }
+    ],
+    "connectNulls": true,
+    "z": 4,
+    "symbolSize": 8,
+    "itemStyle": {
+     "color": "@s2",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@s2",
+     "width": 2.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Qwen 3.8",
+    "type": "line",
+    "data": [
+     {
+      "value": 0.8,
+      "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>4 of 500 clean programs scored 5/10 or more"
+     },
+     null,
+     {
+      "value": 0.6,
+      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>3 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.6,
+      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>3 of 500 clean programs scored 5/10 or more"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "GPT-6 Luna",
+    "type": "line",
+    "data": [
+     {
+      "value": 0.2,
+      "tip": "<b>GPT-6 Luna · off</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>GPT-6 Luna · low</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>GPT-6 Luna · medium (default)</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>GPT-6 Luna · high</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>GPT-6 Luna · xhigh</b><br>2 of 500 clean programs scored 5/10 or more"
+     }
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Mistral Large 4",
+    "type": "line",
+    "data": [
+     null,
+     null,
+     {
+      "value": 0.4,
+      "tip": "<b>Mistral Large 4 · default</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.6,
+      "tip": "<b>Mistral Large 4 · high</b><br>3 of 500 clean programs scored 5/10 or more"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "gpt-oss-120b",
+    "type": "line",
+    "data": [
+     null,
+     {
+      "value": 0.2,
+      "tip": "<b>gpt-oss-120b · low</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>gpt-oss-120b · medium (default)</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.4,
+      "tip": "<b>gpt-oss-120b · high</b><br>2 of 500 clean programs scored 5/10 or more"
+     },
+     null
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   },
+   {
+    "name": "Gemini Flash-Lite",
+    "type": "line",
+    "data": [
+     {
+      "value": 0.2,
+      "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>1 of 500 clean programs scored 5/10 or more"
+     },
+     {
+      "value": 0.2,
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>1 of 500 clean programs scored 5/10 or more"
+     }
+    ],
+    "connectNulls": true,
+    "z": 3,
+    "symbolSize": 6,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 1.5
+    },
+    "endLabel": {
+     "show": true,
+     "formatter": "{a}",
+     "color": "@ink-muted",
+     "fontSize": 11,
+     "fontWeight": 400,
+     "distance": 8
+    },
+    "labelLayout": {
+     "moveOverlap": "shiftY"
+    },
+    "emphasis": {
+     "focus": "series"
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "model",
+   "effort",
+   "clean_flagged",
+   "clean_total",
+   "pct"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5",
+    "low",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "Sonnet 5.5",
+    "high",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "Haiku 5.5",
+    "low",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "Haiku 5.5",
+    "medium",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "Haiku 5.5",
+    "high",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "Haiku 5.5",
+    "xhigh",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "GLM-5.3",
+    "low",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "GLM-5.3",
+    "high",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "GLM-5.3",
+    "max",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "Qwen 3.8",
+    "off",
+    4,
+    500,
+    0.8
+   ],
+   [
+    "Qwen 3.8",
+    "medium",
+    3,
+    500,
+    0.6
+   ],
+   [
+    "Qwen 3.8",
+    "high",
+    3,
+    500,
+    0.6
+   ],
+   [
+    "GPT-6 Luna",
+    "off",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "GPT-6 Luna",
+    "low",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "GPT-6 Luna",
+    "medium",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "GPT-6 Luna",
+    "high",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "GPT-6 Luna",
+    "xhigh",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "Mistral Large 4",
+    "default",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "Mistral Large 4",
+    "high",
+    3,
+    500,
+    0.6
+   ],
+   [
+    "gpt-oss-120b",
+    "low",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "gpt-oss-120b",
+    "medium",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "gpt-oss-120b",
+    "high",
+    2,
+    500,
+    0.4
+   ],
+   [
+    "Gemini Flash-Lite",
+    "off",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "Gemini Flash-Lite",
+    "low",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "Gemini Flash-Lite",
+    "medium",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "Gemini Flash-Lite",
+    "high",
+    1,
+    500,
+    0.2
+   ],
+   [
+    "Gemini Flash-Lite",
+    "xhigh",
+    1,
+    500,
+    0.2
+   ]
+  ]
+ },
+ "facts": {
+  "lo": 0.2,
+  "hi": 0.8,
+  "n_gain": 6
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-high-tm-n500-strip.csv": "sha256:a60a51b2415ba673",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-low-tm-n500-strip.csv": "sha256:df0483e4077defa8",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-medium-tm-n500-strip.csv": "sha256:0e66fe6412044d6a",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip.csv": "sha256:1464354acd0c1eac",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-27b-tm-n500-strip.csv": "sha256:0fd529c0321e2b40",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma3-4b-tm-n500-strip.csv": "sha256:f61740693798daf0",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-efforthigh-tm-n500-strip.csv": "sha256:91ad04f265a32df6",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortlow-tm-n500-strip.csv": "sha256:887b7a9f8b6458c6",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-glm53-tm-n500-strip.csv": "sha256:21940d7538a860fd",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gpt6luna-tm-n500-strip.csv": "sha256:1bd4150a8317991e",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-high-tm-n500-strip.csv": "sha256:7d6358205499e8b5",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-low-tm-n500-strip.csv": "sha256:ab21d9005876f67f",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-gptoss120b-tm-n500-strip.csv": "sha256:27efb0e60c3a48b1",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku45-tm-n500-strip.csv": "sha256:db19f2e66f02248c",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip.csv": "sha256:812be9bae5ee289f",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortlow-tm-n500-strip.csv": "sha256:217621bd62368260",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip.csv": "sha256:1127f06477e2ab86",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-haiku55-tm-n500-strip.csv": "sha256:90128b48d21d6a52",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-high-tm-n500-strip.csv": "sha256:3edcfe1c36eebf3a",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-low-tm-n500-strip.csv": "sha256:768010c0dd6b9807",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-none-tm-n500-strip.csv": "sha256:c7db9cea6a75df52",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-luna-xhigh-tm-n500-strip.csv": "sha256:46e806313783bfdc",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-mistrallarge4-tm-n500-strip.csv": "sha256:b0a3877f4030fbf0",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip.csv": "sha256:af2ef7e80df20ec1",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:c3616d9920823db0",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-high-tm-strip.csv": "sha256:a976a26754d7d62f",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
+   "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
+  },
+  "code": "sha256:258ea9782591abea",
+  "spec": "sha256:08dc2afb88f536af"
+ }
+}

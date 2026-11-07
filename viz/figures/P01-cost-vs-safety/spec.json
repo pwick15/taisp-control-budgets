@@ -106,7 +106,7 @@
       "label": {
        "show": true,
        "position": "right",
-       "formatter": "Sonnet 5.5",
+       "formatter": "Sonnet 5.5 · high",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -197,7 +197,7 @@
       "label": {
        "show": true,
        "position": "top",
-       "formatter": "Haiku 5.5",
+       "formatter": "Haiku 5.5 · xhigh",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -356,7 +356,7 @@
       "label": {
        "show": true,
        "position": "right",
-       "formatter": "GLM-5.3",
+       "formatter": "GLM-5.3 · max",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -985,7 +985,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "Sonnet 5.5",
+         "formatter": "Sonnet 5.5 · high",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -1076,7 +1076,7 @@
         "label": {
          "show": true,
          "position": "top",
-         "formatter": "Haiku 5.5",
+         "formatter": "Haiku 5.5 · xhigh",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -1235,7 +1235,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "GLM-5.3",
+         "formatter": "GLM-5.3 · max",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -1838,7 +1838,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "Sonnet 5.5",
+         "formatter": "Sonnet 5.5 · high",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -1929,7 +1929,7 @@
         "label": {
          "show": true,
          "position": "top",
-         "formatter": "Haiku 5.5",
+         "formatter": "Haiku 5.5 · xhigh",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -2088,7 +2088,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "GLM-5.3",
+         "formatter": "GLM-5.3 · max",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -2707,7 +2707,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "Sonnet 5.5",
+         "formatter": "Sonnet 5.5 · high",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -2798,7 +2798,7 @@
         "label": {
          "show": true,
          "position": "top",
-         "formatter": "Haiku 5.5",
+         "formatter": "Haiku 5.5 · xhigh",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -2957,7 +2957,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "GLM-5.3",
+         "formatter": "GLM-5.3 · max",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -3576,7 +3576,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "Sonnet 5.5",
+         "formatter": "Sonnet 5.5 · high",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -3667,7 +3667,7 @@
         "label": {
          "show": true,
          "position": "top",
-         "formatter": "Haiku 5.5",
+         "formatter": "Haiku 5.5 · xhigh",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -3826,7 +3826,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "GLM-5.3",
+         "formatter": "GLM-5.3 · max",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -5793,7 +5793,7 @@
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:b83f343d7381f932",
-  "spec": "sha256:fe8f4b3ef0956c31"
+  "code": "sha256:57475673b433e3bc",
+  "spec": "sha256:8c3f9e6b24d5c43e"
  }
 }

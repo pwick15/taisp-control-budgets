@@ -48,7 +48,9 @@ class Findings:
 
 
 def words(s: str) -> int:
-    return len(re.findall(r"[A-Za-z][A-Za-z'’-]*", s or ""))
+    # A {placeholder} becomes one number when filled, so it doesn't count as words.
+    s = re.sub(r"\{[^{}]*\}", "0", s or "")
+    return len(re.findall(r"[A-Za-z][A-Za-z'’-]*", s))
 
 
 def git_lists() -> tuple[set[str], callable]:

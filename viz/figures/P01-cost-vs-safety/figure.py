@@ -38,6 +38,12 @@ LABEL_AT = {
 }
 
 
+def label_for(model: str, effort: str) -> str:
+    """Highlighted models carry the effort of the labelled point; Haiku 4.5 has only one setting."""
+    name = SHORT.get(model, model)
+    return f"{name} · {effort}" if model in HIGHLIGHT and model != "haiku45" else name
+
+
 def tip(r) -> str:
     return (f"<b>{r['name']}</b><br>caught {C.pct(r.safety_exact)}% ({C.pct(r.ci_lo)} to {C.pct(r.ci_hi)})"
             f"<br>{C.money(r.cost)} per program")
@@ -55,7 +61,7 @@ def series_at(t, budget: float) -> list:
         for i, r in g.iterrows():
             item = {"value": [r.cost, round(100 * r.safety_exact, 2)], "tip": tip(r)}
             if i == best:
-                item["label"] = {"show": True, "position": LABEL_AT.get(model, "right"), "formatter": SHORT.get(model, model),
+                item["label"] = {"show": True, "position": LABEL_AT.get(model, "right"), "formatter": label_for(model, r.effort),
                                  "color": "@ink-primary" if hot else "@ink-muted", "fontSize": 12 if hot else 11,
                                  "fontWeight": 600 if hot else 400, "distance": 7}
             items.append(item)

@@ -6,8 +6,8 @@ from viz.lib import safety as S
 META = {
     "id": "A06",
     "title": "More reasoning catches more backdoors without raising false alarms",
-    "section": "results",
-    "order": 35,
+    "section": "appendix",
+    "order": 6,
     "caption": ("Top: backdoors caught at a 2% audit budget at each reasoning setting, with 95% intervals. "
                 "Bottom: share of the {n_clean} clean programs the same monitors score 5/10 or higher. "
                 "Detection rises by up to {max_gain:.0f} points while false alarms stay near zero."),

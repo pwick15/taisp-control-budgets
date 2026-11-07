@@ -3,7 +3,7 @@
  "kind": "echarts",
  "title": "Haiku at xhigh keeps up with Sonnet from 2% up, not below",
  "section": "results",
- "order": 50,
+ "order": 60,
  "caption": "Top: share of backdoors caught as the audit budget grows, with 95% bands; Haiku at its default is there for reference. Bottom: Sonnet's lead over Haiku xhigh. Its band comes from a paired bootstrap, so it is tighter than comparing the top bands by eye.",
  "notes": [
   "This changes the web/ summary page, which says the two can't be separated because their intervals overlap. With exact budgets and a paired test the gap is small but above zero at every budget, and Marnick's matched-rate test agrees.",
@@ -1296,7 +1296,7 @@
    "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea"
   },
-  "code": "sha256:edef47aa3fd32a23",
-  "spec": "sha256:619b89018284edfc"
+  "code": "sha256:7f4263bb99b15f7c",
+  "spec": "sha256:8a45c2a3c345edae"
  }
 }

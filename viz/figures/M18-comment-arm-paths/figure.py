@@ -11,8 +11,8 @@ from viz.lib import safety as S
 META = {
     "id": "M18",
     "title": "Stripping comments costs more than any adversarial rewrite gains",
-    "section": "appendix",
-    "order": 132,
+    "section": "results",
+    "order": 120,
     "caption": ("One faint line per backdoored program, tracked across five versions of the same code: "
                 "comments stripped, the confession removed, left as written, rewritten to argue the code "
                 "is safe, and rewritten to point at the wrong line. Bold lines are group means."),

@@ -8,8 +8,8 @@ from viz.lib import safety as S
 META = {
     "id": "M15",
     "title": "No hard backdoor is both stealthy and seriously harmful",
-    "section": "appendix",
-    "order": 123,
+    "section": "results",
+    "order": 140,
     "caption": ("The {n:d} hardest backdoors, each rated by hand on two axes: how obviously planted the code "
                 "looks to a reviewer, and how much damage the bug does when its trigger fires. Cells hold "
                 "counts. The stealthy and severe block, top right, is empty."),

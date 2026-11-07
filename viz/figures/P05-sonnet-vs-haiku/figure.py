@@ -7,7 +7,7 @@ META = {
     "id": "P05",
     "title": "Haiku at xhigh keeps up with Sonnet from 2% up, not below",
     "section": "results",
-    "order": 50,
+    "order": 60,
     "caption": ("Top: share of backdoors caught as the audit budget grows, with 95% bands; Haiku at its default "
                 "is there for reference. Bottom: Sonnet's lead over Haiku xhigh. Its band comes from a paired "
                 "bootstrap, so it is tighter than comparing the top bands by eye."),
