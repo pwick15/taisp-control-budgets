@@ -1,0 +1,315 @@
+{
+ "id": "M05",
+ "kind": "snapshot",
+ "title": "The comment advantage survives recalibration",
+ "section": "appendix",
+ "order": 70,
+ "caption": "Calibrating the cutoff on commented honest code leaves the gap between keeping and stripping comments in place. Backs up M01.",
+ "notes": [],
+ "height": 440,
+ "author": "",
+ "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'cases-honest-recalibration'. Copied as exported; its generator isn't in the repo yet.",
+ "path": "viz/figures/M05-honest-recalibration",
+ "option": {
+  "animation": false,
+  "textStyle": {
+   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
+   "color": "@ink-secondary"
+  },
+  "grid": {
+   "left": 66,
+   "right": 28,
+   "top": 18,
+   "bottom": 74,
+   "containLabel": true
+  },
+  "tooltip": {
+   "trigger": "item",
+   "confine": true,
+   "backgroundColor": "@ink-surface",
+   "borderColor": "@ink-axis",
+   "borderWidth": 1,
+   "textStyle": {
+    "color": "@ink-primary",
+    "fontSize": 12
+   },
+   "formatter": "function (p) { var v = p.value; return p.seriesName + '<br/>' + v[0].toFixed(2) + '% false positives<br/>' + (v[1] * 100).toFixed(1) + '% of backdoors caught'; }"
+  },
+  "legend": {
+   "type": "scroll",
+   "bottom": 0,
+   "icon": "roundRect",
+   "itemWidth": 10,
+   "itemHeight": 10,
+   "textStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   }
+  },
+  "xAxis": {
+   "type": "value",
+   "name": "false-positive rate the cutoff spends (%)",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "min": 0,
+   "max": 6.2
+  },
+  "yAxis": {
+   "type": "value",
+   "name": "share of backdoors caught",
+   "nameLocation": "middle",
+   "nameGap": 48,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "min": 0.4,
+   "max": 1.0
+  },
+  "series": [
+   {
+    "type": "line",
+    "name": "comments kept, bare honest code",
+    "showSymbol": true,
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s0",
+     "width": 2,
+     "type": "solid"
+    },
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1
+    },
+    "data": [
+     [
+      0.0,
+      0.4136
+     ],
+     [
+      0.2132,
+      0.7804
+     ],
+     [
+      0.6397,
+      0.8699
+     ],
+     [
+      1.919,
+      0.9424
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "name": "comments stripped, bare honest code",
+    "showSymbol": true,
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s1",
+     "width": 2,
+     "type": "solid"
+    },
+    "itemStyle": {
+     "color": "@s1",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1
+    },
+    "data": [
+     [
+      0.0,
+      0.1279
+     ],
+     [
+      0.2132,
+      0.5991
+     ],
+     [
+      0.6397,
+      0.7484
+     ],
+     [
+      1.919,
+      0.8507
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "name": "comments kept, commented honest code",
+    "showSymbol": true,
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s0",
+     "width": 2,
+     "type": "dashed"
+    },
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1
+    },
+    "data": [
+     [
+      0.0,
+      0.1748
+     ],
+     [
+      0.2132,
+      0.7804
+     ],
+     [
+      0.8529,
+      0.8699
+     ],
+     [
+      5.7569,
+      0.9424
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "name": "comments stripped, commented honest code",
+    "showSymbol": true,
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s1",
+     "width": 2,
+     "type": "dashed"
+    },
+    "itemStyle": {
+     "color": "@s1",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1
+    },
+    "data": [
+     [
+      0.0,
+      0.0171
+     ],
+     [
+      0.2132,
+      0.5991
+     ],
+     [
+      0.8529,
+      0.7484
+     ],
+     [
+      5.7569,
+      0.8507
+     ]
+    ]
+   },
+   {
+    "type": "scatter",
+    "name": "where a 2% request lands",
+    "symbolSize": 15,
+    "symbol": "diamond",
+    "itemStyle": {
+     "color": "@warning",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "data": [
+     [
+      1.919,
+      0.9424
+     ],
+     [
+      0.8529,
+      0.8699
+     ],
+     [
+      1.919,
+      0.8507
+     ],
+     [
+      0.8529,
+      0.7484
+     ]
+    ]
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "honest baseline the cutoff comes from",
+   "cutoff",
+   "FPR served",
+   "honest rows",
+   "kept recall",
+   "stripped recall",
+   "gap (pts)"
+  ],
+  "rows": [
+   [
+    "calibrated on bare honest code",
+    0.1,
+    "1.92%",
+    9,
+    "94.2%",
+    "85.1%",
+    "+9.2"
+   ],
+   [
+    "calibrated on commented honest code",
+    0.2,
+    "0.85%",
+    4,
+    "87.0%",
+    "74.8%",
+    "+12.2"
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {},
+  "code": "sha256:d785fc1ed553662a",
+  "spec": "sha256:05b071f5d8db1148"
+ }
+}

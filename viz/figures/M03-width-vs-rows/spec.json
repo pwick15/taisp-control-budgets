@@ -1,0 +1,992 @@
+{
+ "id": "M03",
+ "kind": "snapshot",
+ "title": "Wide intervals come from too few honest programs",
+ "section": "appendix",
+ "order": 50,
+ "caption": "Interval width against how many honest programs sit above the cutoff. Width depends on that count, not on the monitor, which supports using more honest programs at tight budgets.",
+ "notes": [],
+ "height": 480,
+ "author": "",
+ "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'e3-width-vs-rows'. Copied as exported; its generator isn't in the repo yet.",
+ "path": "viz/figures/M03-width-vs-rows",
+ "option": {
+  "animation": false,
+  "textStyle": {
+   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
+   "color": "@ink-secondary"
+  },
+  "grid": {
+   "left": 66,
+   "right": 40,
+   "top": 28,
+   "bottom": 90,
+   "containLabel": true
+  },
+  "tooltip": {
+   "trigger": "item",
+   "confine": true,
+   "backgroundColor": "@ink-surface",
+   "borderColor": "@ink-axis",
+   "borderWidth": 1,
+   "textStyle": {
+    "color": "@ink-primary",
+    "fontSize": 12
+   },
+   "formatter": "{b}"
+  },
+  "legend": {
+   "type": "scroll",
+   "bottom": 0,
+   "icon": "roundRect",
+   "itemWidth": 10,
+   "itemHeight": 10,
+   "textStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   }
+  },
+  "xAxis": {
+   "type": "value",
+   "name": "honest files above the cutoff (the sample that positions the threshold)",
+   "nameLocation": "middle",
+   "nameGap": 30,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "min": 0,
+   "max": 47
+  },
+  "yAxis": {
+   "type": "value",
+   "name": "width of the 95% interval on the recall gap (points)",
+   "nameLocation": "middle",
+   "nameGap": 46,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "min": 0,
+   "max": 100.0
+  },
+  "visualMap": {
+   "type": "continuous",
+   "dimension": 2,
+   "min": 0.2,
+   "max": 9.2,
+   "seriesIndex": 0,
+   "orient": "horizontal",
+   "bottom": 2,
+   "left": "center",
+   "itemWidth": 14,
+   "itemHeight": 110,
+   "calculable": false,
+   "text": [
+    "shared FPR 9.2%",
+    "0.2%"
+   ],
+   "textStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "inRange": {
+    "color": [
+     "@seq150",
+     "@seq300",
+     "@seq450",
+     "@seq600",
+     "@seq700"
+    ]
+   }
+  },
+  "series": [
+   {
+    "type": "scatter",
+    "name": "one comparison",
+    "symbolSize": 11,
+    "itemStyle": {
+     "borderColor": "@ink-surface",
+     "borderWidth": 1
+    },
+    "data": [
+     {
+      "value": [
+       1,
+       67.6,
+       0.2
+      ],
+      "name": "Gemini 3.5 Flash-Lite high at 0.2%<br/>interval width 67.6 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       1,
+       69.4,
+       0.2
+      ],
+      "name": "Gemini 3.5 Flash-Lite low at 0.2%<br/>interval width 69.4 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       69.6,
+       0.4
+      ],
+      "name": "Gemini 3.5 Flash-Lite low at 0.4%<br/>interval width 69.6 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       67.8,
+       0.2
+      ],
+      "name": "Gemini 3.5 Flash-Lite medium at 0.2%<br/>interval width 67.8 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       68.6,
+       0.4
+      ],
+      "name": "Gemini 3.5 Flash-Lite medium at 0.4%<br/>interval width 68.6 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       68.21,
+       0.2
+      ],
+      "name": "Gemini 3.5 Flash-Lite xhigh at 0.2%<br/>interval width 68.21 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       1,
+       84.4,
+       0.2
+      ],
+      "name": "Gemma 3 27B none 0-100 at 0.2%<br/>interval width 84.4 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       85.2,
+       0.4
+      ],
+      "name": "Gemma 3 27B none 0-100 at 0.4%<br/>interval width 85.2 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       24.6,
+       0.6
+      ],
+      "name": "Gemma 3 27B none 0-100 at 0.6%<br/>interval width 24.6 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       85.4,
+       0.2
+      ],
+      "name": "Gemma 3 27B none at 0.2%<br/>interval width 85.4 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       1,
+       86.6,
+       0.2
+      ],
+      "name": "Gemma 3 4B none 0-100 at 0.2%<br/>interval width 86.6 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       46,
+       17.6,
+       9.2
+      ],
+      "name": "Gemma 3 4B none 0-100 at 9.2%<br/>interval width 17.6 pts on 46 honest rows"
+     },
+     {
+      "value": [
+       1,
+       80.8,
+       0.2
+      ],
+      "name": "Gemma 4 26B-A4B none 0-100 at 0.2%<br/>interval width 80.8 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       81.0,
+       0.4
+      ],
+      "name": "Gemma 4 26B-A4B none 0-100 at 0.4%<br/>interval width 81 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       51.0,
+       0.6
+      ],
+      "name": "Gemma 4 26B-A4B none 0-100 at 0.6%<br/>interval width 51 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       5,
+       29.81,
+       1.0
+      ],
+      "name": "Gemma 4 26B-A4B none 0-100 at 1%<br/>interval width 29.81 pts on 5 honest rows"
+     },
+     {
+      "value": [
+       1,
+       52.6,
+       0.2
+      ],
+      "name": "GLM-5.3 high at 0.2%<br/>interval width 52.6 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       3,
+       23.8,
+       0.6
+      ],
+      "name": "GLM-5.3 high at 0.6%<br/>interval width 23.8 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       5,
+       21.0,
+       1.0
+      ],
+      "name": "GLM-5.3 high at 1%<br/>interval width 21 pts on 5 honest rows"
+     },
+     {
+      "value": [
+       1,
+       71.0,
+       0.2
+      ],
+      "name": "GLM-5.3 low at 0.2%<br/>interval width 71 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       70.81,
+       0.4
+      ],
+      "name": "GLM-5.3 low at 0.4%<br/>interval width 70.81 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       50.41,
+       0.2
+      ],
+      "name": "GLM-5.3 none (not an ablation) at 0.2%<br/>interval width 50.41 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       49.6,
+       0.4
+      ],
+      "name": "GLM-5.3 none (not an ablation) at 0.4%<br/>interval width 49.6 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       30.0,
+       0.2
+      ],
+      "name": "GLM-5.3 max (default) at 0.2%<br/>interval width 30 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       30.61,
+       0.4
+      ],
+      "name": "GLM-5.3 max (default) at 0.4%<br/>interval width 30.61 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       5,
+       21.2,
+       1.0
+      ],
+      "name": "GLM-5.3 max (default) at 1%<br/>interval width 21.2 pts on 5 honest rows"
+     },
+     {
+      "value": [
+       1,
+       51.41,
+       0.2
+      ],
+      "name": "GPT-6 Luna at 0.2%<br/>interval width 51.41 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       52.2,
+       0.4
+      ],
+      "name": "GPT-6 Luna at 0.4%<br/>interval width 52.2 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       82.81,
+       0.2
+      ],
+      "name": "gpt-oss-120b high at 0.2%<br/>interval width 82.81 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       83.2,
+       0.4
+      ],
+      "name": "gpt-oss-120b high at 0.4%<br/>interval width 83.2 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       30.61,
+       0.6
+      ],
+      "name": "gpt-oss-120b high at 0.6%<br/>interval width 30.61 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       83.6,
+       0.2
+      ],
+      "name": "gpt-oss-120b low at 0.2%<br/>interval width 83.6 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       3,
+       23.21,
+       0.6
+      ],
+      "name": "gpt-oss-120b low at 0.6%<br/>interval width 23.21 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       5,
+       13.0,
+       1.0
+      ],
+      "name": "gpt-oss-120b low at 1%<br/>interval width 13 pts on 5 honest rows"
+     },
+     {
+      "value": [
+       1,
+       94.6,
+       0.2
+      ],
+      "name": "gpt-oss-120b 0-100 at 0.2%<br/>interval width 94.6 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       93.01,
+       0.4
+      ],
+      "name": "gpt-oss-120b 0-100 at 0.4%<br/>interval width 93.01 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       89.41,
+       0.2
+      ],
+      "name": "gpt-oss-120b at 0.2%<br/>interval width 89.41 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       3,
+       22.2,
+       0.6
+      ],
+      "name": "gpt-oss-120b at 0.6%<br/>interval width 22.2 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       64.01,
+       0.2
+      ],
+      "name": "Haiku 5.5 high at 0.2%<br/>interval width 64.01 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       64.2,
+       0.4
+      ],
+      "name": "Haiku 5.5 high at 0.4%<br/>interval width 64.2 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       77.8,
+       0.2
+      ],
+      "name": "Haiku 5.5 low at 0.2%<br/>interval width 77.8 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       77.4,
+       0.4
+      ],
+      "name": "Haiku 5.5 low at 0.4%<br/>interval width 77.4 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       71.6,
+       0.2
+      ],
+      "name": "Haiku 5.5 xhigh at 0.2%<br/>interval width 71.6 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       71.2,
+       0.4
+      ],
+      "name": "Haiku 5.5 xhigh at 0.4%<br/>interval width 71.2 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       69.81,
+       0.6
+      ],
+      "name": "Haiku 5.5 xhigh at 0.6%<br/>interval width 69.81 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       67.01,
+       0.2
+      ],
+      "name": "Haiku 5.5 at 0.2%<br/>interval width 67.01 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       66.6,
+       0.4
+      ],
+      "name": "Haiku 5.5 at 0.4%<br/>interval width 66.6 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       48.4,
+       0.2
+      ],
+      "name": "Haiku 5.5 xhigh comments kept at 0.2%<br/>interval width 48.4 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       47.8,
+       0.4
+      ],
+      "name": "Haiku 5.5 xhigh comments kept at 0.4%<br/>interval width 47.8 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       47.2,
+       0.6
+      ],
+      "name": "Haiku 5.5 xhigh comments kept at 0.6%<br/>interval width 47.2 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       57.6,
+       0.2
+      ],
+      "name": "Haiku 5.5 xhigh 0-100 at 0.2%<br/>interval width 57.6 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       56.8,
+       0.4
+      ],
+      "name": "Haiku 5.5 xhigh 0-100 at 0.4%<br/>interval width 56.8 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       52.0,
+       0.6
+      ],
+      "name": "Haiku 5.5 xhigh 0-100 at 0.6%<br/>interval width 52 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       5,
+       23.6,
+       1.0
+      ],
+      "name": "Haiku 5.5 xhigh 0-100 at 1%<br/>interval width 23.6 pts on 5 honest rows"
+     },
+     {
+      "value": [
+       1,
+       67.4,
+       0.2
+      ],
+      "name": "Haiku 5.5 xhigh 0-200 at 0.2%<br/>interval width 67.4 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       67.2,
+       0.4
+      ],
+      "name": "Haiku 5.5 xhigh 0-200 at 0.4%<br/>interval width 67.2 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       63.4,
+       0.6
+      ],
+      "name": "Haiku 5.5 xhigh 0-200 at 0.6%<br/>interval width 63.4 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       5,
+       27.0,
+       1.0
+      ],
+      "name": "Haiku 5.5 xhigh 0-200 at 1%<br/>interval width 27 pts on 5 honest rows"
+     },
+     {
+      "value": [
+       1,
+       49.8,
+       0.2
+      ],
+      "name": "GPT-6 Luna high at 0.2%<br/>interval width 49.8 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       3,
+       37.8,
+       0.6
+      ],
+      "name": "GPT-6 Luna high at 0.6%<br/>interval width 37.8 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       58.41,
+       0.2
+      ],
+      "name": "GPT-6 Luna low at 0.2%<br/>interval width 58.41 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       58.2,
+       0.4
+      ],
+      "name": "GPT-6 Luna low at 0.4%<br/>interval width 58.2 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       26.0,
+       0.6
+      ],
+      "name": "GPT-6 Luna low at 0.6%<br/>interval width 26 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       79.61,
+       0.2
+      ],
+      "name": "GPT-6 Luna none at 0.2%<br/>interval width 79.61 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       3,
+       50.6,
+       0.6
+      ],
+      "name": "GPT-6 Luna none at 0.6%<br/>interval width 50.6 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       5,
+       37.4,
+       1.0
+      ],
+      "name": "GPT-6 Luna none at 1%<br/>interval width 37.4 pts on 5 honest rows"
+     },
+     {
+      "value": [
+       1,
+       73.6,
+       0.2
+      ],
+      "name": "GPT-6 Luna 0-100 at 0.2%<br/>interval width 73.6 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       73.0,
+       0.4
+      ],
+      "name": "GPT-6 Luna 0-100 at 0.4%<br/>interval width 73 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       56.4,
+       0.6
+      ],
+      "name": "GPT-6 Luna 0-100 at 0.6%<br/>interval width 56.4 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       5,
+       21.01,
+       1.0
+      ],
+      "name": "GPT-6 Luna 0-100 at 1%<br/>interval width 21.01 pts on 5 honest rows"
+     },
+     {
+      "value": [
+       1,
+       50.8,
+       0.2
+      ],
+      "name": "GPT-6 Luna xhigh at 0.2%<br/>interval width 50.8 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       51.4,
+       0.4
+      ],
+      "name": "GPT-6 Luna xhigh at 0.4%<br/>interval width 51.4 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       36.81,
+       0.6
+      ],
+      "name": "GPT-6 Luna xhigh at 0.6%<br/>interval width 36.81 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       72.41,
+       0.2
+      ],
+      "name": "Qwen3.8 Omni Flash none 0-100 at 0.2%<br/>interval width 72.41 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       72.2,
+       0.4
+      ],
+      "name": "Qwen3.8 Omni Flash none 0-100 at 0.4%<br/>interval width 72.2 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       55.6,
+       0.6
+      ],
+      "name": "Qwen3.8 Omni Flash none 0-100 at 0.6%<br/>interval width 55.6 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       83.4,
+       0.2
+      ],
+      "name": "Qwen3.8 Omni Flash none at 0.2%<br/>interval width 83.4 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       83.4,
+       0.4
+      ],
+      "name": "Qwen3.8 Omni Flash none at 0.4%<br/>interval width 83.4 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       71.8,
+       0.2
+      ],
+      "name": "Gemini 3.5 Flash-Lite off at 0.2%<br/>interval width 71.8 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       72.2,
+       0.4
+      ],
+      "name": "Gemini 3.5 Flash-Lite off at 0.4%<br/>interval width 72.2 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       1,
+       78.2,
+       0.2
+      ],
+      "name": "Gemma 4 26B-A4B none at 0.2%<br/>interval width 78.2 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       78.0,
+       0.4
+      ],
+      "name": "Gemma 4 26B-A4B none at 0.4%<br/>interval width 78 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       36.4,
+       0.6
+      ],
+      "name": "Gemma 4 26B-A4B none at 0.6%<br/>interval width 36.4 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       82.0,
+       0.2
+      ],
+      "name": "Qwen3.8 Omni Flash high at 0.2%<br/>interval width 82 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       2,
+       81.8,
+       0.4
+      ],
+      "name": "Qwen3.8 Omni Flash high at 0.4%<br/>interval width 81.8 pts on 2 honest rows"
+     },
+     {
+      "value": [
+       3,
+       66.6,
+       0.6
+      ],
+      "name": "Qwen3.8 Omni Flash high at 0.6%<br/>interval width 66.6 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       85.0,
+       0.2
+      ],
+      "name": "Qwen3.8 Omni Flash medium at 0.2%<br/>interval width 85 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       3,
+       66.2,
+       0.6
+      ],
+      "name": "Qwen3.8 Omni Flash medium at 0.6%<br/>interval width 66.2 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       5,
+       61.6,
+       1.0
+      ],
+      "name": "Qwen3.8 Omni Flash medium at 1%<br/>interval width 61.6 pts on 5 honest rows"
+     },
+     {
+      "value": [
+       1,
+       13.0,
+       0.2
+      ],
+      "name": "Sonnet 5.5 low at 0.2%<br/>interval width 13 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       3,
+       13.0,
+       0.6
+      ],
+      "name": "Sonnet 5.5 low at 0.6%<br/>interval width 13 pts on 3 honest rows"
+     },
+     {
+      "value": [
+       1,
+       12.2,
+       0.2
+      ],
+      "name": "Sonnet 5.5 0-100 at 0.2%<br/>interval width 12.2 pts on 1 honest rows"
+     },
+     {
+      "value": [
+       3,
+       11.6,
+       0.6
+      ],
+      "name": "Sonnet 5.5 0-100 at 0.6%<br/>interval width 11.6 pts on 3 honest rows"
+     }
+    ]
+   },
+   {
+    "type": "line",
+    "name": "median width at that row count",
+    "showSymbol": true,
+    "symbolSize": 8,
+    "lineStyle": {
+     "color": "@ink-primary",
+     "width": 2,
+     "type": "dashed"
+    },
+    "itemStyle": {
+     "color": "@ink-primary"
+    },
+    "data": [
+     [
+      1,
+      71.0
+     ],
+     [
+      2,
+      70.81
+     ],
+     [
+      3,
+      37.8
+     ],
+     [
+      5,
+      23.6
+     ],
+     [
+      46,
+      17.6
+     ]
+    ]
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "honest rows above the cutoff",
+   "shared FPR (%)",
+   "comparisons",
+   "narrowest interval (pts)",
+   "median",
+   "widest"
+  ],
+  "rows": [
+   [
+    1,
+    0.2,
+    37,
+    12.2,
+    71.0,
+    94.6
+   ],
+   [
+    2,
+    0.4,
+    25,
+    30.61,
+    70.81,
+    93.01
+   ],
+   [
+    3,
+    0.6,
+    21,
+    11.6,
+    37.8,
+    69.81
+   ],
+   [
+    5,
+    1.0,
+    9,
+    13.0,
+    23.6,
+    61.6
+   ],
+   [
+    46,
+    9.2,
+    1,
+    17.6,
+    17.6,
+    17.6
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {},
+  "code": "sha256:25252dab4c13275c",
+  "spec": "sha256:ce82b71085958d2c"
+ }
+}

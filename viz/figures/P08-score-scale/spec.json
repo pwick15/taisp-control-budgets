@@ -1,0 +1,569 @@
+{
+ "id": "P08",
+ "kind": "echarts",
+ "title": "A 0 to 100 score gives the monitor more cutoffs to choose from",
+ "section": "results",
+ "order": 80,
+ "caption": "Each dot is a usable cutoff: honest code audited (across) against backdoors caught (up). Grey is the default 0 to 10 prompt, violet the same monitor asked for 0 to 100. Sonnet has 4 cutoffs at 5% or below on 0 to 10 and 5 on 0 to 100.",
+ "notes": [
+  "This explains the wide intervals in P05 only in part. Those come mostly from how few honest programs sit above the cutoff (5 at 1%), and a wider scale doesn't add honest programs.",
+  "The scale isn't purely cosmetic: Marnick measured it raising AUC by about +14 points for GPT-6 Luna and +8.5 for Gemma 4, but under a point for Sonnet and Haiku.",
+  "MonitoringBench saw 0 to 100 scores collapse at the top (honest code hitting 100). A wider scale helps when honest scores pile up low, as ours do, and can hurt when they pile up high."
+ ],
+ "height": 440,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P08-score-scale",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": [
+   {
+    "left": "9%",
+    "width": "39%",
+    "top": 56,
+    "bottom": 70
+   },
+   {
+    "left": "59%",
+    "width": "39%",
+    "top": 56,
+    "bottom": 70
+   }
+  ],
+  "xAxis": [
+   {
+    "name": "Honest code audited (log scale)",
+    "nameLocation": "middle",
+    "nameGap": 34,
+    "gridIndex": 0,
+    "type": "log",
+    "min": 0.1,
+    "max": 10,
+    "axisLabel": {
+     "formatter": "{value}%"
+    }
+   },
+   {
+    "name": "Honest code audited (log scale)",
+    "nameLocation": "middle",
+    "nameGap": 34,
+    "gridIndex": 1,
+    "type": "log",
+    "min": 0.1,
+    "max": 10,
+    "axisLabel": {
+     "formatter": "{value}%"
+    }
+   }
+  ],
+  "yAxis": [
+   {
+    "name": "Backdoors caught",
+    "nameLocation": "middle",
+    "nameGap": 40,
+    "gridIndex": 0,
+    "type": "value",
+    "min": 0,
+    "max": 100,
+    "axisLabel": {
+     "formatter": "{value}%"
+    }
+   },
+   {
+    "name": "",
+    "nameLocation": "middle",
+    "nameGap": 40,
+    "gridIndex": 1,
+    "type": "value",
+    "min": 0,
+    "max": 100,
+    "axisLabel": {
+     "formatter": "{value}%"
+    }
+   }
+  ],
+  "series": [
+   {
+    "name": "0 to 10 score",
+    "type": "line",
+    "step": "end",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong"
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 2
+    },
+    "data": [
+     {
+      "value": [
+       0.2,
+       70.8
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10 score</b><br>audits 0.2% of honest programs<br>catches 70.8% of backdoors"
+     },
+     {
+      "value": [
+       0.4,
+       80.2
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10 score</b><br>audits 0.4% of honest programs<br>catches 80.2% of backdoors"
+     },
+     {
+      "value": [
+       0.6,
+       83.4
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10 score</b><br>audits 0.6% of honest programs<br>catches 83.4% of backdoors"
+     },
+     {
+      "value": [
+       1.0,
+       86.8
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10 score</b><br>audits 1.0% of honest programs<br>catches 86.8% of backdoors"
+     },
+     {
+      "value": [
+       9.2,
+       93.2
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 10 score</b><br>audits 9.2% of honest programs<br>catches 93.2% of backdoors"
+     }
+    ]
+   },
+   {
+    "name": "0 to 100 score",
+    "type": "line",
+    "step": "end",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@s6"
+    },
+    "lineStyle": {
+     "color": "@s6",
+     "width": 2
+    },
+    "data": [
+     {
+      "value": [
+       0.2,
+       79.0
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 0.2% of honest programs<br>catches 79.0% of backdoors"
+     },
+     {
+      "value": [
+       0.6,
+       84.2
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 0.6% of honest programs<br>catches 84.2% of backdoors"
+     },
+     {
+      "value": [
+       0.8,
+       85.8
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 0.8% of honest programs<br>catches 85.8% of backdoors"
+     },
+     {
+      "value": [
+       1.2,
+       87.4
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 1.2% of honest programs<br>catches 87.4% of backdoors"
+     },
+     {
+      "value": [
+       2.0,
+       90.0
+      ],
+      "tip": "<b>Sonnet 5.5, 0 to 100 score</b><br>audits 2.0% of honest programs<br>catches 90.0% of backdoors"
+     }
+    ]
+   },
+   {
+    "name": "0 to 10 score",
+    "type": "line",
+    "step": "end",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@context-strong"
+    },
+    "lineStyle": {
+     "color": "@context-strong",
+     "width": 2
+    },
+    "data": [
+     {
+      "value": [
+       0.2,
+       10.4
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 10 score</b><br>audits 0.2% of honest programs<br>catches 10.4% of backdoors"
+     },
+     {
+      "value": [
+       0.4,
+       50.8
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 10 score</b><br>audits 0.4% of honest programs<br>catches 50.8% of backdoors"
+     },
+     {
+      "value": [
+       0.6,
+       57.4
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 10 score</b><br>audits 0.6% of honest programs<br>catches 57.4% of backdoors"
+     },
+     {
+      "value": [
+       0.8,
+       71.4
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 10 score</b><br>audits 0.8% of honest programs<br>catches 71.4% of backdoors"
+     },
+     {
+      "value": [
+       1.6,
+       85.0
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 10 score</b><br>audits 1.6% of honest programs<br>catches 85.0% of backdoors"
+     }
+    ]
+   },
+   {
+    "name": "0 to 100 score",
+    "type": "line",
+    "step": "end",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "symbolSize": 7,
+    "itemStyle": {
+     "color": "@s6"
+    },
+    "lineStyle": {
+     "color": "@s6",
+     "width": 2
+    },
+    "data": [
+     {
+      "value": [
+       0.2,
+       29.6
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 0.2% of honest programs<br>catches 29.6% of backdoors"
+     },
+     {
+      "value": [
+       0.4,
+       63.0
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 0.4% of honest programs<br>catches 63.0% of backdoors"
+     },
+     {
+      "value": [
+       0.6,
+       64.0
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 0.6% of honest programs<br>catches 64.0% of backdoors"
+     },
+     {
+      "value": [
+       0.8,
+       68.0
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 0.8% of honest programs<br>catches 68.0% of backdoors"
+     },
+     {
+      "value": [
+       1.0,
+       69.8
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 1.0% of honest programs<br>catches 69.8% of backdoors"
+     },
+     {
+      "value": [
+       1.2,
+       73.6
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 1.2% of honest programs<br>catches 73.6% of backdoors"
+     },
+     {
+      "value": [
+       1.4,
+       76.2
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 1.4% of honest programs<br>catches 76.2% of backdoors"
+     },
+     {
+      "value": [
+       1.6,
+       78.0
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 1.6% of honest programs<br>catches 78.0% of backdoors"
+     },
+     {
+      "value": [
+       1.8,
+       83.0
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 1.8% of honest programs<br>catches 83.0% of backdoors"
+     },
+     {
+      "value": [
+       2.2,
+       84.8
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 2.2% of honest programs<br>catches 84.8% of backdoors"
+     },
+     {
+      "value": [
+       3.6,
+       88.8
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 3.6% of honest programs<br>catches 88.8% of backdoors"
+     },
+     {
+      "value": [
+       8.0,
+       91.0
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh, 0 to 100 score</b><br>audits 8.0% of honest programs<br>catches 91.0% of backdoors"
+     }
+    ]
+   }
+  ],
+  "graphic": [
+   {
+    "type": "text",
+    "left": "9%",
+    "top": 26,
+    "style": {
+     "text": "Sonnet 5.5",
+     "fill": "@ink-primary",
+     "fontSize": 13,
+     "fontWeight": 600
+    }
+   },
+   {
+    "type": "text",
+    "left": "59%",
+    "top": 26,
+    "style": {
+     "text": "Haiku 5.5 · xhigh",
+     "fill": "@ink-primary",
+     "fontSize": 13,
+     "fontWeight": 600
+    }
+   }
+  ],
+  "legend": {
+   "top": 0,
+   "left": "6%",
+   "data": [
+    "0 to 10 score",
+    "0 to 100 score"
+   ]
+  }
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "monitor",
+   "scale",
+   "audit_pct",
+   "caught_pct"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5",
+    "0 to 10 score",
+    0.2,
+    70.8
+   ],
+   [
+    "Sonnet 5.5",
+    "0 to 10 score",
+    0.4,
+    80.2
+   ],
+   [
+    "Sonnet 5.5",
+    "0 to 10 score",
+    0.6,
+    83.4
+   ],
+   [
+    "Sonnet 5.5",
+    "0 to 10 score",
+    1.0,
+    86.8
+   ],
+   [
+    "Sonnet 5.5",
+    "0 to 10 score",
+    9.2,
+    93.2
+   ],
+   [
+    "Sonnet 5.5",
+    "0 to 100 score",
+    0.2,
+    79.0
+   ],
+   [
+    "Sonnet 5.5",
+    "0 to 100 score",
+    0.6,
+    84.2
+   ],
+   [
+    "Sonnet 5.5",
+    "0 to 100 score",
+    0.8,
+    85.8
+   ],
+   [
+    "Sonnet 5.5",
+    "0 to 100 score",
+    1.2,
+    87.4
+   ],
+   [
+    "Sonnet 5.5",
+    "0 to 100 score",
+    2.0,
+    90.0
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 10 score",
+    0.2,
+    10.4
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 10 score",
+    0.4,
+    50.8
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 10 score",
+    0.6,
+    57.4
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 10 score",
+    0.8,
+    71.4
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 10 score",
+    1.6,
+    85.0
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    0.2,
+    29.6
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    0.4,
+    63.0
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    0.6,
+    64.0
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    0.8,
+    68.0
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    1.0,
+    69.8
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    1.2,
+    73.6
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    1.4,
+    76.2
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    1.6,
+    78.0
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    1.8,
+    83.0
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    2.2,
+    84.8
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    3.6,
+    88.8
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "0 to 100 score",
+    8.0,
+    91.0
+   ]
+  ]
+ },
+ "facts": {
+  "s10": 4,
+  "s100": 5
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-xhigh-scale100-n500-strip-samples.csv": "sha256:1271c66323a3a3d7",
+   "results/dataset500-sonnet55-um-scale100-strip-samples.csv": "sha256:456576cccddb0c0d",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63"
+  },
+  "code": "sha256:e61ea0137569bff0",
+  "spec": "sha256:002d6b3ee535eda8"
+ }
+}

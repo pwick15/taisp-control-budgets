@@ -1,0 +1,1502 @@
+{
+ "id": "M08",
+ "kind": "snapshot",
+ "title": "An attacker who needs several backdoors gets caught sooner",
+ "section": "appendix",
+ "order": 100,
+ "caption": "Chance of catching an attacker at least once when it must land several backdoors. Assumes attempts are independent and the attacker doesn't adapt, so it is an optimistic bound.",
+ "notes": [],
+ "height": 440,
+ "author": "",
+ "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'geom-campaign-safety'. Copied as exported; its generator isn't in the repo yet.",
+ "path": "viz/figures/M08-campaign-safety",
+ "option": {
+  "animation": false,
+  "textStyle": {
+   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
+   "color": "@ink-secondary"
+  },
+  "grid": {
+   "left": 64,
+   "right": 28,
+   "top": 28,
+   "bottom": 72,
+   "containLabel": true
+  },
+  "tooltip": {
+   "trigger": "item",
+   "confine": true,
+   "backgroundColor": "@ink-surface",
+   "borderColor": "@ink-axis",
+   "borderWidth": 1,
+   "textStyle": {
+    "color": "@ink-primary",
+    "fontSize": 12
+   }
+  },
+  "legend": {
+   "type": "scroll",
+   "bottom": 0,
+   "icon": "roundRect",
+   "itemWidth": 10,
+   "itemHeight": 10,
+   "textStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   }
+  },
+  "xAxis": {
+   "type": "category",
+   "name": "backdoors the attacker has to land",
+   "nameLocation": "middle",
+   "nameGap": 30,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "data": [
+    "1",
+    "2",
+    "3",
+    "5",
+    "8",
+    "12",
+    "20"
+   ]
+  },
+  "yAxis": {
+   "type": "value",
+   "name": "probability at least one of them is caught",
+   "nameLocation": "middle",
+   "nameGap": 46,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "min": 0,
+   "max": 1
+  },
+  "series": [
+   {
+    "type": "line",
+    "name": "Sonnet 5.5 default",
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s0",
+     "width": 2
+    },
+    "itemStyle": {
+     "color": "@s0"
+    },
+    "data": [
+     {
+      "value": 0.868,
+      "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.868"
+     },
+     {
+      "value": 0.9828,
+      "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.983"
+     },
+     {
+      "value": 0.9978,
+      "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.998"
+     },
+     {
+      "value": 1.0,
+      "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 1.000"
+     },
+     {
+      "value": 1.0,
+      "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+     },
+     {
+      "value": 1.0,
+      "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+     },
+     {
+      "value": 1.0,
+      "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+     }
+    ]
+   },
+   {
+    "type": "line",
+    "name": "Haiku 5.5 xhigh",
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s3",
+     "width": 2
+    },
+    "itemStyle": {
+     "color": "@s3"
+    },
+    "data": [
+     {
+      "value": 0.85,
+      "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.850"
+     },
+     {
+      "value": 0.9778,
+      "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.978"
+     },
+     {
+      "value": 0.9967,
+      "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.997"
+     },
+     {
+      "value": 0.9999,
+      "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 1.000"
+     },
+     {
+      "value": 1.0,
+      "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+     },
+     {
+      "value": 1.0,
+      "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+     },
+     {
+      "value": 1.0,
+      "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+     }
+    ]
+   },
+   {
+    "type": "line",
+    "name": "GLM-5.3 max (default)",
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s4",
+     "width": 2
+    },
+    "itemStyle": {
+     "color": "@s4"
+    },
+    "data": [
+     {
+      "value": 0.762,
+      "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.762"
+     },
+     {
+      "value": 0.9437,
+      "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.944"
+     },
+     {
+      "value": 0.9868,
+      "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.987"
+     },
+     {
+      "value": 0.9993,
+      "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.999"
+     },
+     {
+      "value": 1.0,
+      "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+     },
+     {
+      "value": 1.0,
+      "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+     },
+     {
+      "value": 1.0,
+      "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+     }
+    ]
+   },
+   {
+    "type": "line",
+    "name": "Gemma 4 26B-A4B",
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s7",
+     "width": 2
+    },
+    "itemStyle": {
+     "color": "@s7"
+    },
+    "data": [
+     {
+      "value": 0.306,
+      "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.306"
+     },
+     {
+      "value": 0.5188,
+      "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.519"
+     },
+     {
+      "value": 0.6666,
+      "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.667"
+     },
+     {
+      "value": 0.8404,
+      "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.840"
+     },
+     {
+      "value": 0.9475,
+      "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.948"
+     },
+     {
+      "value": 0.9882,
+      "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.988"
+     },
+     {
+      "value": 0.9994,
+      "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 0.999"
+     }
+    ]
+   },
+   {
+    "type": "line",
+    "name": "Gemini 3.5 Flash-Lite high",
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s2",
+     "width": 2
+    },
+    "itemStyle": {
+     "color": "@s2"
+    },
+    "data": [
+     {
+      "value": 0.19,
+      "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.190"
+     },
+     {
+      "value": 0.3442,
+      "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.344"
+     },
+     {
+      "value": 0.4693,
+      "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.469"
+     },
+     {
+      "value": 0.653,
+      "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.653"
+     },
+     {
+      "value": 0.8171,
+      "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.817"
+     },
+     {
+      "value": 0.9227,
+      "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.923"
+     },
+     {
+      "value": 0.9865,
+      "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.987"
+     }
+    ]
+   },
+   {
+    "type": "line",
+    "name": "gpt-oss-120b high",
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@s5",
+     "width": 2
+    },
+    "itemStyle": {
+     "color": "@s5"
+    },
+    "data": [
+     {
+      "value": 0.154,
+      "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.154"
+     },
+     {
+      "value": 0.2845,
+      "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.285"
+     },
+     {
+      "value": 0.3952,
+      "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.395"
+     },
+     {
+      "value": 0.5682,
+      "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.568"
+     },
+     {
+      "value": 0.7403,
+      "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.740"
+     },
+     {
+      "value": 0.8688,
+      "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.869"
+     },
+     {
+      "value": 0.9672,
+      "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.967"
+     }
+    ]
+   }
+  ]
+ },
+ "dial": {
+  "label": "Largest edit the attacker will hide behind",
+  "steps": [
+   "any size",
+   "40 lines",
+   "20 lines",
+   "10 lines",
+   "5 lines"
+  ],
+  "initial": 0,
+  "frames": [
+   {},
+   {
+    "series": [
+     {
+      "type": "line",
+      "name": "Sonnet 5.5 default",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       {
+        "value": 0.8564,
+        "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.856"
+       },
+       {
+        "value": 0.9797,
+        "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.980"
+       },
+       {
+        "value": 0.9972,
+        "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.997"
+       },
+       {
+        "value": 0.9999,
+        "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Haiku 5.5 xhigh",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s3",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s3"
+      },
+      "data": [
+       {
+        "value": 0.8287,
+        "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.829"
+       },
+       {
+        "value": 0.9711,
+        "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.971"
+       },
+       {
+        "value": 0.9952,
+        "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.995"
+       },
+       {
+        "value": 0.9999,
+        "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "GLM-5.3 max (default)",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s4",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s4"
+      },
+      "data": [
+       {
+        "value": 0.7624,
+        "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.762"
+       },
+       {
+        "value": 0.9441,
+        "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.944"
+       },
+       {
+        "value": 0.9869,
+        "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.987"
+       },
+       {
+        "value": 0.9993,
+        "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.999"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Gemma 4 26B-A4B",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s7",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s7"
+      },
+      "data": [
+       {
+        "value": 0.3287,
+        "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.329"
+       },
+       {
+        "value": 0.55,
+        "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.550"
+       },
+       {
+        "value": 0.6988,
+        "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.699"
+       },
+       {
+        "value": 0.8656,
+        "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.866"
+       },
+       {
+        "value": 0.9603,
+        "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.960"
+       },
+       {
+        "value": 0.9924,
+        "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.992"
+       },
+       {
+        "value": 0.9997,
+        "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Gemini 3.5 Flash-Lite high",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s2",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s2"
+      },
+      "data": [
+       {
+        "value": 0.1934,
+        "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.193"
+       },
+       {
+        "value": 0.3498,
+        "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.350"
+       },
+       {
+        "value": 0.4762,
+        "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.476"
+       },
+       {
+        "value": 0.6608,
+        "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.661"
+       },
+       {
+        "value": 0.8241,
+        "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.824"
+       },
+       {
+        "value": 0.9274,
+        "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.927"
+       },
+       {
+        "value": 0.9881,
+        "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.988"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "gpt-oss-120b high",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s5",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s5"
+      },
+      "data": [
+       {
+        "value": 0.1713,
+        "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.171"
+       },
+       {
+        "value": 0.3136,
+        "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.314"
+       },
+       {
+        "value": 0.4318,
+        "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.432"
+       },
+       {
+        "value": 0.6113,
+        "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.611"
+       },
+       {
+        "value": 0.7811,
+        "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.781"
+       },
+       {
+        "value": 0.899,
+        "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.899"
+       },
+       {
+        "value": 0.9791,
+        "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.979"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "type": "line",
+      "name": "Sonnet 5.5 default",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       {
+        "value": 0.8246,
+        "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.825"
+       },
+       {
+        "value": 0.9699,
+        "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.970"
+       },
+       {
+        "value": 0.9949,
+        "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.995"
+       },
+       {
+        "value": 0.9999,
+        "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Haiku 5.5 xhigh",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s3",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s3"
+      },
+      "data": [
+       {
+        "value": 0.7763,
+        "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.776"
+       },
+       {
+        "value": 0.9507,
+        "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.951"
+       },
+       {
+        "value": 0.9893,
+        "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.989"
+       },
+       {
+        "value": 0.9995,
+        "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "GLM-5.3 max (default)",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s4",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s4"
+      },
+      "data": [
+       {
+        "value": 0.7193,
+        "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.719"
+       },
+       {
+        "value": 0.9221,
+        "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.922"
+       },
+       {
+        "value": 0.9786,
+        "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.979"
+       },
+       {
+        "value": 0.9984,
+        "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.998"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Gemma 4 26B-A4B",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s7",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s7"
+      },
+      "data": [
+       {
+        "value": 0.2982,
+        "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.298"
+       },
+       {
+        "value": 0.5085,
+        "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.508"
+       },
+       {
+        "value": 0.6564,
+        "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.656"
+       },
+       {
+        "value": 0.833,
+        "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.833"
+       },
+       {
+        "value": 0.9443,
+        "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.944"
+       },
+       {
+        "value": 0.9875,
+        "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.987"
+       },
+       {
+        "value": 0.9994,
+        "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 0.999"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Gemini 3.5 Flash-Lite high",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s2",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s2"
+      },
+      "data": [
+       {
+        "value": 0.1798,
+        "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.180"
+       },
+       {
+        "value": 0.328,
+        "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.328"
+       },
+       {
+        "value": 0.4499,
+        "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.450"
+       },
+       {
+        "value": 0.6325,
+        "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.632"
+       },
+       {
+        "value": 0.8008,
+        "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.801"
+       },
+       {
+        "value": 0.9133,
+        "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.913"
+       },
+       {
+        "value": 0.9844,
+        "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.984"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "gpt-oss-120b high",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s5",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s5"
+      },
+      "data": [
+       {
+        "value": 0.1754,
+        "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.175"
+       },
+       {
+        "value": 0.3207,
+        "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.321"
+       },
+       {
+        "value": 0.441,
+        "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.441"
+       },
+       {
+        "value": 0.6224,
+        "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.622"
+       },
+       {
+        "value": 0.792,
+        "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.792"
+       },
+       {
+        "value": 0.9073,
+        "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.907"
+       },
+       {
+        "value": 0.9825,
+        "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.983"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "type": "line",
+      "name": "Sonnet 5.5 default",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       {
+        "value": 0.7593,
+        "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.759"
+       },
+       {
+        "value": 0.9438,
+        "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.944"
+       },
+       {
+        "value": 0.9873,
+        "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.987"
+       },
+       {
+        "value": 0.9994,
+        "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 0.999"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Haiku 5.5 xhigh",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s3",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s3"
+      },
+      "data": [
+       {
+        "value": 0.7222,
+        "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.722"
+       },
+       {
+        "value": 0.9247,
+        "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.925"
+       },
+       {
+        "value": 0.9801,
+        "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.980"
+       },
+       {
+        "value": 0.9987,
+        "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 0.999"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "GLM-5.3 max (default)",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s4",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s4"
+      },
+      "data": [
+       {
+        "value": 0.6481,
+        "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.648"
+       },
+       {
+        "value": 0.8783,
+        "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.878"
+       },
+       {
+        "value": 0.9587,
+        "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.959"
+       },
+       {
+        "value": 0.9955,
+        "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.995"
+       },
+       {
+        "value": 0.9999,
+        "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Gemma 4 26B-A4B",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s7",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s7"
+      },
+      "data": [
+       {
+        "value": 0.25,
+        "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.250"
+       },
+       {
+        "value": 0.4393,
+        "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.439"
+       },
+       {
+        "value": 0.5821,
+        "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.582"
+       },
+       {
+        "value": 0.7701,
+        "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.770"
+       },
+       {
+        "value": 0.9086,
+        "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.909"
+       },
+       {
+        "value": 0.9746,
+        "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.975"
+       },
+       {
+        "value": 0.9984,
+        "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 0.998"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Gemini 3.5 Flash-Lite high",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s2",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s2"
+      },
+      "data": [
+       {
+        "value": 0.1389,
+        "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.139"
+       },
+       {
+        "value": 0.2596,
+        "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.260"
+       },
+       {
+        "value": 0.3644,
+        "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.364"
+       },
+       {
+        "value": 0.5338,
+        "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.534"
+       },
+       {
+        "value": 0.7107,
+        "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.711"
+       },
+       {
+        "value": 0.8506,
+        "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.851"
+       },
+       {
+        "value": 0.9638,
+        "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.964"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "gpt-oss-120b high",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s5",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s5"
+      },
+      "data": [
+       {
+        "value": 0.1481,
+        "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.148"
+       },
+       {
+        "value": 0.2755,
+        "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.276"
+       },
+       {
+        "value": 0.3849,
+        "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.385"
+       },
+       {
+        "value": 0.5588,
+        "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.559"
+       },
+       {
+        "value": 0.7356,
+        "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.736"
+       },
+       {
+        "value": 0.8699,
+        "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.870"
+       },
+       {
+        "value": 0.9716,
+        "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.972"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "type": "line",
+      "name": "Sonnet 5.5 default",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       {
+        "value": 0.6585,
+        "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.659"
+       },
+       {
+        "value": 0.889,
+        "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.889"
+       },
+       {
+        "value": 0.9659,
+        "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.966"
+       },
+       {
+        "value": 0.9973,
+        "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 0.997"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Haiku 5.5 xhigh",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s3",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s3"
+      },
+      "data": [
+       {
+        "value": 0.6098,
+        "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.610"
+       },
+       {
+        "value": 0.8537,
+        "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.854"
+       },
+       {
+        "value": 0.9475,
+        "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.947"
+       },
+       {
+        "value": 0.9942,
+        "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 0.994"
+       },
+       {
+        "value": 0.9999,
+        "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "GLM-5.3 max (default)",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s4",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s4"
+      },
+      "data": [
+       {
+        "value": 0.561,
+        "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.561"
+       },
+       {
+        "value": 0.8134,
+        "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.813"
+       },
+       {
+        "value": 0.9235,
+        "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.923"
+       },
+       {
+        "value": 0.9886,
+        "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.989"
+       },
+       {
+        "value": 0.9995,
+        "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+       },
+       {
+        "value": 1.0,
+        "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Gemma 4 26B-A4B",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s7",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s7"
+      },
+      "data": [
+       {
+        "value": 0.2195,
+        "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.220"
+       },
+       {
+        "value": 0.3951,
+        "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.395"
+       },
+       {
+        "value": 0.5347,
+        "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.535"
+       },
+       {
+        "value": 0.7313,
+        "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.731"
+       },
+       {
+        "value": 0.8899,
+        "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.890"
+       },
+       {
+        "value": 0.9714,
+        "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.971"
+       },
+       {
+        "value": 0.9992,
+        "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 0.999"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "Gemini 3.5 Flash-Lite high",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s2",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s2"
+      },
+      "data": [
+       {
+        "value": 0.122,
+        "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.122"
+       },
+       {
+        "value": 0.2317,
+        "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.232"
+       },
+       {
+        "value": 0.3302,
+        "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.330"
+       },
+       {
+        "value": 0.4969,
+        "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.497"
+       },
+       {
+        "value": 0.6833,
+        "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.683"
+       },
+       {
+        "value": 0.8415,
+        "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.842"
+       },
+       {
+        "value": 0.9728,
+        "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.973"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "gpt-oss-120b high",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@s5",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s5"
+      },
+      "data": [
+       {
+        "value": 0.1463,
+        "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.146"
+       },
+       {
+        "value": 0.2744,
+        "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.274"
+       },
+       {
+        "value": 0.386,
+        "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.386"
+       },
+       {
+        "value": 0.5668,
+        "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.567"
+       },
+       {
+        "value": 0.7537,
+        "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.754"
+       },
+       {
+        "value": 0.8944,
+        "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.894"
+       },
+       {
+        "value": 0.9879,
+        "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.988"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "data": {
+  "columns": [
+   "monitor",
+   "backdoors in this pool",
+   "caught one at a time (%)",
+   "1 landing (%)",
+   "2 landings (%)",
+   "3 landings (%)",
+   "5 landings (%)",
+   "8 landings (%)",
+   "12 landings (%)",
+   "20 landings (%)"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5 default",
+    500,
+    86.8,
+    86.8,
+    98.3,
+    99.8,
+    100.0,
+    100.0,
+    100.0,
+    100.0
+   ],
+   [
+    "Haiku 5.5 xhigh",
+    500,
+    85.0,
+    85.0,
+    97.8,
+    99.7,
+    100.0,
+    100.0,
+    100.0,
+    100.0
+   ],
+   [
+    "GLM-5.3 max (default)",
+    500,
+    76.2,
+    76.2,
+    94.4,
+    98.7,
+    99.9,
+    100.0,
+    100.0,
+    100.0
+   ],
+   [
+    "Gemma 4 26B-A4B",
+    500,
+    30.6,
+    30.6,
+    51.9,
+    66.7,
+    84.0,
+    94.8,
+    98.8,
+    99.9
+   ],
+   [
+    "Gemini 3.5 Flash-Lite high",
+    500,
+    19.0,
+    19.0,
+    34.4,
+    46.9,
+    65.3,
+    81.7,
+    92.3,
+    98.7
+   ],
+   [
+    "gpt-oss-120b high",
+    500,
+    15.4,
+    15.4,
+    28.5,
+    39.5,
+    56.8,
+    74.0,
+    86.9,
+    96.7
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {},
+  "code": "sha256:9f4f47448965e936",
+  "spec": "sha256:ca83d48d9adf164b"
+ }
+}

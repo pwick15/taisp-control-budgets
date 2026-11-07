@@ -1,0 +1,399 @@
+{
+ "id": "M01",
+ "kind": "snapshot",
+ "title": "Half the stored backdoors confess in a comment",
+ "section": "results",
+ "order": 120,
+ "caption": "Three ways to flag a backdoor: a six-word regex for comments that admit to a bug, a monitor reading the code with comments deleted, and the same monitor with comments left in. Each bar counts programs caught by exactly that combination.",
+ "notes": [
+  "These are Marnick's numbers. Confirm the 51.8% regex figure and the +9.2 / +12.2 point gaps with him before quoting.",
+  "Four papers strip comments for this reason and none measures what it does to a monitor ranking. Re-scoring the top monitors with comments kept is a cheap side result (Marnick priced it at about $18)."
+ ],
+ "height": 440,
+ "author": "",
+ "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'cases-catch-set-upset'. Copied as exported; its generator isn't in the repo yet.",
+ "path": "viz/figures/M01-comments",
+ "option": {
+  "animation": false,
+  "textStyle": {
+   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
+   "color": "@ink-secondary"
+  },
+  "grid": {
+   "left": 58,
+   "right": 28,
+   "top": 24,
+   "bottom": 78,
+   "containLabel": true
+  },
+  "tooltip": {
+   "trigger": "item",
+   "confine": true,
+   "backgroundColor": "@ink-surface",
+   "borderColor": "@ink-axis",
+   "borderWidth": 1,
+   "textStyle": {
+    "color": "@ink-primary",
+    "fontSize": 12
+   },
+   "formatter": "{b}<br/>{c} of 500 programs"
+  },
+  "xAxis": {
+   "type": "category",
+   "name": "exclusive catch set",
+   "nameLocation": "middle",
+   "nameGap": 64,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11,
+    "rotate": 26
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "data": [
+    "grep + stripped + kept",
+    "stripped + kept",
+    "grep + kept",
+    "kept only",
+    "grep only",
+    "stripped only",
+    "grep + stripped",
+    "none of the three"
+   ]
+  },
+  "yAxis": {
+   "type": "value",
+   "name": "backdoored programs (of 500)",
+   "nameLocation": "middle",
+   "nameGap": 44,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "min": 0,
+   "max": 248
+  },
+  "series": [
+   {
+    "type": "bar",
+    "barWidth": "58%",
+    "data": [
+     {
+      "value": 222.0,
+      "name": "grep + stripped + kept",
+      "itemStyle": {
+       "color": "@seq650"
+      }
+     },
+     {
+      "value": 202.0,
+      "name": "stripped + kept",
+      "itemStyle": {
+       "color": "@seq450"
+      }
+     },
+     {
+      "value": 33.0,
+      "name": "grep + kept",
+      "itemStyle": {
+       "color": "@seq450"
+      }
+     },
+     {
+      "value": 11.0,
+      "name": "kept only",
+      "itemStyle": {
+       "color": "@seq250"
+      }
+     },
+     {
+      "value": 4.0,
+      "name": "grep only",
+      "itemStyle": {
+       "color": "@seq250"
+      }
+     },
+     {
+      "value": 1.0,
+      "name": "stripped only",
+      "itemStyle": {
+       "color": "@seq250"
+      }
+     },
+     {
+      "value": 0.0,
+      "name": "grep + stripped",
+      "itemStyle": {
+       "color": "@seq450"
+      }
+     },
+     {
+      "value": 27.0,
+      "name": "none of the three",
+      "itemStyle": {
+       "color": "@critical"
+      }
+     }
+    ],
+    "label": {
+     "show": true,
+     "position": "top",
+     "color": "@ink-secondary",
+     "fontSize": 10,
+     "formatter": "{c}"
+    }
+   }
+  ]
+ },
+ "dial": {
+  "label": "Audit budget",
+  "steps": [
+   "0.5%",
+   "1%",
+   "2%",
+   "5%",
+   "10%"
+  ],
+  "initial": 2,
+  "frames": [
+   {
+    "series": [
+     {
+      "type": "bar",
+      "barWidth": "58%",
+      "data": [
+       {
+        "value": 155.0,
+        "name": "grep + stripped + kept",
+        "itemStyle": {
+         "color": "@seq650"
+        }
+       },
+       {
+        "value": 131.0,
+        "name": "stripped + kept",
+        "itemStyle": {
+         "color": "@seq450"
+        }
+       },
+       {
+        "value": 84.0,
+        "name": "grep + kept",
+        "itemStyle": {
+         "color": "@seq450"
+        }
+       },
+       {
+        "value": 29.0,
+        "name": "kept only",
+        "itemStyle": {
+         "color": "@seq250"
+        }
+       },
+       {
+        "value": 20.0,
+        "name": "grep only",
+        "itemStyle": {
+         "color": "@seq250"
+        }
+       },
+       {
+        "value": 1.0,
+        "name": "stripped only",
+        "itemStyle": {
+         "color": "@seq250"
+        }
+       },
+       {
+        "value": 0.0,
+        "name": "grep + stripped",
+        "itemStyle": {
+         "color": "@seq450"
+        }
+       },
+       {
+        "value": 80.0,
+        "name": "none of the three",
+        "itemStyle": {
+         "color": "@critical"
+        }
+       }
+      ],
+      "label": {
+       "show": true,
+       "position": "top",
+       "color": "@ink-secondary",
+       "fontSize": 10,
+       "formatter": "{c}"
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "type": "bar",
+      "barWidth": "58%",
+      "data": [
+       {
+        "value": 188.0,
+        "name": "grep + stripped + kept",
+        "itemStyle": {
+         "color": "@seq650"
+        }
+       },
+       {
+        "value": 169.0,
+        "name": "stripped + kept",
+        "itemStyle": {
+         "color": "@seq450"
+        }
+       },
+       {
+        "value": 54.0,
+        "name": "grep + kept",
+        "itemStyle": {
+         "color": "@seq450"
+        }
+       },
+       {
+        "value": 24.0,
+        "name": "kept only",
+        "itemStyle": {
+         "color": "@seq250"
+        }
+       },
+       {
+        "value": 17.0,
+        "name": "grep only",
+        "itemStyle": {
+         "color": "@seq250"
+        }
+       },
+       {
+        "value": 0.0,
+        "name": "stripped only",
+        "itemStyle": {
+         "color": "@seq250"
+        }
+       },
+       {
+        "value": 0.0,
+        "name": "grep + stripped",
+        "itemStyle": {
+         "color": "@seq450"
+        }
+       },
+       {
+        "value": 48.0,
+        "name": "none of the three",
+        "itemStyle": {
+         "color": "@critical"
+        }
+       }
+      ],
+      "label": {
+       "show": true,
+       "position": "top",
+       "color": "@ink-secondary",
+       "fontSize": 10,
+       "formatter": "{c}"
+      }
+     }
+    ]
+   },
+   {},
+   {},
+   {}
+  ]
+ },
+ "data": {
+  "columns": [
+   "exclusive set",
+   "meaning",
+   "programs at 2%"
+  ],
+  "rows": [
+   [
+    "grep + stripped + kept",
+    "all three catch it",
+    222
+   ],
+   [
+    "stripped + kept",
+    "both monitors, no confession to grep",
+    202
+   ],
+   [
+    "grep + kept",
+    "grep and the comment-reading monitor",
+    33
+   ],
+   [
+    "kept only",
+    "only the comment-reading monitor",
+    11
+   ],
+   [
+    "grep only",
+    "only the regex",
+    4
+   ],
+   [
+    "stripped only",
+    "only the stripped monitor",
+    1
+   ],
+   [
+    "grep + stripped",
+    "both, but the kept monitor misses it",
+    0
+   ],
+   [
+    "none of the three",
+    "no detector catches it",
+    27
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {},
+  "code": "sha256:5c467a5a74b870f4",
+  "spec": "sha256:ba0635d7ca7dfb01"
+ }
+}

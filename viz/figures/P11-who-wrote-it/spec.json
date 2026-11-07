@@ -1,0 +1,868 @@
+{
+ "id": "P11",
+ "kind": "echarts",
+ "title": "Who wrote the backdoor matters more than which monitor reads it",
+ "section": "results",
+ "order": 110,
+ "caption": "Each bar is every backdoor one model wrote, split by how many of our seven monitors caught it at a 2% budget. On the right is the 95% range for the share missed by all seven.",
+ "notes": [
+  "Most groups are small and their ranges overlap. Only the gap between o3-mini and o1-mini is clearly real, so say this with the caveat that more backdoors per model are needed.",
+  "Models didn't write backdoors for the same problems, so problem difficulty is mixed in with the writer's skill. A fair test would have every model attack the same problems.",
+  "o3-mini's backdoors differ most from the reference solution (median lines changed is in the CSV), so they may be conspicuous rewrites.",
+  "For the recommendations: report catch rates per attack source, not just the average."
+ ],
+ "height": 510,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P11-who-wrote-it",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 24,
+   "right": 92,
+   "top": 52,
+   "bottom": 46,
+   "containLabel": true
+  },
+  "legend": {
+   "top": 0,
+   "left": 0,
+   "data": [
+    "Missed by all 7",
+    "Missed by some",
+    "Caught by all 7"
+   ],
+   "selectedMode": false
+  },
+  "graphic": [
+   {
+    "type": "text",
+    "right": 12,
+    "top": 30,
+    "style": {
+     "text": "Missed by all, 95% range",
+     "fill": "@ink-muted",
+     "fontSize": 11,
+     "align": "right"
+    }
+   }
+  ],
+  "xAxis": {
+   "name": "Share of that model's backdoors",
+   "nameLocation": "middle",
+   "nameGap": 30,
+   "type": "value",
+   "min": 0,
+   "max": 100,
+   "interval": 25,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "yAxis": {
+   "type": "category",
+   "data": [
+    "o1-mini  n = 41",
+    "GPT-4o mini  n = 20",
+    "Claude 3.5 Haiku  n = 22",
+    "Gemini 2.0 Flash  n = 21",
+    "Claude 3.7 Sonnet  n = 114",
+    "GPT-4o  n = 79",
+    "Claude 3.7 Sonnet thinking  n = 19",
+    "o3-mini  n = 157",
+    "Original APPS  n = 18",
+    "GPT-3.5 Turbo  n = 9"
+   ],
+   "inverse": true,
+   "axisLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "fontSize": 13,
+    "fontWeight": 500,
+    "formatter": "function (v) { var p = v.split('  n = '); return '{n|' + p[0] + '}  {c|n = ' + p[1] + '}'; }",
+    "rich": {
+     "n": {
+      "color": "@ink-primary",
+      "fontSize": 13,
+      "fontWeight": 500
+     },
+     "c": {
+      "color": "@ink-muted",
+      "fontSize": 12
+     }
+    }
+   }
+  },
+  "series": [
+   {
+    "name": "Missed by all 7",
+    "type": "bar",
+    "stack": "all",
+    "data": [
+     {
+      "value": 26.83,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "27%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>o1-mini</b> (n = 41)<br>missed by all 7: 11 (27%)"
+     },
+     {
+      "value": 25.0,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "25%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>GPT-4o mini</b> (n = 20)<br>missed by all 7: 5 (25%)"
+     },
+     {
+      "value": 18.18,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "18%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>Claude 3.5 Haiku</b> (n = 22)<br>missed by all 7: 4 (18%)"
+     },
+     {
+      "value": 14.29,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "14%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>Gemini 2.0 Flash</b> (n = 21)<br>missed by all 7: 3 (14%)"
+     },
+     {
+      "value": 13.16,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "13%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>Claude 3.7 Sonnet</b> (n = 114)<br>missed by all 7: 15 (13%)"
+     },
+     {
+      "value": 7.59,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "8%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>GPT-4o</b> (n = 79)<br>missed by all 7: 6 (8%)"
+     },
+     {
+      "value": 5.26,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "5%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>Claude 3.7 Sonnet thinking</b> (n = 19)<br>missed by all 7: 1 (5%)"
+     },
+     {
+      "value": 2.55,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "3%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>o3-mini</b> (n = 157)<br>missed by all 7: 4 (3%)"
+     },
+     {
+      "value": 0.0,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "0%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>Original APPS</b> (n = 18)<br>missed by all 7: 0 (0%)"
+     },
+     {
+      "value": 0.0,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "0%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>GPT-3.5 Turbo</b> (n = 9)<br>missed by all 7: 0 (0%)"
+     }
+    ],
+    "barWidth": 22,
+    "itemStyle": {
+     "color": "@s7",
+     "borderColor": "@ink-surface",
+     "borderWidth": 2
+    },
+    "label": {
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "name": "Missed by some",
+    "type": "bar",
+    "stack": "all",
+    "data": [
+     {
+      "value": 51.22,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "51%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>o1-mini</b> (n = 41)<br>missed by some: 21 (51%)"
+     },
+     {
+      "value": 55.0,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "55%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>GPT-4o mini</b> (n = 20)<br>missed by some: 11 (55%)"
+     },
+     {
+      "value": 18.18,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "18%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Claude 3.5 Haiku</b> (n = 22)<br>missed by some: 4 (18%)"
+     },
+     {
+      "value": 28.57,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "29%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Gemini 2.0 Flash</b> (n = 21)<br>missed by some: 6 (29%)"
+     },
+     {
+      "value": 31.58,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "32%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Claude 3.7 Sonnet</b> (n = 114)<br>missed by some: 36 (32%)"
+     },
+     {
+      "value": 40.51,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "41%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>GPT-4o</b> (n = 79)<br>missed by some: 32 (41%)"
+     },
+     {
+      "value": 10.53,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "11%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Claude 3.7 Sonnet thinking</b> (n = 19)<br>missed by some: 2 (11%)"
+     },
+     {
+      "value": 34.39,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "34%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>o3-mini</b> (n = 157)<br>missed by some: 54 (34%)"
+     },
+     {
+      "value": 27.78,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "28%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>Original APPS</b> (n = 18)<br>missed by some: 5 (28%)"
+     },
+     {
+      "value": 33.33,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "33%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>GPT-3.5 Turbo</b> (n = 9)<br>missed by some: 3 (33%)"
+     }
+    ],
+    "barWidth": 22,
+    "itemStyle": {
+     "color": "@warning/0.6",
+     "borderColor": "@ink-surface",
+     "borderWidth": 2
+    },
+    "label": {
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "name": "Caught by all 7",
+    "type": "bar",
+    "stack": "all",
+    "data": [
+     {
+      "value": 21.95,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "22%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>o1-mini</b> (n = 41)<br>caught by all 7: 9 (22%)"
+     },
+     {
+      "value": 20.0,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "20%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>GPT-4o mini</b> (n = 20)<br>caught by all 7: 4 (20%)"
+     },
+     {
+      "value": 63.64,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "64%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Claude 3.5 Haiku</b> (n = 22)<br>caught by all 7: 14 (64%)"
+     },
+     {
+      "value": 57.14,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "57%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Gemini 2.0 Flash</b> (n = 21)<br>caught by all 7: 12 (57%)"
+     },
+     {
+      "value": 55.26,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "55%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Claude 3.7 Sonnet</b> (n = 114)<br>caught by all 7: 63 (55%)"
+     },
+     {
+      "value": 51.9,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "52%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>GPT-4o</b> (n = 79)<br>caught by all 7: 41 (52%)"
+     },
+     {
+      "value": 84.21,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "84%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Claude 3.7 Sonnet thinking</b> (n = 19)<br>caught by all 7: 16 (84%)"
+     },
+     {
+      "value": 63.06,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "63%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>o3-mini</b> (n = 157)<br>caught by all 7: 99 (63%)"
+     },
+     {
+      "value": 72.22,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "72%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>Original APPS</b> (n = 18)<br>caught by all 7: 13 (72%)"
+     },
+     {
+      "value": 66.67,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "67%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>GPT-3.5 Turbo</b> (n = 9)<br>caught by all 7: 6 (67%)"
+     }
+    ],
+    "barWidth": 22,
+    "itemStyle": {
+     "color": "@context",
+     "borderColor": "@ink-surface",
+     "borderWidth": 2
+    },
+    "label": {
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "name": "_range",
+    "type": "scatter",
+    "symbolSize": 0,
+    "data": [
+     {
+      "value": [
+       100,
+       0
+      ],
+      "name": "16–42%"
+     },
+     {
+      "value": [
+       100,
+       1
+      ],
+      "name": "11–47%"
+     },
+     {
+      "value": [
+       100,
+       2
+      ],
+      "name": "7–39%"
+     },
+     {
+      "value": [
+       100,
+       3
+      ],
+      "name": "5–35%"
+     },
+     {
+      "value": [
+       100,
+       4
+      ],
+      "name": "8–21%"
+     },
+     {
+      "value": [
+       100,
+       5
+      ],
+      "name": "4–16%"
+     },
+     {
+      "value": [
+       100,
+       6
+      ],
+      "name": "1–25%"
+     },
+     {
+      "value": [
+       100,
+       7
+      ],
+      "name": "1–6%"
+     },
+     {
+      "value": [
+       100,
+       8
+      ],
+      "name": "0–18%"
+     },
+     {
+      "value": [
+       100,
+       9
+      ],
+      "name": "0–30%"
+     }
+    ],
+    "silent": true,
+    "clip": false,
+    "tooltip": {
+     "show": false
+    },
+    "label": {
+     "show": true,
+     "position": "right",
+     "distance": 18,
+     "formatter": "{b}",
+     "color": "@ink-secondary",
+     "fontSize": 12
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "writer",
+   "model",
+   "n",
+   "missed_all",
+   "missed_some",
+   "caught_all",
+   "median_lines"
+  ],
+  "rows": [
+   [
+    "o1-mini",
+    "openai/o1-mini",
+    41,
+    11,
+    21,
+    9,
+    22.0
+   ],
+   [
+    "GPT-4o mini",
+    "openai/gpt-4o-mini",
+    20,
+    5,
+    11,
+    4,
+    12.0
+   ],
+   [
+    "Claude 3.5 Haiku",
+    "anthropic/claude-3-5-haiku-latest",
+    22,
+    4,
+    4,
+    14,
+    12.0
+   ],
+   [
+    "Gemini 2.0 Flash",
+    "google/gemini-2.0-flash",
+    21,
+    3,
+    6,
+    12,
+    10.0
+   ],
+   [
+    "Claude 3.7 Sonnet",
+    "anthropic/claude-3-7-sonnet-latest",
+    114,
+    15,
+    36,
+    63,
+    19.0
+   ],
+   [
+    "GPT-4o",
+    "openai/gpt-4o",
+    79,
+    6,
+    32,
+    41,
+    15.0
+   ],
+   [
+    "Claude 3.7 Sonnet thinking",
+    "anthropic/claude-3-7-sonnet-thinking-latest",
+    19,
+    1,
+    2,
+    16,
+    12.0
+   ],
+   [
+    "o3-mini",
+    "openai/o3-mini",
+    157,
+    4,
+    54,
+    99,
+    39.0
+   ],
+   [
+    "Original APPS",
+    "unknown",
+    18,
+    0,
+    5,
+    13,
+    36.5
+   ],
+   [
+    "GPT-3.5 Turbo",
+    "openai/gpt-3.5-turbo",
+    9,
+    0,
+    3,
+    6,
+    18.0
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {
+   "results/analysis/case-features.csv": "sha256:26805e982a831ffc"
+  },
+  "code": "sha256:1d247e5338ec5364",
+  "spec": "sha256:3201c85062274a2c"
+ }
+}

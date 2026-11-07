@@ -1,0 +1,48 @@
+# The report outline. Each figure's META["section"] names one of these ids, and the gallery
+# groups figures in this order. Figures that aren't in the report use "appendix" (always last).
+
+# One letter per person. A figure's ID is its creator's letter plus a number (P07, A01, M03),
+# so two people working on different branches can never pick the same ID.
+[people]
+P = "Punjaya"
+A = "Anusha"
+M = "Marnick"
+
+[[sections]]
+id = "abstract"
+title = "Abstract"
+
+[[sections]]
+id = "intro"
+title = "Introduction"
+
+[[sections]]
+id = "setup"
+title = "Experimental setup"
+
+[[sections]]
+id = "results"
+title = "Results"
+
+[[sections]]
+id = "recommendations"
+title = "Practical recommendations"
+
+[[sections]]
+id = "limitations"
+title = "Limitations"
+
+[[sections]]
+id = "future"
+title = "Future work"
+
+[[sections]]
+id = "references"
+title = "References"
+
+[[sections]]
+id = "appendix"
+title = "Appendix"
+
+# IDs that were used and then deleted. Never reuse them, so old discussions stay unambiguous.
+retired = []

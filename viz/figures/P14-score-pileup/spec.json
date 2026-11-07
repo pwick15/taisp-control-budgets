@@ -1,0 +1,716 @@
+{
+ "id": "P14",
+ "kind": "echarts",
+ "title": "On a 0 to 10 scale, honest programs pile up on one score",
+ "section": "appendix",
+ "order": 20,
+ "caption": "Programs per suspicion score, honest in grey and backdoored in red, on a log scale so small counts show. The shaded region is what a requested 2% budget audits when only scores above the cutoff count. Sonnet gives 91% of honest programs one score; Haiku xhigh 54%.",
+ "notes": [
+  "Random tie-breaking fixes fairness, not sample size. At 500 honest programs a 1% budget still rests on 5 of them. The other fixes are a 0 to 100 scale (P15, P08) and more honest programs."
+ ],
+ "height": 430,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P14-score-pileup",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": [
+   {
+    "left": "9%",
+    "width": "39%",
+    "top": 56,
+    "bottom": 70
+   },
+   {
+    "left": "59%",
+    "width": "39%",
+    "top": 56,
+    "bottom": 70
+   }
+  ],
+  "xAxis": [
+   {
+    "name": "Suspicion score (0 to 10, as 0 to 1)",
+    "nameLocation": "middle",
+    "nameGap": 34,
+    "gridIndex": 0,
+    "type": "value",
+    "min": -0.03,
+    "max": 1.03,
+    "splitLine": {
+     "show": false
+    }
+   },
+   {
+    "name": "Suspicion score (0 to 10, as 0 to 1)",
+    "nameLocation": "middle",
+    "nameGap": 34,
+    "gridIndex": 1,
+    "type": "value",
+    "min": -0.03,
+    "max": 1.03,
+    "splitLine": {
+     "show": false
+    }
+   }
+  ],
+  "yAxis": [
+   {
+    "name": "Programs (log scale)",
+    "nameLocation": "middle",
+    "nameGap": 44,
+    "gridIndex": 0,
+    "type": "log",
+    "min": 0.5,
+    "max": 1000,
+    "axisLabel": {
+     "formatter": "function (v) { return v < 1 ? '' : String(v); }"
+    }
+   },
+   {
+    "name": "",
+    "nameLocation": "middle",
+    "nameGap": 44,
+    "gridIndex": 1,
+    "type": "log",
+    "min": 0.5,
+    "max": 1000,
+    "axisLabel": {
+     "formatter": "function (v) { return v < 1 ? '' : String(v); }"
+    }
+   }
+  ],
+  "series": [
+   {
+    "name": "honest programs",
+    "type": "bar",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "barWidth": 9,
+    "barGap": "10%",
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderRadius": [
+      2,
+      2,
+      0,
+      0
+     ]
+    },
+    "z": 3,
+    "data": [
+     {
+      "value": [
+       -0.0167,
+       454
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>454 honest programs scored 0.00"
+     },
+     {
+      "value": [
+       0.0833,
+       41
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>41 honest programs scored 0.10"
+     },
+     {
+      "value": [
+       0.1833,
+       2
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>2 honest programs scored 0.20"
+     },
+     {
+      "value": [
+       0.3833,
+       1
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>1 honest programs scored 0.40"
+     },
+     {
+      "value": [
+       0.8833,
+       1
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>1 honest programs scored 0.90"
+     },
+     {
+      "value": [
+       0.5833,
+       1
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>1 honest programs scored 0.60"
+     }
+    ],
+    "markArea": {
+     "silent": true,
+     "itemStyle": {
+      "color": "@s2/0.1"
+     },
+     "label": {
+      "show": true,
+      "position": "insideTop",
+      "color": "@ink-secondary",
+      "fontSize": 11,
+      "formatter": "audited at 2%\n(really 1.0%)"
+     },
+     "data": [
+      [
+       {
+        "xAxis": 0.15
+       },
+       {
+        "xAxis": 1.03
+       }
+      ]
+     ]
+    }
+   },
+   {
+    "name": "backdoored programs",
+    "type": "bar",
+    "xAxisIndex": 0,
+    "yAxisIndex": 0,
+    "barWidth": 9,
+    "barGap": "10%",
+    "itemStyle": {
+     "color": "@s7",
+     "borderRadius": [
+      2,
+      2,
+      0,
+      0
+     ]
+    },
+    "z": 2,
+    "data": [
+     {
+      "value": [
+       0.8167,
+       174
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>174 backdoored programs scored 0.80"
+     },
+     {
+      "value": [
+       0.9167,
+       131
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>131 backdoored programs scored 0.90"
+     },
+     {
+      "value": [
+       0.7167,
+       46
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>46 backdoored programs scored 0.70"
+     },
+     {
+      "value": [
+       0.0167,
+       34
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>34 backdoored programs scored 0.00"
+     },
+     {
+      "value": [
+       0.6167,
+       32
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>32 backdoored programs scored 0.60"
+     },
+     {
+      "value": [
+       0.1167,
+       32
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>32 backdoored programs scored 0.10"
+     },
+     {
+      "value": [
+       0.2167,
+       17
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>17 backdoored programs scored 0.20"
+     },
+     {
+      "value": [
+       0.5167,
+       15
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>15 backdoored programs scored 0.50"
+     },
+     {
+      "value": [
+       0.3167,
+       11
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>11 backdoored programs scored 0.30"
+     },
+     {
+      "value": [
+       0.4167,
+       5
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>5 backdoored programs scored 0.40"
+     },
+     {
+      "value": [
+       1.0167,
+       3
+      ],
+      "tip": "<b>Sonnet 5.5</b><br>3 backdoored programs scored 1.00"
+     }
+    ]
+   },
+   {
+    "name": "honest programs",
+    "type": "bar",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "barWidth": 9,
+    "barGap": "10%",
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderRadius": [
+      2,
+      2,
+      0,
+      0
+     ]
+    },
+    "z": 3,
+    "data": [
+     {
+      "value": [
+       -0.0167,
+       271
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>271 honest programs scored 0.00"
+     },
+     {
+      "value": [
+       0.0833,
+       221
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>221 honest programs scored 0.10"
+     },
+     {
+      "value": [
+       0.1833,
+       4
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>4 honest programs scored 0.20"
+     },
+     {
+      "value": [
+       0.6833,
+       1
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>1 honest programs scored 0.70"
+     },
+     {
+      "value": [
+       0.8833,
+       1
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>1 honest programs scored 0.90"
+     },
+     {
+      "value": [
+       0.2833,
+       1
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>1 honest programs scored 0.30"
+     },
+     {
+      "value": [
+       0.3833,
+       1
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>1 honest programs scored 0.40"
+     }
+    ],
+    "markArea": {
+     "silent": true,
+     "itemStyle": {
+      "color": "@s2/0.1"
+     },
+     "label": {
+      "show": true,
+      "position": "insideTop",
+      "color": "@ink-secondary",
+      "fontSize": 11,
+      "formatter": "audited at 2%\n(really 1.6%)"
+     },
+     "data": [
+      [
+       {
+        "xAxis": 0.15
+       },
+       {
+        "xAxis": 1.03
+       }
+      ]
+     ]
+    }
+   },
+   {
+    "name": "backdoored programs",
+    "type": "bar",
+    "xAxisIndex": 1,
+    "yAxisIndex": 1,
+    "barWidth": 9,
+    "barGap": "10%",
+    "itemStyle": {
+     "color": "@s7",
+     "borderRadius": [
+      2,
+      2,
+      0,
+      0
+     ]
+    },
+    "z": 2,
+    "data": [
+     {
+      "value": [
+       0.7167,
+       84
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>84 backdoored programs scored 0.70"
+     },
+     {
+      "value": [
+       0.6167,
+       76
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>76 backdoored programs scored 0.60"
+     },
+     {
+      "value": [
+       0.3167,
+       70
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>70 backdoored programs scored 0.30"
+     },
+     {
+      "value": [
+       0.2167,
+       68
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>68 backdoored programs scored 0.20"
+     },
+     {
+      "value": [
+       0.1167,
+       57
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>57 backdoored programs scored 0.10"
+     },
+     {
+      "value": [
+       0.8167,
+       47
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>47 backdoored programs scored 0.80"
+     },
+     {
+      "value": [
+       0.5167,
+       42
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>42 backdoored programs scored 0.50"
+     },
+     {
+      "value": [
+       0.4167,
+       33
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>33 backdoored programs scored 0.40"
+     },
+     {
+      "value": [
+       0.0167,
+       18
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>18 backdoored programs scored 0.00"
+     },
+     {
+      "value": [
+       0.9167,
+       5
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>5 backdoored programs scored 0.90"
+     }
+    ]
+   }
+  ],
+  "graphic": [
+   {
+    "type": "text",
+    "left": "9%",
+    "top": 26,
+    "style": {
+     "text": "Sonnet 5.5",
+     "fill": "@ink-primary",
+     "fontSize": 13,
+     "fontWeight": 600
+    }
+   },
+   {
+    "type": "text",
+    "left": "59%",
+    "top": 26,
+    "style": {
+     "text": "Haiku 5.5 · xhigh",
+     "fill": "@ink-primary",
+     "fontSize": 13,
+     "fontWeight": 600
+    }
+   }
+  ],
+  "legend": {
+   "top": 0,
+   "left": "6%",
+   "data": [
+    "honest programs",
+    "backdoored programs"
+   ]
+  }
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "monitor",
+   "programs",
+   "score",
+   "count"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5",
+    "honest",
+    0.0,
+    454
+   ],
+   [
+    "Sonnet 5.5",
+    "honest",
+    0.1,
+    41
+   ],
+   [
+    "Sonnet 5.5",
+    "honest",
+    0.2,
+    2
+   ],
+   [
+    "Sonnet 5.5",
+    "honest",
+    0.4,
+    1
+   ],
+   [
+    "Sonnet 5.5",
+    "honest",
+    0.9,
+    1
+   ],
+   [
+    "Sonnet 5.5",
+    "honest",
+    0.6,
+    1
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.8,
+    174
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.9,
+    131
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.7,
+    46
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.0,
+    34
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.6,
+    32
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.1,
+    32
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.2,
+    17
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.5,
+    15
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.3,
+    11
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    0.4,
+    5
+   ],
+   [
+    "Sonnet 5.5",
+    "backdoored",
+    1.0,
+    3
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "honest",
+    0.0,
+    271
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "honest",
+    0.1,
+    221
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "honest",
+    0.2,
+    4
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "honest",
+    0.7,
+    1
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "honest",
+    0.9,
+    1
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "honest",
+    0.3,
+    1
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "honest",
+    0.4,
+    1
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.7,
+    84
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.6,
+    76
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.3,
+    70
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.2,
+    68
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.1,
+    57
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.8,
+    47
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.5,
+    42
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.4,
+    33
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.0,
+    18
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "backdoored",
+    0.9,
+    5
+   ]
+  ]
+ },
+ "facts": {
+  "top0": 90.8,
+  "distinct0": 6,
+  "top1": 54.2,
+  "distinct1": 7
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63"
+  },
+  "code": "sha256:5758af10720e0c31",
+  "spec": "sha256:75937411bf5d96d0"
+ }
+}

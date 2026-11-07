@@ -1,0 +1,272 @@
+{
+ "id": "P02",
+ "kind": "echarts",
+ "title": "Haiku xhigh comes within 2.5 points of Sonnet for far less",
+ "section": "results",
+ "order": 20,
+ "caption": "The three best monitor settings at a 2% audit budget. Colour ranks each value against all 32 settings we ran: green is the best of them, red the worst. Cost is coloured on a log scale.",
+ "notes": [],
+ "height": 274,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P02-top-three",
+ "option": {
+  "tooltip": {
+   "show": false
+  },
+  "animation": false,
+  "grid": {
+   "left": 190,
+   "right": 16,
+   "top": 40,
+   "bottom": 12
+  },
+  "xAxis": {
+   "type": "category",
+   "data": [
+    "Caught at a 2% budget",
+    "Cost per program"
+   ],
+   "position": "top",
+   "axisLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-secondary",
+    "fontSize": 12,
+    "fontWeight": 600,
+    "interval": 0
+   }
+  },
+  "yAxis": {
+   "type": "category",
+   "data": [
+    "Sonnet 5.5 · high",
+    "Sonnet 5.5 · thinking off",
+    "Haiku 5.5 · xhigh"
+   ],
+   "inverse": true,
+   "axisLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-primary",
+    "fontSize": 13,
+    "fontWeight": 500,
+    "margin": 16
+   }
+  },
+  "series": [
+   {
+    "type": "heatmap",
+    "data": [
+     {
+      "value": [
+       0,
+       0,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:1.000"
+      },
+      "label": {
+       "formatter": "{big|87.6%}\n{small|best of the three}"
+      }
+     },
+     {
+      "value": [
+       0,
+       1,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:0.967"
+      },
+      "label": {
+       "formatter": "{big|84.7%}\n{small|2.9 points behind}"
+      }
+     },
+     {
+      "value": [
+       0,
+       2,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:0.972"
+      },
+      "label": {
+       "formatter": "{big|85.1%}\n{small|2.5 points behind}"
+      }
+     },
+     {
+      "value": [
+       1,
+       0,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:0.088"
+      },
+      "label": {
+       "formatter": "{big|$0.0093}\n{small|5.3x the cheapest}"
+      }
+     },
+     {
+      "value": [
+       1,
+       1,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:0.127"
+      },
+      "label": {
+       "formatter": "{big|$0.0076}\n{small|4.3x the cheapest}"
+      }
+     },
+     {
+      "value": [
+       1,
+       2,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:0.411"
+      },
+      "label": {
+       "formatter": "{big|$0.0018}\n{small|cheapest of the three}"
+      }
+     }
+    ],
+    "silent": true,
+    "itemStyle": {
+     "borderColor": "@ink-surface",
+     "borderWidth": 3,
+     "borderRadius": 8
+    },
+    "label": {
+     "show": true,
+     "color": "@on-pale",
+     "fontSize": 18,
+     "fontWeight": 600,
+     "align": "center",
+     "rich": {
+      "big": {
+       "color": "@on-pale",
+       "fontSize": 18,
+       "fontWeight": 600,
+       "lineHeight": 26,
+       "align": "center"
+      },
+      "small": {
+       "color": "@on-pale",
+       "fontSize": 12,
+       "lineHeight": 16,
+       "align": "center"
+      }
+     }
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "setting",
+   "caught_2pct",
+   "cost_per_program"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5 · high",
+    0.875805,
+    0.00931446
+   ],
+   [
+    "Sonnet 5.5 · thinking off",
+    0.846743,
+    0.00762675
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    0.851032,
+    0.00177274
+   ]
+  ]
+ },
+ "facts": {
+  "n_runs": 32,
+  "gap": 2.47732
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-high-tm-n500-strip.csv": "sha256:a60a51b2415ba673",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-low-tm-n500-strip.csv": "sha256:df0483e4077defa8",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-medium-tm-n500-strip.csv": "sha256:0e66fe6412044d6a",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip.csv": "sha256:1464354acd0c1eac",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-27b-tm-n500-strip.csv": "sha256:0fd529c0321e2b40",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma3-4b-tm-n500-strip.csv": "sha256:f61740693798daf0",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-efforthigh-tm-n500-strip.csv": "sha256:91ad04f265a32df6",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortlow-tm-n500-strip.csv": "sha256:887b7a9f8b6458c6",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-glm53-tm-n500-strip.csv": "sha256:21940d7538a860fd",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gpt6luna-tm-n500-strip.csv": "sha256:1bd4150a8317991e",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-high-tm-n500-strip.csv": "sha256:7d6358205499e8b5",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-low-tm-n500-strip.csv": "sha256:ab21d9005876f67f",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-gptoss120b-tm-n500-strip.csv": "sha256:27efb0e60c3a48b1",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku45-tm-n500-strip.csv": "sha256:db19f2e66f02248c",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip.csv": "sha256:812be9bae5ee289f",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortlow-tm-n500-strip.csv": "sha256:217621bd62368260",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip.csv": "sha256:1127f06477e2ab86",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-haiku55-tm-n500-strip.csv": "sha256:90128b48d21d6a52",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-high-tm-n500-strip.csv": "sha256:3edcfe1c36eebf3a",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-low-tm-n500-strip.csv": "sha256:768010c0dd6b9807",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-none-tm-n500-strip.csv": "sha256:c7db9cea6a75df52",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-luna-xhigh-tm-n500-strip.csv": "sha256:46e806313783bfdc",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-mistrallarge4-tm-n500-strip.csv": "sha256:b0a3877f4030fbf0",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip.csv": "sha256:af2ef7e80df20ec1",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:8ce58648701ae338",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:32ff7e0c9397cfa6",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-high-tm-strip.csv": "sha256:a976a26754d7d62f",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63",
+   "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
+  },
+  "code": "sha256:3d0db6bf5dc4a566",
+  "spec": "sha256:9220bdf0d78a738c"
+ }
+}

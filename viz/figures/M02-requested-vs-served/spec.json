@@ -1,0 +1,554 @@
+{
+ "id": "M02",
+ "kind": "snapshot",
+ "title": "Few budget requests audit exactly the share asked for",
+ "section": "appendix",
+ "order": 40,
+ "caption": "Across all runs and seven budgets, each requested audit budget on the left against what the monitor could actually deliver on the right. The same tie problem as P07, shown across every run.",
+ "notes": [],
+ "height": 620,
+ "author": "",
+ "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'b1-requested-vs-served'. Copied as exported; its generator isn't in the repo yet.",
+ "path": "viz/figures/M02-requested-vs-served",
+ "option": {
+  "animation": false,
+  "textStyle": {
+   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
+   "color": "@ink-secondary"
+  },
+  "tooltip": {
+   "trigger": "item",
+   "confine": true,
+   "backgroundColor": "@ink-surface",
+   "borderColor": "@ink-axis",
+   "borderWidth": 1,
+   "textStyle": {
+    "color": "@ink-primary",
+    "fontSize": 12
+   }
+  },
+  "series": [
+   {
+    "type": "sankey",
+    "left": 16,
+    "right": 210,
+    "top": 18,
+    "bottom": 18,
+    "nodeWidth": 14,
+    "nodeGap": 10,
+    "layoutIterations": 0,
+    "draggable": false,
+    "emphasis": {
+     "focus": "adjacency"
+    },
+    "label": {
+     "color": "@ink-primary",
+     "fontSize": 11
+    },
+    "lineStyle": {
+     "curveness": 0.45
+    },
+    "data": [
+     {
+      "name": "asked for 0.5%",
+      "itemStyle": {
+       "color": "@ink-secondary"
+      }
+     },
+     {
+      "name": "asked for 1%",
+      "itemStyle": {
+       "color": "@ink-secondary"
+      }
+     },
+     {
+      "name": "asked for 2%",
+      "itemStyle": {
+       "color": "@ink-secondary"
+      }
+     },
+     {
+      "name": "asked for 5%",
+      "itemStyle": {
+       "color": "@ink-secondary"
+      }
+     },
+     {
+      "name": "asked for 10%",
+      "itemStyle": {
+       "color": "@ink-secondary"
+      }
+     },
+     {
+      "name": "asked for 20%",
+      "itemStyle": {
+       "color": "@ink-secondary"
+      }
+     },
+     {
+      "name": "asked for 50%",
+      "itemStyle": {
+       "color": "@ink-secondary"
+      }
+     },
+     {
+      "name": "served exactly the rate requested",
+      "itemStyle": {
+       "color": "@good"
+      }
+     },
+     {
+      "name": "snapped down to over 20% up to 50%",
+      "itemStyle": {
+       "color": "@seq400"
+      }
+     },
+     {
+      "name": "snapped down to over 10% up to 20%",
+      "itemStyle": {
+       "color": "@seq400"
+      }
+     },
+     {
+      "name": "snapped down to over 5% up to 10%",
+      "itemStyle": {
+       "color": "@seq400"
+      }
+     },
+     {
+      "name": "snapped down to over 2% up to 5%",
+      "itemStyle": {
+       "color": "@seq400"
+      }
+     },
+     {
+      "name": "snapped down to over 1% up to 2%",
+      "itemStyle": {
+       "color": "@seq400"
+      }
+     },
+     {
+      "name": "snapped down to over 0.5% up to 1%",
+      "itemStyle": {
+       "color": "@seq400"
+      }
+     },
+     {
+      "name": "snapped down to over 0% up to 0.5%",
+      "itemStyle": {
+       "color": "@seq400"
+      }
+     },
+     {
+      "name": "0%: the budget cannot be spent at all",
+      "itemStyle": {
+       "color": "@critical"
+      }
+     }
+    ],
+    "links": [
+     {
+      "source": "asked for 0.5%",
+      "target": "0%: the budget cannot be spent at all",
+      "value": 4.0,
+      "lineStyle": {
+       "color": "@critical",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 0.5%",
+      "target": "snapped down to over 0% up to 0.5%",
+      "value": 38.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 1%",
+      "target": "0%: the budget cannot be spent at all",
+      "value": 4.0,
+      "lineStyle": {
+       "color": "@critical",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 1%",
+      "target": "served exactly the rate requested",
+      "value": 10.0,
+      "lineStyle": {
+       "color": "@good",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 1%",
+      "target": "snapped down to over 0% up to 0.5%",
+      "value": 7.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 1%",
+      "target": "snapped down to over 0.5% up to 1%",
+      "value": 21.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 10%",
+      "target": "0%: the budget cannot be spent at all",
+      "value": 2.0,
+      "lineStyle": {
+       "color": "@critical",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 10%",
+      "target": "served exactly the rate requested",
+      "value": 2.0,
+      "lineStyle": {
+       "color": "@good",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 10%",
+      "target": "snapped down to over 0% up to 0.5%",
+      "value": 4.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 10%",
+      "target": "snapped down to over 0.5% up to 1%",
+      "value": 5.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 10%",
+      "target": "snapped down to over 1% up to 2%",
+      "value": 16.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 10%",
+      "target": "snapped down to over 2% up to 5%",
+      "value": 5.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 10%",
+      "target": "snapped down to over 5% up to 10%",
+      "value": 8.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 2%",
+      "target": "0%: the budget cannot be spent at all",
+      "value": 3.0,
+      "lineStyle": {
+       "color": "@critical",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 2%",
+      "target": "served exactly the rate requested",
+      "value": 9.0,
+      "lineStyle": {
+       "color": "@good",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 2%",
+      "target": "snapped down to over 0% up to 0.5%",
+      "value": 5.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 2%",
+      "target": "snapped down to over 0.5% up to 1%",
+      "value": 10.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 2%",
+      "target": "snapped down to over 1% up to 2%",
+      "value": 15.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 20%",
+      "target": "snapped down to over 0% up to 0.5%",
+      "value": 4.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 20%",
+      "target": "snapped down to over 0.5% up to 1%",
+      "value": 4.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 20%",
+      "target": "snapped down to over 1% up to 2%",
+      "value": 15.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 20%",
+      "target": "snapped down to over 10% up to 20%",
+      "value": 9.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 20%",
+      "target": "snapped down to over 2% up to 5%",
+      "value": 3.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 20%",
+      "target": "snapped down to over 5% up to 10%",
+      "value": 7.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 5%",
+      "target": "0%: the budget cannot be spent at all",
+      "value": 2.0,
+      "lineStyle": {
+       "color": "@critical",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 5%",
+      "target": "served exactly the rate requested",
+      "value": 1.0,
+      "lineStyle": {
+       "color": "@good",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 5%",
+      "target": "snapped down to over 0% up to 0.5%",
+      "value": 4.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 5%",
+      "target": "snapped down to over 0.5% up to 1%",
+      "value": 7.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 5%",
+      "target": "snapped down to over 1% up to 2%",
+      "value": 17.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 5%",
+      "target": "snapped down to over 2% up to 5%",
+      "value": 11.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 50%",
+      "target": "snapped down to over 0% up to 0.5%",
+      "value": 4.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 50%",
+      "target": "snapped down to over 0.5% up to 1%",
+      "value": 4.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 50%",
+      "target": "snapped down to over 1% up to 2%",
+      "value": 13.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 50%",
+      "target": "snapped down to over 10% up to 20%",
+      "value": 6.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 50%",
+      "target": "snapped down to over 2% up to 5%",
+      "value": 2.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 50%",
+      "target": "snapped down to over 20% up to 50%",
+      "value": 11.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     },
+     {
+      "source": "asked for 50%",
+      "target": "snapped down to over 5% up to 10%",
+      "value": 2.0,
+      "lineStyle": {
+       "color": "@seq400",
+       "opacity": 0.5
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "requested budget",
+   "exact",
+   "snapped down",
+   "unspendable (0%)",
+   "requests resting on fewer than 5 honest rows"
+  ],
+  "rows": [
+   [
+    "0.5%",
+    0,
+    33,
+    4,
+    42
+   ],
+   [
+    "1%",
+    10,
+    23,
+    4,
+    32
+   ],
+   [
+    "2%",
+    9,
+    25,
+    3,
+    15
+   ],
+   [
+    "5%",
+    1,
+    34,
+    2,
+    10
+   ],
+   [
+    "10%",
+    2,
+    33,
+    2,
+    10
+   ],
+   [
+    "20%",
+    0,
+    37,
+    0,
+    7
+   ],
+   [
+    "50%",
+    0,
+    37,
+    0,
+    7
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {},
+  "code": "sha256:9ab16f7db5e02bf4",
+  "spec": "sha256:00f9c84e167d655c"
+ }
+}

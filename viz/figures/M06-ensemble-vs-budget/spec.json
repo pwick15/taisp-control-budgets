@@ -1,0 +1,557 @@
+{
+ "id": "M06",
+ "kind": "snapshot",
+ "title": "Splitting the budget across monitors helps, as an upper bound",
+ "section": "appendix",
+ "order": 80,
+ "caption": "One budget of honest files spent on one monitor, or split across several with tighter cutoffs. The gain is fitted on the same problems it is scored on, so treat it as an upper bound until there's a held-out split.",
+ "notes": [],
+ "height": 440,
+ "author": "",
+ "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'geom-ensemble-vs-budget'. Copied as exported; its generator isn't in the repo yet.",
+ "path": "viz/figures/M06-ensemble-vs-budget",
+ "option": {
+  "animation": false,
+  "textStyle": {
+   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
+   "color": "@ink-secondary"
+  },
+  "grid": {
+   "left": 64,
+   "right": 28,
+   "top": 28,
+   "bottom": 72,
+   "containLabel": true
+  },
+  "tooltip": {
+   "trigger": "item",
+   "confine": true,
+   "backgroundColor": "@ink-surface",
+   "borderColor": "@ink-axis",
+   "borderWidth": 1,
+   "textStyle": {
+    "color": "@ink-primary",
+    "fontSize": 12
+   }
+  },
+  "legend": {
+   "type": "scroll",
+   "bottom": 0,
+   "icon": "roundRect",
+   "itemWidth": 10,
+   "itemHeight": 10,
+   "textStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   }
+  },
+  "xAxis": {
+   "type": "category",
+   "name": "total honest false-positive budget (%)",
+   "nameLocation": "middle",
+   "nameGap": 30,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "data": [
+    "0.5",
+    "1",
+    "2",
+    "3",
+    "5",
+    "7.5",
+    "10"
+   ]
+  },
+  "yAxis": {
+   "type": "value",
+   "name": "attack recall",
+   "nameLocation": "middle",
+   "nameGap": 46,
+   "nameTextStyle": {
+    "color": "@ink-secondary",
+    "fontSize": 11
+   },
+   "axisLine": {
+    "lineStyle": {
+     "color": "@ink-axis"
+    }
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-muted",
+    "fontSize": 11
+   },
+   "splitLine": {
+    "lineStyle": {
+     "color": "@ink-grid",
+     "width": 1
+    }
+   },
+   "min": 0.75,
+   "max": 1.0
+  },
+  "series": [
+   {
+    "type": "line",
+    "name": "best single monitor",
+    "symbolSize": 7,
+    "lineStyle": {
+     "color": "@ink-muted",
+     "width": 2,
+     "type": "dashed"
+    },
+    "itemStyle": {
+     "color": "@ink-muted"
+    },
+    "data": [
+     {
+      "value": 0.802,
+      "name": "one monitor at 0.5%: recall 0.802"
+     },
+     {
+      "value": 0.868,
+      "name": "one monitor at 1%: recall 0.868"
+     },
+     {
+      "value": 0.868,
+      "name": "one monitor at 2%: recall 0.868"
+     },
+     {
+      "value": 0.868,
+      "name": "one monitor at 3%: recall 0.868"
+     },
+     {
+      "value": 0.868,
+      "name": "one monitor at 5%: recall 0.868"
+     },
+     {
+      "value": 0.868,
+      "name": "one monitor at 7.5%: recall 0.868"
+     },
+     {
+      "value": 0.932,
+      "name": "one monitor at 10%: recall 0.932"
+     }
+    ]
+   },
+   {
+    "type": "line",
+    "name": "best OR of at most 1 monitor",
+    "symbolSize": 9,
+    "lineStyle": {
+     "color": "@s0",
+     "width": 2
+    },
+    "itemStyle": {
+     "color": "@s0"
+    },
+    "data": [
+     {
+      "value": 0.802,
+      "name": "Sonnet 5.5<br/>budget 0.5%, served 0.40%, recall 0.802"
+     },
+     {
+      "value": 0.868,
+      "name": "Sonnet 5.5<br/>budget 1%, served 1.00%, recall 0.868"
+     },
+     {
+      "value": 0.868,
+      "name": "Sonnet 5.5<br/>budget 2%, served 1.00%, recall 0.868"
+     },
+     {
+      "value": 0.868,
+      "name": "Sonnet 5.5<br/>budget 3%, served 1.00%, recall 0.868"
+     },
+     {
+      "value": 0.868,
+      "name": "Sonnet 5.5<br/>budget 5%, served 1.00%, recall 0.868"
+     },
+     {
+      "value": 0.868,
+      "name": "Sonnet 5.5<br/>budget 7.5%, served 1.00%, recall 0.868"
+     },
+     {
+      "value": 0.932,
+      "name": "Sonnet 5.5<br/>budget 10%, served 9.20%, recall 0.932"
+     }
+    ]
+   }
+  ]
+ },
+ "dial": {
+  "label": "Monitors you are allowed to buy",
+  "steps": [
+   "1",
+   "2",
+   "3",
+   "4"
+  ],
+  "initial": 0,
+  "frames": [
+   {},
+   {
+    "series": [
+     {
+      "type": "line",
+      "name": "best single monitor",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@ink-muted",
+       "width": 2,
+       "type": "dashed"
+      },
+      "itemStyle": {
+       "color": "@ink-muted"
+      },
+      "data": [
+       {
+        "value": 0.802,
+        "name": "one monitor at 0.5%: recall 0.802"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 1%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 2%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 3%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 5%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 7.5%: recall 0.868"
+       },
+       {
+        "value": 0.932,
+        "name": "one monitor at 10%: recall 0.932"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "best OR of at most 2 monitors",
+      "symbolSize": 9,
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       {
+        "value": 0.802,
+        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 0.5%, served 0.40%, recall 0.802"
+       },
+       {
+        "value": 0.87,
+        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 1%, served 1.00%, recall 0.870"
+       },
+       {
+        "value": 0.886,
+        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 2%, served 1.60%, recall 0.886"
+       },
+       {
+        "value": 0.886,
+        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 3%, served 1.60%, recall 0.886"
+       },
+       {
+        "value": 0.886,
+        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 5%, served 1.60%, recall 0.886"
+       },
+       {
+        "value": 0.886,
+        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 7.5%, served 1.60%, recall 0.886"
+       },
+       {
+        "value": 0.936,
+        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 10%, served 9.20%, recall 0.936"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "type": "line",
+      "name": "best single monitor",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@ink-muted",
+       "width": 2,
+       "type": "dashed"
+      },
+      "itemStyle": {
+       "color": "@ink-muted"
+      },
+      "data": [
+       {
+        "value": 0.802,
+        "name": "one monitor at 0.5%: recall 0.802"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 1%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 2%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 3%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 5%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 7.5%: recall 0.868"
+       },
+       {
+        "value": 0.932,
+        "name": "one monitor at 10%: recall 0.932"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "best OR of at most 3 monitors",
+      "symbolSize": 9,
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       {
+        "value": 0.802,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 0.5%, served 0.40%, recall 0.802"
+       },
+       {
+        "value": 0.87,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 1%, served 1.00%, recall 0.870"
+       },
+       {
+        "value": 0.886,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 2%, served 1.80%, recall 0.886"
+       },
+       {
+        "value": 0.888,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 3%, served 2.40%, recall 0.888"
+       },
+       {
+        "value": 0.89,
+        "name": "Sonnet 5.5, Haiku 5.5, Qwen3.8 Omni Flash<br/>budget 5%, served 3.60%, recall 0.890"
+       },
+       {
+        "value": 0.89,
+        "name": "Sonnet 5.5, Haiku 5.5, Qwen3.8 Omni Flash<br/>budget 7.5%, served 3.60%, recall 0.890"
+       },
+       {
+        "value": 0.938,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 10%, served 9.60%, recall 0.938"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "type": "line",
+      "name": "best single monitor",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@ink-muted",
+       "width": 2,
+       "type": "dashed"
+      },
+      "itemStyle": {
+       "color": "@ink-muted"
+      },
+      "data": [
+       {
+        "value": 0.802,
+        "name": "one monitor at 0.5%: recall 0.802"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 1%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 2%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 3%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 5%: recall 0.868"
+       },
+       {
+        "value": 0.868,
+        "name": "one monitor at 7.5%: recall 0.868"
+       },
+       {
+        "value": 0.932,
+        "name": "one monitor at 10%: recall 0.932"
+       }
+      ]
+     },
+     {
+      "type": "line",
+      "name": "best OR of at most 4 monitors",
+      "symbolSize": 9,
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2
+      },
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "data": [
+       {
+        "value": 0.802,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 0.5%, served 0.40%, recall 0.802"
+       },
+       {
+        "value": 0.87,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 1%, served 1.00%, recall 0.870"
+       },
+       {
+        "value": 0.886,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 2%, served 1.80%, recall 0.886"
+       },
+       {
+        "value": 0.888,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 3%, served 2.40%, recall 0.888"
+       },
+       {
+        "value": 0.892,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 5%, served 4.00%, recall 0.892"
+       },
+       {
+        "value": 0.892,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 7.5%, served 4.00%, recall 0.892"
+       },
+       {
+        "value": 0.938,
+        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 10%, served 9.60%, recall 0.938"
+       }
+      ]
+     }
+    ]
+   }
+  ]
+ },
+ "data": {
+  "columns": [
+   "total budget (%)",
+   "monitors bought",
+   "served FPR (%)",
+   "recall (%)",
+   "best single monitor (%)",
+   "gain (pts)"
+  ],
+  "rows": [
+   [
+    "0.5",
+    "Sonnet 5.5",
+    0.4,
+    80.2,
+    80.2,
+    0.0
+   ],
+   [
+    "1",
+    "Sonnet 5.5",
+    1.0,
+    86.8,
+    86.8,
+    0.0
+   ],
+   [
+    "2",
+    "Sonnet 5.5",
+    1.0,
+    86.8,
+    86.8,
+    0.0
+   ],
+   [
+    "3",
+    "Sonnet 5.5",
+    1.0,
+    86.8,
+    86.8,
+    0.0
+   ],
+   [
+    "5",
+    "Sonnet 5.5",
+    1.0,
+    86.8,
+    86.8,
+    0.0
+   ],
+   [
+    "7.5",
+    "Sonnet 5.5",
+    1.0,
+    86.8,
+    86.8,
+    0.0
+   ],
+   [
+    "10",
+    "Sonnet 5.5",
+    9.2,
+    93.2,
+    93.2,
+    0.0
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {},
+  "code": "sha256:9f7a350928cc8dd8",
+  "spec": "sha256:df927e238f165358"
+ }
+}

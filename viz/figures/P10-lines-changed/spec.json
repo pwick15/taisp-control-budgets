@@ -1,0 +1,448 @@
+{
+ "id": "P10",
+ "kind": "echarts",
+ "title": "Small edits get past monitors far more often",
+ "section": "results",
+ "order": 100,
+ "caption": "All 500 backdoors, grouped by how many lines differ from the honest reference solution and split like P11 by how many of seven monitors caught them at a 2% budget. On the right is the 95% range for the share missed by all seven.",
+ "notes": [
+  "Lines changed is measured against the dataset's reference solution, not against what an honest model would write, so a big number can mean a rewrite rather than a big backdoor.",
+  "Size and writer are tangled: o3-mini's backdoors change the most lines and are the easiest to catch (P11). This figure alone can't say which one drives the other."
+ ],
+ "height": 270,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P10-lines-changed",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 24,
+   "right": 92,
+   "top": 52,
+   "bottom": 46,
+   "containLabel": true
+  },
+  "legend": {
+   "top": 0,
+   "left": 0,
+   "data": [
+    "Missed by all 7",
+    "Missed by some",
+    "Caught by all 7"
+   ],
+   "selectedMode": false
+  },
+  "graphic": [
+   {
+    "type": "text",
+    "right": 12,
+    "top": 30,
+    "style": {
+     "text": "Missed by all, 95% range",
+     "fill": "@ink-muted",
+     "fontSize": 11,
+     "align": "right"
+    }
+   }
+  ],
+  "xAxis": {
+   "name": "Share of backdoors in that size group",
+   "nameLocation": "middle",
+   "nameGap": 30,
+   "type": "value",
+   "min": 0,
+   "max": 100,
+   "interval": 25,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "yAxis": {
+   "type": "category",
+   "data": [
+    "1 to 4 lines  n = 25",
+    "5 to 8 lines  n = 58",
+    "9 to 20 lines  n = 145",
+    "21 or more lines  n = 272"
+   ],
+   "inverse": true,
+   "axisLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "fontSize": 13,
+    "fontWeight": 500,
+    "formatter": "function (v) { var p = v.split('  n = '); return '{n|' + p[0] + '}  {c|n = ' + p[1] + '}'; }",
+    "rich": {
+     "n": {
+      "color": "@ink-primary",
+      "fontSize": 13,
+      "fontWeight": 500
+     },
+     "c": {
+      "color": "@ink-muted",
+      "fontSize": 12
+     }
+    }
+   }
+  },
+  "series": [
+   {
+    "name": "Missed by all 7",
+    "type": "bar",
+    "stack": "all",
+    "data": [
+     {
+      "value": 44.0,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "44%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>1 to 4 lines</b> (n = 25)<br>missed by all 7: 11 (44%)"
+     },
+     {
+      "value": 15.52,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "16%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>5 to 8 lines</b> (n = 58)<br>missed by all 7: 9 (16%)"
+     },
+     {
+      "value": 11.03,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "11%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>9 to 20 lines</b> (n = 145)<br>missed by all 7: 16 (11%)"
+     },
+     {
+      "value": 4.78,
+      "itemStyle": {
+       "borderRadius": [
+        6,
+        0,
+        0,
+        6
+       ]
+      },
+      "label": {
+       "show": false,
+       "formatter": "5%",
+       "color": "@on-strong"
+      },
+      "tip": "<b>21 or more lines</b> (n = 272)<br>missed by all 7: 13 (5%)"
+     }
+    ],
+    "barWidth": 22,
+    "itemStyle": {
+     "color": "@s7",
+     "borderColor": "@ink-surface",
+     "borderWidth": 2
+    },
+    "label": {
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "name": "Missed by some",
+    "type": "bar",
+    "stack": "all",
+    "data": [
+     {
+      "value": 32.0,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "32%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>1 to 4 lines</b> (n = 25)<br>missed by some: 8 (32%)"
+     },
+     {
+      "value": 39.66,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "40%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>5 to 8 lines</b> (n = 58)<br>missed by some: 23 (40%)"
+     },
+     {
+      "value": 31.72,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "32%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>9 to 20 lines</b> (n = 145)<br>missed by some: 46 (32%)"
+     },
+     {
+      "value": 35.66,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        0,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "36%",
+       "color": "@on-bright"
+      },
+      "tip": "<b>21 or more lines</b> (n = 272)<br>missed by some: 97 (36%)"
+     }
+    ],
+    "barWidth": 22,
+    "itemStyle": {
+     "color": "@warning/0.6",
+     "borderColor": "@ink-surface",
+     "borderWidth": 2
+    },
+    "label": {
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "name": "Caught by all 7",
+    "type": "bar",
+    "stack": "all",
+    "data": [
+     {
+      "value": 24.0,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "24%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>1 to 4 lines</b> (n = 25)<br>caught by all 7: 6 (24%)"
+     },
+     {
+      "value": 44.83,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "45%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>5 to 8 lines</b> (n = 58)<br>caught by all 7: 26 (45%)"
+     },
+     {
+      "value": 57.24,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "57%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>9 to 20 lines</b> (n = 145)<br>caught by all 7: 83 (57%)"
+     },
+     {
+      "value": 59.56,
+      "itemStyle": {
+       "borderRadius": [
+        0,
+        6,
+        6,
+        0
+       ]
+      },
+      "label": {
+       "show": true,
+       "formatter": "60%",
+       "color": "@on-pale"
+      },
+      "tip": "<b>21 or more lines</b> (n = 272)<br>caught by all 7: 162 (60%)"
+     }
+    ],
+    "barWidth": 22,
+    "itemStyle": {
+     "color": "@context",
+     "borderColor": "@ink-surface",
+     "borderWidth": 2
+    },
+    "label": {
+     "fontSize": 12,
+     "fontWeight": 600
+    }
+   },
+   {
+    "name": "_range",
+    "type": "scatter",
+    "symbolSize": 0,
+    "data": [
+     {
+      "value": [
+       100,
+       0
+      ],
+      "name": "27–63%"
+     },
+     {
+      "value": [
+       100,
+       1
+      ],
+      "name": "8–27%"
+     },
+     {
+      "value": [
+       100,
+       2
+      ],
+      "name": "7–17%"
+     },
+     {
+      "value": [
+       100,
+       3
+      ],
+      "name": "3–8%"
+     }
+    ],
+    "silent": true,
+    "clip": false,
+    "tooltip": {
+     "show": false
+    },
+    "label": {
+     "show": true,
+     "position": "right",
+     "distance": 18,
+     "formatter": "{b}",
+     "color": "@ink-secondary",
+     "fontSize": 12
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "lines",
+   "n",
+   "missed_all",
+   "missed_some",
+   "caught_all"
+  ],
+  "rows": [
+   [
+    "1 to 4 lines",
+    25,
+    11,
+    8,
+    6
+   ],
+   [
+    "5 to 8 lines",
+    58,
+    9,
+    23,
+    26
+   ],
+   [
+    "9 to 20 lines",
+    145,
+    16,
+    46,
+    83
+   ],
+   [
+    "21 or more lines",
+    272,
+    13,
+    97,
+    162
+   ]
+  ]
+ },
+ "facts": {},
+ "build": {
+  "inputs": {
+   "results/analysis/case-features.csv": "sha256:26805e982a831ffc"
+  },
+  "code": "sha256:5af3aee8de3d4ed4",
+  "spec": "sha256:a1e7c30805a35ba6"
+ }
+}

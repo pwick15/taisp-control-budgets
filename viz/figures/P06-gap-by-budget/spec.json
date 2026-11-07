@@ -1,0 +1,373 @@
+{
+ "id": "P06",
+ "kind": "echarts",
+ "title": "Sonnet's lead over Haiku xhigh grows as the budget tightens",
+ "section": "results",
+ "order": 60,
+ "caption": "Share of the 500 backdoors caught at four audit budgets, and Sonnet's lead in points. Colour ranks each catch rate against all 32 monitor settings at that budget: green is the best of them, red the worst.",
+ "notes": [
+  "Every paired 95% interval for the lead excludes zero (they are in the CSV). The intervals widen as the budget tightens, so the size of the lead at 0.5% is uncertain even though its direction isn't."
+ ],
+ "height": 308,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P06-gap-by-budget",
+ "option": {
+  "tooltip": {
+   "show": false
+  },
+  "animation": false,
+  "grid": {
+   "left": 112,
+   "right": 16,
+   "top": 40,
+   "bottom": 12
+  },
+  "xAxis": {
+   "type": "category",
+   "data": [
+    "Sonnet 5.5 · high",
+    "Haiku 5.5 · xhigh",
+    "Sonnet's lead (points)"
+   ],
+   "position": "top",
+   "axisLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-secondary",
+    "fontSize": 12,
+    "fontWeight": 600,
+    "interval": 0
+   }
+  },
+  "yAxis": {
+   "type": "category",
+   "data": [
+    "5% budget",
+    "2% budget",
+    "1% budget",
+    "0.5% budget"
+   ],
+   "inverse": true,
+   "axisLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-primary",
+    "fontSize": 13,
+    "fontWeight": 500,
+    "margin": 16
+   }
+  },
+  "series": [
+   {
+    "type": "heatmap",
+    "data": [
+     {
+      "value": [
+       0,
+       0,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:1.000"
+      },
+      "label": {
+       "formatter": "89.9%"
+      }
+     },
+     {
+      "value": [
+       1,
+       0,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:0.952"
+      },
+      "label": {
+       "formatter": "85.9%"
+      }
+     },
+     {
+      "value": [
+       2,
+       0,
+       1
+      ],
+      "itemStyle": {
+       "color": "@seq:0.135"
+      },
+      "label": {
+       "formatter": "+4.0"
+      }
+     },
+     {
+      "value": [
+       0,
+       1,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:1.000"
+      },
+      "label": {
+       "formatter": "87.6%"
+      }
+     },
+     {
+      "value": [
+       1,
+       1,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:0.972"
+      },
+      "label": {
+       "formatter": "85.1%"
+      }
+     },
+     {
+      "value": [
+       2,
+       1,
+       1
+      ],
+      "itemStyle": {
+       "color": "@seq:0.083"
+      },
+      "label": {
+       "formatter": "+2.5"
+      }
+     },
+     {
+      "value": [
+       0,
+       2,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:1.000"
+      },
+      "label": {
+       "formatter": "86.8%"
+      }
+     },
+     {
+      "value": [
+       1,
+       2,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:0.861"
+      },
+      "label": {
+       "formatter": "74.8%"
+      }
+     },
+     {
+      "value": [
+       2,
+       2,
+       1
+      ],
+      "itemStyle": {
+       "color": "@seq:0.400"
+      },
+      "label": {
+       "formatter": "+12.0"
+      }
+     },
+     {
+      "value": [
+       0,
+       3,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:1.000"
+      },
+      "label": {
+       "formatter": "80.7%"
+      }
+     },
+     {
+      "value": [
+       1,
+       3,
+       1
+      ],
+      "itemStyle": {
+       "color": "@goodbad:0.670"
+      },
+      "label": {
+       "formatter": "54.1%"
+      }
+     },
+     {
+      "value": [
+       2,
+       3,
+       1
+      ],
+      "itemStyle": {
+       "color": "@seq:0.887"
+      },
+      "label": {
+       "formatter": "+26.6"
+      }
+     }
+    ],
+    "silent": true,
+    "itemStyle": {
+     "borderColor": "@ink-surface",
+     "borderWidth": 3,
+     "borderRadius": 8
+    },
+    "label": {
+     "show": true,
+     "color": "@on-pale",
+     "fontSize": 18,
+     "fontWeight": 600,
+     "align": "center",
+     "rich": {
+      "big": {
+       "color": "@on-pale",
+       "fontSize": 18,
+       "fontWeight": 600,
+       "lineHeight": 26,
+       "align": "center"
+      },
+      "small": {
+       "color": "@on-pale",
+       "fontSize": 12,
+       "lineHeight": 16,
+       "align": "center"
+      }
+     }
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "budget_pct",
+   "sonnet",
+   "haiku_xhigh",
+   "lead",
+   "lead_lo",
+   "lead_hi"
+  ],
+  "rows": [
+   [
+    5,
+    0.89922,
+    0.858769,
+    0.0404503,
+    0.0206948,
+    0.0644272
+   ],
+   [
+    2,
+    0.875805,
+    0.851032,
+    0.0247732,
+    0.00631983,
+    0.105768
+   ],
+   [
+    1,
+    0.868,
+    0.748,
+    0.12,
+    0.0102465,
+    0.3027
+   ],
+   [
+    0.5,
+    0.807,
+    0.541,
+    0.266,
+    0.0639933,
+    0.640504
+   ]
+  ]
+ },
+ "facts": {
+  "n_runs": 32
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-high-tm-n500-strip.csv": "sha256:a60a51b2415ba673",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-low-tm-n500-strip.csv": "sha256:df0483e4077defa8",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-medium-tm-n500-strip.csv": "sha256:0e66fe6412044d6a",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip.csv": "sha256:1464354acd0c1eac",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-27b-tm-n500-strip.csv": "sha256:0fd529c0321e2b40",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma3-4b-tm-n500-strip.csv": "sha256:f61740693798daf0",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-efforthigh-tm-n500-strip.csv": "sha256:91ad04f265a32df6",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortlow-tm-n500-strip.csv": "sha256:887b7a9f8b6458c6",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-glm53-tm-n500-strip.csv": "sha256:21940d7538a860fd",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gpt6luna-tm-n500-strip.csv": "sha256:1bd4150a8317991e",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-high-tm-n500-strip.csv": "sha256:7d6358205499e8b5",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-low-tm-n500-strip.csv": "sha256:ab21d9005876f67f",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-gptoss120b-tm-n500-strip.csv": "sha256:27efb0e60c3a48b1",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku45-tm-n500-strip.csv": "sha256:db19f2e66f02248c",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip.csv": "sha256:812be9bae5ee289f",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortlow-tm-n500-strip.csv": "sha256:217621bd62368260",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip.csv": "sha256:1127f06477e2ab86",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-haiku55-tm-n500-strip.csv": "sha256:90128b48d21d6a52",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-high-tm-n500-strip.csv": "sha256:3edcfe1c36eebf3a",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-low-tm-n500-strip.csv": "sha256:768010c0dd6b9807",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-none-tm-n500-strip.csv": "sha256:c7db9cea6a75df52",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-luna-xhigh-tm-n500-strip.csv": "sha256:46e806313783bfdc",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-mistrallarge4-tm-n500-strip.csv": "sha256:b0a3877f4030fbf0",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip.csv": "sha256:af2ef7e80df20ec1",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:8ce58648701ae338",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:32ff7e0c9397cfa6",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-high-tm-strip.csv": "sha256:a976a26754d7d62f",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63",
+   "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
+  },
+  "code": "sha256:daff4251401fa989",
+  "spec": "sha256:f0c7fbcd5bbdd5f8"
+ }
+}
