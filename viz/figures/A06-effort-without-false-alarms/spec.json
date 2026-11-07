@@ -2,8 +2,8 @@
  "id": "A06",
  "kind": "echarts",
  "title": "More reasoning catches more backdoors without raising false alarms",
- "section": "results",
- "order": 35,
+ "section": "appendix",
+ "order": 6,
  "caption": "Top: backdoors caught at a 2% audit budget at each reasoning setting, with 95% intervals. Bottom: share of the 500 clean programs the same monitors score 5/10 or higher. Detection rises by up to 22 points while false alarms stay near zero.",
  "notes": [],
  "height": 560,
@@ -595,7 +595,7 @@
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:4819fae8df7e82aa",
-  "spec": "sha256:88f40404a676e940"
+  "code": "sha256:034f91670aab934b",
+  "spec": "sha256:9ebd03bab1e8d8cf"
  }
 }

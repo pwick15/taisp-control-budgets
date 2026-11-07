@@ -7,7 +7,7 @@ META = {
     "id": "P06",
     "title": "Sonnet's lead over Haiku xhigh grows as the budget tightens",
     "section": "results",
-    "order": 60,
+    "order": 50,
     "caption": ("Share of the 500 backdoors caught at four audit budgets, and Sonnet's lead in points. "
                 "Colour ranks each catch rate against all {n_runs} monitor settings at that budget: green "
                 "is the best of them, red the worst."),

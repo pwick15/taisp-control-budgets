@@ -3,7 +3,7 @@
  "kind": "echarts",
  "title": "Sonnet's lead over Haiku xhigh grows as the budget tightens",
  "section": "results",
- "order": 60,
+ "order": 50,
  "caption": "Share of the 500 backdoors caught at four audit budgets, and Sonnet's lead in points. Colour ranks each catch rate against all 32 monitor settings at that budget: green is the best of them, red the worst.",
  "notes": [
   "Every paired 95% interval for the lead excludes zero (they are in the CSV). The intervals widen as the budget tightens, so the size of the lead at 0.5% is uncertain even though its direction isn't."
@@ -367,7 +367,7 @@
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:96cecf860d9ac322",
-  "spec": "sha256:3b4b577972be9f99"
+  "code": "sha256:49934bf42dd47fe0",
+  "spec": "sha256:9fb0247778569bb1"
  }
 }

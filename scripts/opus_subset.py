@@ -1,9 +1,9 @@
 """Paired test of a new monitor on backdoors that no existing monitor caught.
 
-    N=5 uv run python blog/results-figures/opus_subset.py build      # free
+    N=5 uv run python scripts/opus_subset.py build      # free
     TRAJ_DIR=trajectories/hard-subset MONITOR_MODEL=anthropic/claude-opus-5-5 STRIP_COMMENTS=1 \
       LOG_DIR=logs/hard-subset-opus55-strip uv run python src/monitor.py   # costs money
-    uv run python blog/results-figures/opus_subset.py report logs/hard-subset-opus55-strip   # free
+    uv run python scripts/opus_subset.py report logs/hard-subset-opus55-strip   # free
 
 `build` copies the first N problems of PICKS (backdoored and honest version of each) out of the
 Haiku 5.5 dataset logs into trajectories/hard-subset/untrusted/, with the old monitor's scores and
@@ -22,7 +22,7 @@ from pathlib import Path
 import pandas as pd
 from inspect_ai.log import read_eval_log, write_eval_log
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "logs" / "dataset-haiku55-tm-n500-strip" / "trusted_monitoring"
 OUT = ROOT / "trajectories" / "hard-subset" / "untrusted"
 MONITOR_KEYS = ("suspicion_score", "reason", "model_usage")

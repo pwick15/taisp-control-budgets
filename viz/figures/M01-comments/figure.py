@@ -9,8 +9,8 @@ from viz.lib import safety as S
 META = {
     "id": "M01",
     "title": "Comments add {dp} points of recall but only {nk} new catches",
-    "section": "results",
-    "order": 70,
+    "section": "appendix",
+    "order": 125,
     "caption": ("Each of 500 backdoored programs falls in exactly one bar: the set of detectors that flag "
                 "it. Three detectors, a keyword regex on the generator's own comments and the same monitor "
                 "reading the code with comments stripped or kept. Bars do not overlap and sum to 500. Use "
