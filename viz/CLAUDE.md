@@ -78,9 +78,23 @@ and rebuild.
 gallery. The check warns about it (and fails with `--strict`). Replacing one with a real generator is in
 [HANDOVER.md](HANDOVER.md).
 
+**Diagrams.** A flow chart or explainer is an ECharts option with `graphic` elements (rects, text, polylines)
+and no series, so it follows the theme and gets the same copy and export buttons as a chart. The check
+treats an option with graphic and no series as a diagram and doesn't ask it for data. A04 is the example.
+
+**Animation and GIFs.** Every figure with a dial gets a GIF button: the GIF holds each dial position for
+1.6 s and loops. If every series in the dial's frames has an `id`, the figure *glides*: marks move to their
+new place, live in the gallery and in the GIF (A05 is the example; set `animation: True` in its option).
+Without ids it cuts from one position to the next. `python -m viz check` writes `viz/.out/<ID>-light.gif`
+for every dial figure; open it.
+
 **Custom HTML.** For an interactive piece ECharts can't express, set `kind: "html"` and put a
 self-contained page in `figure.html` next to `figure.py`. The gallery embeds it and sets
-`data-theme="light"` or `"dark"` on its `<html>`; use the same palette as `viz/kit/theme.py`.
+`data-theme="light"` or `"dark"` on its `<html>`; use the same palette as `viz/kit/theme.py`. Write its dark
+colours under both `@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {...} }` and
+`:root[data-theme="dark"] {...}` so it follows the gallery's theme switch (A01 does). An HTML figure has no
+image export, so a chart from it that belongs in the doc should also be an ECharts figure reading the same
+data: A02, A03 and A05 read A01's incident log through `viz/data/incidents.py`.
 
 ## The framework itself
 

@@ -1,6 +1,6 @@
 # Handover: what's left for each of us
 
-viz/ is set up and holds 23 figures. These are the jobs that belong to particular people. Point your
+viz/ is set up and holds 28 figures. These are the jobs that belong to particular people. Point your
 Claude at your section; [CLAUDE.md](CLAUDE.md) has the general rules.
 
 ## Marnick
@@ -51,22 +51,20 @@ Keep the IDs: people already refer to them.
 
 ## Anusha
 
-### Move the rogue AI incidents page into viz/
+Done:
 
-`interactive_viz/introduction/rogue-ai-incidents.html` goes in as a custom HTML figure. It was tested in the
-gallery and renders as it does on its own.
+- **A01** is the rogue AI incidents page, moved in as a custom HTML figure. It now follows the gallery's
+  theme switch as well as the OS setting.
+- **A02** (disclosure delays), **A03** (data loss) and **A05** (incident timeline) are ECharts figures
+  drawn from A01's incident log through `viz/data/incidents.py`, so editing the log updates all four.
+- **A04** is the trusted vs untrusted monitoring diagram, drawn with ECharts graphic elements so it gets
+  the theme and the copy and export buttons.
+- **GIF export.** Every figure with a dial has a GIF button, and `viz check` writes `viz/.out/<ID>-light.gif`
+  for each one and fails if the export breaks. Figures whose series carry ids glide between dial positions
+  (A05); the rest cut. See "Animation and GIFs" in [CLAUDE.md](CLAUDE.md).
 
-1. `uv run python -m viz new A rogue-ai-incidents --section intro`
-2. Move the page into the new folder as `figure.html`
-   (`git mv interactive_viz/introduction/rogue-ai-incidents.html viz/figures/A01-rogue-ai-incidents/figure.html`).
-3. In `figure.py`, delete `build()` and set META: `"kind": "html"`, `"height": 1100`, a title that states the
-   finding in 12 words or fewer, and a short caption.
-4. Build, check, and look at `viz/.out/A01-light.png` and `-dark.png`.
-
-Two things worth doing while you're there: the page follows the OS colour setting, so making it also
-respond to `data-theme="dark"` on `<html>` (which the gallery sets) would let it follow the gallery's
-theme switch; and GIF export, which isn't built. The export buttons live in `act()` in
-`viz/kit/page/gallery.js`.
+Open: HTML figures (A01) still have no image export, only the page itself. Their charts reach the doc as
+ECharts figures instead (A02, A03, A05).
 
 ## Punjaya
 

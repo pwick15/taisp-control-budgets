@@ -31,8 +31,9 @@ def find_browser() -> str | None:
     return None
 
 
-def run(ids: list[str] | None) -> tuple[list[dict], list[str], dict]:
-    """Returns (per-figure results from the page, page errors, {(id, theme): png bytes} for html figures)."""
+def run(ids: list[str] | None) -> tuple[list[dict], list[str], dict, dict]:
+    """Returns (per-figure results from the page, page errors, {(id, theme): png bytes} for html figures,
+    {id: GIF export result or {"error": ...}} for figures with a dial)."""
     try:
         from playwright.sync_api import sync_playwright
     except ImportError:
@@ -51,6 +52,12 @@ def run(ids: list[str] | None) -> tuple[list[dict], list[str], dict]:
             page.goto(core.GALLERY.as_uri())
             page.wait_for_function("window.__viz && window.__viz.ready === true", timeout=60_000)
             results = page.evaluate("ids => window.__viz.checkAll(ids)", ids or [])
+            gifs: dict = {}
+            for fid in dict.fromkeys(r["id"] for r in results if not r.get("html") and r.get("step", 0) > 0):
+                try:
+                    gifs[fid] = page.evaluate("id => window.__viz.checkGif(id, false)", fid)
+                except Exception as e:  # noqa: BLE001
+                    gifs[fid] = {"error": str(e).splitlines()[0][:200]}
             shots: dict = {}
             html_ids = [r["id"] for r in results if r.get("html")]
             for theme in ("light", "dark"):
@@ -64,4 +71,4 @@ def run(ids: list[str] | None) -> tuple[list[dict], list[str], dict]:
                     shots[(fid, theme)] = box.screenshot()
         finally:
             browser.close()
-    return results, errors, shots
+    return results, errors, shots, gifs

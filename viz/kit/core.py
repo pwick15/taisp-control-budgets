@@ -35,6 +35,7 @@ GALLERY = VIZ / "gallery.html"
 OUT = VIZ / ".out"
 REPORT = VIZ / "report.toml"
 ECHARTS = KIT / "vendor" / "echarts-5.5.1.min.js"
+GIFENC = KIT / "vendor" / "gifenc-1.0.3.js"
 FONT = KIT / "fonts" / "inter-latin-wght-normal.woff2"
 
 # Code outside viz/ that generators depend on: viz/lib/safety.py loads the run list from it.
@@ -398,6 +399,9 @@ def card(spec: dict, people: dict) -> str:
     actions = ("<button type='button' data-act='copy' class='primary'>Copy image</button>"
                "<button type='button' data-act='png'>PNG</button><button type='button' data-act='svg'>SVG</button>"
                if can_export else "")
+    if can_export and spec.get("dial"):
+        # A figure with a dial animates: the GIF steps through every dial position, with the transitions.
+        actions += "<button type='button' data-act='gif' title='Animated GIF that steps through the dial'>GIF</button>"
     if spec.get("data"):
         actions += "<button type='button' data-act='csv'>CSV</button>"
     return (f"<article class='fig' id='{fid}' data-id='{fid}' data-search='{_e((fid + ' ' + spec['title'] + ' ' + spec['caption']).lower())}'>"
@@ -450,15 +454,16 @@ def gallery_html() -> str:
     payload = {"theme": theme.as_json(), "figures": specs, "font": font_b64}
     data = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("<", "\\u003c")
     echarts_js = ECHARTS.read_text()
+    gifenc_js = GIFENC.read_text()
     js = (KIT / "page" / "gallery.js").read_text()
-    for name, src in (("echarts", echarts_js), ("gallery.js", js)):
+    for name, src in (("echarts", echarts_js), ("gifenc", gifenc_js), ("gallery.js", js)):
         if "</script" in src.lower():
             raise BuildError(f"{name} contains </script>, can't inline it")
     snapshots = sum(1 for s in specs if s["kind"] == "snapshot")
     stats = f"{len(specs)} figures" + (f" · {snapshots} snapshots" if snapshots else "")
     vals = {"FONT": font_b64, "VARS": css_vars(), "CSS": (KIT / "page" / "gallery.css").read_text(),
             "NAV": "".join(nav), "SECTIONS": "".join(sections_html), "STATS": _e(stats),
-            "ECHARTS": echarts_js, "DATA": data, "JS": js}
+            "ECHARTS": echarts_js, "GIFENC": gifenc_js, "DATA": data, "JS": js}
     template = (KIT / "page" / "template.html").read_text()
     # One pass over the template, so text inside a value is never treated as a placeholder.
     return re.sub(r"\{\{([A-Z]+)\}\}", lambda m: vals[m.group(1)], template)

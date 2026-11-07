@@ -2,7 +2,8 @@
 
 Every chart for the report lives here, one folder per figure: `figure.py` (the generator) next to
 `spec.json` (what it produced). Open **`gallery.html`** in a browser to see them all, grouped by report
-section, with buttons to copy an image, download PNG, SVG or CSV, and switch light/dark.
+section, with buttons to copy an image, download PNG, SVG or CSV, export an animated GIF of any figure
+with a dial, and switch light/dark.
 
 ```
 uv run python -m viz build          # rebuild every figure and the gallery

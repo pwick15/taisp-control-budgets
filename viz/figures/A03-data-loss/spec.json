@@ -1,0 +1,205 @@
+{
+ "id": "A03",
+ "kind": "echarts",
+ "title": "Single agent mistakes cost individuals up to 700 GB of data",
+ "section": "intro",
+ "order": 20,
+ "caption": "Reported data loss in the 7 first-person reports that give a size, 2,376 GB in all. Each bar is one person's report.",
+ "notes": [
+  "Sizes are the reporters' own and have not been independently verified. Recovery varied, and some reports involved safety settings turned off.",
+  "One-off reports don't show how often this happens or allow vendor comparisons. Data: the A01 incident log."
+ ],
+ "height": 280,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/A03-data-loss",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 210,
+   "right": 72,
+   "top": 8,
+   "bottom": 28
+  },
+  "xAxis": {
+   "type": "value",
+   "axisLabel": {
+    "formatter": "{value} GB"
+   }
+  },
+  "yAxis": {
+   "type": "category",
+   "inverse": true,
+   "data": [
+    "Claude Fable home directory",
+    "Claude Code #95426",
+    "Codex for Windows",
+    "Gemini CLI / Antigravity",
+    "Claude Code #36339",
+    "Claude Code #97660",
+    "Claude Code #99193"
+   ],
+   "axisLine": {
+    "show": false
+   },
+   "splitLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-primary",
+    "fontSize": 12,
+    "interval": 0
+   }
+  },
+  "series": [
+   {
+    "type": "bar",
+    "data": [
+     {
+      "value": 700.0,
+      "label": {
+       "formatter": "700 GB"
+      },
+      "tip": "26 Aug 2026<br><b>Claude session, Fable 5 then Opus 4.8</b>: 700 GB<br>Recovery: Mostly rebuilt"
+     },
+     {
+      "value": 600.0,
+      "label": {
+       "formatter": "600 GB"
+      },
+      "tip": "16 Sep 2026<br><b>Claude Code with Opus 5</b>: 600 GB<br>Recovery: Some unrecoverable"
+     },
+     {
+      "value": 370.0,
+      "label": {
+       "formatter": "370 GB"
+      },
+      "tip": "Mar 2026<br><b>Codex app with GPT-5.4</b>: 370 GB<br>Recovery: Recovery attempted, outcome not stated"
+     },
+     {
+      "value": 300.0,
+      "label": {
+       "formatter": "300 GB"
+      },
+      "tip": "9 Aug 2026<br><b>Gemini CLI / Antigravity</b>: 300 GB<br>Recovery: Not stated"
+     },
+     {
+      "value": 165.0,
+      "label": {
+       "formatter": "165 GB"
+      },
+      "tip": "19 Mar 2026<br><b>Claude Code</b>: 165 GB<br>Recovery: Not stated"
+     },
+     {
+      "value": 125.0,
+      "label": {
+       "formatter": "125 GB"
+      },
+      "tip": "27 Sep 2026<br><b>Claude Code, auto mode</b>: 125 GB<br>Recovery: Restored from a shadow copy"
+     },
+     {
+      "value": 116.0,
+      "label": {
+       "formatter": "116 GB"
+      },
+      "tip": "3 Oct 2026<br><b>Claude Code</b>: 116 GB<br>Recovery: Partial or unverified backups"
+     }
+    ],
+    "barWidth": 16,
+    "itemStyle": {
+     "color": "@s2",
+     "borderRadius": [
+      0,
+      4,
+      4,
+      0
+     ]
+    },
+    "label": {
+     "show": true,
+     "position": "right",
+     "color": "@ink-secondary",
+     "fontSize": 12
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "report",
+   "who",
+   "when",
+   "gb",
+   "recovery"
+  ],
+  "rows": [
+   [
+    "Claude Fable home directory",
+    "Claude session, Fable 5 then Opus 4.8",
+    "26 Aug 2026",
+    700.0,
+    "Mostly rebuilt"
+   ],
+   [
+    "Claude Code #95426",
+    "Claude Code with Opus 5",
+    "16 Sep 2026",
+    600.0,
+    "Some unrecoverable"
+   ],
+   [
+    "Codex for Windows",
+    "Codex app with GPT-5.4",
+    "Mar 2026",
+    370.0,
+    "Recovery attempted, outcome not stated"
+   ],
+   [
+    "Gemini CLI / Antigravity",
+    "Gemini CLI / Antigravity",
+    "9 Aug 2026",
+    300.0,
+    "Not stated"
+   ],
+   [
+    "Claude Code #36339",
+    "Claude Code",
+    "19 Mar 2026",
+    165.0,
+    "Not stated"
+   ],
+   [
+    "Claude Code #97660",
+    "Claude Code, auto mode",
+    "27 Sep 2026",
+    125.0,
+    "Restored from a shadow copy"
+   ],
+   [
+    "Claude Code #99193",
+    "Claude Code",
+    "3 Oct 2026",
+    116.0,
+    "Partial or unverified backups"
+   ]
+  ]
+ },
+ "facts": {
+  "top": 700.0,
+  "total": 2376.0,
+  "n": 7
+ },
+ "build": {
+  "inputs": {
+   "viz/figures/A01-rogue-ai-incidents/figure.html": "sha256:e0b0fd9e1e7b08df"
+  },
+  "code": "sha256:1595942322a0b22e",
+  "spec": "sha256:307091e7c0eccb88"
+ }
+}
