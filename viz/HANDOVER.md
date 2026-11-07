@@ -1,53 +1,21 @@
 # Handover: what's left for each of us
 
-viz/ is set up and holds 29 figures. These are the jobs that belong to particular people. Point your
-Claude at your section; [CLAUDE.md](CLAUDE.md) has the general rules.
+viz/ holds 41 figures, every one with a generator, and `viz check --strict` passes. These are the jobs
+that belong to particular people. Point your Claude at your section; [CLAUDE.md](CLAUDE.md) has the
+general rules.
 
 ## Marnick
 
-### 1. Give the eight snapshots real generators
+Done:
 
-M01 to M08 are views copied from your data explorer (`marnick-data-2`, built 2026-11-02) as exported
-ECharts options. They show in the gallery with a "Snapshot, no generator" badge, and `viz check` warns
-about each one, because nobody can rebuild them when the data changes. M01 is in the report (the
-comments figure); the rest are in the appendix.
+- **M01 to M08** have real generators in place of the snapshots copied from the data explorer. M01's
+  counts at 2% match its snapshot exactly; several titles changed to sharper findings.
+- **M09 to M14** are the score-resolution plots from #28 and the three Opus PNGs from #29, now viz
+  figures. **M15** draws the hard-backdoor risk ratings (`results/analysis/hard51-risk-ratings.csv`).
+- **M16 to M20** are further explorer views (edit size, reasoning dose, comment arms, the token bill).
+- #28 and #29 are merged and every figure was rebuilt on the repaired data.
 
-| ID | Your view id |
-| --- | --- |
-| M01 | `cases-catch-set-upset` |
-| M02 | `b1-requested-vs-served` |
-| M03 | `e3-width-vs-rows` |
-| M04 | `geom-score-scale` |
-| M05 | `cases-honest-recalibration` |
-| M06 | `geom-ensemble-vs-budget` |
-| M07 | `free-auc-reason-vs-suspicion` |
-| M08 | `geom-campaign-safety` |
-
-For each one:
-
-1. Find the code in your explorer that builds that view.
-2. Move its data logic into `build()` in `viz/figures/Mxx-*/figure.py`, reading only committed files
-   (`results/` CSVs, or a small derived CSV under `viz/data/` if it needs the logs). Reuse
-   `viz/lib/safety.py` where it already computes what you need.
-3. Remove `"kind": "snapshot"` and `"source"` from META, and restyle the option to
-   [STYLE.md](STYLE.md): colour tokens, no font settings, no sentences on the chart (the check lists what
-   each snapshot breaks today, prefixed `(snapshot)`).
-4. Keep or improve the title, caption and notes. A title is the finding in 12 words or fewer.
-5. `uv run python -m viz build Mxx`, then `uv run python -m viz check --strict Mxx`, and look at the PNGs.
-
-**Done** when `uv run python -m viz check --strict M01 M02 M03 M04 M05 M06 M07 M08` ends with `0 errors`.
-Keep the IDs: people already refer to them.
-
-### 2. After your PRs #28 and #29 merge
-
-- They change data our figures read, and both edit `results/analysis/achieved-fpr.csv` and
-  `results/analysis/safety-with-ci.csv`, so the second to merge will need those two regenerated.
-- Then run `uv run python -m viz build` and `uv run python -m viz check`. Figures whose inputs changed
-  rebuild; diff their `spec.json` and post what moved, since the draft quotes some of these numbers.
-- Port the three Opus PNGs (`results/analysis/opus-hard51-fig*.png`, from `scripts/analysis_opus_hard51.py`)
-  and the score-resolution plot (`scripts/plot_score_resolution_batches.py`) into viz/ as M figures.
-- If you can, commit the incrimination and harm ratings for the 51 hard backdoors as a CSV, so the 2x2
-  can be rebuilt as a figure (P12's notes mention it).
+Open: nothing assigned.
 
 ## Anusha
 
@@ -69,8 +37,9 @@ ECharts figures instead (A02, A03, A05).
 
 ## Punjaya
 
-- `blog/results-figures/` can go once you're happy: all 23 of its figures are now in viz/ (P01 to P15,
-  M01 to M08). Its `prose.py` still holds the draft takeaways if you want them.
+- Done: `blog/results-figures/` is gone, its figures now P01 to P15 and M01 to M08. Its draft takeaways
+  are still in history (`git show 03e213b:blog/results-figures/prose.py`), and the Opus subset script
+  moved to `scripts/opus_subset.py`.
 - `small-sample-explainer.html` (repo root, untracked) can become a custom HTML figure the same way as
   Anusha's page.
 - When the final post is assembled, `web/` should embed figures by ID from viz/ rather than draw its own.
