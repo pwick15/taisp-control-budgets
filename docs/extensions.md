@@ -4,7 +4,7 @@ Where to pick things up. Everything here uses the N=500 dataset-policy setup (`s
 
 ## Results page
 
-`web/index.html` is the shareable page (write-up plus interactive cost-vs-safety chart). Rebuild with `python3 web/build.py` after `scripts/analysis_ci.py`; add new runs to `RUNS` in `web/build.py`. Cloudflare Pages: no build command, output directory `web`.
+`web/index.html` is the landing page (Knights of the Audit); its source is in `landing/`, rebuilt with `python3 landing/build.py`. `web/results.html` is the write-up plus interactive cost-vs-safety chart; rebuild it with `python3 web/build.py` after `scripts/analysis_ci.py`, and add new runs to `RUNS` in `web/build.py`. Cloudflare Pages: no build command, output directory `web`.
 
 ## No API cost
 

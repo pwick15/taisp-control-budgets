@@ -1,4 +1,4 @@
-"""Build web/index.html: one self-contained page (write-up + interactive cost-vs-safety chart).
+"""Build web/results.html: one self-contained page (write-up + interactive cost-vs-safety chart).
 
     uv run python scripts/analysis_ci.py   # refresh results/analysis/safety-with-ci.csv first
     python3 web/build.py
@@ -106,8 +106,8 @@ def main() -> None:
     html = (HERE / "template.html").read_text(encoding="utf-8")
     html = html.replace("/*DATA*/[]", json.dumps(data, ensure_ascii=False))
     html = html.replace("{{N}}", str(len(data)))
-    (HERE / "index.html").write_text(html, encoding="utf-8")
-    print(f"wrote {HERE / 'index.html'} with {len(data)} configurations")
+    (HERE / "results.html").write_text(html, encoding="utf-8")
+    print(f"wrote {HERE / 'results.html'} with {len(data)} configurations")
 
 
 if __name__ == "__main__":
