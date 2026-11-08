@@ -1,6 +1,6 @@
-"""A05: every incident as a dot, stacked by month, with a dial to switch between when it happened
-and when it became public (the incident page's timeline). Its dial makes it a GIF in the gallery."""
-from datetime import date
+"""A05: each lab incident as a line from when it happened to when it became public, coloured by lab."""
+from datetime import date, timedelta
+from statistics import median
 
 from viz.data import incidents as I
 from viz.kit import Figure
@@ -11,74 +11,66 @@ META = {
     "title": "Lab incidents surfaced months after they happened",
     "section": "intro",
     "order": 40,
-    "caption": ("Each dot is one of {n} incidents, stacked by month. Switch the dial to move each dot from when it "
-                "happened to when it became public. Filled dots are confirmed by the operator or affected party, "
-                "hollow ones attributed or disputed, dotted ones self-reported."),
+    "caption": ("Each line is one of {n} lab incidents, running from when it happened (open circle) to when it "
+                "became public (filled). Dashed lines mark the median dates; half took {median:.0f} days or more "
+                "to surface."),
     "notes": [
-        "{undated} incidents have no published incident date, so they only appear in the 'became public' view.",
-        "Data: the A01 incident log. Lane colours match A01 (labs blue, companies orange, individuals aqua).",
+        "Only lab and evaluator incidents with a usable incident date are shown, the same set as A02. A date "
+        "known only to the month is placed mid-month.",
+        "Grey covers incidents involving other or several labs: the UK AISI test (Anthropic and OpenAI models) "
+        "and the Tencent Cloud fleet. Data: the A01 incident log.",
     ],
-    "height": 520,
 }
 
-COLOURS = ["@s0", "@s1", "@s2"]
-PITCH = 15          # px between stacked dots
-SIZE = 11           # dot diameter
-TOP, LANE_HEAD, LANE_GAP, BOTTOM = 8, 26, 14, 30
+COLOURS = {"OpenAI": "@s6", "Anthropic": "@s1", "Google": "@s0", "Other": "@context-strong"}
 
 
-def month_label(m: str) -> str:
-    return date.fromisoformat(m + "-01").strftime("%b %Y")
+def mid_date(dates: list[str]) -> str:
+    ds = sorted(date.fromisoformat(d) for d in dates)
+    n = len(ds)
+    m = ds[n // 2] if n % 2 else ds[n // 2 - 1] + (ds[n // 2] - ds[n // 2 - 1]) / 2
+    return m.isoformat()
 
 
 def build() -> Figure:
-    rows = sorted(I.incidents(), key=lambda r: r["id"])
-    months = I.months()
-    views = {"occurred": I.stack("occurred"), "public": I.stack("public")}
-    lane_max = [max([k + 1 for v in views.values() for (l, _, k) in v.values() if l == li] or [1])
-                for li in range(len(I.LANES))]
-
-    grids, xs, ys, graphic, y = [], [], [], [], TOP
-    for li, name in enumerate(I.LANES):
-        h = lane_max[li] * PITCH
-        graphic.append({"type": "text", "left": 40, "top": y, "silent": True,
-                        "style": {"text": name, "fill": "@ink-primary", "fontSize": 12, "fontWeight": 600}})
-        grids.append({"left": 40, "right": 24, "top": y + LANE_HEAD, "height": h})
-        last = li == len(I.LANES) - 1
-        xs.append({"type": "category", "gridIndex": li, "data": [month_label(m) for m in months],
-                   "boundaryGap": True, "axisLine": {"show": True}, "splitLine": {"show": False},
-                   "axisLabel": {"show": last, "interval": 2}})
-        ys.append({"type": "value", "gridIndex": li, "min": 0, "max": lane_max[li], "show": False})
-        y += LANE_HEAD + h + LANE_GAP
-    height = y - LANE_GAP + BOTTOM
-
-    def series(view: str) -> list[dict]:
-        out = []
-        for li, lane in enumerate(I.LANES):
-            data = []
-            for r in (r for r in rows if r["lane"] == lane):
-                pos = views[view].get(r["id"])
-                shown = pos is not None
-                _, m, k = pos if shown else views["public"].get(r["id"], (li, 0, 0))
-                ev = r["evidence"]
-                data.append({
-                    "value": [m, k + 0.5], "name": r["short"],
-                    "tip": f"{r['when']}<br><b>{r['short']}</b><br>{ev}",
-                    "itemStyle": {"color": COLOURS[li] if ev == "Confirmed" else "@ink-surface",
-                                  "borderColor": COLOURS[li], "borderWidth": 2,
-                                  "borderType": "dotted" if ev == "Self-reported" else "solid",
-                                  "opacity": 1 if shown else 0}})
-            out.append({"type": "scatter", "id": f"lane{li}", "xAxisIndex": li, "yAxisIndex": li,
-                        "symbolSize": SIZE, "data": data})
-        return out
-
-    option = C.base(grid=grids, xAxis=xs, yAxis=ys, graphic=graphic, series=series("occurred"))
-    option["animation"] = True
-    option["animationDurationUpdate"] = 700
-    option["animationEasingUpdate"] = "cubicOut"
-    dial = {"label": "Date shown", "steps": ["When it happened", "When it became public"], "initial": 0,
-            "frames": [{"series": series("occurred")}, {"series": series("public")}]}
-    data = [{"incident": r["short"], "lane": r["lane"], "evidence": r["evidence"],
-             "occurred": r.get("occurred"), "public": r.get("public")} for r in rows]
-    undated = sum(1 for r in rows if not r.get("occurred"))
-    return Figure(option=option, dial=dial, height=height, data=data, facts={"n": len(rows), "undated": undated})
+    rows = I.lab_timeline()
+    labels = [r["company"] for r in rows]
+    series = []
+    for group in I.COMPANIES:
+        col = COLOURS[group]
+        mine = [(i, r) for i, r in enumerate(rows) if I.colour_group(r["company"]) == group]
+        if not mine:
+            continue
+        tip = lambda r: (f"<b>{r['short']}</b><br>{r['company']}<br>happened {'~' if r['approx'] else ''}{r['occurred']}"
+                         f"<br>public {r['public']} ({'about ' if r['approx'] else ''}{r['days']} days)")
+        series.append({"type": "lines", "name": group, "coordinateSystem": "cartesian2d", "z": 2, "silent": True,
+                       "lineStyle": {"color": col, "width": 3, "opacity": 0.45},
+                       "data": [{"coords": [[r["occurred"], i], [r["public"], i]]} for i, r in mine]})
+        series.append({"type": "scatter", "name": group, "z": 3, "symbolSize": 10,
+                       "itemStyle": {"color": "@ink-surface", "borderColor": col, "borderWidth": 2},
+                       "data": [{"value": [r["occurred"], i], "tip": tip(r)} for i, r in mine]})
+        series.append({"type": "scatter", "name": group, "z": 4, "symbolSize": 11,
+                       "itemStyle": {"color": col},
+                       "data": [{"value": [r["public"], i], "tip": tip(r)} for i, r in mine]})
+    med_occ, med_pub = mid_date([r["occurred"] for r in rows]), mid_date([r["public"] for r in rows])
+    series.append({"type": "scatter", "name": "median", "data": [], "silent": True,
+                   "markLine": {"silent": True, "symbol": "none",
+                                "lineStyle": {"type": "dashed", "color": "@ink-muted", "width": 1},
+                                "label": {"position": "start", "color": "@ink-secondary", "fontSize": 12},
+                                "data": [{"xAxis": med_occ, "label": {"formatter": "Median incident"}},
+                                         {"xAxis": med_pub, "label": {"formatter": "Median disclosure"}}]}})
+    start = (date.fromisoformat(min(r["occurred"] for r in rows)).replace(day=1)).isoformat()
+    end = (date.fromisoformat(max(r["public"] for r in rows)).replace(day=1) + timedelta(days=45)).replace(day=1).isoformat()
+    option = C.base(
+        grid={"left": 170, "right": 28, "top": 44, "bottom": 36},
+        legend={"top": 0, "left": 170, "data": [g for g in I.COMPANIES if any(I.colour_group(r["company"]) == g for r in rows)]},
+        xAxis={"type": "time", "min": start, "max": end, "splitLine": {"show": True, "lineStyle": {"color": "@ink-grid"}},
+               "axisLabel": {"formatter": "{MMM} {yyyy}", "hideOverlap": True}},
+        yAxis={"type": "category", "inverse": True, "data": labels, "axisLine": {"show": False}, "axisTick": {"show": False},
+               "splitLine": {"show": False}, "axisLabel": {"color": "@ink-primary", "fontSize": 12, "interval": 0}},
+        series=series,
+    )
+    data = [{"incident": r["short"], "lab": r["company"], "happened": r["occurred"], "date_known_to_month_only": r["approx"],
+             "became_public": r["public"], "days": r["days"]} for r in rows]
+    return Figure(option=option, height=110 + 26 * len(rows), data=data,
+                  facts={"n": len(rows), "median": median(r["days"] for r in rows)})

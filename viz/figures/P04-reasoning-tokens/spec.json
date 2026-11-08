@@ -616,7 +616,7 @@
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:e047fd29ccc18b56",
-  "spec": "sha256:3cfda7409d0837e4"
+  "code": "sha256:f960cb5f3532f64f",
+  "spec": "sha256:a33d6877c34db970"
  }
 }
