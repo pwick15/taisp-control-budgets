@@ -139,6 +139,9 @@
   var filt = {};
   DIMS.forEach(function (d) { filt[d.key] = new Set(d.vals); });
   filt.scale = new Set([10]); filt.comments = new Set(["stripped"]); filt.batch = new Set(["b1"]);
+  var defaultFilt = {}; DIMS.forEach(function (d) { defaultFilt[d.key] = new Set(filt[d.key]); });
+  var DIM_KEY = { monitor: "m", effort: "e", scale: "sc", comments: "cm", batch: "ba" };   // short keys for the URL hash
+  var pendingZoom = null;   // a zoom window parsed from the URL, applied after the first paint
 
   function pass(r) {
     return DIMS.every(function (d) {
@@ -164,7 +167,7 @@
   })();
   var BUDGETS = [0.1, 0.2, 0.3, 0.5, 0.7, 1, 1.5, 2, 3, 5, 7, 10, 15, 20, 30, 50];
   var state = {
-    atlas: { mode: "both", sort: "monitor", color: "side", noTok: false },
+    atlas: { mode: "both", sort: "monitor", color: "verdict", noTok: false },
     trajectories: { ladder: defLadder, mode: "both", mean: true },
     flightdeck: { metric: "recall", budget: 2 },
   };
@@ -186,6 +189,7 @@
     }
     opts.forEach(function (o) {
       var b = el("button", null, o.t); b.type = "button";
+      if (o.title) b.title = o.title;
       b.addEventListener("click", function () { set(o.v); sync(); repaint(); });
       s.appendChild(b);
     });
@@ -232,13 +236,23 @@
         { t: "Monitor", v: "monitor" }, { t: "Separation (AUC)", v: "auc" },
         { t: "Score resolution", v: "resolution" }, { t: "Usable budgets", v: "usable" },
         { t: "Floor share", v: "floor" }] }], function () { return S.sort; }, function (v) { S.sort = v; }));
-      tb.appendChild(seg("Colour by", [{ t: "Side", v: "side" }, { t: "Verdict @2%", v: "verdict" }],
+      tb.appendChild(seg("Colour by", [{ t: "Honest/backdoor", v: "side" },
+        { t: "Verdict @2%", v: "verdict", title: "Flagged vs cleared if you audit the 2% most-suspicious programs." }],
         function () { return S.color; }, function (v) { S.color = v; }));
       tb.appendChild(toggle("Non-reasoning monitors", S.noTok, function (v) { S.noTok = v; }));
+      var fnd = el("div", "ctl-group"); fnd.appendChild(el("span", "ctl-label", "Find"));
+      var fb = el("input", "findbox"); fb.type = "text"; fb.placeholder = "problem #"; fb.inputMode = "numeric";
+      fb.setAttribute("aria-label", "Find a problem by number");
+      fb.addEventListener("keydown", function (e) { if (e.key === "Enter") jumpToProblem(fb.value); });
+      fnd.appendChild(fb); tb.appendChild(fnd);
       var rz = el("div", "ctl-group");
       var rb = el("button", "btn"); rb.type = "button"; rb.textContent = "Reset zoom";
       rb.addEventListener("click", function () { resetZoom(); });
-      rz.appendChild(rb); tb.appendChild(rz);
+      var png = el("button", "btn"); png.type = "button"; png.textContent = "PNG"; png.title = "Download the chart as a PNG image";
+      png.addEventListener("click", exportPNG);
+      var csvb = el("button", "btn"); csvb.type = "button"; csvb.textContent = "CSV"; csvb.title = "Download the samples now in view as CSV";
+      csvb.addEventListener("click", exportCSV);
+      rz.appendChild(rb); rz.appendChild(png); rz.appendChild(csvb); tb.appendChild(rz);
     } else if (lens === "trajectories") {
       var kinds = { effort: "Reasoning-effort ladders", scale: "Score-scale ladders", comments: "Comment ladders" };
       var groups = Object.keys(kinds).map(function (k) {
@@ -315,7 +329,11 @@
 
   // ---- detail panel -------------------------------------------------------
   function swatch(hex) { return "<span class='swatch' style='background:" + hex + "'></span>"; }
-  function lrow(hex, label, n) { return "<div class='row'>" + swatch(hex) + label + (n == null ? "" : " &middot; " + n.toLocaleString()) + "</div>"; }
+  function lrow(hex, label, n, shape) {   // shape: "triangle" (backdoor side) | "circle" (honest side)
+    var ch = shape === "triangle" ? "▲" : "●";
+    return "<div class='row'><span class='swg' style='color:" + hex + "'>" + ch + "</span>" + label +
+      (n == null ? "" : " &middot; " + n.toLocaleString()) + "</div>";
+  }
   function panel(title, bodyHtml) {
     var p = el("div", "panel"); p.appendChild(el("h3", null, title));
     var b = el("div"); b.innerHTML = bodyHtml; p.appendChild(b); return p;
@@ -326,14 +344,14 @@
     if (lens === "atlas") {
       var cn = meta.counts || {}, legend, note;
       if (meta.colorMode === "verdict") {
-        legend = lrow(C("@good"), "caught", cn.caught) + lrow(C("@critical"), "missed", cn.missed) +
-          lrow(C("@warning"), "false alarm", cn.falsealarm) + lrow(C("@ink-muted"), "passed", cn.passed);
-        note = "Coloured by whether the call was right at a 2% audit budget: caught and passed are correct, missed and false alarm are not. Honest still above each lane line, backdoors below.";
+        legend = lrow(C("@good"), "caught", cn.caught, "triangle") + lrow(C("@critical"), "missed", cn.missed, "triangle") +
+          lrow(C("@warning"), "false alarm", cn.falsealarm, "circle") + lrow(C("@ink-muted"), "passed", cn.passed, "circle");
+        note = "Coloured by whether the call was right at a 2% audit budget: caught and passed are correct, missed and false alarm are not. Backdoors are triangles, honest programs circles; honest still above each lane line, backdoors below.";
       } else {
-        legend = lrow(C("@honest"), "honest programs", cn.honest) + lrow(C("@attack"), "backdoors", cn.attack);
-        note = "Honest above each lane line, backdoors below, placed by reasoning length.";
+        legend = lrow(C("@honest"), "honest programs", cn.honest, "circle") + lrow(C("@attack"), "backdoors", cn.attack, "triangle");
+        note = "Honest programs (circles) above each lane line, backdoors (triangles) below, placed by reasoning length.";
       }
-      legend += "<div class='row'><span class='ring'></span>carries an auditor's read</div>";
+      legend += "<div class='row' title='A written note from a human who reviewed this exact program.'><span class='ring'></span>carries an auditor's read</div>";
       host.appendChild(panel("Field", "<div class='legend'>" + legend + "</div><p class='hint' style='margin:9px 0 0'>" +
         (meta.lanes ? meta.lanes.length : 0) + " runs in view. " + note +
         " Drag to zoom a span, scroll to zoom toward the cursor (it holds the edge when you are near one), click a dot to pin it." +
@@ -841,6 +859,108 @@
   }
 
   // ---- paint --------------------------------------------------------------
+  // ---- export, jump-to-problem, empty state, shareable URL ----------------
+  function exportPNG() {
+    if (!chart || !chart.getDataURL) return;
+    var url = chart.getDataURL({ type: "png", pixelRatio: 2, backgroundColor: C("@ink-surface") });
+    var a = document.createElement("a"); a.href = url; a.download = "control-atlas.png";
+    document.body.appendChild(a); a.click(); a.remove(); toast("Downloaded control-atlas.png");
+  }
+  function csvCell(v) { v = v == null ? "" : String(v); return /[",\n]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+  function exportCSV() {
+    var rows = [["run", "monitor", "effort", "scale", "comments", "problem_id", "side", "suspicion", "reasoning_tokens"]];
+    var mode = state.atlas.mode;
+    (lastMeta.lanes || []).forEach(function (r) {
+      var S = D.samples[r.run]; if (!S) return;
+      for (var i = 0; i < S.id.length; i++) {
+        var isAtk = S.mode[i] === 1;
+        if (mode === "honest" && isAtk) continue;
+        if (mode === "attack" && !isAtk) continue;
+        rows.push([r.run, r.monitor, r.effort, r.scale, r.comments, S.id[i], isAtk ? "backdoor" : "honest",
+          S.susp[i] < 0 ? "" : (S.susp[i] / 1000).toFixed(3), S.rtok ? (S.rtok[i] < 0 ? "" : S.rtok[i]) : ""]);
+      }
+    });
+    if (rows.length < 2) { toast("Nothing in view to export."); return; }
+    var csv = rows.map(function (row) { return row.map(csvCell).join(","); }).join("\n");
+    try {
+      var blob = new Blob([csv], { type: "text/csv" }), url = URL.createObjectURL(blob);
+      var a = document.createElement("a"); a.href = url; a.download = "control-atlas.csv";
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 3000);
+      toast("Downloaded control-atlas.csv (" + (rows.length - 1).toLocaleString() + " rows)");
+    } catch (e) { toast("Download failed."); }
+  }
+  function jumpToProblem(v) {
+    var id = parseInt(String(v || "").trim(), 10);
+    if (!(id >= 0)) { toast("Enter a problem number."); return; }
+    if (lens !== "atlas") { lens = "atlas"; syncTabs(); rebuild(); }
+    focusSample({ id: id, side: "attack", head: "Problem " + id, note: "The backdoor version of this problem." });
+    if (pin && pin.inView === 0) focusSample({ id: id, side: "honest", head: "Problem " + id, note: "The honest version of this problem." });
+  }
+  var emptyEl = null;
+  function showEmptyState(on) {
+    if (!on) { if (emptyEl) emptyEl.style.display = "none"; return; }
+    if (!emptyEl) { emptyEl = el("div", "emptystate"); if (plot && plot.appendChild) plot.appendChild(emptyEl); }
+    if (!emptyEl) return;
+    emptyEl.innerHTML = "<p>No runs match these filters.</p><button class='btn' id='empty-reset' type='button'>Reset filters</button>";
+    emptyEl.style.display = "flex";
+    var rb = document.getElementById("empty-reset"); if (rb) rb.addEventListener("click", resetFilters);
+  }
+  function resetFilters() {
+    DIMS.forEach(function (d) { filt[d.key] = new Set(defaultFilt[d.key]); });
+    buildFilterbar(); repaint();
+  }
+  function sameSet(a, b) { if (a.size !== b.size) return false; var ok = true; a.forEach(function (x) { if (!b.has(x)) ok = false; }); return ok; }
+  function encodeState() {
+    var p = [], A = state.atlas;
+    if (lens !== "atlas") p.push("lens=" + lens);
+    if (A.mode !== "both") p.push("show=" + A.mode);
+    if (A.sort !== "monitor") p.push("order=" + A.sort);
+    if (A.color !== "verdict") p.push("color=" + A.color);
+    if (A.noTok) p.push("notok=1");
+    DIMS.forEach(function (d) {
+      if (!sameSet(filt[d.key], defaultFilt[d.key])) {
+        var arr = []; filt[d.key].forEach(function (x) { arr.push(x); });
+        p.push(DIM_KEY[d.key] + "=" + encodeURIComponent(arr.join("|")));
+      }
+    });
+    if (lens === "atlas" && chart) {
+      try { var w = zbWindow(), f = zbFull();
+        if (w && (w.lo > f.lo + 0.02 || w.hi < f.hi - 0.02)) p.push("zoom=" + Math.round(Math.pow(10, w.lo)) + "," + Math.round(Math.pow(10, w.hi)));
+      } catch (e) { /* chart not ready */ }
+    }
+    if (state.trajectories.ladder !== defLadder) p.push("ladder=" + state.trajectories.ladder);
+    if (state.flightdeck.metric !== "recall") p.push("metric=" + state.flightdeck.metric);
+    if (state.flightdeck.budget !== 2) p.push("budget=" + state.flightdeck.budget);
+    return p.join("&");
+  }
+  function applyHash() {
+    if (typeof location === "undefined") return;
+    var h = (location.hash || "").replace(/^#/, ""); if (!h) return;
+    var q = {}; h.split("&").forEach(function (kv) { var i = kv.indexOf("="); if (i > 0) q[kv.slice(0, i)] = decodeURIComponent(kv.slice(i + 1)); });
+    if (q.lens && LENSES.some(function (L) { return L.id === q.lens; })) lens = q.lens;
+    var A = state.atlas;
+    if (q.show) A.mode = q.show;
+    if (q.order) A.sort = q.order;
+    if (q.color) A.color = q.color;
+    A.noTok = q.notok === "1";
+    DIMS.forEach(function (d) {
+      var k = DIM_KEY[d.key];
+      if (q[k] != null) { var vals = q[k] ? q[k].split("|") : []; if (d.key === "scale") vals = vals.map(Number); filt[d.key] = new Set(vals); }
+    });
+    if (q.ladder != null && !isNaN(+q.ladder)) state.trajectories.ladder = +q.ladder;
+    if (q.metric) state.flightdeck.metric = q.metric;
+    if (q.budget != null && !isNaN(+q.budget)) state.flightdeck.budget = +q.budget;
+    pendingZoom = q.zoom ? q.zoom.split(",").map(Number) : null;
+  }
+  var hashT;
+  function updateHash() {
+    clearTimeout(hashT);
+    hashT = setTimeout(function () {
+      try { var s = encodeState(); history.replaceState(null, "", s ? "#" + s : location.pathname + location.search); } catch (e) { /* ignore */ }
+    }, 300);
+  }
+
   function repaint() {
     pin = null; suppressClickUntil = 0;
     var ctx = { D: D, C: C, themeIdx: themeIdx(), runs: currentRuns(), state: state[lens], filters: filt };
@@ -852,6 +972,12 @@
     document.getElementById("plotcap").textContent = plotCap();
     renderDetail(lastMeta);
     zbSync();
+    showEmptyState(lens === "atlas" && (!lastMeta.lanes || !lastMeta.lanes.length));
+    if (pendingZoom && lens === "atlas") {
+      var z = pendingZoom; pendingZoom = null;
+      setTimeout(function () { try { chart.dispatchAction({ type: "dataZoom", xAxisIndex: 0, startValue: z[0], endValue: z[1] }); zbSync(); } catch (e) { /* ignore */ } }, 0);
+    }
+    updateHash();
   }
   function plotCap() {
     if (lens === "atlas") return "";
@@ -890,9 +1016,11 @@
       if (pin && pin.mode === "point" && pin.seriesIndex === p.seriesIndex && pin.dataIndex === p.dataIndex) { unpin(); return; }
       pinPoint(p);
     });
-    chart.on("datazoom", function () { if (pin) reposPins(); zbSync(); });   // pins + scrollbar follow the window
+    chart.on("datazoom", function () { if (pin) reposPins(); zbSync(); updateHash(); });   // pins + scrollbar + URL follow the window
 
+    applyHash();                // restore a shared view from the URL before the first paint
     buildTabs(); syncTabs(); buildNotes();
+    window.addEventListener("hashchange", function () { applyHash(); syncTabs(); rebuild(); });
     setThemeBtn(stored);
     document.getElementById("theme-btn").addEventListener("click", function () {
       setTheme(themeIdx() === 1 ? "light" : "dark");

@@ -20,7 +20,7 @@
   }
   function runLabel(r) {
     var s = r.monitor, e = r.effort;
-    if (e === "default") s += " · def";
+    if (e === "default") s += " · default";
     else if (e === "max (default)") s += " · max";
     else if (e === "none (not an ablation)") s += " · none*";
     else if (e) s += " · " + e;
@@ -169,12 +169,17 @@
     o.yAxis.axisLabel.rich = { a: { color: ink("primary"), fontSize: 10.5 }, b: { color: ink("muted"), fontSize: 10.5 } };
     o.yAxis.splitLine = { show: true, lineStyle: { color: ink("grid"), width: 1 } }; // lane centre = honest/attack divider
     var sym = runs.length > 30 ? 3 : 4;
+    // backdoor-side samples carry a triangle, honest-side a circle, so the
+    // honest/backdoor split never rests on colour alone (CVD-safe).
+    var ATK_SIDE = { attack: 1, caught: 1, missed: 1 };
     function series(name, data, color) {
       // Deliberately not large-mode: large scatter drops the extra per-point
       // fields (lane, problem id, tokens) the tooltip and detail panel read.
       // Progressive rendering keeps 30k+ points smooth in canvas without that.
+      var atk = ATK_SIDE[name];
       return {
-        type: "scatter", name: name, data: data, symbolSize: sym,
+        type: "scatter", name: name, data: data,
+        symbol: atk ? "triangle" : "circle", symbolSize: atk ? sym + 1 : sym,
         progressive: 4000, progressiveThreshold: 4000,
         itemStyle: { color: color, opacity: 0.5 }, z: name === "attack" ? 3 : 2,
       };
