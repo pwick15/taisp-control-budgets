@@ -16,17 +16,17 @@
   --cds-radius: 8px; --cds-dur-slow: 300ms;
   --color-bg: #f6f5f2; --color-panel: #fcfcfb; --color-fg: #0b0b0b; --color-fg-muted: #52514e; --color-border-line: #e0dfda; --color-bad: #c9372c;
   --cds-chart-axis: #bdbcb6; --cds-surface-popover: #ffffff; --cds-border: #d6d5cf; --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.14); --cds-text-secondary: #52514e;
-  --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a;
+  --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --co-openai: #6250d6; --co-other: #9c9a92;
 }
 /* Dark palette. Follows the OS setting, and data-theme on <html> (set by the viz gallery) overrides it. */
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark;
   --color-bg: #121211; --color-panel: #1a1a19; --color-fg: #f0efec; --color-fg-muted: #c3c2b7; --color-border-line: #33332f; --color-bad: #e5604f;
   --cds-chart-axis: #55544e; --cds-surface-popover: #262624; --cds-border: #3d3d38; --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.5); --cds-text-secondary: #c3c2b7;
-  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;} }
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --co-openai: #9085e9; --co-other: #77756e;} }
 :root[data-theme="dark"] { color-scheme: dark;
   --color-bg: #121211; --color-panel: #1a1a19; --color-fg: #f0efec; --color-fg-muted: #c3c2b7; --color-border-line: #33332f; --color-bad: #e5604f;
   --cds-chart-axis: #55544e; --cds-surface-popover: #262624; --cds-border: #3d3d38; --cds-shadow-popover: 0 4px 16px rgba(0,0,0,.5); --cds-text-secondary: #c3c2b7;
-  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;}
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --co-openai: #9085e9; --co-other: #77756e;}
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
 body { margin: 0; background: var(--color-bg); color: var(--color-fg); line-height: 1.5; font-family: var(--font-anthropic-sans); }
@@ -104,22 +104,20 @@ body { margin: 0; background: var(--color-bg); color: var(--color-fg); line-heig
 
   <section class="ri-card" id="timeline">
     <div class="ri-head2">
-      <h2>Lab incidents clustered from May to July, but surfaced in September and October</h2>
-      <p class="ri-note">Each dot is one incident, stacked by month. Switch views to see the gap between an incident and the public learning of it. Select a dot for the details.</p>
+      <h2>Lab incidents surfaced months after they happened</h2>
+      <p class="ri-note">Each line is one lab incident, from when it happened (open circle) to when it became public (filled). Colour shows the lab. Dashed lines mark the median dates. Select a line for the details.</p>
     </div>
     <div class="ri-controls">
-      <div class="ri-mode" role="group" aria-label="Date shown">
-        <button type="button" data-mode="occurred" aria-pressed="true">When it happened</button>
-        <button type="button" data-mode="public" aria-pressed="false">When it became public</button>
-      </div>
-      <div class="ri-legend" aria-label="Evidence key">
-        <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="currentColor" stroke="currentColor"/></svg>Confirmed by the operator or affected party</span>
-        <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>Attributed or disputed</span>
-        <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="2 2"/></svg>Self-reported</span>
+      <div class="ri-legend" aria-label="Key">
+        <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="var(--co-openai)"/></svg>OpenAI</span>
+        <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="var(--series-2)"/></svg>Anthropic</span>
+        <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="var(--series-1)"/></svg>Google</span>
+        <span><svg width="12" height="12" aria-hidden="true"><circle cx="6" cy="6" r="5" fill="var(--co-other)"/></svg>Other or several labs</span>
+        <span><svg width="28" height="12" aria-hidden="true"><line x1="5" y1="6" x2="23" y2="6" stroke="currentColor" stroke-width="2" opacity=".5"/><circle cx="5" cy="6" r="4" fill="var(--color-panel)" stroke="currentColor" stroke-width="2"/><circle cx="23" cy="6" r="4.5" fill="currentColor"/></svg>Happened, then public</span>
       </div>
     </div>
     <div class="ri-chart ri-timeline dash-skeleton" data-draw="timeline" data-source="incidents"></div>
-    <p class="ri-note">The first view leaves out <span data-draw="stat" data-source="summary" data-field="undated" data-row="0">—</span> incidents with no published incident date.</p>
+    <p class="ri-note">Only lab incidents with a usable incident date are shown. A date known only to the month is placed mid-month.</p>
     <div class="ri-detail" data-draw="detail" data-source="incidents" aria-live="polite">—</div>
   </section>
 
@@ -392,74 +390,81 @@ dash.draw('ctx', (el) => {
   el.textContent = row ? fmtInt(Number(row.value)) : '—';
 });
 
+function labOf(actor) {
+  const a = actor || '';
+  const openai = /OpenAI|GPT/.test(a), anthropic = /Anthropic|Claude/.test(a);
+  if (openai && anthropic) return 'Anthropic and OpenAI';
+  if (openai) return 'OpenAI';
+  if (anthropic) return 'Anthropic';
+  if (/Google|Gemini/.test(a)) return 'Google';
+  if (/Tencent/.test(a)) return 'Models on Tencent Cloud';
+  return a.split(',')[0];
+}
+const LAB_COLOUR = { OpenAI: 'var(--co-openai)', Anthropic: 'var(--series-2)', Google: 'var(--series-1)' };
+const labColour = (lab) => LAB_COLOUR[lab] || 'var(--co-other)';
+
 dash.draw('timeline', (el) => {
   const q = dash.data('incidents');
   if (q.status !== 'ok') { notReady(el, q); return; }
   el.classList.remove('dash-skeleton');
-  const rows = q.data;
+  const rows = q.data.filter((r) => r.lag_ok === true && r.occurred && r.public)
+    .slice().sort((a, b) => a.occurred.localeCompare(b.occurred) || a.id.localeCompare(b.id))
+    .map((r) => ({ ...r, lab: labOf(r.actor) }));
   const w = el.clientWidth;
   if (!w) return;
-  let svg = d3.select(el).select('svg');
-  if (svg.empty()) {
-    el.replaceChildren();
-    svg = d3.select(el).append('svg').attr('width', '100%').attr('role', 'img').attr('aria-label', 'Incidents by month and scale');
-    svg.append('g').attr('class', 'ri-axes');
-    svg.append('g').attr('class', 'ri-dots');
-  }
-  const byHappened = stack(rows, 'occurred');
-  const byPublic = stack(rows, 'public');
-  const col = w / MONTHS.length;
-  const r = Math.max(4, Math.min(8, (col - 4) / 2));
-  const pitch = 2 * r + 3;
-  const laneMax = LANES.map((_, l) => d3.max([byHappened, byPublic], (s) =>
-    d3.max(Object.entries(s.counts).filter(([k]) => k.startsWith(`${l}:`)), ([, v]) => v) || 1));
-  const base = [];
-  let y = 0;
-  laneMax.forEach((m, l) => { y += 24 + m * pitch + 8; base[l] = y; y += 10; });
-  const h = y + 18;
-  svg.attr('viewBox', `0 0 ${w} ${h}`).attr('height', h);
-
-  const ax = svg.select('g.ri-axes');
-  ax.selectAll('*').remove();
-  LANES.forEach((name, l) => {
-    ax.append('text').attr('class', 'ri-strong').attr('x', 0).attr('y', base[l] - laneMax[l] * pitch - 14).text(name);
-    ax.append('line').attr('x1', 0).attr('x2', w).attr('y1', base[l] + 1).attr('y2', base[l] + 1).style('stroke', 'var(--cds-chart-axis)');
+  el.replaceChildren();
+  const narrow = w < 560;
+  const left = narrow ? 104 : 168, right = 16, top = narrow ? 40 : 26, rowH = 26, bottom = 30;
+  const SHORT = { 'Anthropic and OpenAI': 'Several labs', 'Models on Tencent Cloud': 'Tencent Cloud' };
+  const label = (lab) => (narrow && SHORT[lab]) || lab;
+  const h = top + rows.length * rowH + bottom;
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('height', h)
+    .attr('role', 'img').attr('aria-label', 'Each lab incident from when it happened to when it became public');
+  const day = (s) => new Date(`${s}T00:00:00Z`);
+  const lo = d3.utcMonth.floor(d3.min(rows, (r) => day(r.occurred)));
+  const hi = d3.utcMonth.offset(d3.utcMonth.floor(d3.max(rows, (r) => day(r.public))), 1);
+  const x = d3.scaleUtc().domain([lo, hi]).range([left, w - right]);
+  const y = (i) => top + i * rowH + rowH / 2;
+  const ax = svg.append('g');
+  // Month gridlines; a label on every month that fits, with the year on January.
+  const every = Math.max(1, Math.ceil(44 / ((w - left - right) / d3.utcMonth.count(lo, hi))));
+  d3.utcMonth.range(lo, hi).forEach((t, i) => {
+    ax.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', top - 4).attr('y2', h - bottom).style('stroke', 'var(--color-border-line)');
+    if (i % every) return;
+    ax.append('text').attr('x', x(t)).attr('y', h - 10).attr('text-anchor', 'middle')
+      .text(d3.utcFormat(t.getUTCMonth() === 0 ? (narrow ? "%b '%y" : '%b %Y') : '%b')(t));
   });
-  const tickEvery = w < 620 ? 6 : 3;
-  MONTHS.forEach((m, i) => {
-    if (i % tickEvery) return;
-    ax.append('text').attr('x', i * col + 2).attr('y', h - 4)
-      .text(d3.utcFormat('%b %Y')(new Date(`${m}-01T00:00:00Z`)));
+  const mid = (vals) => new Date(d3.median(vals.map((v) => day(v).getTime())));
+  [[mid(rows.map((r) => r.occurred)), 'Median incident', 'end', 12], [mid(rows.map((r) => r.public)), 'Median disclosure', 'end', narrow ? 28 : 12]].forEach(([d, text, anchor, ty]) => {
+    ax.append('line').attr('x1', x(d)).attr('x2', x(d)).attr('y1', ty + 4).attr('y2', h - bottom)
+      .style('stroke', 'var(--color-fg-muted)').style('stroke-dasharray', '4 4');
+    ax.append('text').attr('x', x(d) + 4).attr('y', ty).attr('text-anchor', anchor).text(text);
   });
-
-  const place = (d) => (mode === 'occurred' && byHappened.pos.get(d.id)) || byPublic.pos.get(d.id);
-  const shown = (d) => mode === 'public' || byHappened.pos.has(d.id);
-  const cx = (d) => { const p = place(d); return p ? (p.m + 0.5) * col : -20; };
-  const cy = (d) => { const p = place(d); return p ? base[p.l] - r - p.k * pitch : -20; };
-
-  const dots = svg.select('g.ri-dots').selectAll('circle').data(rows, (d) => d.id).join((enter) => enter.append('circle')
+  const g = svg.append('g').selectAll('g').data(rows, (d) => d.id).join('g')
     .attr('class', 'ri-dot').attr('tabindex', 0).attr('role', 'button')
-    .attr('cx', cx).attr('cy', cy));
-  dots
-    .attr('aria-label', (d) => `${d.when}: ${d.incident}`)
-    .attr('aria-pressed', (d) => String(d.id === selected))
-    .attr('r', (d) => (d.evidence === 'Confirmed' ? r : r - 1))
-    .style('fill', (d) => (d.evidence === 'Confirmed' ? dash.colors[LANES.indexOf(d.lane)] : 'var(--color-panel)'))
-    .style('stroke', (d) => (d.id === selected ? 'var(--color-fg)' : dash.colors[LANES.indexOf(d.lane)]))
-    .style('stroke-width', (d) => (d.id === selected ? 3 : 2))
-    .style('stroke-dasharray', (d) => (d.evidence === 'Self-reported' && d.id !== selected ? '2 2' : null))
-    .style('pointer-events', (d) => (shown(d) ? 'auto' : 'none'));
+    .attr('aria-label', (d) => `${d.lab}: ${d.incident}, ${d.when}`)
+    .attr('aria-pressed', (d) => String(d.id === selected));
+  g.append('text').attr('class', 'ri-strong').attr('x', left - 10).attr('y', (d, i) => y(i) + 4)
+    .attr('text-anchor', 'end').text((d) => label(d.lab));
+  g.append('rect').attr('x', 0).attr('width', w).attr('y', (d, i) => y(i) - rowH / 2).attr('height', rowH)
+    .style('fill', (d) => (d.id === selected ? 'var(--color-border-line)' : 'transparent')).style('opacity', 0.5);
+  g.append('line').attr('x1', (d) => x(day(d.occurred))).attr('x2', (d) => x(day(d.public)))
+    .attr('y1', (d, i) => y(i)).attr('y2', (d, i) => y(i))
+    .style('stroke', (d) => labColour(d.lab)).style('stroke-width', 3).style('opacity', 0.5);
+  g.append('circle').attr('cx', (d) => x(day(d.occurred))).attr('cy', (d, i) => y(i)).attr('r', 5)
+    .style('fill', 'var(--color-panel)').style('stroke', (d) => labColour(d.lab)).style('stroke-width', 2);
+  g.append('circle').attr('cx', (d) => x(day(d.public))).attr('cy', (d, i) => y(i)).attr('r', 5.5)
+    .style('fill', (d) => labColour(d.lab));
+  const days = (d) => Math.round((day(d.public) - day(d.occurred)) / 864e5);
+  const tip = (d) => [d.incident, `${d.lab} · happened ${d.occ_precision === 'month' ? 'around ' : ''}${d.when}`, `public after ${d.occ_precision === 'month' ? 'about ' : ''}${days(d)} days`];
   const pick = (d) => { selected = d.id; dash.draw('detail'); dash.draw('timeline'); };
-  dots
-    .on('pointerenter pointermove', (e, d) => showTip(el, e, [d.when, d.incident]))
+  g.style('cursor', 'pointer')
+    .on('pointerenter pointermove', (e, d) => showTip(el, e, tip(d)))
     .on('pointerleave', () => hideTip(el))
-    .on('focus', (e, d) => showTip(el, e, [d.when, d.incident]))
+    .on('focus', (e, d) => showTip(el, e, tip(d)))
     .on('blur', () => hideTip(el))
     .on('click', (e, d) => pick(d))
     .on('keydown', (e, d) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pick(d); } });
-  const target = animate && !reduced() ? dots.transition().duration(650).ease(d3.easeCubicOut) : dots;
-  target.attr('cx', cx).attr('cy', cy).style('opacity', (d) => (shown(d) ? 1 : 0));
-  animate = false;
 });
 
 dash.draw('detail', (el) => {
@@ -607,14 +612,6 @@ dash.draw('shown', (el) => {
   el.textContent = q.status === 'ok' ? `${fmtInt(filtered(q.data).length)} of ${fmtInt(q.data.length)}` : '—';
 });
 
-document.querySelectorAll('.ri-mode button').forEach((b) => {
-  b.addEventListener('click', () => {
-    mode = b.dataset.mode;
-    animate = true;
-    document.querySelectorAll('.ri-mode button').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
-    dash.draw('timeline');
-  });
-});
 
 document.querySelectorAll('.ri-search, .ri-lanefilter, .ri-evfilter').forEach((c) => {
   c.addEventListener('input', () => { dash.draw('rows'); dash.draw('shown'); });
