@@ -2278,10 +2278,10 @@
   "inputs": {
    "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
    "results/dataset-haiku55-xhigh-scale100-n500-strip-samples.csv": "sha256:1271c66323a3a3d7",
-   "results/dataset500-sonnet55-um-scale100-strip-samples.csv": "sha256:456576cccddb0c0d",
-   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63"
+   "results/dataset500-sonnet55-um-scale100-strip-samples.csv": "sha256:1c7d31048163d394",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea"
   },
-  "code": "sha256:4b1a0d859bbf51a6",
-  "spec": "sha256:08aacd90ce5ce36d"
+  "code": "sha256:43a6a053a65917be",
+  "spec": "sha256:33965c74d42e5e56"
  }
 }

@@ -1,931 +1,861 @@
 {
  "id": "M03",
- "kind": "snapshot",
+ "kind": "echarts",
  "title": "Wide intervals come from too few honest programs",
  "section": "appendix",
- "order": 50,
- "caption": "Interval width against how many honest programs sit above the cutoff. Width depends on that count, not on the monitor, which supports using more honest programs at tight budgets.",
- "notes": [],
- "height": 480,
+ "order": 134,
+ "caption": "One dot per pairwise comparison in MATCHED-FPR: how many honest programs sit above the shared cutoff, against the width of the 95% interval on the recall gap. The dashed line is this project's bar of five honest rows; the stepped line is the median at each count.",
+ "notes": [
+  "The median interval runs 71.2 points wide when the cutoff rests on one honest row and 24.2 at five. Nothing about the monitors changes along this axis; only how much honest data the threshold was estimated from.",
+  "Data quality, which is the point of this figure: 93 of 104 comparisons rest on fewer than five honest rows, and only 11 of 104 separate from zero at all.",
+  "No comparison rests on exactly four honest rows, and none rests on more than five. The gaps are real, not missing data: a rung exists only where both monitors can serve the same rate exactly.",
+  "This figure used to reach 46 honest rows. That comparison, Sonnet against the Gemma 3 4B 0-100 arm, left the set when the parser-default repairs landed: one corrected honest score moved that arm's achievable rate and the shared rung disappeared. M09 and MATCHED-FPR record it.",
+  "Ported from the data explorer's e3-width-vs-rows view, reading the committed pairwise table."
+ ],
+ "height": 500,
  "author": "",
- "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'e3-width-vs-rows'. Copied as exported; its generator isn't in the repo yet.",
+ "source": "",
  "path": "viz/figures/M03-width-vs-rows",
  "option": {
-  "animation": false,
-  "textStyle": {
-   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
-   "color": "@ink-secondary"
-  },
-  "grid": {
-   "left": 66,
-   "right": 40,
-   "top": 28,
-   "bottom": 90,
-   "containLabel": true
-  },
   "tooltip": {
    "trigger": "item",
-   "confine": true,
-   "backgroundColor": "@ink-surface",
-   "borderColor": "@ink-axis",
-   "borderWidth": 1,
-   "textStyle": {
-    "color": "@ink-primary",
-    "fontSize": 12
-   },
-   "formatter": "{b}"
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
   },
-  "legend": {
-   "type": "scroll",
-   "bottom": 0,
-   "icon": "roundRect",
-   "itemWidth": 10,
-   "itemHeight": 10,
-   "textStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   }
+  "animation": false,
+  "grid": {
+   "left": 74,
+   "right": 32,
+   "top": 40,
+   "bottom": 58
   },
   "xAxis": {
-   "type": "value",
-   "name": "honest files above the cutoff (the sample that positions the threshold)",
+   "name": "Honest programs above the shared cutoff",
    "nameLocation": "middle",
-   "nameGap": 30,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
+   "nameGap": 34,
+   "type": "value",
+   "min": 0.4,
+   "max": 5.8,
    "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
-   "min": 0,
-   "max": 47
+    "formatter": "function (v) { return v % 1 ? '' : v; }"
+   }
   },
   "yAxis": {
-   "type": "value",
-   "name": "width of the 95% interval on the recall gap (points)",
+   "name": "Width of the 95% interval (points)",
    "nameLocation": "middle",
-   "nameGap": 46,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
-   "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
+   "nameGap": 52,
+   "type": "value",
    "min": 0,
-   "max": 100.0
+   "max": 90.0
   },
-  "visualMap": {
-   "type": "continuous",
-   "dimension": 2,
-   "min": 0.2,
-   "max": 9.2,
-   "seriesIndex": 0,
-   "orient": "horizontal",
-   "bottom": 2,
-   "left": "center",
-   "itemWidth": 14,
-   "itemHeight": 110,
-   "calculable": false,
-   "text": [
-    "shared FPR 9.2%",
-    "0.2%"
-   ],
-   "textStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "inRange": {
-    "color": [
-     "@seq150",
-     "@seq300",
-     "@seq450",
-     "@seq600",
-     "@seq700"
-    ]
-   }
+  "legend": {
+   "top": 0,
+   "left": 68,
+   "data": [
+    "one comparison",
+    "median at that count"
+   ]
   },
   "series": [
    {
-    "type": "scatter",
     "name": "one comparison",
-    "symbolSize": 11,
+    "type": "scatter",
+    "symbolSize": 10,
+    "data": [
+     {
+      "value": [
+       0.879,
+       67.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemini35fl-high</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +51.8, interval 67.8 points wide"
+     },
+     {
+      "value": [
+       0.961,
+       69.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemini35fl-low</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +58.2, interval 69.8 points wide"
+     },
+     {
+      "value": [
+       1.841,
+       69.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemini35fl-low</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +60.0, interval 69.8 points wide"
+     },
+     {
+      "value": [
+       0.919,
+       68.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemini35fl-medium</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +55.8, interval 68.0 points wide"
+     },
+     {
+      "value": [
+       1.876,
+       68.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemini35fl-medium</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +60.0, interval 68.8 points wide"
+     },
+     {
+      "value": [
+       0.897,
+       68.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemini35fl-xhigh</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +52.2, interval 68.8 points wide"
+     },
+     {
+      "value": [
+       0.92,
+       84.61
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma3-27b-scale100-n500-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +70.6, interval 84.6 points wide"
+     },
+     {
+      "value": [
+       2.006,
+       85.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma3-27b-scale100-n500-strip</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +79.8, interval 85.8 points wide"
+     },
+     {
+      "value": [
+       3.113,
+       22.61
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma3-27b-scale100-n500-strip</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +78.2, interval 22.6 points wide"
+     },
+     {
+      "value": [
+       1.028,
+       85.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma3-27b</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +70.4, interval 85.6 points wide"
+     },
+     {
+      "value": [
+       1.178,
+       86.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma3-4b-scale100-n500-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +70.8, interval 86.4 points wide"
+     },
+     {
+      "value": [
+       1.113,
+       80.81
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma426b-scale100-n500-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +67.0, interval 80.8 points wide"
+     },
+     {
+      "value": [
+       2.01,
+       81.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma426b-scale100-n500-strip</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +59.2, interval 81.4 points wide"
+     },
+     {
+      "value": [
+       2.874,
+       50.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma426b-scale100-n500-strip</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +54.6, interval 50.6 points wide"
+     },
+     {
+      "value": [
+       5.172,
+       31.61
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma426b-scale100-n500-strip</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +47.6, interval 31.6 points wide"
+     },
+     {
+      "value": [
+       0.998,
+       52.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53-efforthigh</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +40.4, interval 52.2 points wide"
+     },
+     {
+      "value": [
+       3.101,
+       23.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53-efforthigh</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +43.8, interval 23.6 points wide"
+     },
+     {
+      "value": [
+       5.031,
+       21.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53-efforthigh</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +35.4, interval 21.2 points wide"
+     },
+     {
+      "value": [
+       0.923,
+       71.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53-effortlow</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +59.8, interval 71.2 points wide"
+     },
+     {
+      "value": [
+       1.919,
+       70.81
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53-effortlow</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +47.6, interval 70.8 points wide"
+     },
+     {
+      "value": [
+       1.09,
+       50.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53-effortnone-NOT-AN-ABLATION</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +38.4, interval 50.8 points wide"
+     },
+     {
+      "value": [
+       2.07,
+       50.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53-effortnone-NOT-AN-ABLATION</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +23.0, interval 50.2 points wide"
+     },
+     {
+      "value": [
+       0.891,
+       30.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +17.6, interval 30.4 points wide"
+     },
+     {
+      "value": [
+       2.13,
+       30.61
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +22.8, interval 30.6 points wide"
+     },
+     {
+      "value": [
+       5.156,
+       21.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs glm53</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +22.4, interval 21.4 points wide"
+     },
+     {
+      "value": [
+       0.912,
+       51.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gpt6luna</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +37.6, interval 51.6 points wide"
+     },
+     {
+      "value": [
+       1.854,
+       52.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gpt6luna</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +41.4, interval 52.6 points wide"
+     },
+     {
+      "value": [
+       0.934,
+       83.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b-high</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +69.6, interval 83.6 points wide"
+     },
+     {
+      "value": [
+       2.079,
+       83.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b-high</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +70.8, interval 83.4 points wide"
+     },
+     {
+      "value": [
+       3.038,
+       31.81
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b-high</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +67.6, interval 31.8 points wide"
+     },
+     {
+      "value": [
+       0.912,
+       82.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b-low</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +67.6, interval 82.4 points wide"
+     },
+     {
+      "value": [
+       3.178,
+       23.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b-low</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +77.8, interval 23.6 points wide"
+     },
+     {
+      "value": [
+       5.007,
+       14.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b-low</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +76.4, interval 14.4 points wide"
+     },
+     {
+      "value": [
+       0.962,
+       82.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b-scale100-n500-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +69.2, interval 82.6 points wide"
+     },
+     {
+      "value": [
+       2.026,
+       83.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b-scale100-n500-strip</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +71.0, interval 83.2 points wide"
+     },
+     {
+      "value": [
+       2.826,
+       28.61
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b-scale100-n500-strip</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +70.4, interval 28.6 points wide"
+     },
+     {
+      "value": [
+       1.06,
+       80.21
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +66.0, interval 80.2 points wide"
+     },
+     {
+      "value": [
+       2.104,
+       81.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs gptoss120b</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +71.4, interval 81.2 points wide"
+     },
+     {
+      "value": [
+       1.858,
+       82.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku45</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +73.8, interval 82.2 points wide"
+     },
+     {
+      "value": [
+       2.874,
+       53.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku45</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +51.8, interval 53.0 points wide"
+     },
+     {
+      "value": [
+       5.054,
+       42.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku45</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +42.4, interval 42.8 points wide"
+     },
+     {
+      "value": [
+       1.121,
+       64.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-efforthigh</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +52.6, interval 64.2 points wide"
+     },
+     {
+      "value": [
+       2.151,
+       63.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-efforthigh</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +36.4, interval 63.8 points wide"
+     },
+     {
+      "value": [
+       0.827,
+       78.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-effortlow</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +66.6, interval 78.0 points wide"
+     },
+     {
+      "value": [
+       2.16,
+       77.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-effortlow</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +41.8, interval 77.6 points wide"
+     },
+     {
+      "value": [
+       0.872,
+       72.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-effortxhigh</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +60.4, interval 72.0 points wide"
+     },
+     {
+      "value": [
+       1.851,
+       71.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-effortxhigh</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +29.4, interval 71.4 points wide"
+     },
+     {
+      "value": [
+       3.127,
+       70.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-effortxhigh</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +26.0, interval 70.0 points wide"
+     },
+     {
+      "value": [
+       0.925,
+       67.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +55.8, interval 67.4 points wide"
+     },
+     {
+      "value": [
+       2.059,
+       67.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +42.6, interval 67.2 points wide"
+     },
+     {
+      "value": [
+       0.989,
+       47.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-nostrip-n500</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +29.8, interval 47.8 points wide"
+     },
+     {
+      "value": [
+       2.145,
+       47.81
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-nostrip-n500</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +4.8, interval 47.8 points wide"
+     },
+     {
+      "value": [
+       3.138,
+       47.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-nostrip-n500</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +3.6, interval 47.2 points wide"
+     },
+     {
+      "value": [
+       0.961,
+       58.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-scale100-n500-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +41.2, interval 58.0 points wide"
+     },
+     {
+      "value": [
+       2.038,
+       57.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-scale100-n500-strip</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +17.2, interval 57.0 points wide"
+     },
+     {
+      "value": [
+       2.83,
+       49.61
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-scale100-n500-strip</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +19.4, interval 49.6 points wide"
+     },
+     {
+      "value": [
+       5.035,
+       24.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-scale100-n500-strip</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +17.0, interval 24.2 points wide"
+     },
+     {
+      "value": [
+       1.143,
+       68.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-scale200-n500-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +54.0, interval 68.0 points wide"
+     },
+     {
+      "value": [
+       2.001,
+       67.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-scale200-n500-strip</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +25.4, interval 67.2 points wide"
+     },
+     {
+      "value": [
+       3.129,
+       63.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-scale200-n500-strip</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +14.0, interval 63.8 points wide"
+     },
+     {
+      "value": [
+       5.123,
+       27.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs haiku55-xhigh-scale200-n500-strip</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +8.8, interval 27.0 points wide"
+     },
+     {
+      "value": [
+       0.951,
+       50.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-high</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +35.2, interval 50.0 points wide"
+     },
+     {
+      "value": [
+       3.141,
+       37.01
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-high</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +32.8, interval 37.0 points wide"
+     },
+     {
+      "value": [
+       0.924,
+       58.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-low</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +46.8, interval 58.6 points wide"
+     },
+     {
+      "value": [
+       2.097,
+       58.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-low</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +50.4, interval 58.8 points wide"
+     },
+     {
+      "value": [
+       3.0,
+       26.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-low</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +49.4, interval 26.4 points wide"
+     },
+     {
+      "value": [
+       0.862,
+       80.21
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-none</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +65.8, interval 80.2 points wide"
+     },
+     {
+      "value": [
+       3.151,
+       50.81
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-none</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +62.4, interval 50.8 points wide"
+     },
+     {
+      "value": [
+       5.096,
+       38.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-none</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +48.0, interval 38.0 points wide"
+     },
+     {
+      "value": [
+       0.945,
+       74.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-scale100-n500-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +59.4, interval 74.0 points wide"
+     },
+     {
+      "value": [
+       2.038,
+       73.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-scale100-n500-strip</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +36.8, interval 73.0 points wide"
+     },
+     {
+      "value": [
+       3.138,
+       55.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-scale100-n500-strip</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +34.0, interval 55.4 points wide"
+     },
+     {
+      "value": [
+       4.95,
+       19.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-scale100-n500-strip</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +31.4, interval 19.8 points wide"
+     },
+     {
+      "value": [
+       1.003,
+       50.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-xhigh</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +38.2, interval 50.6 points wide"
+     },
+     {
+      "value": [
+       1.987,
+       51.41
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-xhigh</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +44.8, interval 51.4 points wide"
+     },
+     {
+      "value": [
+       2.825,
+       36.41
+      ],
+      "tip": "<b>sonnet55-um-strip vs luna-xhigh</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +39.2, interval 36.4 points wide"
+     },
+     {
+      "value": [
+       1.133,
+       76.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs mistrallarge4</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +65.6, interval 76.8 points wide"
+     },
+     {
+      "value": [
+       2.056,
+       76.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs mistrallarge4</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +39.4, interval 76.8 points wide"
+     },
+     {
+      "value": [
+       2.947,
+       56.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs mistrallarge4</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +35.0, interval 56.0 points wide"
+     },
+     {
+      "value": [
+       1.138,
+       72.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38-scale100-n500-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +61.2, interval 72.6 points wide"
+     },
+     {
+      "value": [
+       1.922,
+       72.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38-scale100-n500-strip</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +66.2, interval 72.4 points wide"
+     },
+     {
+      "value": [
+       3.145,
+       55.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38-scale100-n500-strip</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +64.6, interval 55.4 points wide"
+     },
+     {
+      "value": [
+       0.851,
+       83.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38omniflash-none</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +69.8, interval 83.4 points wide"
+     },
+     {
+      "value": [
+       2.037,
+       84.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38omniflash-none</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +66.0, interval 84.2 points wide"
+     },
+     {
+      "value": [
+       1.101,
+       72.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemini35lite</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +60.6, interval 72.6 points wide"
+     },
+     {
+      "value": [
+       1.834,
+       72.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemini35lite</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +63.2, interval 72.6 points wide"
+     },
+     {
+      "value": [
+       1.131,
+       78.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma426b</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +67.2, interval 78.6 points wide"
+     },
+     {
+      "value": [
+       1.869,
+       78.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma426b</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +58.4, interval 78.4 points wide"
+     },
+     {
+      "value": [
+       2.9,
+       35.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs gemma426b</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +56.8, interval 35.8 points wide"
+     },
+     {
+      "value": [
+       3.122,
+       21.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs ministral14b</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +83.0, interval 21.0 points wide"
+     },
+     {
+      "value": [
+       1.136,
+       56.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs mistrallarge4-high</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +53.0, interval 56.4 points wide"
+     },
+     {
+      "value": [
+       2.039,
+       56.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs mistrallarge4-high</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +51.4, interval 56.0 points wide"
+     },
+     {
+      "value": [
+       2.987,
+       21.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs mistrallarge4-high</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +41.2, interval 21.6 points wide"
+     },
+     {
+      "value": [
+       5.158,
+       18.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs mistrallarge4-high</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +40.0, interval 18.8 points wide"
+     },
+     {
+      "value": [
+       1.109,
+       82.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38omniflash-high</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +70.6, interval 82.0 points wide"
+     },
+     {
+      "value": [
+       2.08,
+       82.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38omniflash-high</b><br>shared FPR 0.4%<br>2 honest row(s) above the cutoff<br>gap +75.2, interval 82.4 points wide"
+     },
+     {
+      "value": [
+       3.035,
+       66.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38omniflash-high</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +30.2, interval 66.6 points wide"
+     },
+     {
+      "value": [
+       0.843,
+       85.41
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38omniflash-medium</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap +70.8, interval 85.4 points wide"
+     },
+     {
+      "value": [
+       2.976,
+       66.8
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38omniflash-medium</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +37.4, interval 66.8 points wide"
+     },
+     {
+      "value": [
+       5.172,
+       61.4
+      ],
+      "tip": "<b>sonnet55-um-strip vs qwen38omniflash-medium</b><br>shared FPR 1%<br>5 honest row(s) above the cutoff<br>gap +34.8, interval 61.4 points wide"
+     },
+     {
+      "value": [
+       1.002,
+       13.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs sonnet55-um-effortlow-v2-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap -0.8, interval 13.2 points wide"
+     },
+     {
+      "value": [
+       3.148,
+       13.0
+      ],
+      "tip": "<b>sonnet55-um-strip vs sonnet55-um-effortlow-v2-strip</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap +6.0, interval 13.0 points wide"
+     },
+     {
+      "value": [
+       1.169,
+       12.2
+      ],
+      "tip": "<b>sonnet55-um-strip vs sonnet55-um-scale100-strip</b><br>shared FPR 0.2%<br>1 honest row(s) above the cutoff<br>gap -8.4, interval 12.2 points wide"
+     },
+     {
+      "value": [
+       3.079,
+       11.6
+      ],
+      "tip": "<b>sonnet55-um-strip vs sonnet55-um-scale100-strip</b><br>shared FPR 0.6%<br>3 honest row(s) above the cutoff<br>gap -1.0, interval 11.6 points wide"
+     }
+    ],
     "itemStyle": {
+     "color": "@context-strong",
+     "opacity": 0.7,
      "borderColor": "@ink-surface",
      "borderWidth": 1
     },
-    "data": [
-     {
-      "value": [
-       1,
-       67.6,
-       0.2
-      ],
-      "name": "Gemini 3.5 Flash-Lite high at 0.2%<br/>interval width 67.6 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       1,
-       69.4,
-       0.2
-      ],
-      "name": "Gemini 3.5 Flash-Lite low at 0.2%<br/>interval width 69.4 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       69.6,
-       0.4
-      ],
-      "name": "Gemini 3.5 Flash-Lite low at 0.4%<br/>interval width 69.6 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       67.8,
-       0.2
-      ],
-      "name": "Gemini 3.5 Flash-Lite medium at 0.2%<br/>interval width 67.8 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       68.6,
-       0.4
-      ],
-      "name": "Gemini 3.5 Flash-Lite medium at 0.4%<br/>interval width 68.6 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       68.21,
-       0.2
-      ],
-      "name": "Gemini 3.5 Flash-Lite xhigh at 0.2%<br/>interval width 68.21 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       1,
-       84.4,
-       0.2
-      ],
-      "name": "Gemma 3 27B none 0-100 at 0.2%<br/>interval width 84.4 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       85.2,
-       0.4
-      ],
-      "name": "Gemma 3 27B none 0-100 at 0.4%<br/>interval width 85.2 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       24.6,
-       0.6
-      ],
-      "name": "Gemma 3 27B none 0-100 at 0.6%<br/>interval width 24.6 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       85.4,
-       0.2
-      ],
-      "name": "Gemma 3 27B none at 0.2%<br/>interval width 85.4 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       1,
-       86.6,
-       0.2
-      ],
-      "name": "Gemma 3 4B none 0-100 at 0.2%<br/>interval width 86.6 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       46,
-       17.6,
-       9.2
-      ],
-      "name": "Gemma 3 4B none 0-100 at 9.2%<br/>interval width 17.6 pts on 46 honest rows"
-     },
-     {
-      "value": [
-       1,
-       80.8,
-       0.2
-      ],
-      "name": "Gemma 4 26B-A4B none 0-100 at 0.2%<br/>interval width 80.8 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       81.0,
-       0.4
-      ],
-      "name": "Gemma 4 26B-A4B none 0-100 at 0.4%<br/>interval width 81 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       51.0,
-       0.6
-      ],
-      "name": "Gemma 4 26B-A4B none 0-100 at 0.6%<br/>interval width 51 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       5,
-       29.81,
-       1.0
-      ],
-      "name": "Gemma 4 26B-A4B none 0-100 at 1%<br/>interval width 29.81 pts on 5 honest rows"
-     },
-     {
-      "value": [
-       1,
-       52.6,
-       0.2
-      ],
-      "name": "GLM-5.3 high at 0.2%<br/>interval width 52.6 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       3,
-       23.8,
-       0.6
-      ],
-      "name": "GLM-5.3 high at 0.6%<br/>interval width 23.8 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       5,
-       21.0,
-       1.0
-      ],
-      "name": "GLM-5.3 high at 1%<br/>interval width 21 pts on 5 honest rows"
-     },
-     {
-      "value": [
-       1,
-       71.0,
-       0.2
-      ],
-      "name": "GLM-5.3 low at 0.2%<br/>interval width 71 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       70.81,
-       0.4
-      ],
-      "name": "GLM-5.3 low at 0.4%<br/>interval width 70.81 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       50.41,
-       0.2
-      ],
-      "name": "GLM-5.3 none (not an ablation) at 0.2%<br/>interval width 50.41 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       49.6,
-       0.4
-      ],
-      "name": "GLM-5.3 none (not an ablation) at 0.4%<br/>interval width 49.6 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       30.0,
-       0.2
-      ],
-      "name": "GLM-5.3 max (default) at 0.2%<br/>interval width 30 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       30.61,
-       0.4
-      ],
-      "name": "GLM-5.3 max (default) at 0.4%<br/>interval width 30.61 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       5,
-       21.2,
-       1.0
-      ],
-      "name": "GLM-5.3 max (default) at 1%<br/>interval width 21.2 pts on 5 honest rows"
-     },
-     {
-      "value": [
-       1,
-       51.41,
-       0.2
-      ],
-      "name": "GPT-6 Luna at 0.2%<br/>interval width 51.41 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       52.2,
-       0.4
-      ],
-      "name": "GPT-6 Luna at 0.4%<br/>interval width 52.2 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       82.81,
-       0.2
-      ],
-      "name": "gpt-oss-120b high at 0.2%<br/>interval width 82.81 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       83.2,
-       0.4
-      ],
-      "name": "gpt-oss-120b high at 0.4%<br/>interval width 83.2 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       30.61,
-       0.6
-      ],
-      "name": "gpt-oss-120b high at 0.6%<br/>interval width 30.61 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       83.6,
-       0.2
-      ],
-      "name": "gpt-oss-120b low at 0.2%<br/>interval width 83.6 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       3,
-       23.21,
-       0.6
-      ],
-      "name": "gpt-oss-120b low at 0.6%<br/>interval width 23.21 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       5,
-       13.0,
-       1.0
-      ],
-      "name": "gpt-oss-120b low at 1%<br/>interval width 13 pts on 5 honest rows"
-     },
-     {
-      "value": [
-       1,
-       94.6,
-       0.2
-      ],
-      "name": "gpt-oss-120b 0-100 at 0.2%<br/>interval width 94.6 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       93.01,
-       0.4
-      ],
-      "name": "gpt-oss-120b 0-100 at 0.4%<br/>interval width 93.01 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       89.41,
-       0.2
-      ],
-      "name": "gpt-oss-120b at 0.2%<br/>interval width 89.41 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       3,
-       22.2,
-       0.6
-      ],
-      "name": "gpt-oss-120b at 0.6%<br/>interval width 22.2 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       64.01,
-       0.2
-      ],
-      "name": "Haiku 5.5 high at 0.2%<br/>interval width 64.01 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       64.2,
-       0.4
-      ],
-      "name": "Haiku 5.5 high at 0.4%<br/>interval width 64.2 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       77.8,
-       0.2
-      ],
-      "name": "Haiku 5.5 low at 0.2%<br/>interval width 77.8 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       77.4,
-       0.4
-      ],
-      "name": "Haiku 5.5 low at 0.4%<br/>interval width 77.4 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       71.6,
-       0.2
-      ],
-      "name": "Haiku 5.5 xhigh at 0.2%<br/>interval width 71.6 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       71.2,
-       0.4
-      ],
-      "name": "Haiku 5.5 xhigh at 0.4%<br/>interval width 71.2 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       69.81,
-       0.6
-      ],
-      "name": "Haiku 5.5 xhigh at 0.6%<br/>interval width 69.81 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       67.01,
-       0.2
-      ],
-      "name": "Haiku 5.5 at 0.2%<br/>interval width 67.01 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       66.6,
-       0.4
-      ],
-      "name": "Haiku 5.5 at 0.4%<br/>interval width 66.6 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       48.4,
-       0.2
-      ],
-      "name": "Haiku 5.5 xhigh comments kept at 0.2%<br/>interval width 48.4 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       47.8,
-       0.4
-      ],
-      "name": "Haiku 5.5 xhigh comments kept at 0.4%<br/>interval width 47.8 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       47.2,
-       0.6
-      ],
-      "name": "Haiku 5.5 xhigh comments kept at 0.6%<br/>interval width 47.2 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       57.6,
-       0.2
-      ],
-      "name": "Haiku 5.5 xhigh 0-100 at 0.2%<br/>interval width 57.6 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       56.8,
-       0.4
-      ],
-      "name": "Haiku 5.5 xhigh 0-100 at 0.4%<br/>interval width 56.8 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       52.0,
-       0.6
-      ],
-      "name": "Haiku 5.5 xhigh 0-100 at 0.6%<br/>interval width 52 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       5,
-       23.6,
-       1.0
-      ],
-      "name": "Haiku 5.5 xhigh 0-100 at 1%<br/>interval width 23.6 pts on 5 honest rows"
-     },
-     {
-      "value": [
-       1,
-       67.4,
-       0.2
-      ],
-      "name": "Haiku 5.5 xhigh 0-200 at 0.2%<br/>interval width 67.4 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       67.2,
-       0.4
-      ],
-      "name": "Haiku 5.5 xhigh 0-200 at 0.4%<br/>interval width 67.2 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       63.4,
-       0.6
-      ],
-      "name": "Haiku 5.5 xhigh 0-200 at 0.6%<br/>interval width 63.4 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       5,
-       27.0,
-       1.0
-      ],
-      "name": "Haiku 5.5 xhigh 0-200 at 1%<br/>interval width 27 pts on 5 honest rows"
-     },
-     {
-      "value": [
-       1,
-       49.8,
-       0.2
-      ],
-      "name": "GPT-6 Luna high at 0.2%<br/>interval width 49.8 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       3,
-       37.8,
-       0.6
-      ],
-      "name": "GPT-6 Luna high at 0.6%<br/>interval width 37.8 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       58.41,
-       0.2
-      ],
-      "name": "GPT-6 Luna low at 0.2%<br/>interval width 58.41 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       58.2,
-       0.4
-      ],
-      "name": "GPT-6 Luna low at 0.4%<br/>interval width 58.2 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       26.0,
-       0.6
-      ],
-      "name": "GPT-6 Luna low at 0.6%<br/>interval width 26 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       79.61,
-       0.2
-      ],
-      "name": "GPT-6 Luna none at 0.2%<br/>interval width 79.61 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       3,
-       50.6,
-       0.6
-      ],
-      "name": "GPT-6 Luna none at 0.6%<br/>interval width 50.6 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       5,
-       37.4,
-       1.0
-      ],
-      "name": "GPT-6 Luna none at 1%<br/>interval width 37.4 pts on 5 honest rows"
-     },
-     {
-      "value": [
-       1,
-       73.6,
-       0.2
-      ],
-      "name": "GPT-6 Luna 0-100 at 0.2%<br/>interval width 73.6 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       73.0,
-       0.4
-      ],
-      "name": "GPT-6 Luna 0-100 at 0.4%<br/>interval width 73 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       56.4,
-       0.6
-      ],
-      "name": "GPT-6 Luna 0-100 at 0.6%<br/>interval width 56.4 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       5,
-       21.01,
-       1.0
-      ],
-      "name": "GPT-6 Luna 0-100 at 1%<br/>interval width 21.01 pts on 5 honest rows"
-     },
-     {
-      "value": [
-       1,
-       50.8,
-       0.2
-      ],
-      "name": "GPT-6 Luna xhigh at 0.2%<br/>interval width 50.8 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       51.4,
-       0.4
-      ],
-      "name": "GPT-6 Luna xhigh at 0.4%<br/>interval width 51.4 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       36.81,
-       0.6
-      ],
-      "name": "GPT-6 Luna xhigh at 0.6%<br/>interval width 36.81 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       72.41,
-       0.2
-      ],
-      "name": "Qwen3.8 Omni Flash none 0-100 at 0.2%<br/>interval width 72.41 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       72.2,
-       0.4
-      ],
-      "name": "Qwen3.8 Omni Flash none 0-100 at 0.4%<br/>interval width 72.2 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       55.6,
-       0.6
-      ],
-      "name": "Qwen3.8 Omni Flash none 0-100 at 0.6%<br/>interval width 55.6 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       83.4,
-       0.2
-      ],
-      "name": "Qwen3.8 Omni Flash none at 0.2%<br/>interval width 83.4 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       83.4,
-       0.4
-      ],
-      "name": "Qwen3.8 Omni Flash none at 0.4%<br/>interval width 83.4 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       71.8,
-       0.2
-      ],
-      "name": "Gemini 3.5 Flash-Lite off at 0.2%<br/>interval width 71.8 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       72.2,
-       0.4
-      ],
-      "name": "Gemini 3.5 Flash-Lite off at 0.4%<br/>interval width 72.2 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       1,
-       78.2,
-       0.2
-      ],
-      "name": "Gemma 4 26B-A4B none at 0.2%<br/>interval width 78.2 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       78.0,
-       0.4
-      ],
-      "name": "Gemma 4 26B-A4B none at 0.4%<br/>interval width 78 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       36.4,
-       0.6
-      ],
-      "name": "Gemma 4 26B-A4B none at 0.6%<br/>interval width 36.4 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       82.0,
-       0.2
-      ],
-      "name": "Qwen3.8 Omni Flash high at 0.2%<br/>interval width 82 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       2,
-       81.8,
-       0.4
-      ],
-      "name": "Qwen3.8 Omni Flash high at 0.4%<br/>interval width 81.8 pts on 2 honest rows"
-     },
-     {
-      "value": [
-       3,
-       66.6,
-       0.6
-      ],
-      "name": "Qwen3.8 Omni Flash high at 0.6%<br/>interval width 66.6 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       85.0,
-       0.2
-      ],
-      "name": "Qwen3.8 Omni Flash medium at 0.2%<br/>interval width 85 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       3,
-       66.2,
-       0.6
-      ],
-      "name": "Qwen3.8 Omni Flash medium at 0.6%<br/>interval width 66.2 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       5,
-       61.6,
-       1.0
-      ],
-      "name": "Qwen3.8 Omni Flash medium at 1%<br/>interval width 61.6 pts on 5 honest rows"
-     },
-     {
-      "value": [
-       1,
-       13.0,
-       0.2
-      ],
-      "name": "Sonnet 5.5 low at 0.2%<br/>interval width 13 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       3,
-       13.0,
-       0.6
-      ],
-      "name": "Sonnet 5.5 low at 0.6%<br/>interval width 13 pts on 3 honest rows"
-     },
-     {
-      "value": [
-       1,
-       12.2,
-       0.2
-      ],
-      "name": "Sonnet 5.5 0-100 at 0.2%<br/>interval width 12.2 pts on 1 honest rows"
-     },
-     {
-      "value": [
-       3,
-       11.6,
-       0.6
-      ],
-      "name": "Sonnet 5.5 0-100 at 0.6%<br/>interval width 11.6 pts on 3 honest rows"
-     }
-    ]
+    "markLine": {
+     "silent": true,
+     "symbol": "none",
+     "lineStyle": {
+      "color": "@ink-muted",
+      "type": "dashed",
+      "width": 1.5
+     },
+     "label": {
+      "show": false
+     },
+     "data": [
+      {
+       "xAxis": 5
+      }
+     ]
+    }
    },
    {
+    "name": "median at that count",
     "type": "line",
-    "name": "median width at that row count",
-    "showSymbol": true,
-    "symbolSize": 8,
+    "step": "middle",
+    "symbolSize": 9,
     "lineStyle": {
-     "color": "@ink-primary",
-     "width": 2,
-     "type": "dashed"
+     "color": "@s0",
+     "width": 2.5
     },
     "itemStyle": {
-     "color": "@ink-primary"
+     "color": "@s0"
     },
     "data": [
-     [
-      1,
-      71.0
-     ],
-     [
-      2,
-      70.81
-     ],
-     [
-      3,
-      37.8
-     ],
-     [
-      5,
-      23.6
-     ],
-     [
-      46,
-      17.6
-     ]
+     {
+      "value": [
+       1,
+       71.2
+      ],
+      "tip": "median 71.2 points at 1 row(s)"
+     },
+     {
+      "value": [
+       2,
+       71.4
+      ],
+      "tip": "median 71.4 points at 2 row(s)"
+     },
+     {
+      "value": [
+       3,
+       37.01
+      ],
+      "tip": "median 37.0 points at 3 row(s)"
+     },
+     {
+      "value": [
+       5,
+       24.2
+      ],
+      "tip": "median 24.2 points at 5 row(s)"
+     }
     ]
    }
   ]
@@ -933,60 +863,860 @@
  "dial": null,
  "data": {
   "columns": [
-   "honest rows above the cutoff",
-   "shared FPR (%)",
-   "comparisons",
-   "narrowest interval (pts)",
-   "median",
-   "widest"
+   "reference",
+   "other",
+   "shared_fpr_pct",
+   "honest_rows_above_cutoff",
+   "ci_width_pts",
+   "separated"
   ],
   "rows": [
    [
-    1,
+    "sonnet55-um-strip",
+    "gemini35fl-high",
     0.2,
-    37,
-    12.2,
-    71.0,
-    94.6
-   ],
-   [
-    2,
-    0.4,
-    25,
-    30.61,
-    70.81,
-    93.01
-   ],
-   [
-    3,
-    0.6,
-    21,
-    11.6,
-    37.8,
-    69.81
-   ],
-   [
-    5,
-    1.0,
-    9,
-    13.0,
-    23.6,
-    61.6
-   ],
-   [
-    46,
-    9.2,
     1,
-    17.6,
-    17.6,
-    17.6
+    67.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemini35fl-low",
+    0.2,
+    1,
+    69.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemini35fl-low",
+    0.4,
+    2,
+    69.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemini35fl-medium",
+    0.2,
+    1,
+    68.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemini35fl-medium",
+    0.4,
+    2,
+    68.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemini35fl-xhigh",
+    0.2,
+    1,
+    68.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma3-27b-scale100-n500-strip",
+    0.2,
+    1,
+    84.61,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma3-27b-scale100-n500-strip",
+    0.4,
+    2,
+    85.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma3-27b-scale100-n500-strip",
+    0.6,
+    3,
+    22.61,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma3-27b",
+    0.2,
+    1,
+    85.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma3-4b-scale100-n500-strip",
+    0.2,
+    1,
+    86.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma426b-scale100-n500-strip",
+    0.2,
+    1,
+    80.81,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma426b-scale100-n500-strip",
+    0.4,
+    2,
+    81.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma426b-scale100-n500-strip",
+    0.6,
+    3,
+    50.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma426b-scale100-n500-strip",
+    1.0,
+    5,
+    31.61,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53-efforthigh",
+    0.2,
+    1,
+    52.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53-efforthigh",
+    0.6,
+    3,
+    23.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53-efforthigh",
+    1.0,
+    5,
+    21.2,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53-effortlow",
+    0.2,
+    1,
+    71.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53-effortlow",
+    0.4,
+    2,
+    70.81,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53-effortnone-NOT-AN-ABLATION",
+    0.2,
+    1,
+    50.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53-effortnone-NOT-AN-ABLATION",
+    0.4,
+    2,
+    50.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53",
+    0.2,
+    1,
+    30.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53",
+    0.4,
+    2,
+    30.61,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "glm53",
+    1.0,
+    5,
+    21.4,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "gpt6luna",
+    0.2,
+    1,
+    51.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gpt6luna",
+    0.4,
+    2,
+    52.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b-high",
+    0.2,
+    1,
+    83.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b-high",
+    0.4,
+    2,
+    83.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b-high",
+    0.6,
+    3,
+    31.81,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b-low",
+    0.2,
+    1,
+    82.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b-low",
+    0.6,
+    3,
+    23.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b-low",
+    1.0,
+    5,
+    14.4,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b-scale100-n500-strip",
+    0.2,
+    1,
+    82.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b-scale100-n500-strip",
+    0.4,
+    2,
+    83.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b-scale100-n500-strip",
+    0.6,
+    3,
+    28.61,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b",
+    0.2,
+    1,
+    80.21,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gptoss120b",
+    0.4,
+    2,
+    81.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku45",
+    0.4,
+    2,
+    82.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku45",
+    0.6,
+    3,
+    53.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku45",
+    1.0,
+    5,
+    42.8,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-efforthigh",
+    0.2,
+    1,
+    64.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-efforthigh",
+    0.4,
+    2,
+    63.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-effortlow",
+    0.2,
+    1,
+    78.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-effortlow",
+    0.4,
+    2,
+    77.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-effortxhigh",
+    0.2,
+    1,
+    72.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-effortxhigh",
+    0.4,
+    2,
+    71.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-effortxhigh",
+    0.6,
+    3,
+    70.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55",
+    0.2,
+    1,
+    67.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55",
+    0.4,
+    2,
+    67.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-nostrip-n500",
+    0.2,
+    1,
+    47.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-nostrip-n500",
+    0.4,
+    2,
+    47.81,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-nostrip-n500",
+    0.6,
+    3,
+    47.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-scale100-n500-strip",
+    0.2,
+    1,
+    58.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-scale100-n500-strip",
+    0.4,
+    2,
+    57.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-scale100-n500-strip",
+    0.6,
+    3,
+    49.61,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-scale100-n500-strip",
+    1.0,
+    5,
+    24.2,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-scale200-n500-strip",
+    0.2,
+    1,
+    68.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-scale200-n500-strip",
+    0.4,
+    2,
+    67.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-scale200-n500-strip",
+    0.6,
+    3,
+    63.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "haiku55-xhigh-scale200-n500-strip",
+    1.0,
+    5,
+    27.0,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-high",
+    0.2,
+    1,
+    50.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-high",
+    0.6,
+    3,
+    37.01,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-low",
+    0.2,
+    1,
+    58.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-low",
+    0.4,
+    2,
+    58.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-low",
+    0.6,
+    3,
+    26.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-none",
+    0.2,
+    1,
+    80.21,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-none",
+    0.6,
+    3,
+    50.81,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-none",
+    1.0,
+    5,
+    38.0,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-scale100-n500-strip",
+    0.2,
+    1,
+    74.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-scale100-n500-strip",
+    0.4,
+    2,
+    73.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-scale100-n500-strip",
+    0.6,
+    3,
+    55.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-scale100-n500-strip",
+    1.0,
+    5,
+    19.8,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-xhigh",
+    0.2,
+    1,
+    50.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-xhigh",
+    0.4,
+    2,
+    51.41,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "luna-xhigh",
+    0.6,
+    3,
+    36.41,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "mistrallarge4",
+    0.2,
+    1,
+    76.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "mistrallarge4",
+    0.4,
+    2,
+    76.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "mistrallarge4",
+    0.6,
+    3,
+    56.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38-scale100-n500-strip",
+    0.2,
+    1,
+    72.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38-scale100-n500-strip",
+    0.4,
+    2,
+    72.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38-scale100-n500-strip",
+    0.6,
+    3,
+    55.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38omniflash-none",
+    0.2,
+    1,
+    83.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38omniflash-none",
+    0.4,
+    2,
+    84.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemini35lite",
+    0.2,
+    1,
+    72.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemini35lite",
+    0.4,
+    2,
+    72.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma426b",
+    0.2,
+    1,
+    78.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma426b",
+    0.4,
+    2,
+    78.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "gemma426b",
+    0.6,
+    3,
+    35.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "ministral14b",
+    0.6,
+    3,
+    21.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "mistrallarge4-high",
+    0.2,
+    1,
+    56.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "mistrallarge4-high",
+    0.4,
+    2,
+    56.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "mistrallarge4-high",
+    0.6,
+    3,
+    21.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "mistrallarge4-high",
+    1.0,
+    5,
+    18.8,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38omniflash-high",
+    0.2,
+    1,
+    82.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38omniflash-high",
+    0.4,
+    2,
+    82.4,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38omniflash-high",
+    0.6,
+    3,
+    66.6,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38omniflash-medium",
+    0.2,
+    1,
+    85.41,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38omniflash-medium",
+    0.6,
+    3,
+    66.8,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "qwen38omniflash-medium",
+    1.0,
+    5,
+    61.4,
+    true
+   ],
+   [
+    "sonnet55-um-strip",
+    "sonnet55-um-effortlow-v2-strip",
+    0.2,
+    1,
+    13.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "sonnet55-um-effortlow-v2-strip",
+    0.6,
+    3,
+    13.0,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "sonnet55-um-scale100-strip",
+    0.2,
+    1,
+    12.2,
+    false
+   ],
+   [
+    "sonnet55-um-strip",
+    "sonnet55-um-scale100-strip",
+    0.6,
+    3,
+    11.6,
+    false
    ]
   ]
  },
- "facts": {},
+ "facts": {
+  "n": 104,
+  "n_sep": 11,
+  "n_thin": 93,
+  "w1": 71.2,
+  "w5": 24.2
+ },
  "build": {
-  "inputs": {},
-  "code": "sha256:25252dab4c13275c",
-  "spec": "sha256:ce82b71085958d2c"
+  "inputs": {
+   "results/analysis/matched-fpr-pairwise.csv": "sha256:481676c7a70a87ab"
+  },
+  "code": "sha256:06d443dba3ea1e03",
+  "spec": "sha256:3d72794f47c75e3e"
  }
 }

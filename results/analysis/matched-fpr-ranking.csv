@@ -109,6 +109,11 @@ haiku55-effortxhigh,0.4,0.4,0.0,0.508,0.4
 haiku55-effortxhigh,0.6,0.6,0.0,0.574,0.3
 haiku55-effortxhigh,1.0,0.8,0.2,0.714,0.2
 haiku55-effortxhigh,2.0,1.6,0.4,0.85,0.1
+haiku55-effortxhigh-tm-n500b2-strip,0.2,0.2,0.0,0.72,0.2
+haiku55-effortxhigh-tm-n500b2-strip,0.4,0.2,0.2,0.72,0.2
+haiku55-effortxhigh-tm-n500b2-strip,0.6,0.6,0.0,0.886,0.1
+haiku55-effortxhigh-tm-n500b2-strip,1.0,0.6,0.4,0.886,0.1
+haiku55-effortxhigh-tm-n500b2-strip,2.0,0.6,1.4,0.886,0.1
 haiku55,0.2,0.2,0.0,0.15,0.6
 haiku55,0.4,0.4,0.0,0.376,0.3
 haiku55,0.6,0.4,0.2,0.376,0.3
@@ -124,6 +129,11 @@ haiku55-xhigh-scale100-n500-strip,0.4,0.4,0.0,0.63,0.23
 haiku55-xhigh-scale100-n500-strip,0.6,0.6,0.0,0.64,0.22
 haiku55-xhigh-scale100-n500-strip,1.0,1.0,0.0,0.698,0.14
 haiku55-xhigh-scale100-n500-strip,2.0,1.8,0.2,0.83,0.05
+haiku55-xhigh-scale100-n500b2-strip,0.2,0.2,0.0,0.788,0.09
+haiku55-xhigh-scale100-n500b2-strip,0.4,0.4,0.0,0.824,0.07
+haiku55-xhigh-scale100-n500b2-strip,0.6,0.6,0.0,0.886,0.05
+haiku55-xhigh-scale100-n500b2-strip,1.0,0.8,0.2,0.902,0.04
+haiku55-xhigh-scale100-n500b2-strip,2.0,1.2,0.8,0.946,0.03
 haiku55-xhigh-scale200-n500-strip,0.2,0.2,0.0,0.168,0.8
 haiku55-xhigh-scale200-n500-strip,0.4,0.4,0.0,0.548,0.305
 haiku55-xhigh-scale200-n500-strip,0.6,0.6,0.0,0.694,0.135
@@ -214,3 +224,13 @@ sonnet55-um-strip,0.4,0.4,0.0,0.802,0.4
 sonnet55-um-strip,0.6,0.6,0.0,0.834,0.2
 sonnet55-um-strip,1.0,1.0,0.0,0.868,0.1
 sonnet55-um-strip,2.0,1.0,1.0,0.868,0.1
+dataset500b2-sonnet55-um-scale100-strip,0.2,0.0,0.2,0.86,0.04
+dataset500b2-sonnet55-um-scale100-strip,0.4,0.0,0.4,0.86,0.04
+dataset500b2-sonnet55-um-scale100-strip,0.6,0.6,0.0,0.894,0.03
+dataset500b2-sonnet55-um-scale100-strip,1.0,0.8,0.2,0.922,0.02
+dataset500b2-sonnet55-um-scale100-strip,2.0,0.8,1.2,0.922,0.02
+dataset500b2-sonnet55-um-strip,0.2,0.0,0.2,0.876,0.1
+dataset500b2-sonnet55-um-strip,0.4,0.0,0.4,0.876,0.1
+dataset500b2-sonnet55-um-strip,0.6,0.0,0.6,0.876,0.1
+dataset500b2-sonnet55-um-strip,1.0,0.0,1.0,0.876,0.1
+dataset500b2-sonnet55-um-strip,2.0,0.0,2.0,0.876,0.1

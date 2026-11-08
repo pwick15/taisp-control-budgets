@@ -4,11 +4,11 @@
  "title": "The same effort setting means very different amounts of thinking",
  "section": "results",
  "order": 40,
- "caption": "Median reasoning tokens per program at each effort setting we ran. The number between two cells is the change from one setting to the next; red means it went down. Empty cells are settings we didn't run.",
+ "caption": "Median reasoning tokens per program at each effort setting, for four models that show the range. Darker cells think more. The number between two cells is the change; red means it fell.",
  "notes": [
-  "Sonnet 5.5 and Mistral Large 4 report no reasoning tokens in their usage, so their cells say not logged. It doesn't mean they didn't think."
+  "Sonnet 5.5 and Mistral Large 4 are left out because they report no reasoning tokens, which doesn't mean they didn't think. gpt-oss-120b and Gemini Flash-Lite are left out to keep the figure readable; they step up like Haiku and Luna. All eight are in the CSV."
  ],
- "height": 470,
+ "height": 300,
  "author": "",
  "source": "",
  "path": "viz/figures/P04-reasoning-tokens",
@@ -18,10 +18,10 @@
   },
   "animation": false,
   "grid": {
-   "left": 170,
+   "left": 110,
    "right": 20,
    "top": 40,
-   "bottom": 10
+   "bottom": 8
   },
   "xAxis": {
    "type": "category",
@@ -45,14 +45,10 @@
   "yAxis": {
    "type": "category",
    "data": [
-    "Haiku 5.5",
     "GLM-5.3",
-    "gpt-oss-120b",
-    "Qwen 3.8 Omni Flash",
-    "Gemini 3.5 Flash-Lite",
-    "GPT-6 Luna",
-    "Sonnet 5.5",
-    "Mistral Large 4"
+    "Haiku 5.5",
+    "Qwen 3.8",
+    "GPT-6 Luna"
    ],
    "inverse": true,
    "axisLine": {
@@ -68,276 +64,171 @@
   "series": [
    {
     "type": "custom",
-    "renderItem": "function (params, api) { var c = api.coord([api.value(0), api.value(1)]); var w = api.size([1, 0])[0] * 0.62, h = api.size([0, 1])[1] * 0.66; var v = api.value(2); var t = v < 0 ? 'not logged' : String(Math.round(v)).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','); return {type: 'group', children: [{type: 'rect', shape: {x: c[0] - w / 2, y: c[1] - h / 2, width: w, height: h, r: 7}, style: api.style()}, {type: 'text', silent: true, style: {text: t, x: c[0], y: c[1], align: 'center', verticalAlign: 'middle', fontSize: v < 0 ? 12 : 15, fontWeight: v < 0 ? 'normal' : 600, fill: v < 0 ? '@ink-muted' : '@on-pale'}}]}; }",
+    "renderItem": "function (params, api) { var c = api.coord([api.value(0), api.value(1)]); var w = api.size([1, 0])[0] * 0.62, h = api.size([0, 1])[1] * 0.64; var v = api.value(2); var t = String(Math.round(v)).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','); return {type: 'group', children: [{type: 'rect', shape: {x: c[0] - w / 2, y: c[1] - h / 2, width: w, height: h, r: 7}, style: api.style()}, {type: 'text', silent: true, style: {text: t, x: c[0], y: c[1], align: 'center', verticalAlign: 'middle', fontSize: 15, fontWeight: 600, fill: api.value(3) ? '@on-strong' : '@on-pale'}}]}; }",
     "data": [
      {
       "value": [
        1,
        0,
-       371.5
+       6.0,
+       0
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
-      }
-     },
-     {
-      "value": [
-       2,
-       0,
-       463.5
-      ],
-      "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.050"
       }
      },
      {
       "value": [
        3,
        0,
-       688.0
+       64.0,
+       0
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.162"
       }
      },
      {
       "value": [
        4,
        0,
-       1491.5
+       2444.0,
+       1
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:1.000"
       }
      },
      {
       "value": [
        1,
        1,
-       6.0
+       371.5,
+       0
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.390"
+      }
+     },
+     {
+      "value": [
+       2,
+       1,
+       463.5,
+       0
+      ],
+      "itemStyle": {
+       "color": "@deep:0.435"
       }
      },
      {
       "value": [
        3,
        1,
-       64.0
+       688.0,
+       0
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.531"
       }
      },
      {
       "value": [
        4,
        1,
-       2444.0
+       1491.5,
+       1
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.781"
       }
      },
      {
       "value": [
-       1,
+       0,
        2,
-       42.0
+       0.0,
+       0
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.000"
       }
      },
      {
       "value": [
        2,
        2,
-       241.0
+       970.0,
+       1
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.630"
       }
      },
      {
       "value": [
        3,
        2,
-       870.0
+       813.0,
+       1
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.577"
       }
      },
      {
       "value": [
        0,
        3,
-       0.0
+       0.0,
+       0
       ],
       "itemStyle": {
-       "color": "@mid"
-      }
-     },
-     {
-      "value": [
-       2,
-       3,
-       970.0
-      ],
-      "itemStyle": {
-       "color": "@seq:0.5"
-      }
-     },
-     {
-      "value": [
-       3,
-       3,
-       813.0
-      ],
-      "itemStyle": {
-       "color": "@seq:0.5"
-      }
-     },
-     {
-      "value": [
-       0,
-       4,
-       0.0
-      ],
-      "itemStyle": {
-       "color": "@mid"
+       "color": "@deep:0.000"
       }
      },
      {
       "value": [
        1,
-       4,
-       234.0
+       3,
+       134.0,
+       0
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.234"
       }
      },
      {
       "value": [
        2,
-       4,
-       417.0
+       3,
+       208.5,
+       0
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.292"
       }
      },
      {
       "value": [
        3,
-       4,
-       597.5
-      ],
-      "itemStyle": {
-       "color": "@seq:0.5"
-      }
-     },
-     {
-      "value": [
-       4,
-       4,
-       606.5
-      ],
-      "itemStyle": {
-       "color": "@seq:0.5"
-      }
-     },
-     {
-      "value": [
-       0,
-       5,
-       0.0
-      ],
-      "itemStyle": {
-       "color": "@mid"
-      }
-     },
-     {
-      "value": [
-       1,
-       5,
-       134.0
-      ],
-      "itemStyle": {
-       "color": "@seq:0.5"
-      }
-     },
-     {
-      "value": [
-       2,
-       5,
-       208.5
-      ],
-      "itemStyle": {
-       "color": "@seq:0.5"
-      }
-     },
-     {
-      "value": [
        3,
-       5,
-       265.5
+       265.5,
+       0
       ],
       "itemStyle": {
-       "color": "@seq:0.5"
+       "color": "@deep:0.330"
       }
      },
      {
       "value": [
        4,
-       5,
-       340.0
-      ],
-      "itemStyle": {
-       "color": "@seq:0.5"
-      }
-     },
-     {
-      "value": [
-       1,
-       6,
-       -1
-      ],
-      "itemStyle": {
-       "color": "@mid"
-      }
-     },
-     {
-      "value": [
        3,
-       6,
-       -1
+       340.0,
+       0
       ],
       "itemStyle": {
-       "color": "@mid"
-      }
-     },
-     {
-      "value": [
-       2,
-       7,
-       -1
-      ],
-      "itemStyle": {
-       "color": "@mid"
-      }
-     },
-     {
-      "value": [
-       3,
-       7,
-       -1
-      ],
-      "itemStyle": {
-       "color": "@mid"
+       "color": "@deep:0.373"
       }
      }
     ],
@@ -345,25 +236,51 @@
    },
    {
     "type": "custom",
-    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var w = api.size([1, 0])[0] * 0.31; var x1 = a[0] + w, x2 = b[0] - w, d = api.value(3); var s = (d >= 0 ? '+' : '−') + String(Math.abs(Math.round(d))).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','); return {type: 'group', children: [{type: 'line', shape: {x1: x1 + 3, y1: a[1] + 9, x2: x2 - 3, y2: a[1] + 9}, style: {stroke: api.visual('color'), lineWidth: 1.2}}, {type: 'text', silent: true, style: {text: s, x: (x1 + x2) / 2, y: a[1] - 2, align: 'center', verticalAlign: 'bottom', fontSize: 12, fontWeight: 600, fill: api.visual('color')}}]}; }",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); var w = api.size([1, 0])[0] * 0.31; var x1 = a[0] + w, x2 = b[0] - w, d = api.value(3), s = api.value(4); var t = (d >= 0 ? '+' : '−') + String(Math.abs(Math.round(d))).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ','); return {type: 'group', children: [{type: 'line', shape: {x1: x1 + 3, y1: a[1] + 10, x2: x2 - 3, y2: a[1] + 10}, style: {stroke: api.visual('color'), lineWidth: s > 1 ? 2 : 1}}, {type: 'text', silent: true, style: {text: t, x: (x1 + x2) / 2, y: a[1] - 2, align: 'center', verticalAlign: 'bottom', fontSize: s > 1 ? 14 : s > 0 ? 12 : 11, fontWeight: s > 0 ? 600 : 400, fill: api.visual('color')}}]}; }",
     "data": [
      {
       "value": [
        1,
-       2,
+       3,
        0,
-       92.0
+       58.0,
+       0
       ],
       "itemStyle": {
-       "color": "@ink-secondary"
+       "color": "@ink-muted"
+      }
+     },
+     {
+      "value": [
+       3,
+       4,
+       0,
+       2380.0,
+       2
+      ],
+      "itemStyle": {
+       "color": "@ink-primary"
+      }
+     },
+     {
+      "value": [
+       1,
+       2,
+       1,
+       92.0,
+       0
+      ],
+      "itemStyle": {
+       "color": "@ink-muted"
       }
      },
      {
       "value": [
        2,
        3,
-       0,
-       224.5
+       1,
+       224.5,
+       1
       ],
       "itemStyle": {
        "color": "@ink-secondary"
@@ -373,74 +290,33 @@
       "value": [
        3,
        4,
-       0,
-       803.5
-      ],
-      "itemStyle": {
-       "color": "@ink-secondary"
-      }
-     },
-     {
-      "value": [
        1,
-       3,
-       1,
-       58.0
+       803.5,
+       2
       ],
       "itemStyle": {
-       "color": "@ink-secondary"
-      }
-     },
-     {
-      "value": [
-       3,
-       4,
-       1,
-       2380.0
-      ],
-      "itemStyle": {
-       "color": "@ink-secondary"
-      }
-     },
-     {
-      "value": [
-       1,
-       2,
-       2,
-       199.0
-      ],
-      "itemStyle": {
-       "color": "@ink-secondary"
-      }
-     },
-     {
-      "value": [
-       2,
-       3,
-       2,
-       629.0
-      ],
-      "itemStyle": {
-       "color": "@ink-secondary"
+       "color": "@ink-primary"
       }
      },
      {
       "value": [
        0,
        2,
-       3,
-       970.0
+       2,
+       970.0,
+       2
       ],
       "itemStyle": {
-       "color": "@ink-secondary"
+       "color": "@ink-primary"
       }
      },
      {
       "value": [
        2,
        3,
-       3,
-       -157.0
+       2,
+       -157.0,
+       1
       ],
       "itemStyle": {
        "color": "@s7"
@@ -450,88 +326,48 @@
       "value": [
        0,
        1,
-       4,
-       234.0
+       3,
+       134.0,
+       0
       ],
       "itemStyle": {
-       "color": "@ink-secondary"
+       "color": "@ink-muted"
       }
      },
      {
       "value": [
        1,
        2,
-       4,
-       183.0
+       3,
+       74.5,
+       0
       ],
       "itemStyle": {
-       "color": "@ink-secondary"
+       "color": "@ink-muted"
       }
      },
      {
       "value": [
        2,
        3,
-       4,
-       180.5
+       3,
+       57.0,
+       0
       ],
       "itemStyle": {
-       "color": "@ink-secondary"
+       "color": "@ink-muted"
       }
      },
      {
       "value": [
        3,
        4,
-       4,
-       9.0
-      ],
-      "itemStyle": {
-       "color": "@ink-secondary"
-      }
-     },
-     {
-      "value": [
-       0,
-       1,
-       5,
-       134.0
-      ],
-      "itemStyle": {
-       "color": "@ink-secondary"
-      }
-     },
-     {
-      "value": [
-       1,
-       2,
-       5,
-       74.5
-      ],
-      "itemStyle": {
-       "color": "@ink-secondary"
-      }
-     },
-     {
-      "value": [
-       2,
        3,
-       5,
-       57.0
+       74.5,
+       0
       ],
       "itemStyle": {
-       "color": "@ink-secondary"
-      }
-     },
-     {
-      "value": [
-       3,
-       4,
-       5,
-       74.5
-      ],
-      "itemStyle": {
-       "color": "@ink-secondary"
+       "color": "@ink-muted"
       }
      }
     ],
@@ -548,6 +384,24 @@
    "median_reasoning_tokens"
   ],
   "rows": [
+   [
+    "GLM-5.3",
+    "max",
+    "dataset-glm53-tm-n500-strip",
+    2444.0
+   ],
+   [
+    "GLM-5.3",
+    "high",
+    "dataset-glm53-efforthigh-tm-n500-strip",
+    64.0
+   ],
+   [
+    "GLM-5.3",
+    "low",
+    "dataset-glm53-effortlow-tm-n500-strip",
+    6.0
+   ],
    [
     "Haiku 5.5",
     "xhigh",
@@ -573,88 +427,22 @@
     371.5
    ],
    [
-    "GLM-5.3",
-    "max",
-    "dataset-glm53-tm-n500-strip",
-    2444.0
-   ],
-   [
-    "GLM-5.3",
-    "high",
-    "dataset-glm53-efforthigh-tm-n500-strip",
-    64.0
-   ],
-   [
-    "GLM-5.3",
-    "low",
-    "dataset-glm53-effortlow-tm-n500-strip",
-    6.0
-   ],
-   [
-    "gpt-oss-120b",
-    "high",
-    "dataset-gptoss120b-high-tm-n500-strip",
-    870.0
-   ],
-   [
-    "gpt-oss-120b",
-    "medium",
-    "dataset-gptoss120b-tm-n500-strip",
-    241.0
-   ],
-   [
-    "gpt-oss-120b",
-    "low",
-    "dataset-gptoss120b-low-tm-n500-strip",
-    42.0
-   ],
-   [
-    "Qwen 3.8 Omni Flash",
+    "Qwen 3.8",
     "high",
     "dataset500-qwen38omniflash-high-tm-strip",
     813.0
    ],
    [
-    "Qwen 3.8 Omni Flash",
+    "Qwen 3.8",
     "medium",
     "dataset500-qwen38omniflash-medium-tm-strip",
     970.0
    ],
    [
-    "Qwen 3.8 Omni Flash",
+    "Qwen 3.8",
     "off",
     "dataset-qwen38omniflash-none-tm-n500-strip",
     0.0
-   ],
-   [
-    "Gemini 3.5 Flash-Lite",
-    "off",
-    "dataset500-gemini35lite-tm-strip",
-    0.0
-   ],
-   [
-    "Gemini 3.5 Flash-Lite",
-    "low",
-    "dataset-gemini35fl-low-tm-n500-strip",
-    234.0
-   ],
-   [
-    "Gemini 3.5 Flash-Lite",
-    "medium",
-    "dataset-gemini35fl-medium-tm-n500-strip",
-    417.0
-   ],
-   [
-    "Gemini 3.5 Flash-Lite",
-    "high",
-    "dataset-gemini35fl-high-tm-n500-strip",
-    597.5
-   ],
-   [
-    "Gemini 3.5 Flash-Lite",
-    "xhigh",
-    "dataset-gemini35fl-xhigh-tm-n500-strip",
-    606.5
    ],
    [
     "GPT-6 Luna",
@@ -685,6 +473,54 @@
     "off",
     "dataset-luna-none-tm-n500-strip",
     0.0
+   ],
+   [
+    "gpt-oss-120b",
+    "high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    870.0
+   ],
+   [
+    "gpt-oss-120b",
+    "medium",
+    "dataset-gptoss120b-tm-n500-strip",
+    241.0
+   ],
+   [
+    "gpt-oss-120b",
+    "low",
+    "dataset-gptoss120b-low-tm-n500-strip",
+    42.0
+   ],
+   [
+    "Gemini Flash-Lite",
+    "off",
+    "dataset500-gemini35lite-tm-strip",
+    0.0
+   ],
+   [
+    "Gemini Flash-Lite",
+    "low",
+    "dataset-gemini35fl-low-tm-n500-strip",
+    234.0
+   ],
+   [
+    "Gemini Flash-Lite",
+    "medium",
+    "dataset-gemini35fl-medium-tm-n500-strip",
+    417.0
+   ],
+   [
+    "Gemini Flash-Lite",
+    "high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    597.5
+   ],
+   [
+    "Gemini Flash-Lite",
+    "xhigh",
+    "dataset-gemini35fl-xhigh-tm-n500-strip",
+    606.5
    ],
    [
     "Sonnet 5.5",
@@ -767,8 +603,8 @@
    "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
    "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
    "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
-   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:8ce58648701ae338",
-   "results/dataset500-ministral14b-tm-strip.csv": "sha256:32ff7e0c9397cfa6",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:c3616d9920823db0",
    "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
    "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
    "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
@@ -777,10 +613,10 @@
    "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
    "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
    "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
-   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:7ba7cdd0cdd1a703",
-  "spec": "sha256:068b31c7949fa668"
+  "code": "sha256:e047fd29ccc18b56",
+  "spec": "sha256:3cfda7409d0837e4"
  }
 }

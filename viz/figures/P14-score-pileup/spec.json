@@ -199,9 +199,9 @@
      {
       "value": [
        0.9167,
-       131
+       133
       ],
-      "tip": "<b>Sonnet 5.5</b><br>131 backdoored programs scored 0.90"
+      "tip": "<b>Sonnet 5.5</b><br>133 backdoored programs scored 0.90"
      },
      {
       "value": [
@@ -262,9 +262,9 @@
      {
       "value": [
        1.0167,
-       3
+       1
       ],
-      "tip": "<b>Sonnet 5.5</b><br>3 backdoored programs scored 1.00"
+      "tip": "<b>Sonnet 5.5</b><br>1 backdoored programs scored 1.00"
      }
     ]
    },
@@ -539,7 +539,7 @@
     "Sonnet 5.5",
     "backdoored",
     0.9,
-    131
+    133
    ],
    [
     "Sonnet 5.5",
@@ -593,7 +593,7 @@
     "Sonnet 5.5",
     "backdoored",
     1.0,
-    3
+    1
    ],
    [
     "Haiku 5.5 · xhigh",
@@ -708,9 +708,9 @@
  "build": {
   "inputs": {
    "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
-   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63"
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea"
   },
-  "code": "sha256:5758af10720e0c31",
-  "spec": "sha256:75937411bf5d96d0"
+  "code": "sha256:992e56f841e4ab6b",
+  "spec": "sha256:49916d486060aae0"
  }
 }

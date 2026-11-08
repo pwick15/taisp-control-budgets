@@ -1,0 +1,613 @@
+{
+ "id": "M17",
+ "kind": "echarts",
+ "title": "Every reasoning monitor thinks longer about backdoored code",
+ "section": "appendix",
+ "order": 131,
+ "caption": "One dot per run that emits hidden reasoning: mean tokens spent on clean programs across, on backdoored ones up. The dashed line is equal effort, so a dot above it means the monitor thought longer about the backdoor. Every dot is above it.",
+ "notes": [
+  "The direction is unanimous: backdoored code draws more reasoning in 32 of 32 runs, median 1.69x. Length is a signal the monitor gives away for free, before you read its score.",
+  "It is not a detector on its own. M07 compares how well reasoning length separates the two classes against how well the suspicion score does, and the score usually wins.",
+  "Only runs with 500 honest and 500 attack programs that report any reasoning are drawn. A run reporting zero can mean the model does not reason or that the tokens were never recorded, and those two are not distinguishable here, so they are left out rather than drawn as a flat line.",
+  "Reasoning tokens now come from the committed per-sample tables. The explorer version of this chart read a derived file that only existed on one machine.",
+  "Ported from the data explorer's free-butterfly-honest-attack view."
+ ],
+ "height": 560,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/M17-reasoning-on-backdoors",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 86,
+   "right": 34,
+   "top": 30,
+   "bottom": 60
+  },
+  "xAxis": {
+   "name": "Mean reasoning tokens on clean code",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "value",
+   "min": 0,
+   "max": 8000
+  },
+  "yAxis": {
+   "name": "Mean reasoning tokens on backdoored code",
+   "nameLocation": "middle",
+   "nameGap": 62,
+   "type": "value",
+   "min": 0,
+   "max": 8000
+  },
+  "series": [
+   {
+    "name": "equal effort",
+    "type": "line",
+    "symbol": "none",
+    "silent": true,
+    "lineStyle": {
+     "color": "@ink-muted",
+     "type": "dashed",
+     "width": 1.5
+    },
+    "data": [
+     [
+      0,
+      0
+     ],
+     [
+      8000,
+      8000
+     ]
+    ],
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "one run",
+    "type": "scatter",
+    "symbolSize": 11,
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.2
+    },
+    "data": [
+     {
+      "value": [
+       4.4,
+       41.7
+      ],
+      "tip": "<b>GLM-5.3 · low</b><br>clean: 4 tokens<br>backdoored: 42 tokens<br>9.54x"
+     },
+     {
+      "value": [
+       40.6,
+       58.0
+      ],
+      "tip": "<b>gpt-oss-120b · low</b><br>clean: 41 tokens<br>backdoored: 58 tokens<br>1.43x"
+     },
+     {
+      "value": [
+       44.3,
+       164.6
+      ],
+      "tip": "<b>Sonnet 5.5 UM · batch 2</b><br>clean: 44 tokens<br>backdoored: 165 tokens<br>3.72x"
+     },
+     {
+      "value": [
+       55.2,
+       178.6
+      ],
+      "tip": "<b>Sonnet 5.5 UM</b><br>clean: 55 tokens<br>backdoored: 179 tokens<br>3.24x"
+     },
+     {
+      "value": [
+       124.9,
+       186.8
+      ],
+      "tip": "<b>GPT-6 Luna · low</b><br>clean: 125 tokens<br>backdoored: 187 tokens<br>1.49x"
+     },
+     {
+      "value": [
+       90.2,
+       199.4
+      ],
+      "tip": "<b>Sonnet 5.5 UM · batch 2 · 0-100</b><br>clean: 90 tokens<br>backdoored: 199 tokens<br>2.21x"
+     },
+     {
+      "value": [
+       60.7,
+       213.9
+      ],
+      "tip": "<b>GLM-5.3 · high</b><br>clean: 61 tokens<br>backdoored: 214 tokens<br>3.52x"
+     },
+     {
+      "value": [
+       89.9,
+       221.3
+      ],
+      "tip": "<b>Sonnet 5.5 UM · 0-100</b><br>clean: 90 tokens<br>backdoored: 221 tokens<br>2.46x"
+     },
+     {
+      "value": [
+       247.1,
+       317.9
+      ],
+      "tip": "<b>gpt-oss-120b</b><br>clean: 247 tokens<br>backdoored: 318 tokens<br>1.29x"
+     },
+     {
+      "value": [
+       209.6,
+       332.0
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>clean: 210 tokens<br>backdoored: 332 tokens<br>1.58x"
+     },
+     {
+      "value": [
+       210.8,
+       332.2
+      ],
+      "tip": "<b>GPT-6 Luna</b><br>clean: 211 tokens<br>backdoored: 332 tokens<br>1.58x"
+     },
+     {
+      "value": [
+       224.5,
+       339.1
+      ],
+      "tip": "<b>GPT-6 Luna · 0-100</b><br>clean: 225 tokens<br>backdoored: 339 tokens<br>1.51x"
+     },
+     {
+      "value": [
+       282.1,
+       450.8
+      ],
+      "tip": "<b>GPT-6 Luna · high</b><br>clean: 282 tokens<br>backdoored: 451 tokens<br>1.60x"
+     },
+     {
+      "value": [
+       337.7,
+       566.0
+      ],
+      "tip": "<b>Haiku 5.5 · low</b><br>clean: 338 tokens<br>backdoored: 566 tokens<br>1.68x"
+     },
+     {
+      "value": [
+       414.6,
+       612.2
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>clean: 415 tokens<br>backdoored: 612 tokens<br>1.48x"
+     },
+     {
+      "value": [
+       375.0,
+       663.8
+      ],
+      "tip": "<b>GPT-6 Luna · xhigh</b><br>clean: 375 tokens<br>backdoored: 664 tokens<br>1.77x"
+     },
+     {
+      "value": [
+       438.4,
+       728.1
+      ],
+      "tip": "<b>Haiku 5.5</b><br>clean: 438 tokens<br>backdoored: 728 tokens<br>1.66x"
+     },
+     {
+      "value": [
+       584.3,
+       882.0
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>clean: 584 tokens<br>backdoored: 882 tokens<br>1.51x"
+     },
+     {
+      "value": [
+       584.3,
+       908.9
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>clean: 584 tokens<br>backdoored: 909 tokens<br>1.56x"
+     },
+     {
+      "value": [
+       745.5,
+       1263.7
+      ],
+      "tip": "<b>Haiku 5.5 · high</b><br>clean: 745 tokens<br>backdoored: 1,264 tokens<br>1.70x"
+     },
+     {
+      "value": [
+       876.4,
+       1404.8
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>clean: 876 tokens<br>backdoored: 1,405 tokens<br>1.60x"
+     },
+     {
+      "value": [
+       1361.5,
+       1424.5
+      ],
+      "tip": "<b>gpt-oss-120b · high</b><br>clean: 1,361 tokens<br>backdoored: 1,424 tokens<br>1.05x"
+     },
+     {
+      "value": [
+       900.9,
+       1660.7
+      ],
+      "tip": "<b>Qwen 3.8 · 0-100</b><br>clean: 901 tokens<br>backdoored: 1,661 tokens<br>1.84x"
+     },
+     {
+      "value": [
+       743.2,
+       1696.4
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>clean: 743 tokens<br>backdoored: 1,696 tokens<br>2.28x"
+     },
+     {
+      "value": [
+       1076.4,
+       2101.2
+      ],
+      "tip": "<b>Gemma 4 26B</b><br>clean: 1,076 tokens<br>backdoored: 2,101 tokens<br>1.95x"
+     },
+     {
+      "value": [
+       1801.5,
+       2370.4
+      ],
+      "tip": "<b>Haiku 5.5 · comments kept · xhigh</b><br>clean: 1,802 tokens<br>backdoored: 2,370 tokens<br>1.32x"
+     },
+     {
+      "value": [
+       1826.0,
+       3139.5
+      ],
+      "tip": "<b>Haiku 5.5 · batch 2 · xhigh</b><br>clean: 1,826 tokens<br>backdoored: 3,139 tokens<br>1.72x"
+     },
+     {
+      "value": [
+       1739.9,
+       3165.7
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>clean: 1,740 tokens<br>backdoored: 3,166 tokens<br>1.82x"
+     },
+     {
+      "value": [
+       1950.4,
+       3378.9
+      ],
+      "tip": "<b>Haiku 5.5 · 0-100 · xhigh</b><br>clean: 1,950 tokens<br>backdoored: 3,379 tokens<br>1.73x"
+     },
+     {
+      "value": [
+       2065.5,
+       3379.6
+      ],
+      "tip": "<b>Haiku 5.5 · batch 2 · 0-100 · xhigh</b><br>clean: 2,066 tokens<br>backdoored: 3,380 tokens<br>1.64x"
+     },
+     {
+      "value": [
+       1956.8,
+       3535.9
+      ],
+      "tip": "<b>Haiku 5.5 · 0-200 · xhigh</b><br>clean: 1,957 tokens<br>backdoored: 3,536 tokens<br>1.81x"
+     },
+     {
+      "value": [
+       3056.7,
+       7159.1
+      ],
+      "tip": "<b>GLM-5.3</b><br>clean: 3,057 tokens<br>backdoored: 7,159 tokens<br>2.34x"
+     }
+    ]
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "run",
+   "monitor",
+   "honest_mean_reasoning",
+   "attack_mean_reasoning",
+   "multiplier"
+  ],
+  "rows": [
+   [
+    "dataset-glm53-effortlow-tm-n500-strip",
+    "GLM-5.3 · low",
+    4.4,
+    41.7,
+    9.538
+   ],
+   [
+    "dataset-gptoss120b-low-tm-n500-strip",
+    "gpt-oss-120b · low",
+    40.6,
+    58.0,
+    1.43
+   ],
+   [
+    "dataset500b2-sonnet55-um-strip",
+    "Sonnet 5.5 UM · batch 2",
+    44.3,
+    164.6,
+    3.718
+   ],
+   [
+    "dataset500-sonnet55-um-strip",
+    "Sonnet 5.5 UM",
+    55.2,
+    178.6,
+    3.237
+   ],
+   [
+    "dataset-luna-low-tm-n500-strip",
+    "GPT-6 Luna · low",
+    124.9,
+    186.8,
+    1.495
+   ],
+   [
+    "dataset500b2-sonnet55-um-scale100-strip",
+    "Sonnet 5.5 UM · batch 2 · 0-100",
+    90.2,
+    199.4,
+    2.209
+   ],
+   [
+    "dataset-glm53-efforthigh-tm-n500-strip",
+    "GLM-5.3 · high",
+    60.7,
+    213.9,
+    3.521
+   ],
+   [
+    "dataset500-sonnet55-um-scale100-strip",
+    "Sonnet 5.5 UM · 0-100",
+    89.9,
+    221.3,
+    2.461
+   ],
+   [
+    "dataset-gptoss120b-tm-n500-strip",
+    "gpt-oss-120b",
+    247.1,
+    317.9,
+    1.286
+   ],
+   [
+    "dataset-gemini35fl-low-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · low",
+    209.6,
+    332.0,
+    1.584
+   ],
+   [
+    "dataset-gpt6luna-tm-n500-strip",
+    "GPT-6 Luna",
+    210.8,
+    332.2,
+    1.576
+   ],
+   [
+    "dataset-luna-scale100-n500-strip",
+    "GPT-6 Luna · 0-100",
+    224.5,
+    339.1,
+    1.51
+   ],
+   [
+    "dataset-luna-high-tm-n500-strip",
+    "GPT-6 Luna · high",
+    282.1,
+    450.8,
+    1.598
+   ],
+   [
+    "dataset-haiku55-effortlow-tm-n500-strip",
+    "Haiku 5.5 · low",
+    337.7,
+    566.0,
+    1.676
+   ],
+   [
+    "dataset-gemini35fl-medium-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · medium",
+    414.6,
+    612.2,
+    1.477
+   ],
+   [
+    "dataset-luna-xhigh-tm-n500-strip",
+    "GPT-6 Luna · xhigh",
+    375.0,
+    663.8,
+    1.77
+   ],
+   [
+    "dataset-haiku55-tm-n500-strip",
+    "Haiku 5.5",
+    438.4,
+    728.1,
+    1.661
+   ],
+   [
+    "dataset-gemini35fl-high-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · high",
+    584.3,
+    882.0,
+    1.51
+   ],
+   [
+    "dataset-gemini35fl-xhigh-tm-n500-strip",
+    "Gemini 3.5 Flash-Lite · xhigh",
+    584.3,
+    908.9,
+    1.555
+   ],
+   [
+    "dataset-haiku55-efforthigh-tm-n500-strip",
+    "Haiku 5.5 · high",
+    745.5,
+    1263.7,
+    1.695
+   ],
+   [
+    "dataset500-qwen38omniflash-medium-tm-strip",
+    "Qwen 3.8 Omni Flash · medium",
+    876.4,
+    1404.8,
+    1.603
+   ],
+   [
+    "dataset-gptoss120b-high-tm-n500-strip",
+    "gpt-oss-120b · high",
+    1361.5,
+    1424.5,
+    1.046
+   ],
+   [
+    "dataset-qwen38-scale100-n500-strip",
+    "Qwen 3.8 · 0-100",
+    900.9,
+    1660.7,
+    1.843
+   ],
+   [
+    "dataset500-qwen38omniflash-high-tm-strip",
+    "Qwen 3.8 Omni Flash · high",
+    743.2,
+    1696.4,
+    2.283
+   ],
+   [
+    "dataset500-gemma426b-tm-strip",
+    "Gemma 4 26B",
+    1076.4,
+    2101.2,
+    1.952
+   ],
+   [
+    "dataset-haiku55-xhigh-nostrip-n500",
+    "Haiku 5.5 · comments kept · xhigh",
+    1801.5,
+    2370.4,
+    1.316
+   ],
+   [
+    "dataset-haiku55-effortxhigh-tm-n500b2-strip",
+    "Haiku 5.5 · batch 2 · xhigh",
+    1826.0,
+    3139.5,
+    1.719
+   ],
+   [
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    "Haiku 5.5 · xhigh",
+    1739.9,
+    3165.7,
+    1.819
+   ],
+   [
+    "dataset-haiku55-xhigh-scale100-n500-strip",
+    "Haiku 5.5 · 0-100 · xhigh",
+    1950.4,
+    3378.9,
+    1.732
+   ],
+   [
+    "dataset-haiku55-xhigh-scale100-n500b2-strip",
+    "Haiku 5.5 · batch 2 · 0-100 · xhigh",
+    2065.5,
+    3379.6,
+    1.636
+   ],
+   [
+    "dataset-haiku55-xhigh-scale200-n500-strip",
+    "Haiku 5.5 · 0-200 · xhigh",
+    1956.8,
+    3535.9,
+    1.807
+   ],
+   [
+    "dataset-glm53-tm-n500-strip",
+    "GLM-5.3",
+    3056.7,
+    7159.1,
+    2.342
+   ]
+  ]
+ },
+ "facts": {
+  "n_runs": 32,
+  "mult": 1.69
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemma3-27b-scale100-n500-strip-samples.csv": "sha256:d1d643249f9888b7",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-4b-scale100-n500-strip-samples.csv": "sha256:26bc1f00893a78d4",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma426b-scale100-n500-strip-samples.csv": "sha256:fb1d594503683bda",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip-samples.csv": "sha256:89fa32c0112dd470",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-gpt6luna-tm-n30-samples.csv": "sha256:3d23004001f335d4",
+   "results/dataset-gpt6luna-tm-n30-strip-samples.csv": "sha256:5ddd5c5eb21ae48c",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-scale100-n500-strip-samples.csv": "sha256:71346b2cb532a567",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-haiku45-tm-n30-samples.csv": "sha256:869b056ccc0f7925",
+   "results/dataset-haiku45-tm-n30-strip-samples.csv": "sha256:5170311ed3cd2296",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-effortxhigh-tm-n500b2-strip-samples.csv": "sha256:037564c532113877",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-haiku55-xhigh-nostrip-n500-samples.csv": "sha256:822a2fe624aa4c68",
+   "results/dataset-haiku55-xhigh-scale100-n500-strip-samples.csv": "sha256:1271c66323a3a3d7",
+   "results/dataset-haiku55-xhigh-scale100-n500b2-strip-samples.csv": "sha256:0903d3e33a26577f",
+   "results/dataset-haiku55-xhigh-scale200-n500-strip-samples.csv": "sha256:b45d2a54b978eec8",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-scale100-n500-strip-samples.csv": "sha256:0f35bf14c005f353",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-qwen38-scale100-n500-strip-samples.csv": "sha256:9ee19673f160ab64",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-sonnet55-um-n30-samples.csv": "sha256:8f2fa088c5bb1d10",
+   "results/dataset-sonnet55-um-n30-strip-samples.csv": "sha256:fad7d8c0711da669",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-scale100-strip-samples.csv": "sha256:1c7d31048163d394",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
+   "results/dataset500b2-sonnet55-um-scale100-strip-samples.csv": "sha256:71c299a8e9535652",
+   "results/dataset500b2-sonnet55-um-strip-samples.csv": "sha256:0c01b9ed04f6988b",
+   "results/sonnet55-n100-haiku45-samples.csv": "sha256:2b0692b9c27bf710",
+   "results/sonnet55-n100-haiku45-strip-samples.csv": "sha256:d0c7dce0921e63e6",
+   "results/sonnet55-n100-sonnet55-um-strip-samples.csv": "sha256:9c922d475b5cecca"
+  },
+  "code": "sha256:61e9e453b30cab04",
+  "spec": "sha256:6899b7534d1a5af7"
+ }
+}

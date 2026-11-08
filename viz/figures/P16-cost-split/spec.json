@@ -1,0 +1,898 @@
+{
+ "id": "P16",
+ "kind": "echarts",
+ "title": "GLM-5.3 has cheaper tokens than Sonnet but uses 3x as many",
+ "section": "recommendations",
+ "order": 10,
+ "caption": "Each dot is one monitor setting: what it paid per million tokens, input and output together (across), and how many tokens it used per program (up). Cost per program is the product, so dots on one diagonal cost the same. Prices are the list prices behind P01.",
+ "notes": [
+  "GLM-5.3 at max costs 1.6x Sonnet per program although its tokens cost about half as much: the difference is volume, mostly hidden reasoning (M20). Sonnet being cheaper per program needs no subsidy to explain it.",
+  "Haiku 4.5 uses about as many tokens as Haiku 5.5 but its list price per token is ten times higher, so it costs 7.2x Haiku 5.5's default per program and catches fewer backdoors.",
+  "List prices change; tokens per program don't. Reporting both lets anyone reprice these results later."
+ ],
+ "height": 520,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P16-cost-split",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 64,
+   "right": 40,
+   "top": 24,
+   "bottom": 54
+  },
+  "xAxis": {
+   "name": "Price per million tokens (USD, log scale)",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "log",
+   "min": 0.01,
+   "max": 10,
+   "axisLabel": {
+    "formatter": "function (v) { return '$' + v; }"
+   }
+  },
+  "yAxis": {
+   "name": "Tokens per program (log scale)",
+   "nameLocation": "middle",
+   "nameGap": 48,
+   "type": "log",
+   "min": 1000,
+   "max": 10000
+  },
+  "series": [
+   {
+    "name": "_iso $0.0001",
+    "type": "line",
+    "data": [
+     [
+      0.01,
+      10000.0
+     ],
+     [
+      10,
+      10.0
+     ]
+    ],
+    "symbol": "none",
+    "silent": true,
+    "z": 1,
+    "lineStyle": {
+     "type": "dashed",
+     "color": "@ink-axis",
+     "width": 1
+    },
+    "tooltip": {
+     "show": false
+    },
+    "endLabel": {
+     "show": false
+    },
+    "markPoint": {
+     "silent": true,
+     "symbol": "circle",
+     "symbolSize": 0,
+     "data": [
+      {
+       "coord": [
+        0.0128205,
+        7800.0
+       ],
+       "value": "$0.0001 per program"
+      }
+     ],
+     "label": {
+      "show": true,
+      "formatter": "{c}",
+      "color": "@ink-muted",
+      "fontSize": 11,
+      "position": "right",
+      "distance": 6
+     }
+    }
+   },
+   {
+    "name": "_iso $0.001",
+    "type": "line",
+    "data": [
+     [
+      0.01,
+      100000.0
+     ],
+     [
+      10,
+      100.0
+     ]
+    ],
+    "symbol": "none",
+    "silent": true,
+    "z": 1,
+    "lineStyle": {
+     "type": "dashed",
+     "color": "@ink-axis",
+     "width": 1
+    },
+    "tooltip": {
+     "show": false
+    },
+    "endLabel": {
+     "show": false
+    },
+    "markPoint": {
+     "silent": true,
+     "symbol": "circle",
+     "symbolSize": 0,
+     "data": [
+      {
+       "coord": [
+        0.128205,
+        7800.0
+       ],
+       "value": "$0.001 per program"
+      }
+     ],
+     "label": {
+      "show": true,
+      "formatter": "{c}",
+      "color": "@ink-muted",
+      "fontSize": 11,
+      "position": "right",
+      "distance": 6
+     }
+    }
+   },
+   {
+    "name": "_iso $0.01",
+    "type": "line",
+    "data": [
+     [
+      0.01,
+      1000000.0
+     ],
+     [
+      10,
+      1000.0
+     ]
+    ],
+    "symbol": "none",
+    "silent": true,
+    "z": 1,
+    "lineStyle": {
+     "type": "dashed",
+     "color": "@ink-axis",
+     "width": 1
+    },
+    "tooltip": {
+     "show": false
+    },
+    "endLabel": {
+     "show": false
+    },
+    "markPoint": {
+     "silent": true,
+     "symbol": "circle",
+     "symbolSize": 0,
+     "data": [
+      {
+       "coord": [
+        1.28205,
+        7800.0
+       ],
+       "value": "$0.01 per program"
+      }
+     ],
+     "label": {
+      "show": true,
+      "formatter": "{c}",
+      "color": "@ink-muted",
+      "fontSize": 11,
+      "position": "right",
+      "distance": 6
+     }
+    }
+   },
+   {
+    "name": "Other settings",
+    "type": "scatter",
+    "data": [
+     {
+      "value": [
+       3.6614,
+       2083
+      ],
+      "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>$3.66 per million tokens<br>2,083 tokens per program<br>$0.0076 per program, catches 84.7% at 2%"
+     },
+     {
+      "value": [
+       0.3028,
+       3321
+      ],
+      "tip": "<b>Haiku 5.5 · high</b><br>$0.30 per million tokens<br>3,321 tokens per program<br>$0.0010 per program, catches 81.5% at 2%"
+     },
+     {
+      "value": [
+       0.2545,
+       2668
+      ],
+      "tip": "<b>Haiku 5.5 · low</b><br>$0.25 per million tokens<br>2,668 tokens per program<br>$0.00068 per program, catches 70.0% at 2%"
+     },
+     {
+      "value": [
+       1.0302,
+       1657
+      ],
+      "tip": "<b>GLM-5.3 · high</b><br>$1.03 per million tokens<br>1,657 tokens per program<br>$0.0017 per program, catches 51.9% at 2%"
+     },
+     {
+      "value": [
+       0.6925,
+       1348
+      ],
+      "tip": "<b>GLM-5.3 · low</b><br>$0.69 per million tokens<br>1,348 tokens per program<br>$0.00093 per program, catches 48.4% at 2%"
+     },
+     {
+      "value": [
+       0.3249,
+       2827
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · high</b><br>$0.32 per million tokens<br>2,827 tokens per program<br>$0.00092 per program, catches 66.8% at 2%"
+     },
+     {
+      "value": [
+       0.3306,
+       2845
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · medium</b><br>$0.33 per million tokens<br>2,845 tokens per program<br>$0.00094 per program, catches 62.6% at 2%"
+     },
+     {
+      "value": [
+       0.2698,
+       1985
+      ],
+      "tip": "<b>Qwen 3.8 Omni Flash · off</b><br>$0.27 per million tokens<br>1,985 tokens per program<br>$0.00054 per program, catches 51.3% at 2%"
+     },
+     {
+      "value": [
+       0.2465,
+       1841
+      ],
+      "tip": "<b>GPT-6 Luna · xhigh</b><br>$0.25 per million tokens<br>1,841 tokens per program<br>$0.00045 per program, catches 61.0% at 2%"
+     },
+     {
+      "value": [
+       0.2226,
+       1682
+      ],
+      "tip": "<b>GPT-6 Luna · high</b><br>$0.22 per million tokens<br>1,682 tokens per program<br>$0.00037 per program, catches 57.7% at 2%"
+     },
+     {
+      "value": [
+       0.2056,
+       1585
+      ],
+      "tip": "<b>GPT-6 Luna · medium (default)</b><br>$0.21 per million tokens<br>1,585 tokens per program<br>$0.00033 per program, catches 55.0% at 2%"
+     },
+     {
+      "value": [
+       0.182,
+       1468
+      ],
+      "tip": "<b>GPT-6 Luna · low</b><br>$0.18 per million tokens<br>1,468 tokens per program<br>$0.00027 per program, catches 49.9% at 2%"
+     },
+     {
+      "value": [
+       0.1435,
+       1310
+      ],
+      "tip": "<b>GPT-6 Luna · off</b><br>$0.14 per million tokens<br>1,310 tokens per program<br>$0.00019 per program, catches 39.4% at 2%"
+     },
+     {
+      "value": [
+       0.116,
+       2993
+      ],
+      "tip": "<b>gpt-oss-120b · high</b><br>$0.12 per million tokens<br>2,993 tokens per program<br>$0.00035 per program, catches 33.0% at 2%"
+     },
+     {
+      "value": [
+       0.0844,
+       1887
+      ],
+      "tip": "<b>gpt-oss-120b · medium (default)</b><br>$0.08 per million tokens<br>1,887 tokens per program<br>$0.00016 per program, catches 19.6% at 2%"
+     },
+     {
+      "value": [
+       0.072,
+       1650
+      ],
+      "tip": "<b>gpt-oss-120b · low</b><br>$0.07 per million tokens<br>1,650 tokens per program<br>$0.00012 per program, catches 14.5% at 2%"
+     },
+     {
+      "value": [
+       0.2335,
+       3154
+      ],
+      "tip": "<b>Gemma 4 26B-A4B</b><br>$0.23 per million tokens<br>3,154 tokens per program<br>$0.00074 per program, catches 31.4% at 2%"
+     },
+     {
+      "value": [
+       0.7231,
+       1540
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · off</b><br>$0.72 per million tokens<br>1,540 tokens per program<br>$0.0011 per program, catches 29.1% at 2%"
+     },
+     {
+      "value": [
+       0.8902,
+       1700
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · low</b><br>$0.89 per million tokens<br>1,700 tokens per program<br>$0.0015 per program, catches 21.5% at 2%"
+     },
+     {
+      "value": [
+       1.0896,
+       1940
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · medium</b><br>$1.09 per million tokens<br>1,940 tokens per program<br>$0.0021 per program, catches 21.5% at 2%"
+     },
+     {
+      "value": [
+       1.2367,
+       2166
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>$1.24 per million tokens<br>2,166 tokens per program<br>$0.0027 per program, catches 20.5% at 2%"
+     },
+     {
+      "value": [
+       1.2448,
+       2180
+      ],
+      "tip": "<b>Gemini 3.5 Flash-Lite · xhigh</b><br>$1.24 per million tokens<br>2,180 tokens per program<br>$0.0027 per program, catches 20.1% at 2%"
+     },
+     {
+      "value": [
+       0.0579,
+       1485
+      ],
+      "tip": "<b>Gemma 3 4B</b><br>$0.06 per million tokens<br>1,485 tokens per program<br>$0.00009 per program, catches 0.5% at 2%"
+     },
+     {
+      "value": [
+       0.0942,
+       1522
+      ],
+      "tip": "<b>Gemma 3 27B</b><br>$0.09 per million tokens<br>1,522 tokens per program<br>$0.00014 per program, catches 15.7% at 2%"
+     },
+     {
+      "value": [
+       1.6599,
+       3737
+      ],
+      "tip": "<b>Mistral Large 4 · default</b><br>$1.66 per million tokens<br>3,737 tokens per program<br>$0.0062 per program, catches 49.1% at 2%"
+     },
+     {
+      "value": [
+       1.6626,
+       3759
+      ],
+      "tip": "<b>Mistral Large 4 · high</b><br>$1.66 per million tokens<br>3,759 tokens per program<br>$0.0062 per program, catches 47.3% at 2%"
+     },
+     {
+      "value": [
+       0.2,
+       2152
+      ],
+      "tip": "<b>Ministral 14B</b><br>$0.20 per million tokens<br>2,152 tokens per program<br>$0.00043 per program, catches 6.0% at 2%"
+     }
+    ],
+    "symbolSize": 7,
+    "z": 3,
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1
+    }
+   },
+   {
+    "name": "Discussed",
+    "type": "scatter",
+    "data": [
+     {
+      "value": [
+       4.1545,
+       2242
+      ],
+      "tip": "<b>Sonnet 5.5 · high (default)</b><br>$4.15 per million tokens<br>2,242 tokens per program<br>$0.0093 per program, catches 87.6% at 2%",
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@s0",
+       "borderWidth": 1.5
+      },
+      "label": {
+       "show": true,
+       "formatter": "Sonnet 5.5 · high",
+       "position": "right",
+       "distance": 8,
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600
+      }
+     },
+     {
+      "value": [
+       0.3651,
+       4856
+      ],
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>$0.37 per million tokens<br>4,856 tokens per program<br>$0.0018 per program, catches 85.1% at 2%",
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@s1",
+       "borderWidth": 1.5
+      },
+      "label": {
+       "show": true,
+       "formatter": "Haiku 5.5 · xhigh",
+       "position": "top",
+       "distance": 8,
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600
+      }
+     },
+     {
+      "value": [
+       0.2693,
+       2839
+      ],
+      "tip": "<b>Haiku 5.5 · medium (default)</b><br>$0.27 per million tokens<br>2,839 tokens per program<br>$0.00076 per program, catches 77.2% at 2%",
+      "itemStyle": {
+       "color": "@s1",
+       "borderColor": "@s1",
+       "borderWidth": 1.5
+      },
+      "label": {
+       "show": true,
+       "formatter": "Haiku 5.5 · default",
+       "position": "bottom",
+       "distance": 8,
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600
+      }
+     },
+     {
+      "value": [
+       2.5555,
+       2162
+      ],
+      "tip": "<b>Haiku 4.5 · no thinking</b><br>$2.56 per million tokens<br>2,162 tokens per program<br>$0.0055 per program, catches 49.2% at 2%",
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s1",
+       "borderWidth": 2
+      },
+      "label": {
+       "show": true,
+       "formatter": "Haiku 4.5",
+       "position": "left",
+       "distance": 8,
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600
+      }
+     },
+     {
+      "value": [
+       2.1503,
+       6797
+      ],
+      "tip": "<b>GLM-5.3 · max (default)</b><br>$2.15 per million tokens<br>6,797 tokens per program<br>$0.0146 per program, catches 76.2% at 2%",
+      "itemStyle": {
+       "color": "@s2",
+       "borderColor": "@s2",
+       "borderWidth": 1.5
+      },
+      "label": {
+       "show": true,
+       "formatter": "GLM-5.3 · max",
+       "position": "right",
+       "distance": 8,
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600
+      }
+     }
+    ],
+    "symbolSize": 11,
+    "z": 4,
+    "itemStyle": {
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "name",
+   "model",
+   "effort",
+   "usd_per_million_tokens",
+   "tokens_per_program",
+   "usd_per_program",
+   "caught_at_2pct"
+  ],
+  "rows": [
+   [
+    "Sonnet 5.5 · high (default)",
+    "sonnet55",
+    "high",
+    4.15453,
+    2242.0,
+    0.00931446,
+    0.875805
+   ],
+   [
+    "Sonnet 5.5 · low (thinking off)",
+    "sonnet55",
+    "low",
+    3.66143,
+    2083.0,
+    0.00762675,
+    0.846743
+   ],
+   [
+    "Haiku 5.5 · xhigh",
+    "haiku55",
+    "xhigh",
+    0.365062,
+    4856.0,
+    0.00177274,
+    0.851032
+   ],
+   [
+    "Haiku 5.5 · high",
+    "haiku55",
+    "high",
+    0.302773,
+    3321.0,
+    0.00100551,
+    0.814941
+   ],
+   [
+    "Haiku 5.5 · medium (default)",
+    "haiku55",
+    "medium",
+    0.269296,
+    2839.0,
+    0.00076453,
+    0.772
+   ],
+   [
+    "Haiku 5.5 · low",
+    "haiku55",
+    "low",
+    0.254468,
+    2668.0,
+    0.00067892,
+    0.7005
+   ],
+   [
+    "Haiku 4.5 · no thinking",
+    "haiku45",
+    "off",
+    2.55553,
+    2162.0,
+    0.00552506,
+    0.492
+   ],
+   [
+    "GLM-5.3 · max (default)",
+    "glm53",
+    "max",
+    2.15034,
+    6797.0,
+    0.0146159,
+    0.762
+   ],
+   [
+    "GLM-5.3 · high",
+    "glm53",
+    "high",
+    1.03024,
+    1657.0,
+    0.00170711,
+    0.518909
+   ],
+   [
+    "GLM-5.3 · low",
+    "glm53",
+    "low",
+    0.692507,
+    1348.0,
+    0.0009335,
+    0.484211
+   ],
+   [
+    "Qwen 3.8 Omni Flash · high",
+    "qwen38",
+    "high",
+    0.32491,
+    2827.0,
+    0.00091852,
+    0.6684
+   ],
+   [
+    "Qwen 3.8 Omni Flash · medium",
+    "qwen38",
+    "medium",
+    0.330587,
+    2845.0,
+    0.00094052,
+    0.626
+   ],
+   [
+    "Qwen 3.8 Omni Flash · off",
+    "qwen38",
+    "off",
+    0.269839,
+    1985.0,
+    0.00053563,
+    0.512994
+   ],
+   [
+    "GPT-6 Luna · xhigh",
+    "luna",
+    "xhigh",
+    0.246513,
+    1841.0,
+    0.00045383,
+    0.609593
+   ],
+   [
+    "GPT-6 Luna · high",
+    "luna",
+    "high",
+    0.222568,
+    1682.0,
+    0.00037436,
+    0.577449
+   ],
+   [
+    "GPT-6 Luna · medium (default)",
+    "luna",
+    "medium",
+    0.205552,
+    1585.0,
+    0.0003258,
+    0.549676
+   ],
+   [
+    "GPT-6 Luna · low",
+    "luna",
+    "low",
+    0.182044,
+    1468.0,
+    0.00026724,
+    0.499067
+   ],
+   [
+    "GPT-6 Luna · off",
+    "luna",
+    "off",
+    0.143511,
+    1310.0,
+    0.000188,
+    0.394182
+   ],
+   [
+    "gpt-oss-120b · high",
+    "gptoss",
+    "high",
+    0.116017,
+    2993.0,
+    0.00034724,
+    0.3295
+   ],
+   [
+    "gpt-oss-120b · medium (default)",
+    "gptoss",
+    "medium",
+    0.0843773,
+    1887.0,
+    0.00015922,
+    0.196
+   ],
+   [
+    "gpt-oss-120b · low",
+    "gptoss",
+    "low",
+    0.0720364,
+    1650.0,
+    0.00011886,
+    0.145316
+   ],
+   [
+    "Gemma 4 26B-A4B",
+    "gemma4",
+    "default",
+    0.233513,
+    3154.0,
+    0.0007365,
+    0.314395
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · off",
+    "gemini35lite",
+    "off",
+    0.72313,
+    1540.0,
+    0.00111362,
+    0.290685
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · low",
+    "gemini35lite",
+    "low",
+    0.890247,
+    1700.0,
+    0.00151342,
+    0.214819
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · medium",
+    "gemini35lite",
+    "medium",
+    1.08958,
+    1940.0,
+    0.00211379,
+    0.214819
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · high",
+    "gemini35lite",
+    "high",
+    1.23674,
+    2166.0,
+    0.00267878,
+    0.204609
+   ],
+   [
+    "Gemini 3.5 Flash-Lite · xhigh",
+    "gemini35lite",
+    "xhigh",
+    1.24478,
+    2180.0,
+    0.00271361,
+    0.200681
+   ],
+   [
+    "Gemma 3 4B",
+    "gemma3",
+    "default",
+    0.0578653,
+    1485.0,
+    8.593e-05,
+    0.005
+   ],
+   [
+    "Gemma 3 27B",
+    "gemma3_27b",
+    "default",
+    0.0942378,
+    1522.0,
+    0.00014343,
+    0.1568
+   ],
+   [
+    "Mistral Large 4 · default",
+    "mistrallarge4",
+    "default",
+    1.65994,
+    3737.0,
+    0.00620319,
+    0.491268
+   ],
+   [
+    "Mistral Large 4 · high",
+    "mistrallarge4",
+    "high",
+    1.66258,
+    3759.0,
+    0.00624963,
+    0.473374
+   ],
+   [
+    "Ministral 14B",
+    "ministral14b",
+    "default",
+    0.200046,
+    2152.0,
+    0.0004305,
+    0.06
+   ]
+  ]
+ },
+ "facts": {
+  "ratio": 3.03167,
+  "glm_x": 1.56916,
+  "h45_x": 7.22674
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-high-tm-n500-strip.csv": "sha256:a60a51b2415ba673",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-low-tm-n500-strip.csv": "sha256:df0483e4077defa8",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-medium-tm-n500-strip.csv": "sha256:0e66fe6412044d6a",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip.csv": "sha256:1464354acd0c1eac",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-27b-tm-n500-strip.csv": "sha256:0fd529c0321e2b40",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-gemma3-4b-tm-n500-strip.csv": "sha256:f61740693798daf0",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-efforthigh-tm-n500-strip.csv": "sha256:91ad04f265a32df6",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortlow-tm-n500-strip.csv": "sha256:887b7a9f8b6458c6",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-glm53-tm-n500-strip.csv": "sha256:21940d7538a860fd",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gpt6luna-tm-n500-strip.csv": "sha256:1bd4150a8317991e",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-high-tm-n500-strip.csv": "sha256:7d6358205499e8b5",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-low-tm-n500-strip.csv": "sha256:ab21d9005876f67f",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-gptoss120b-tm-n500-strip.csv": "sha256:27efb0e60c3a48b1",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku45-tm-n500-strip.csv": "sha256:db19f2e66f02248c",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip.csv": "sha256:812be9bae5ee289f",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortlow-tm-n500-strip.csv": "sha256:217621bd62368260",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip.csv": "sha256:1127f06477e2ab86",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-haiku55-tm-n500-strip.csv": "sha256:90128b48d21d6a52",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-high-tm-n500-strip.csv": "sha256:3edcfe1c36eebf3a",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-low-tm-n500-strip.csv": "sha256:768010c0dd6b9807",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-none-tm-n500-strip.csv": "sha256:c7db9cea6a75df52",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-luna-xhigh-tm-n500-strip.csv": "sha256:46e806313783bfdc",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-mistrallarge4-tm-n500-strip.csv": "sha256:b0a3877f4030fbf0",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip.csv": "sha256:af2ef7e80df20ec1",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:c3616d9920823db0",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-high-tm-strip.csv": "sha256:a976a26754d7d62f",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
+   "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
+  },
+  "code": "sha256:482b8361b9db04b4",
+  "spec": "sha256:53799d92b18b47d0"
+ }
+}

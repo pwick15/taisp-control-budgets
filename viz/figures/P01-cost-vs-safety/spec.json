@@ -106,7 +106,7 @@
       "label": {
        "show": true,
        "position": "right",
-       "formatter": "Sonnet 5.5",
+       "formatter": "Sonnet 5.5 · high",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -197,7 +197,7 @@
       "label": {
        "show": true,
        "position": "top",
-       "formatter": "Haiku 5.5",
+       "formatter": "Haiku 5.5 · xhigh",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -356,7 +356,7 @@
       "label": {
        "show": true,
        "position": "right",
-       "formatter": "GLM-5.3",
+       "formatter": "GLM-5.3 · max",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -844,9 +844,9 @@
      {
       "value": [
        0.0004305,
-       6.38
+       6.0
       ],
-      "tip": "<b>Ministral 14B</b><br>caught 6.4% (1.9 to 9.7)<br>$0.00043 per program",
+      "tip": "<b>Ministral 14B</b><br>caught 6.0% (2.2 to 9.7)<br>$0.00043 per program",
       "label": {
        "show": true,
        "position": "right",
@@ -985,7 +985,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "Sonnet 5.5",
+         "formatter": "Sonnet 5.5 · high",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -1076,7 +1076,7 @@
         "label": {
          "show": true,
          "position": "top",
-         "formatter": "Haiku 5.5",
+         "formatter": "Haiku 5.5 · xhigh",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -1235,7 +1235,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "GLM-5.3",
+         "formatter": "GLM-5.3 · max",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -1723,9 +1723,9 @@
        {
         "value": [
          0.0004305,
-         0.25
+         0.33
         ],
-        "tip": "<b>Ministral 14B</b><br>caught 0.2% (0.0 to 3.5)<br>$0.00043 per program",
+        "tip": "<b>Ministral 14B</b><br>caught 0.3% (0.0 to 3.1)<br>$0.00043 per program",
         "label": {
          "show": true,
          "position": "right",
@@ -1838,7 +1838,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "Sonnet 5.5",
+         "formatter": "Sonnet 5.5 · high",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -1929,7 +1929,7 @@
         "label": {
          "show": true,
          "position": "top",
-         "formatter": "Haiku 5.5",
+         "formatter": "Haiku 5.5 · xhigh",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -2088,7 +2088,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "GLM-5.3",
+         "formatter": "GLM-5.3 · max",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -2576,9 +2576,9 @@
        {
         "value": [
          0.0004305,
-         1.52
+         2.0
         ],
-        "tip": "<b>Ministral 14B</b><br>caught 1.5% (0.0 to 7.1)<br>$0.00043 per program",
+        "tip": "<b>Ministral 14B</b><br>caught 2.0% (0.1 to 6.6)<br>$0.00043 per program",
         "label": {
          "show": true,
          "position": "right",
@@ -2707,7 +2707,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "Sonnet 5.5",
+         "formatter": "Sonnet 5.5 · high",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -2798,7 +2798,7 @@
         "label": {
          "show": true,
          "position": "top",
-         "formatter": "Haiku 5.5",
+         "formatter": "Haiku 5.5 · xhigh",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -2957,7 +2957,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "GLM-5.3",
+         "formatter": "GLM-5.3 · max",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -3445,9 +3445,9 @@
        {
         "value": [
          0.0004305,
-         6.38
+         6.0
         ],
-        "tip": "<b>Ministral 14B</b><br>caught 6.4% (1.9 to 9.7)<br>$0.00043 per program",
+        "tip": "<b>Ministral 14B</b><br>caught 6.0% (2.2 to 9.7)<br>$0.00043 per program",
         "label": {
          "show": true,
          "position": "right",
@@ -3576,7 +3576,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "Sonnet 5.5",
+         "formatter": "Sonnet 5.5 · high",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -3667,7 +3667,7 @@
         "label": {
          "show": true,
          "position": "top",
-         "formatter": "Haiku 5.5",
+         "formatter": "Haiku 5.5 · xhigh",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -3826,7 +3826,7 @@
         "label": {
          "show": true,
          "position": "right",
-         "formatter": "GLM-5.3",
+         "formatter": "GLM-5.3 · max",
          "color": "@ink-primary",
          "fontSize": 12,
          "fontWeight": 600,
@@ -4314,9 +4314,9 @@
        {
         "value": [
          0.0004305,
-         13.7
+         14.12
         ],
-        "tip": "<b>Ministral 14B</b><br>caught 13.7% (8.2 to 20.5)<br>$0.00043 per program",
+        "tip": "<b>Ministral 14B</b><br>caught 14.1% (8.4 to 21.1)<br>$0.00043 per program",
         "label": {
          "show": true,
          "position": "right",
@@ -4448,7 +4448,7 @@
     0.5,
     0.009314,
     0.807,
-    0.201642,
+    0.201625,
     0.883511
    ],
    [
@@ -5687,9 +5687,9 @@
     "default",
     0.5,
     0.00043,
-    0.0025,
+    0.003333,
     0.0,
-    0.035
+    0.031014
    ],
    [
     "Ministral 14B",
@@ -5697,9 +5697,9 @@
     "default",
     1.0,
     0.00043,
-    0.0152,
-    0.0,
-    0.070572
+    0.02,
+    0.000886,
+    0.066
    ],
    [
     "Ministral 14B",
@@ -5707,9 +5707,9 @@
     "default",
     2.0,
     0.00043,
-    0.063818,
-    0.019443,
-    0.097004
+    0.06,
+    0.022,
+    0.096675
    ],
    [
     "Ministral 14B",
@@ -5717,9 +5717,9 @@
     "default",
     5.0,
     0.00043,
-    0.137,
-    0.081865,
-    0.205224
+    0.141152,
+    0.084371,
+    0.210669
    ]
   ]
  },
@@ -5780,8 +5780,8 @@
    "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
    "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
    "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
-   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:8ce58648701ae338",
-   "results/dataset500-ministral14b-tm-strip.csv": "sha256:32ff7e0c9397cfa6",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:c3616d9920823db0",
    "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
    "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
    "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
@@ -5790,10 +5790,10 @@
    "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
    "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
    "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
-   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:775c9d24590f2aa7",
-  "spec": "sha256:753029599e448705"
+  "code": "sha256:57475673b433e3bc",
+  "spec": "sha256:8c3f9e6b24d5c43e"
  }
 }

@@ -3,7 +3,7 @@
  "kind": "echarts",
  "title": "Sonnet's lead over Haiku xhigh grows as the budget tightens",
  "section": "results",
- "order": 60,
+ "order": 50,
  "caption": "Share of the 500 backdoors caught at four audit budgets, and Sonnet's lead in points. Colour ranks each catch rate against all 32 monitor settings at that budget: green is the best of them, red the worst.",
  "notes": [
   "Every paired 95% interval for the lead excludes zero (they are in the CSV). The intervals widen as the budget tightens, so the size of the lead at 0.5% is uncertain even though its direction isn't."
@@ -354,8 +354,8 @@
    "results/dataset500-gemini35lite-tm-strip.csv": "sha256:173d3524f71a4cea",
    "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
    "results/dataset500-gemma426b-tm-strip.csv": "sha256:54b4ad3480e0ea4c",
-   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:8ce58648701ae338",
-   "results/dataset500-ministral14b-tm-strip.csv": "sha256:32ff7e0c9397cfa6",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-ministral14b-tm-strip.csv": "sha256:c3616d9920823db0",
    "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
    "results/dataset500-mistrallarge4-high-tm-strip.csv": "sha256:c7c8485a4097a83c",
    "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
@@ -364,10 +364,10 @@
    "results/dataset500-qwen38omniflash-medium-tm-strip.csv": "sha256:8a701cfb71a4b691",
    "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
    "results/dataset500-sonnet55-um-effortlow-v2-strip.csv": "sha256:f9bffbc237b84cf5",
-   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:78139cf9efa77f63",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:daff4251401fa989",
-  "spec": "sha256:f0c7fbcd5bbdd5f8"
+  "code": "sha256:49934bf42dd47fe0",
+  "spec": "sha256:9fb0247778569bb1"
  }
 }

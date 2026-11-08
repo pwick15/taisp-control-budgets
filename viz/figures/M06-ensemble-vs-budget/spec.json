@@ -1,300 +1,334 @@
 {
  "id": "M06",
- "kind": "snapshot",
- "title": "Splitting the budget across monitors helps, as an upper bound",
+ "kind": "echarts",
+ "title": "Splitting the audit budget across monitors buys very little",
  "section": "appendix",
- "order": 80,
- "caption": "One budget of honest files spent on one monitor, or split across several with tighter cutoffs. The gain is fitted on the same problems it is scored on, so treat it as an upper bound until there's a held-out split.",
- "notes": [],
- "height": 440,
+ "order": 140,
+ "caption": "One budget, spent two ways. The dashed line is the best a single cutoff can do; the solid line is the best an OR of up to this many monitors can do for the same honest false positives in total. Use the dial to change how many you may buy.",
+ "notes": [
+  "The most any ensemble buys anywhere on this grid is 2.4 points, and at the tightest budget it buys nothing at all: 0.5% is too little to split.",
+  "This is an upper bound, not a protocol. Both the monitors and their cutoffs are chosen knowing which programs are backdoored, so the curve is fitted on the data it is scored on. A real ensemble picked in advance would do worse.",
+  "The union's false-positive rate is measured, not added: every arm scored the same 500 honest programs, so overlapping alarms are counted once. That is what makes the comparison fair.",
+  "The pool is one arm per monitor family, the 0 to 10 stripped arm with the best separation: Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash, gpt-oss-120b, Gemma 3 27B.",
+  "Rebuilt from committed per-sample tables, replacing the exported snapshot."
+ ],
+ "height": 520,
  "author": "",
- "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'geom-ensemble-vs-budget'. Copied as exported; its generator isn't in the repo yet.",
+ "source": "",
  "path": "viz/figures/M06-ensemble-vs-budget",
  "option": {
-  "animation": false,
-  "textStyle": {
-   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
-   "color": "@ink-secondary"
-  },
-  "grid": {
-   "left": 64,
-   "right": 28,
-   "top": 28,
-   "bottom": 72,
-   "containLabel": true
-  },
   "tooltip": {
    "trigger": "item",
-   "confine": true,
-   "backgroundColor": "@ink-surface",
-   "borderColor": "@ink-axis",
-   "borderWidth": 1,
-   "textStyle": {
-    "color": "@ink-primary",
-    "fontSize": 12
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 70,
+   "right": 32,
+   "top": 40,
+   "bottom": 58
+  },
+  "xAxis": {
+   "name": "Total audit budget (log scale)",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "log",
+   "min": 0.5,
+   "max": 10,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "yAxis": {
+   "name": "Backdoors caught",
+   "nameLocation": "middle",
+   "nameGap": 48,
+   "type": "value",
+   "min": 75,
+   "max": 95,
+   "axisLabel": {
+    "formatter": "{value}%"
    }
   },
   "legend": {
-   "type": "scroll",
-   "bottom": 0,
-   "icon": "roundRect",
-   "itemWidth": 10,
-   "itemHeight": 10,
-   "textStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   }
-  },
-  "xAxis": {
-   "type": "category",
-   "name": "total honest false-positive budget (%)",
-   "nameLocation": "middle",
-   "nameGap": 30,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
-   "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
+   "top": 0,
+   "left": 64,
    "data": [
-    "0.5",
-    "1",
-    "2",
-    "3",
-    "5",
-    "7.5",
-    "10"
+    "best single cutoff",
+    "best ensemble"
    ]
-  },
-  "yAxis": {
-   "type": "value",
-   "name": "attack recall",
-   "nameLocation": "middle",
-   "nameGap": 46,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
-   "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
-   "min": 0.75,
-   "max": 1.0
   },
   "series": [
    {
+    "name": "best single cutoff",
     "type": "line",
-    "name": "best single monitor",
     "symbolSize": 7,
     "lineStyle": {
-     "color": "@ink-muted",
+     "color": "@context-strong",
      "width": 2,
      "type": "dashed"
     },
     "itemStyle": {
-     "color": "@ink-muted"
+     "color": "@context-strong"
     },
     "data": [
      {
-      "value": 0.802,
-      "name": "one monitor at 0.5%: recall 0.802"
+      "value": [
+       0.5,
+       80.2
+      ],
+      "tip": "one monitor at 0.5%: 80.2%"
      },
      {
-      "value": 0.868,
-      "name": "one monitor at 1%: recall 0.868"
+      "value": [
+       1.0,
+       86.8
+      ],
+      "tip": "one monitor at 1%: 86.8%"
      },
      {
-      "value": 0.868,
-      "name": "one monitor at 2%: recall 0.868"
+      "value": [
+       2.0,
+       86.8
+      ],
+      "tip": "one monitor at 2%: 86.8%"
      },
      {
-      "value": 0.868,
-      "name": "one monitor at 3%: recall 0.868"
+      "value": [
+       3.0,
+       86.8
+      ],
+      "tip": "one monitor at 3%: 86.8%"
      },
      {
-      "value": 0.868,
-      "name": "one monitor at 5%: recall 0.868"
+      "value": [
+       5.0,
+       86.8
+      ],
+      "tip": "one monitor at 5%: 86.8%"
      },
      {
-      "value": 0.868,
-      "name": "one monitor at 7.5%: recall 0.868"
+      "value": [
+       7.5,
+       86.8
+      ],
+      "tip": "one monitor at 7.5%: 86.8%"
      },
      {
-      "value": 0.932,
-      "name": "one monitor at 10%: recall 0.932"
+      "value": [
+       10.0,
+       93.2
+      ],
+      "tip": "one monitor at 10%: 93.2%"
      }
     ]
    },
    {
+    "name": "best ensemble",
     "type": "line",
-    "name": "best OR of at most 1 monitor",
-    "symbolSize": 9,
+    "symbolSize": 8,
     "lineStyle": {
      "color": "@s0",
-     "width": 2
+     "width": 2.5
     },
     "itemStyle": {
-     "color": "@s0"
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
-      "value": 0.802,
-      "name": "Sonnet 5.5<br/>budget 0.5%, served 0.40%, recall 0.802"
+      "value": [
+       0.5,
+       80.2
+      ],
+      "tip": "<b>0.5% budget, up to 2</b><br>80.2% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 0.40%"
      },
      {
-      "value": 0.868,
-      "name": "Sonnet 5.5<br/>budget 1%, served 1.00%, recall 0.868"
+      "value": [
+       1.0,
+       87.0
+      ],
+      "tip": "<b>1% budget, up to 2</b><br>87.0% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.00%"
      },
      {
-      "value": 0.868,
-      "name": "Sonnet 5.5<br/>budget 2%, served 1.00%, recall 0.868"
+      "value": [
+       2.0,
+       88.6
+      ],
+      "tip": "<b>2% budget, up to 2</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.60%"
      },
      {
-      "value": 0.868,
-      "name": "Sonnet 5.5<br/>budget 3%, served 1.00%, recall 0.868"
+      "value": [
+       3.0,
+       88.6
+      ],
+      "tip": "<b>3% budget, up to 2</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.60%"
      },
      {
-      "value": 0.868,
-      "name": "Sonnet 5.5<br/>budget 5%, served 1.00%, recall 0.868"
+      "value": [
+       5.0,
+       88.6
+      ],
+      "tip": "<b>5% budget, up to 2</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.60%"
      },
      {
-      "value": 0.868,
-      "name": "Sonnet 5.5<br/>budget 7.5%, served 1.00%, recall 0.868"
+      "value": [
+       7.5,
+       88.6
+      ],
+      "tip": "<b>7.5% budget, up to 2</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.60%"
      },
      {
-      "value": 0.932,
-      "name": "Sonnet 5.5<br/>budget 10%, served 9.20%, recall 0.932"
+      "value": [
+       10.0,
+       93.6
+      ],
+      "tip": "<b>10% budget, up to 2</b><br>93.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 9.20%"
      }
     ]
    }
   ]
  },
  "dial": {
-  "label": "Monitors you are allowed to buy",
+  "label": "Monitors you may buy",
   "steps": [
    "1",
    "2",
    "3",
    "4"
   ],
-  "initial": 0,
+  "initial": 1,
   "frames": [
-   {},
    {
     "series": [
      {
+      "name": "best single cutoff",
       "type": "line",
-      "name": "best single monitor",
       "symbolSize": 7,
       "lineStyle": {
-       "color": "@ink-muted",
+       "color": "@context-strong",
        "width": 2,
        "type": "dashed"
       },
       "itemStyle": {
-       "color": "@ink-muted"
+       "color": "@context-strong"
       },
       "data": [
        {
-        "value": 0.802,
-        "name": "one monitor at 0.5%: recall 0.802"
+        "value": [
+         0.5,
+         80.2
+        ],
+        "tip": "one monitor at 0.5%: 80.2%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 1%: recall 0.868"
+        "value": [
+         1.0,
+         86.8
+        ],
+        "tip": "one monitor at 1%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 2%: recall 0.868"
+        "value": [
+         2.0,
+         86.8
+        ],
+        "tip": "one monitor at 2%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 3%: recall 0.868"
+        "value": [
+         3.0,
+         86.8
+        ],
+        "tip": "one monitor at 3%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 5%: recall 0.868"
+        "value": [
+         5.0,
+         86.8
+        ],
+        "tip": "one monitor at 5%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 7.5%: recall 0.868"
+        "value": [
+         7.5,
+         86.8
+        ],
+        "tip": "one monitor at 7.5%: 86.8%"
        },
        {
-        "value": 0.932,
-        "name": "one monitor at 10%: recall 0.932"
+        "value": [
+         10.0,
+         93.2
+        ],
+        "tip": "one monitor at 10%: 93.2%"
        }
       ]
      },
      {
+      "name": "best ensemble",
       "type": "line",
-      "name": "best OR of at most 2 monitors",
-      "symbolSize": 9,
+      "symbolSize": 8,
       "lineStyle": {
        "color": "@s0",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s0"
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
-        "value": 0.802,
-        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 0.5%, served 0.40%, recall 0.802"
+        "value": [
+         0.5,
+         80.2
+        ],
+        "tip": "<b>0.5% budget, up to 1</b><br>80.2% caught<br>Sonnet 5.5 UM<br>served 0.40%"
        },
        {
-        "value": 0.87,
-        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 1%, served 1.00%, recall 0.870"
+        "value": [
+         1.0,
+         86.8
+        ],
+        "tip": "<b>1% budget, up to 1</b><br>86.8% caught<br>Sonnet 5.5 UM<br>served 1.00%"
        },
        {
-        "value": 0.886,
-        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 2%, served 1.60%, recall 0.886"
+        "value": [
+         2.0,
+         86.8
+        ],
+        "tip": "<b>2% budget, up to 1</b><br>86.8% caught<br>Sonnet 5.5 UM<br>served 1.00%"
        },
        {
-        "value": 0.886,
-        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 3%, served 1.60%, recall 0.886"
+        "value": [
+         3.0,
+         86.8
+        ],
+        "tip": "<b>3% budget, up to 1</b><br>86.8% caught<br>Sonnet 5.5 UM<br>served 1.00%"
        },
        {
-        "value": 0.886,
-        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 5%, served 1.60%, recall 0.886"
+        "value": [
+         5.0,
+         86.8
+        ],
+        "tip": "<b>5% budget, up to 1</b><br>86.8% caught<br>Sonnet 5.5 UM<br>served 1.00%"
        },
        {
-        "value": 0.886,
-        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 7.5%, served 1.60%, recall 0.886"
+        "value": [
+         7.5,
+         86.8
+        ],
+        "tip": "<b>7.5% budget, up to 1</b><br>86.8% caught<br>Sonnet 5.5 UM<br>served 1.00%"
        },
        {
-        "value": 0.936,
-        "name": "Sonnet 5.5, Haiku 5.5<br/>budget 10%, served 9.20%, recall 0.936"
+        "value": [
+         10.0,
+         93.2
+        ],
+        "tip": "<b>10% budget, up to 1</b><br>93.2% caught<br>Sonnet 5.5 UM<br>served 9.20%"
        }
       ]
      }
@@ -303,87 +337,131 @@
    {
     "series": [
      {
+      "name": "best single cutoff",
       "type": "line",
-      "name": "best single monitor",
       "symbolSize": 7,
       "lineStyle": {
-       "color": "@ink-muted",
+       "color": "@context-strong",
        "width": 2,
        "type": "dashed"
       },
       "itemStyle": {
-       "color": "@ink-muted"
+       "color": "@context-strong"
       },
       "data": [
        {
-        "value": 0.802,
-        "name": "one monitor at 0.5%: recall 0.802"
+        "value": [
+         0.5,
+         80.2
+        ],
+        "tip": "one monitor at 0.5%: 80.2%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 1%: recall 0.868"
+        "value": [
+         1.0,
+         86.8
+        ],
+        "tip": "one monitor at 1%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 2%: recall 0.868"
+        "value": [
+         2.0,
+         86.8
+        ],
+        "tip": "one monitor at 2%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 3%: recall 0.868"
+        "value": [
+         3.0,
+         86.8
+        ],
+        "tip": "one monitor at 3%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 5%: recall 0.868"
+        "value": [
+         5.0,
+         86.8
+        ],
+        "tip": "one monitor at 5%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 7.5%: recall 0.868"
+        "value": [
+         7.5,
+         86.8
+        ],
+        "tip": "one monitor at 7.5%: 86.8%"
        },
        {
-        "value": 0.932,
-        "name": "one monitor at 10%: recall 0.932"
+        "value": [
+         10.0,
+         93.2
+        ],
+        "tip": "one monitor at 10%: 93.2%"
        }
       ]
      },
      {
+      "name": "best ensemble",
       "type": "line",
-      "name": "best OR of at most 3 monitors",
-      "symbolSize": 9,
+      "symbolSize": 8,
       "lineStyle": {
        "color": "@s0",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s0"
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
-        "value": 0.802,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 0.5%, served 0.40%, recall 0.802"
+        "value": [
+         0.5,
+         80.2
+        ],
+        "tip": "<b>0.5% budget, up to 2</b><br>80.2% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 0.40%"
        },
        {
-        "value": 0.87,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 1%, served 1.00%, recall 0.870"
+        "value": [
+         1.0,
+         87.0
+        ],
+        "tip": "<b>1% budget, up to 2</b><br>87.0% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.00%"
        },
        {
-        "value": 0.886,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 2%, served 1.80%, recall 0.886"
+        "value": [
+         2.0,
+         88.6
+        ],
+        "tip": "<b>2% budget, up to 2</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.60%"
        },
        {
-        "value": 0.888,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 3%, served 2.40%, recall 0.888"
+        "value": [
+         3.0,
+         88.6
+        ],
+        "tip": "<b>3% budget, up to 2</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.60%"
        },
        {
-        "value": 0.89,
-        "name": "Sonnet 5.5, Haiku 5.5, Qwen3.8 Omni Flash<br/>budget 5%, served 3.60%, recall 0.890"
+        "value": [
+         5.0,
+         88.6
+        ],
+        "tip": "<b>5% budget, up to 2</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.60%"
        },
        {
-        "value": 0.89,
-        "name": "Sonnet 5.5, Haiku 5.5, Qwen3.8 Omni Flash<br/>budget 7.5%, served 3.60%, recall 0.890"
+        "value": [
+         7.5,
+         88.6
+        ],
+        "tip": "<b>7.5% budget, up to 2</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 1.60%"
        },
        {
-        "value": 0.938,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3<br/>budget 10%, served 9.60%, recall 0.938"
+        "value": [
+         10.0,
+         93.6
+        ],
+        "tip": "<b>10% budget, up to 2</b><br>93.6% caught<br>Sonnet 5.5 UM, Haiku 5.5<br>served 9.20%"
        }
       ]
      }
@@ -392,87 +470,264 @@
    {
     "series": [
      {
+      "name": "best single cutoff",
       "type": "line",
-      "name": "best single monitor",
       "symbolSize": 7,
       "lineStyle": {
-       "color": "@ink-muted",
+       "color": "@context-strong",
        "width": 2,
        "type": "dashed"
       },
       "itemStyle": {
-       "color": "@ink-muted"
+       "color": "@context-strong"
       },
       "data": [
        {
-        "value": 0.802,
-        "name": "one monitor at 0.5%: recall 0.802"
+        "value": [
+         0.5,
+         80.2
+        ],
+        "tip": "one monitor at 0.5%: 80.2%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 1%: recall 0.868"
+        "value": [
+         1.0,
+         86.8
+        ],
+        "tip": "one monitor at 1%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 2%: recall 0.868"
+        "value": [
+         2.0,
+         86.8
+        ],
+        "tip": "one monitor at 2%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 3%: recall 0.868"
+        "value": [
+         3.0,
+         86.8
+        ],
+        "tip": "one monitor at 3%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 5%: recall 0.868"
+        "value": [
+         5.0,
+         86.8
+        ],
+        "tip": "one monitor at 5%: 86.8%"
        },
        {
-        "value": 0.868,
-        "name": "one monitor at 7.5%: recall 0.868"
+        "value": [
+         7.5,
+         86.8
+        ],
+        "tip": "one monitor at 7.5%: 86.8%"
        },
        {
-        "value": 0.932,
-        "name": "one monitor at 10%: recall 0.932"
+        "value": [
+         10.0,
+         93.2
+        ],
+        "tip": "one monitor at 10%: 93.2%"
        }
       ]
      },
      {
+      "name": "best ensemble",
       "type": "line",
-      "name": "best OR of at most 4 monitors",
-      "symbolSize": 9,
+      "symbolSize": 8,
       "lineStyle": {
        "color": "@s0",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s0"
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
-        "value": 0.802,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 0.5%, served 0.40%, recall 0.802"
+        "value": [
+         0.5,
+         80.2
+        ],
+        "tip": "<b>0.5% budget, up to 3</b><br>80.2% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3<br>served 0.40%"
        },
        {
-        "value": 0.87,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 1%, served 1.00%, recall 0.870"
+        "value": [
+         1.0,
+         87.0
+        ],
+        "tip": "<b>1% budget, up to 3</b><br>87.0% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3<br>served 1.00%"
        },
        {
-        "value": 0.886,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 2%, served 1.80%, recall 0.886"
+        "value": [
+         2.0,
+         88.6
+        ],
+        "tip": "<b>2% budget, up to 3</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3<br>served 1.80%"
        },
        {
-        "value": 0.888,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 3%, served 2.40%, recall 0.888"
+        "value": [
+         3.0,
+         88.8
+        ],
+        "tip": "<b>3% budget, up to 3</b><br>88.8% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3<br>served 2.40%"
        },
        {
-        "value": 0.892,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 5%, served 4.00%, recall 0.892"
+        "value": [
+         5.0,
+         89.0
+        ],
+        "tip": "<b>5% budget, up to 3</b><br>89.0% caught<br>Sonnet 5.5 UM, Haiku 5.5, Qwen 3.8 Omni Flash<br>served 3.60%"
        },
        {
-        "value": 0.892,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 7.5%, served 4.00%, recall 0.892"
+        "value": [
+         7.5,
+         89.0
+        ],
+        "tip": "<b>7.5% budget, up to 3</b><br>89.0% caught<br>Sonnet 5.5 UM, Haiku 5.5, Qwen 3.8 Omni Flash<br>served 3.60%"
        },
        {
-        "value": 0.938,
-        "name": "Sonnet 5.5, Haiku 5.5, GLM-5.3, Qwen3.8 Omni Flash<br/>budget 10%, served 9.60%, recall 0.938"
+        "value": [
+         10.0,
+         93.8
+        ],
+        "tip": "<b>10% budget, up to 3</b><br>93.8% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3<br>served 9.60%"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "best single cutoff",
+      "type": "line",
+      "symbolSize": 7,
+      "lineStyle": {
+       "color": "@context-strong",
+       "width": 2,
+       "type": "dashed"
+      },
+      "itemStyle": {
+       "color": "@context-strong"
+      },
+      "data": [
+       {
+        "value": [
+         0.5,
+         80.2
+        ],
+        "tip": "one monitor at 0.5%: 80.2%"
+       },
+       {
+        "value": [
+         1.0,
+         86.8
+        ],
+        "tip": "one monitor at 1%: 86.8%"
+       },
+       {
+        "value": [
+         2.0,
+         86.8
+        ],
+        "tip": "one monitor at 2%: 86.8%"
+       },
+       {
+        "value": [
+         3.0,
+         86.8
+        ],
+        "tip": "one monitor at 3%: 86.8%"
+       },
+       {
+        "value": [
+         5.0,
+         86.8
+        ],
+        "tip": "one monitor at 5%: 86.8%"
+       },
+       {
+        "value": [
+         7.5,
+         86.8
+        ],
+        "tip": "one monitor at 7.5%: 86.8%"
+       },
+       {
+        "value": [
+         10.0,
+         93.2
+        ],
+        "tip": "one monitor at 10%: 93.2%"
+       }
+      ]
+     },
+     {
+      "name": "best ensemble",
+      "type": "line",
+      "symbolSize": 8,
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2.5
+      },
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": [
+         0.5,
+         80.2
+        ],
+        "tip": "<b>0.5% budget, up to 4</b><br>80.2% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash<br>served 0.40%"
+       },
+       {
+        "value": [
+         1.0,
+         87.0
+        ],
+        "tip": "<b>1% budget, up to 4</b><br>87.0% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash<br>served 1.00%"
+       },
+       {
+        "value": [
+         2.0,
+         88.6
+        ],
+        "tip": "<b>2% budget, up to 4</b><br>88.6% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash<br>served 1.80%"
+       },
+       {
+        "value": [
+         3.0,
+         88.8
+        ],
+        "tip": "<b>3% budget, up to 4</b><br>88.8% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash<br>served 2.40%"
+       },
+       {
+        "value": [
+         5.0,
+         89.2
+        ],
+        "tip": "<b>5% budget, up to 4</b><br>89.2% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash<br>served 4.00%"
+       },
+       {
+        "value": [
+         7.5,
+         89.2
+        ],
+        "tip": "<b>7.5% budget, up to 4</b><br>89.2% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash<br>served 4.00%"
+       },
+       {
+        "value": [
+         10.0,
+         93.8
+        ],
+        "tip": "<b>10% budget, up to 4</b><br>93.8% caught<br>Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash<br>served 9.60%"
        }
       ]
      }
@@ -482,76 +737,320 @@
  },
  "data": {
   "columns": [
-   "total budget (%)",
-   "monitors bought",
-   "served FPR (%)",
-   "recall (%)",
-   "best single monitor (%)",
-   "gain (pts)"
+   "max_monitors",
+   "budget_pct",
+   "ensemble_recall",
+   "best_single_recall",
+   "gain_pts",
+   "monitors",
+   "served_pct"
   ],
   "rows": [
    [
-    "0.5",
-    "Sonnet 5.5",
+    1,
+    0.5,
+    0.802,
+    0.802,
+    0.0,
+    "Sonnet 5.5 UM",
+    0.4
+   ],
+   [
+    1,
+    1.0,
+    0.868,
+    0.868,
+    0.0,
+    "Sonnet 5.5 UM",
+    1.0
+   ],
+   [
+    1,
+    2.0,
+    0.868,
+    0.868,
+    0.0,
+    "Sonnet 5.5 UM",
+    1.0
+   ],
+   [
+    1,
+    3.0,
+    0.868,
+    0.868,
+    0.0,
+    "Sonnet 5.5 UM",
+    1.0
+   ],
+   [
+    1,
+    5.0,
+    0.868,
+    0.868,
+    0.0,
+    "Sonnet 5.5 UM",
+    1.0
+   ],
+   [
+    1,
+    7.5,
+    0.868,
+    0.868,
+    0.0,
+    "Sonnet 5.5 UM",
+    1.0
+   ],
+   [
+    1,
+    10.0,
+    0.932,
+    0.932,
+    0.0,
+    "Sonnet 5.5 UM",
+    9.2
+   ],
+   [
+    2,
+    0.5,
+    0.802,
+    0.802,
+    0.0,
+    "Sonnet 5.5 UM, Haiku 5.5",
+    0.4
+   ],
+   [
+    2,
+    1.0,
+    0.87,
+    0.868,
+    0.2,
+    "Sonnet 5.5 UM, Haiku 5.5",
+    1.0
+   ],
+   [
+    2,
+    2.0,
+    0.886,
+    0.868,
+    1.8,
+    "Sonnet 5.5 UM, Haiku 5.5",
+    1.6
+   ],
+   [
+    2,
+    3.0,
+    0.886,
+    0.868,
+    1.8,
+    "Sonnet 5.5 UM, Haiku 5.5",
+    1.6
+   ],
+   [
+    2,
+    5.0,
+    0.886,
+    0.868,
+    1.8,
+    "Sonnet 5.5 UM, Haiku 5.5",
+    1.6
+   ],
+   [
+    2,
+    7.5,
+    0.886,
+    0.868,
+    1.8,
+    "Sonnet 5.5 UM, Haiku 5.5",
+    1.6
+   ],
+   [
+    2,
+    10.0,
+    0.936,
+    0.932,
     0.4,
-    80.2,
-    80.2,
-    0.0
+    "Sonnet 5.5 UM, Haiku 5.5",
+    9.2
    ],
    [
-    "1",
-    "Sonnet 5.5",
+    3,
+    0.5,
+    0.802,
+    0.802,
+    0.0,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3",
+    0.4
+   ],
+   [
+    3,
     1.0,
-    86.8,
-    86.8,
-    0.0
+    0.87,
+    0.868,
+    0.2,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3",
+    1.0
    ],
    [
-    "2",
-    "Sonnet 5.5",
+    3,
+    2.0,
+    0.886,
+    0.868,
+    1.8,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3",
+    1.8
+   ],
+   [
+    3,
+    3.0,
+    0.888,
+    0.868,
+    2.0,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3",
+    2.4
+   ],
+   [
+    3,
+    5.0,
+    0.89,
+    0.868,
+    2.2,
+    "Sonnet 5.5 UM, Haiku 5.5, Qwen 3.8 Omni Flash",
+    3.6
+   ],
+   [
+    3,
+    7.5,
+    0.89,
+    0.868,
+    2.2,
+    "Sonnet 5.5 UM, Haiku 5.5, Qwen 3.8 Omni Flash",
+    3.6
+   ],
+   [
+    3,
+    10.0,
+    0.938,
+    0.932,
+    0.6,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3",
+    9.6
+   ],
+   [
+    4,
+    0.5,
+    0.802,
+    0.802,
+    0.0,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash",
+    0.4
+   ],
+   [
+    4,
     1.0,
-    86.8,
-    86.8,
-    0.0
+    0.87,
+    0.868,
+    0.2,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash",
+    1.0
    ],
    [
-    "3",
-    "Sonnet 5.5",
-    1.0,
-    86.8,
-    86.8,
-    0.0
+    4,
+    2.0,
+    0.886,
+    0.868,
+    1.8,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash",
+    1.8
    ],
    [
-    "5",
-    "Sonnet 5.5",
-    1.0,
-    86.8,
-    86.8,
-    0.0
+    4,
+    3.0,
+    0.888,
+    0.868,
+    2.0,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash",
+    2.4
    ],
    [
-    "7.5",
-    "Sonnet 5.5",
-    1.0,
-    86.8,
-    86.8,
-    0.0
+    4,
+    5.0,
+    0.892,
+    0.868,
+    2.4,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash",
+    4.0
    ],
    [
-    "10",
-    "Sonnet 5.5",
-    9.2,
-    93.2,
-    93.2,
-    0.0
+    4,
+    7.5,
+    0.892,
+    0.868,
+    2.4,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash",
+    4.0
+   ],
+   [
+    4,
+    10.0,
+    0.938,
+    0.932,
+    0.6,
+    "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash",
+    9.6
    ]
   ]
  },
- "facts": {},
+ "facts": {
+  "best_gain": 2.4,
+  "tight": "0.5",
+  "pool": "Sonnet 5.5 UM, Haiku 5.5, GLM-5.3, Qwen 3.8 Omni Flash, gpt-oss-120b, Gemma 3 27B"
+ },
  "build": {
-  "inputs": {},
-  "code": "sha256:9f7a350928cc8dd8",
-  "spec": "sha256:df927e238f165358"
+  "inputs": {
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-gemini35fl-low-tm-n500-strip-samples.csv": "sha256:ca972aa58ef0531a",
+   "results/dataset-gemini35fl-medium-tm-n500-strip-samples.csv": "sha256:5862fd8b855706eb",
+   "results/dataset-gemini35fl-xhigh-tm-n500-strip-samples.csv": "sha256:f1cfb431f52c2720",
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-glm53-efforthigh-tm-n500-strip-samples.csv": "sha256:2c2d61e192415f2b",
+   "results/dataset-glm53-effortlow-tm-n500-strip-samples.csv": "sha256:24f432a06b6bc64f",
+   "results/dataset-glm53-effortnone-NOT-AN-ABLATION-tm-n500-strip-samples.csv": "sha256:89fa32c0112dd470",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-gpt6luna-tm-n30-samples.csv": "sha256:3d23004001f335d4",
+   "results/dataset-gpt6luna-tm-n30-strip-samples.csv": "sha256:5ddd5c5eb21ae48c",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-gptoss120b-low-tm-n500-strip-samples.csv": "sha256:24f6d6c6399e6d87",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-haiku45-tm-n30-samples.csv": "sha256:869b056ccc0f7925",
+   "results/dataset-haiku45-tm-n30-strip-samples.csv": "sha256:5170311ed3cd2296",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku55-efforthigh-tm-n500-strip-samples.csv": "sha256:a875b95e06f8f2dc",
+   "results/dataset-haiku55-effortlow-tm-n500-strip-samples.csv": "sha256:f82381eec9a48437",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-luna-high-tm-n500-strip-samples.csv": "sha256:99f80b4078bd8da5",
+   "results/dataset-luna-low-tm-n500-strip-samples.csv": "sha256:cee75c341c844ac5",
+   "results/dataset-luna-none-tm-n500-strip-samples.csv": "sha256:fef7cff90a810caa",
+   "results/dataset-luna-xhigh-tm-n500-strip-samples.csv": "sha256:1df9fe2bfa6581ce",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset-qwen38omniflash-none-tm-n500-strip-samples.csv": "sha256:5df3776785eb320e",
+   "results/dataset-sonnet55-um-n30-samples.csv": "sha256:8f2fa088c5bb1d10",
+   "results/dataset-sonnet55-um-n30-strip-samples.csv": "sha256:fad7d8c0711da669",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-mistrallarge4-high-tm-strip-samples.csv": "sha256:18313e34621dd8fc",
+   "results/dataset500-qwen38omniflash-high-tm-strip-samples.csv": "sha256:013dbd5ea43138b1",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-sonnet55-um-effortlow-v2-strip-samples.csv": "sha256:cabfabcc9158a504",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
+   "results/sonnet55-n100-haiku45-samples.csv": "sha256:2b0692b9c27bf710",
+   "results/sonnet55-n100-haiku45-strip-samples.csv": "sha256:d0c7dce0921e63e6",
+   "results/sonnet55-n100-sonnet55-um-strip-samples.csv": "sha256:9c922d475b5cecca"
+  },
+  "code": "sha256:c5ec42165ba1a0fd",
+  "spec": "sha256:13439d4f4d7f04e6"
  }
 }

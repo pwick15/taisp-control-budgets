@@ -1,77 +1,40 @@
 {
  "id": "M08",
- "kind": "snapshot",
+ "kind": "echarts",
  "title": "An attacker who needs several backdoors gets caught sooner",
  "section": "appendix",
  "order": 100,
- "caption": "Chance of catching an attacker at least once when it must land several backdoors. Assumes attempts are independent and the attacker doesn't adapt, so it is an optimistic bound.",
- "notes": [],
- "height": 440,
+ "caption": "Each line is one monitor held at its own cutoff for a 2% audit request. x is how many backdoors the attacker has to land, y the chance at least one of them is caught, with the tasks drawn without replacement from the problems we measured. The dial confines the attacker to smaller and smaller edits.",
+ "notes": [
+  "Thin rungs to the right of the dial. The pool falls from 500 backdoors at any size to 41 at 5 lines or fewer, so the steeper dial steps draw 20 of 41 problems and lean hard on the set. Treat the right-hand end of those steps as the least trustworthy part of the figure.",
+  "No independence assumption and no fitted model: the probability is the exact hypergeometric one over the joint outcome actually observed. The single assumption is that the attacker's tasks are an unordered draw from the problems measured, which is what the dial puts pressure on.",
+  "These monitors are not spending the same budget. A 2% request lands on cutoffs serving 0.2% to 2.0% of honest programs, because a coarse score scale cannot land on 2%. The weakest monitors here are the ones spending least, so the comparison flatters the strong ones.",
+  "Every attempt is screened by the same monitor at the same cutoff, and the attacker never adapts after a near miss. That makes each curve an optimistic bound on catching a real campaign.",
+  "Coloured: the strongest and weakest monitors on the whole set. The grey lines are the four others and are context for the shape; the CSV carries every monitor's numbers.",
+  "The x-axis is a ladder of rungs, not a scale: the landing counts sit evenly apart although they are not evenly spaced, so the slope between two rungs cannot be compared with the slope between two others. Read the heights rather than the steepness."
+ ],
+ "height": 460,
  "author": "",
- "source": "Marnick's data explorer (marnick-data-2, built 2026-11-02), view 'geom-campaign-safety'. Copied as exported; its generator isn't in the repo yet.",
+ "source": "",
  "path": "viz/figures/M08-campaign-safety",
  "option": {
-  "animation": false,
-  "textStyle": {
-   "fontFamily": "system-ui, -apple-system, \"Segoe UI\", sans-serif",
-   "color": "@ink-secondary"
-  },
-  "grid": {
-   "left": 64,
-   "right": 28,
-   "top": 28,
-   "bottom": 72,
-   "containLabel": true
-  },
   "tooltip": {
    "trigger": "item",
-   "confine": true,
-   "backgroundColor": "@ink-surface",
-   "borderColor": "@ink-axis",
-   "borderWidth": 1,
-   "textStyle": {
-    "color": "@ink-primary",
-    "fontSize": 12
-   }
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
   },
-  "legend": {
-   "type": "scroll",
-   "bottom": 0,
-   "icon": "roundRect",
-   "itemWidth": 10,
-   "itemHeight": 10,
-   "textStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   }
+  "animation": false,
+  "grid": {
+   "left": 70,
+   "right": 30,
+   "top": 46,
+   "bottom": 56
   },
   "xAxis": {
-   "type": "category",
-   "name": "backdoors the attacker has to land",
+   "name": "Backdoors the attacker has to land",
    "nameLocation": "middle",
-   "nameGap": 30,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
-   "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
+   "nameGap": 34,
+   "type": "category",
    "data": [
     "1",
     "2",
@@ -80,288 +43,297 @@
     "8",
     "12",
     "20"
-   ]
+   ],
+   "boundaryGap": false
   },
   "yAxis": {
-   "type": "value",
-   "name": "probability at least one of them is caught",
+   "name": "Chance at least one is caught",
    "nameLocation": "middle",
-   "nameGap": 46,
-   "nameTextStyle": {
-    "color": "@ink-secondary",
-    "fontSize": 11
-   },
-   "axisLine": {
-    "lineStyle": {
-     "color": "@ink-axis"
-    }
-   },
-   "axisTick": {
-    "show": false
-   },
-   "axisLabel": {
-    "color": "@ink-muted",
-    "fontSize": 11
-   },
-   "splitLine": {
-    "lineStyle": {
-     "color": "@ink-grid",
-     "width": 1
-    }
-   },
+   "nameGap": 48,
+   "type": "value",
    "min": 0,
-   "max": 1
+   "max": 1,
+   "axisLabel": {
+    "formatter": "{value}"
+   }
+  },
+  "legend": {
+   "top": 0,
+   "left": 60,
+   "data": [
+    "Sonnet 5.5 UM",
+    "gpt-oss-120b · high",
+    "four other monitors"
+   ]
   },
   "series": [
    {
+    "name": "Sonnet 5.5 UM",
     "type": "line",
-    "name": "Sonnet 5.5 default",
-    "symbolSize": 7,
+    "symbolSize": 8,
+    "z": 3,
     "lineStyle": {
      "color": "@s0",
-     "width": 2
+     "width": 2.5
     },
     "itemStyle": {
-     "color": "@s0"
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
       "value": 0.868,
-      "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.868"
+      "tip": "<b>Sonnet 5.5 UM</b><br>1 backdoor to land<br>caught at least once: 86.8%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9828,
-      "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.983"
+      "tip": "<b>Sonnet 5.5 UM</b><br>2 backdoors to land<br>caught at least once: 98.3%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9978,
-      "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.998"
+      "tip": "<b>Sonnet 5.5 UM</b><br>3 backdoors to land<br>caught at least once: 99.8%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 1.000"
+      "tip": "<b>Sonnet 5.5 UM</b><br>5 backdoors to land<br>caught at least once: 100.0%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+      "tip": "<b>Sonnet 5.5 UM</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+      "tip": "<b>Sonnet 5.5 UM</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+      "tip": "<b>Sonnet 5.5 UM</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
      }
     ]
    },
    {
+    "name": "four other monitors",
     "type": "line",
-    "name": "Haiku 5.5 xhigh",
-    "symbolSize": 7,
+    "symbolSize": 6,
+    "z": 2,
     "lineStyle": {
-     "color": "@s3",
-     "width": 2
+     "color": "@context",
+     "width": 1.5
     },
     "itemStyle": {
-     "color": "@s3"
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
       "value": 0.85,
-      "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.850"
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>1 backdoor to land<br>caught at least once: 85.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9778,
-      "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.978"
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>2 backdoors to land<br>caught at least once: 97.8%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9967,
-      "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.997"
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>3 backdoors to land<br>caught at least once: 99.7%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9999,
-      "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 1.000"
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>5 backdoors to land<br>caught at least once: 100.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+      "tip": "<b>Haiku 5.5 · xhigh</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
      }
     ]
    },
    {
+    "name": "four other monitors",
     "type": "line",
-    "name": "GLM-5.3 max (default)",
-    "symbolSize": 7,
+    "symbolSize": 6,
+    "z": 2,
     "lineStyle": {
-     "color": "@s4",
-     "width": 2
+     "color": "@context",
+     "width": 1.5
     },
     "itemStyle": {
-     "color": "@s4"
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
       "value": 0.762,
-      "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.762"
+      "tip": "<b>GLM-5.3</b><br>1 backdoor to land<br>caught at least once: 76.2%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9437,
-      "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.944"
+      "tip": "<b>GLM-5.3</b><br>2 backdoors to land<br>caught at least once: 94.4%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9868,
-      "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.987"
+      "tip": "<b>GLM-5.3</b><br>3 backdoors to land<br>caught at least once: 98.7%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9993,
-      "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.999"
+      "tip": "<b>GLM-5.3</b><br>5 backdoors to land<br>caught at least once: 99.9%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+      "tip": "<b>GLM-5.3</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+      "tip": "<b>GLM-5.3</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 1.0,
-      "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+      "tip": "<b>GLM-5.3</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
      }
     ]
    },
    {
+    "name": "gpt-oss-120b · high",
     "type": "line",
-    "name": "Gemma 4 26B-A4B",
-    "symbolSize": 7,
+    "symbolSize": 8,
+    "z": 3,
     "lineStyle": {
      "color": "@s7",
-     "width": 2
+     "width": 2.5
     },
     "itemStyle": {
-     "color": "@s7"
+     "color": "@s7",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
-      "value": 0.306,
-      "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.306"
+      "value": 0.158,
+      "tip": "<b>gpt-oss-120b · high</b><br>1 backdoor to land<br>caught at least once: 15.8%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.5188,
-      "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.519"
+      "value": 0.2913,
+      "tip": "<b>gpt-oss-120b · high</b><br>2 backdoors to land<br>caught at least once: 29.1%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.6666,
-      "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.667"
+      "value": 0.4037,
+      "tip": "<b>gpt-oss-120b · high</b><br>3 backdoors to land<br>caught at least once: 40.4%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.8404,
-      "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.840"
+      "value": 0.5784,
+      "tip": "<b>gpt-oss-120b · high</b><br>5 backdoors to land<br>caught at least once: 57.8%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.9475,
-      "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.948"
+      "value": 0.75,
+      "tip": "<b>gpt-oss-120b · high</b><br>8 backdoors to land<br>caught at least once: 75.0%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.9882,
-      "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.988"
+      "value": 0.8762,
+      "tip": "<b>gpt-oss-120b · high</b><br>12 backdoors to land<br>caught at least once: 87.6%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.9994,
-      "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 0.999"
+      "value": 0.9702,
+      "tip": "<b>gpt-oss-120b · high</b><br>20 backdoors to land<br>caught at least once: 97.0%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
      }
     ]
    },
    {
+    "name": "four other monitors",
     "type": "line",
-    "name": "Gemini 3.5 Flash-Lite high",
-    "symbolSize": 7,
+    "symbolSize": 6,
+    "z": 2,
     "lineStyle": {
-     "color": "@s2",
-     "width": 2
+     "color": "@context",
+     "width": 1.5
     },
     "itemStyle": {
-     "color": "@s2"
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
       "value": 0.19,
-      "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.190"
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>1 backdoor to land<br>caught at least once: 19.0%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.3442,
-      "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.344"
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>2 backdoors to land<br>caught at least once: 34.4%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.4693,
-      "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.469"
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>3 backdoors to land<br>caught at least once: 46.9%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.653,
-      "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.653"
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>5 backdoors to land<br>caught at least once: 65.3%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.8171,
-      "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.817"
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>8 backdoors to land<br>caught at least once: 81.7%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9227,
-      "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.923"
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>12 backdoors to land<br>caught at least once: 92.3%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
      },
      {
       "value": 0.9865,
-      "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.987"
+      "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>20 backdoors to land<br>caught at least once: 98.7%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
      }
     ]
    },
    {
+    "name": "four other monitors",
     "type": "line",
-    "name": "gpt-oss-120b high",
-    "symbolSize": 7,
+    "symbolSize": 6,
+    "z": 2,
     "lineStyle": {
-     "color": "@s5",
-     "width": 2
+     "color": "@context",
+     "width": 1.5
     },
     "itemStyle": {
-     "color": "@s5"
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
     },
     "data": [
      {
-      "value": 0.154,
-      "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.154"
+      "value": 0.306,
+      "tip": "<b>Gemma 4 26B</b><br>1 backdoor to land<br>caught at least once: 30.6%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.2845,
-      "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.285"
+      "value": 0.5188,
+      "tip": "<b>Gemma 4 26B</b><br>2 backdoors to land<br>caught at least once: 51.9%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.3952,
-      "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.395"
+      "value": 0.6666,
+      "tip": "<b>Gemma 4 26B</b><br>3 backdoors to land<br>caught at least once: 66.7%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.5682,
-      "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.568"
+      "value": 0.8404,
+      "tip": "<b>Gemma 4 26B</b><br>5 backdoors to land<br>caught at least once: 84.0%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.7403,
-      "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.740"
+      "value": 0.9475,
+      "tip": "<b>Gemma 4 26B</b><br>8 backdoors to land<br>caught at least once: 94.8%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.8688,
-      "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.869"
+      "value": 0.9882,
+      "tip": "<b>Gemma 4 26B</b><br>12 backdoors to land<br>caught at least once: 98.8%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
      },
      {
-      "value": 0.9672,
-      "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.967"
+      "value": 0.9994,
+      "tip": "<b>Gemma 4 26B</b><br>20 backdoors to land<br>caught at least once: 99.9%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
      }
     ]
    }
@@ -378,258 +350,549 @@
   ],
   "initial": 0,
   "frames": [
-   {},
    {
     "series": [
      {
+      "name": "Sonnet 5.5 UM",
       "type": "line",
-      "name": "Sonnet 5.5 default",
-      "symbolSize": 7,
+      "symbolSize": 8,
+      "z": 3,
       "lineStyle": {
        "color": "@s0",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s0"
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.868,
+        "tip": "<b>Sonnet 5.5 UM</b><br>1 backdoor to land<br>caught at least once: 86.8%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9828,
+        "tip": "<b>Sonnet 5.5 UM</b><br>2 backdoors to land<br>caught at least once: 98.3%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9978,
+        "tip": "<b>Sonnet 5.5 UM</b><br>3 backdoors to land<br>caught at least once: 99.8%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>Sonnet 5.5 UM</b><br>5 backdoors to land<br>caught at least once: 100.0%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>Sonnet 5.5 UM</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>Sonnet 5.5 UM</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>Sonnet 5.5 UM</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 86.8% one at a time<br>pool: 500 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.85,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>1 backdoor to land<br>caught at least once: 85.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9778,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>2 backdoors to land<br>caught at least once: 97.8%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9967,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>3 backdoors to land<br>caught at least once: 99.7%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9999,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>5 backdoors to land<br>caught at least once: 100.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 85.0% one at a time<br>pool: 500 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.762,
+        "tip": "<b>GLM-5.3</b><br>1 backdoor to land<br>caught at least once: 76.2%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9437,
+        "tip": "<b>GLM-5.3</b><br>2 backdoors to land<br>caught at least once: 94.4%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9868,
+        "tip": "<b>GLM-5.3</b><br>3 backdoors to land<br>caught at least once: 98.7%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9993,
+        "tip": "<b>GLM-5.3</b><br>5 backdoors to land<br>caught at least once: 99.9%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>GLM-5.3</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>GLM-5.3</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 1.0,
+        "tip": "<b>GLM-5.3</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 76.2% one at a time<br>pool: 500 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "gpt-oss-120b · high",
+      "type": "line",
+      "symbolSize": 8,
+      "z": 3,
+      "lineStyle": {
+       "color": "@s7",
+       "width": 2.5
+      },
+      "itemStyle": {
+       "color": "@s7",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.158,
+        "tip": "<b>gpt-oss-120b · high</b><br>1 backdoor to land<br>caught at least once: 15.8%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.2913,
+        "tip": "<b>gpt-oss-120b · high</b><br>2 backdoors to land<br>caught at least once: 29.1%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.4037,
+        "tip": "<b>gpt-oss-120b · high</b><br>3 backdoors to land<br>caught at least once: 40.4%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.5784,
+        "tip": "<b>gpt-oss-120b · high</b><br>5 backdoors to land<br>caught at least once: 57.8%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.75,
+        "tip": "<b>gpt-oss-120b · high</b><br>8 backdoors to land<br>caught at least once: 75.0%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.8762,
+        "tip": "<b>gpt-oss-120b · high</b><br>12 backdoors to land<br>caught at least once: 87.6%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9702,
+        "tip": "<b>gpt-oss-120b · high</b><br>20 backdoors to land<br>caught at least once: 97.0%<br>catches 15.8% one at a time<br>pool: 500 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.19,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>1 backdoor to land<br>caught at least once: 19.0%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.3442,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>2 backdoors to land<br>caught at least once: 34.4%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.4693,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>3 backdoors to land<br>caught at least once: 46.9%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.653,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>5 backdoors to land<br>caught at least once: 65.3%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.8171,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>8 backdoors to land<br>caught at least once: 81.7%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9227,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>12 backdoors to land<br>caught at least once: 92.3%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9865,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>20 backdoors to land<br>caught at least once: 98.7%<br>catches 19.0% one at a time<br>pool: 500 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.306,
+        "tip": "<b>Gemma 4 26B</b><br>1 backdoor to land<br>caught at least once: 30.6%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.5188,
+        "tip": "<b>Gemma 4 26B</b><br>2 backdoors to land<br>caught at least once: 51.9%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.6666,
+        "tip": "<b>Gemma 4 26B</b><br>3 backdoors to land<br>caught at least once: 66.7%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.8404,
+        "tip": "<b>Gemma 4 26B</b><br>5 backdoors to land<br>caught at least once: 84.0%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9475,
+        "tip": "<b>Gemma 4 26B</b><br>8 backdoors to land<br>caught at least once: 94.8%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9882,
+        "tip": "<b>Gemma 4 26B</b><br>12 backdoors to land<br>caught at least once: 98.8%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
+       },
+       {
+        "value": 0.9994,
+        "tip": "<b>Gemma 4 26B</b><br>20 backdoors to land<br>caught at least once: 99.9%<br>catches 30.6% one at a time<br>pool: 500 backdoors of this size"
+       }
+      ]
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "Sonnet 5.5 UM",
+      "type": "line",
+      "symbolSize": 8,
+      "z": 3,
+      "lineStyle": {
+       "color": "@s0",
+       "width": 2.5
+      },
+      "itemStyle": {
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.8564,
-        "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.856"
+        "tip": "<b>Sonnet 5.5 UM</b><br>1 backdoor to land<br>caught at least once: 85.6%<br>catches 85.6% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9797,
-        "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.980"
+        "tip": "<b>Sonnet 5.5 UM</b><br>2 backdoors to land<br>caught at least once: 98.0%<br>catches 85.6% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9972,
-        "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.997"
+        "tip": "<b>Sonnet 5.5 UM</b><br>3 backdoors to land<br>caught at least once: 99.7%<br>catches 85.6% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9999,
-        "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>5 backdoors to land<br>caught at least once: 100.0%<br>catches 85.6% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 85.6% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 85.6% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 85.6% one at a time<br>pool: 362 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "Haiku 5.5 xhigh",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s3",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s3"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.8287,
-        "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.829"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>1 backdoor to land<br>caught at least once: 82.9%<br>catches 82.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9711,
-        "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.971"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>2 backdoors to land<br>caught at least once: 97.1%<br>catches 82.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9952,
-        "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.995"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>3 backdoors to land<br>caught at least once: 99.5%<br>catches 82.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9999,
-        "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>5 backdoors to land<br>caught at least once: 100.0%<br>catches 82.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 82.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 82.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 82.9% one at a time<br>pool: 362 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "GLM-5.3 max (default)",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s4",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s4"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.7624,
-        "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.762"
+        "tip": "<b>GLM-5.3</b><br>1 backdoor to land<br>caught at least once: 76.2%<br>catches 76.2% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9441,
-        "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.944"
+        "tip": "<b>GLM-5.3</b><br>2 backdoors to land<br>caught at least once: 94.4%<br>catches 76.2% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9869,
-        "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.987"
+        "tip": "<b>GLM-5.3</b><br>3 backdoors to land<br>caught at least once: 98.7%<br>catches 76.2% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9993,
-        "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.999"
+        "tip": "<b>GLM-5.3</b><br>5 backdoors to land<br>caught at least once: 99.9%<br>catches 76.2% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 76.2% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 76.2% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 76.2% one at a time<br>pool: 362 backdoors of this size"
        }
       ]
      },
      {
+      "name": "gpt-oss-120b · high",
       "type": "line",
-      "name": "Gemma 4 26B-A4B",
-      "symbolSize": 7,
+      "symbolSize": 8,
+      "z": 3,
       "lineStyle": {
        "color": "@s7",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s7"
+       "color": "@s7",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
-        "value": 0.3287,
-        "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.329"
+        "value": 0.174,
+        "tip": "<b>gpt-oss-120b · high</b><br>1 backdoor to land<br>caught at least once: 17.4%<br>catches 17.4% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.55,
-        "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.550"
+        "value": 0.3182,
+        "tip": "<b>gpt-oss-120b · high</b><br>2 backdoors to land<br>caught at least once: 31.8%<br>catches 17.4% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.6988,
-        "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.699"
+        "value": 0.4375,
+        "tip": "<b>gpt-oss-120b · high</b><br>3 backdoors to land<br>caught at least once: 43.7%<br>catches 17.4% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.8656,
-        "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.866"
+        "value": 0.6178,
+        "tip": "<b>gpt-oss-120b · high</b><br>5 backdoors to land<br>caught at least once: 61.8%<br>catches 17.4% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.9603,
-        "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.960"
+        "value": 0.7869,
+        "tip": "<b>gpt-oss-120b · high</b><br>8 backdoors to land<br>caught at least once: 78.7%<br>catches 17.4% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.9924,
-        "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.992"
+        "value": 0.9031,
+        "tip": "<b>gpt-oss-120b · high</b><br>12 backdoors to land<br>caught at least once: 90.3%<br>catches 17.4% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.9997,
-        "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 1.000"
+        "value": 0.9805,
+        "tip": "<b>gpt-oss-120b · high</b><br>20 backdoors to land<br>caught at least once: 98.1%<br>catches 17.4% one at a time<br>pool: 362 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "Gemini 3.5 Flash-Lite high",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s2",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s2"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.1934,
-        "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.193"
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>1 backdoor to land<br>caught at least once: 19.3%<br>catches 19.3% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.3498,
-        "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.350"
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>2 backdoors to land<br>caught at least once: 35.0%<br>catches 19.3% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.4762,
-        "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.476"
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>3 backdoors to land<br>caught at least once: 47.6%<br>catches 19.3% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.6608,
-        "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.661"
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>5 backdoors to land<br>caught at least once: 66.1%<br>catches 19.3% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.8241,
-        "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.824"
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>8 backdoors to land<br>caught at least once: 82.4%<br>catches 19.3% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9274,
-        "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.927"
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>12 backdoors to land<br>caught at least once: 92.7%<br>catches 19.3% one at a time<br>pool: 362 backdoors of this size"
        },
        {
         "value": 0.9881,
-        "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.988"
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>20 backdoors to land<br>caught at least once: 98.8%<br>catches 19.3% one at a time<br>pool: 362 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "gpt-oss-120b high",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s5",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s5"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
-        "value": 0.1713,
-        "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.171"
+        "value": 0.3287,
+        "tip": "<b>Gemma 4 26B</b><br>1 backdoor to land<br>caught at least once: 32.9%<br>catches 32.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.3136,
-        "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.314"
+        "value": 0.55,
+        "tip": "<b>Gemma 4 26B</b><br>2 backdoors to land<br>caught at least once: 55.0%<br>catches 32.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.4318,
-        "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.432"
+        "value": 0.6988,
+        "tip": "<b>Gemma 4 26B</b><br>3 backdoors to land<br>caught at least once: 69.9%<br>catches 32.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.6113,
-        "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.611"
+        "value": 0.8656,
+        "tip": "<b>Gemma 4 26B</b><br>5 backdoors to land<br>caught at least once: 86.6%<br>catches 32.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.7811,
-        "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.781"
+        "value": 0.9603,
+        "tip": "<b>Gemma 4 26B</b><br>8 backdoors to land<br>caught at least once: 96.0%<br>catches 32.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.899,
-        "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.899"
+        "value": 0.9924,
+        "tip": "<b>Gemma 4 26B</b><br>12 backdoors to land<br>caught at least once: 99.2%<br>catches 32.9% one at a time<br>pool: 362 backdoors of this size"
        },
        {
-        "value": 0.9791,
-        "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.979"
+        "value": 0.9997,
+        "tip": "<b>Gemma 4 26B</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 32.9% one at a time<br>pool: 362 backdoors of this size"
        }
       ]
      }
@@ -638,254 +901,272 @@
    {
     "series": [
      {
+      "name": "Sonnet 5.5 UM",
       "type": "line",
-      "name": "Sonnet 5.5 default",
-      "symbolSize": 7,
+      "symbolSize": 8,
+      "z": 3,
       "lineStyle": {
        "color": "@s0",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s0"
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.8246,
-        "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.825"
+        "tip": "<b>Sonnet 5.5 UM</b><br>1 backdoor to land<br>caught at least once: 82.5%<br>catches 82.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9699,
-        "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.970"
+        "tip": "<b>Sonnet 5.5 UM</b><br>2 backdoors to land<br>caught at least once: 97.0%<br>catches 82.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9949,
-        "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.995"
+        "tip": "<b>Sonnet 5.5 UM</b><br>3 backdoors to land<br>caught at least once: 99.5%<br>catches 82.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9999,
-        "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>5 backdoors to land<br>caught at least once: 100.0%<br>catches 82.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 82.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 82.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 82.5% one at a time<br>pool: 228 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "Haiku 5.5 xhigh",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s3",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s3"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.7763,
-        "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.776"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>1 backdoor to land<br>caught at least once: 77.6%<br>catches 77.6% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9507,
-        "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.951"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>2 backdoors to land<br>caught at least once: 95.1%<br>catches 77.6% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9893,
-        "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.989"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>3 backdoors to land<br>caught at least once: 98.9%<br>catches 77.6% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9995,
-        "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>5 backdoors to land<br>caught at least once: 100.0%<br>catches 77.6% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 77.6% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 77.6% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 77.6% one at a time<br>pool: 228 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "GLM-5.3 max (default)",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s4",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s4"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.7193,
-        "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.719"
+        "tip": "<b>GLM-5.3</b><br>1 backdoor to land<br>caught at least once: 71.9%<br>catches 71.9% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9221,
-        "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.922"
+        "tip": "<b>GLM-5.3</b><br>2 backdoors to land<br>caught at least once: 92.2%<br>catches 71.9% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9786,
-        "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.979"
+        "tip": "<b>GLM-5.3</b><br>3 backdoors to land<br>caught at least once: 97.9%<br>catches 71.9% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9984,
-        "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.998"
+        "tip": "<b>GLM-5.3</b><br>5 backdoors to land<br>caught at least once: 99.8%<br>catches 71.9% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 71.9% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 71.9% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 71.9% one at a time<br>pool: 228 backdoors of this size"
        }
       ]
      },
      {
+      "name": "gpt-oss-120b · high",
       "type": "line",
-      "name": "Gemma 4 26B-A4B",
-      "symbolSize": 7,
+      "symbolSize": 8,
+      "z": 3,
       "lineStyle": {
        "color": "@s7",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s7"
-      },
-      "data": [
-       {
-        "value": 0.2982,
-        "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.298"
-       },
-       {
-        "value": 0.5085,
-        "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.508"
-       },
-       {
-        "value": 0.6564,
-        "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.656"
-       },
-       {
-        "value": 0.833,
-        "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.833"
-       },
-       {
-        "value": 0.9443,
-        "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.944"
-       },
-       {
-        "value": 0.9875,
-        "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.987"
-       },
-       {
-        "value": 0.9994,
-        "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 0.999"
-       }
-      ]
-     },
-     {
-      "type": "line",
-      "name": "Gemini 3.5 Flash-Lite high",
-      "symbolSize": 7,
-      "lineStyle": {
-       "color": "@s2",
-       "width": 2
-      },
-      "itemStyle": {
-       "color": "@s2"
-      },
-      "data": [
-       {
-        "value": 0.1798,
-        "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.180"
-       },
-       {
-        "value": 0.328,
-        "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.328"
-       },
-       {
-        "value": 0.4499,
-        "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.450"
-       },
-       {
-        "value": 0.6325,
-        "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.632"
-       },
-       {
-        "value": 0.8008,
-        "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.801"
-       },
-       {
-        "value": 0.9133,
-        "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.913"
-       },
-       {
-        "value": 0.9844,
-        "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.984"
-       }
-      ]
-     },
-     {
-      "type": "line",
-      "name": "gpt-oss-120b high",
-      "symbolSize": 7,
-      "lineStyle": {
-       "color": "@s5",
-       "width": 2
-      },
-      "itemStyle": {
-       "color": "@s5"
+       "color": "@s7",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.1754,
-        "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.175"
+        "tip": "<b>gpt-oss-120b · high</b><br>1 backdoor to land<br>caught at least once: 17.5%<br>catches 17.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.3207,
-        "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.321"
+        "tip": "<b>gpt-oss-120b · high</b><br>2 backdoors to land<br>caught at least once: 32.1%<br>catches 17.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.441,
-        "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.441"
+        "tip": "<b>gpt-oss-120b · high</b><br>3 backdoors to land<br>caught at least once: 44.1%<br>catches 17.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.6224,
-        "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.622"
+        "tip": "<b>gpt-oss-120b · high</b><br>5 backdoors to land<br>caught at least once: 62.2%<br>catches 17.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.792,
-        "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.792"
+        "tip": "<b>gpt-oss-120b · high</b><br>8 backdoors to land<br>caught at least once: 79.2%<br>catches 17.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9073,
-        "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.907"
+        "tip": "<b>gpt-oss-120b · high</b><br>12 backdoors to land<br>caught at least once: 90.7%<br>catches 17.5% one at a time<br>pool: 228 backdoors of this size"
        },
        {
         "value": 0.9825,
-        "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.983"
+        "tip": "<b>gpt-oss-120b · high</b><br>20 backdoors to land<br>caught at least once: 98.3%<br>catches 17.5% one at a time<br>pool: 228 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.1798,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>1 backdoor to land<br>caught at least once: 18.0%<br>catches 18.0% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.328,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>2 backdoors to land<br>caught at least once: 32.8%<br>catches 18.0% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.4499,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>3 backdoors to land<br>caught at least once: 45.0%<br>catches 18.0% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.6325,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>5 backdoors to land<br>caught at least once: 63.2%<br>catches 18.0% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.8008,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>8 backdoors to land<br>caught at least once: 80.1%<br>catches 18.0% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.9133,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>12 backdoors to land<br>caught at least once: 91.3%<br>catches 18.0% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.9844,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>20 backdoors to land<br>caught at least once: 98.4%<br>catches 18.0% one at a time<br>pool: 228 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.2982,
+        "tip": "<b>Gemma 4 26B</b><br>1 backdoor to land<br>caught at least once: 29.8%<br>catches 29.8% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.5085,
+        "tip": "<b>Gemma 4 26B</b><br>2 backdoors to land<br>caught at least once: 50.8%<br>catches 29.8% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.6564,
+        "tip": "<b>Gemma 4 26B</b><br>3 backdoors to land<br>caught at least once: 65.6%<br>catches 29.8% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.833,
+        "tip": "<b>Gemma 4 26B</b><br>5 backdoors to land<br>caught at least once: 83.3%<br>catches 29.8% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.9443,
+        "tip": "<b>Gemma 4 26B</b><br>8 backdoors to land<br>caught at least once: 94.4%<br>catches 29.8% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.9875,
+        "tip": "<b>Gemma 4 26B</b><br>12 backdoors to land<br>caught at least once: 98.7%<br>catches 29.8% one at a time<br>pool: 228 backdoors of this size"
+       },
+       {
+        "value": 0.9994,
+        "tip": "<b>Gemma 4 26B</b><br>20 backdoors to land<br>caught at least once: 99.9%<br>catches 29.8% one at a time<br>pool: 228 backdoors of this size"
        }
       ]
      }
@@ -894,254 +1175,272 @@
    {
     "series": [
      {
+      "name": "Sonnet 5.5 UM",
       "type": "line",
-      "name": "Sonnet 5.5 default",
-      "symbolSize": 7,
+      "symbolSize": 8,
+      "z": 3,
       "lineStyle": {
        "color": "@s0",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s0"
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.7593,
-        "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.759"
+        "tip": "<b>Sonnet 5.5 UM</b><br>1 backdoor to land<br>caught at least once: 75.9%<br>catches 75.9% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9438,
-        "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.944"
+        "tip": "<b>Sonnet 5.5 UM</b><br>2 backdoors to land<br>caught at least once: 94.4%<br>catches 75.9% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9873,
-        "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.987"
+        "tip": "<b>Sonnet 5.5 UM</b><br>3 backdoors to land<br>caught at least once: 98.7%<br>catches 75.9% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9994,
-        "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 0.999"
+        "tip": "<b>Sonnet 5.5 UM</b><br>5 backdoors to land<br>caught at least once: 99.9%<br>catches 75.9% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 75.9% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 75.9% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 75.9% one at a time<br>pool: 108 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "Haiku 5.5 xhigh",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s3",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s3"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.7222,
-        "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.722"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>1 backdoor to land<br>caught at least once: 72.2%<br>catches 72.2% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9247,
-        "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.925"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>2 backdoors to land<br>caught at least once: 92.5%<br>catches 72.2% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9801,
-        "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.980"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>3 backdoors to land<br>caught at least once: 98.0%<br>catches 72.2% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9987,
-        "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 0.999"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>5 backdoors to land<br>caught at least once: 99.9%<br>catches 72.2% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 72.2% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 72.2% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 72.2% one at a time<br>pool: 108 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "GLM-5.3 max (default)",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s4",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s4"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.6481,
-        "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.648"
+        "tip": "<b>GLM-5.3</b><br>1 backdoor to land<br>caught at least once: 64.8%<br>catches 64.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.8783,
-        "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.878"
+        "tip": "<b>GLM-5.3</b><br>2 backdoors to land<br>caught at least once: 87.8%<br>catches 64.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9587,
-        "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.959"
+        "tip": "<b>GLM-5.3</b><br>3 backdoors to land<br>caught at least once: 95.9%<br>catches 64.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9955,
-        "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.995"
+        "tip": "<b>GLM-5.3</b><br>5 backdoors to land<br>caught at least once: 99.5%<br>catches 64.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9999,
-        "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 64.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 64.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 64.8% one at a time<br>pool: 108 backdoors of this size"
        }
       ]
      },
      {
+      "name": "gpt-oss-120b · high",
       "type": "line",
-      "name": "Gemma 4 26B-A4B",
-      "symbolSize": 7,
+      "symbolSize": 8,
+      "z": 3,
       "lineStyle": {
        "color": "@s7",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s7"
-      },
-      "data": [
-       {
-        "value": 0.25,
-        "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.250"
-       },
-       {
-        "value": 0.4393,
-        "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.439"
-       },
-       {
-        "value": 0.5821,
-        "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.582"
-       },
-       {
-        "value": 0.7701,
-        "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.770"
-       },
-       {
-        "value": 0.9086,
-        "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.909"
-       },
-       {
-        "value": 0.9746,
-        "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.975"
-       },
-       {
-        "value": 0.9984,
-        "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 0.998"
-       }
-      ]
-     },
-     {
-      "type": "line",
-      "name": "Gemini 3.5 Flash-Lite high",
-      "symbolSize": 7,
-      "lineStyle": {
-       "color": "@s2",
-       "width": 2
-      },
-      "itemStyle": {
-       "color": "@s2"
-      },
-      "data": [
-       {
-        "value": 0.1389,
-        "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.139"
-       },
-       {
-        "value": 0.2596,
-        "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.260"
-       },
-       {
-        "value": 0.3644,
-        "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.364"
-       },
-       {
-        "value": 0.5338,
-        "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.534"
-       },
-       {
-        "value": 0.7107,
-        "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.711"
-       },
-       {
-        "value": 0.8506,
-        "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.851"
-       },
-       {
-        "value": 0.9638,
-        "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.964"
-       }
-      ]
-     },
-     {
-      "type": "line",
-      "name": "gpt-oss-120b high",
-      "symbolSize": 7,
-      "lineStyle": {
-       "color": "@s5",
-       "width": 2
-      },
-      "itemStyle": {
-       "color": "@s5"
+       "color": "@s7",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.1481,
-        "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.148"
+        "tip": "<b>gpt-oss-120b · high</b><br>1 backdoor to land<br>caught at least once: 14.8%<br>catches 14.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.2755,
-        "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.276"
+        "tip": "<b>gpt-oss-120b · high</b><br>2 backdoors to land<br>caught at least once: 27.6%<br>catches 14.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.3849,
-        "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.385"
+        "tip": "<b>gpt-oss-120b · high</b><br>3 backdoors to land<br>caught at least once: 38.5%<br>catches 14.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.5588,
-        "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.559"
+        "tip": "<b>gpt-oss-120b · high</b><br>5 backdoors to land<br>caught at least once: 55.9%<br>catches 14.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.7356,
-        "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.736"
+        "tip": "<b>gpt-oss-120b · high</b><br>8 backdoors to land<br>caught at least once: 73.6%<br>catches 14.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.8699,
-        "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.870"
+        "tip": "<b>gpt-oss-120b · high</b><br>12 backdoors to land<br>caught at least once: 87.0%<br>catches 14.8% one at a time<br>pool: 108 backdoors of this size"
        },
        {
         "value": 0.9716,
-        "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.972"
+        "tip": "<b>gpt-oss-120b · high</b><br>20 backdoors to land<br>caught at least once: 97.2%<br>catches 14.8% one at a time<br>pool: 108 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.1389,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>1 backdoor to land<br>caught at least once: 13.9%<br>catches 13.9% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.2596,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>2 backdoors to land<br>caught at least once: 26.0%<br>catches 13.9% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.3644,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>3 backdoors to land<br>caught at least once: 36.4%<br>catches 13.9% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.5338,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>5 backdoors to land<br>caught at least once: 53.4%<br>catches 13.9% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.7107,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>8 backdoors to land<br>caught at least once: 71.1%<br>catches 13.9% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.8506,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>12 backdoors to land<br>caught at least once: 85.1%<br>catches 13.9% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.9638,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>20 backdoors to land<br>caught at least once: 96.4%<br>catches 13.9% one at a time<br>pool: 108 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.25,
+        "tip": "<b>Gemma 4 26B</b><br>1 backdoor to land<br>caught at least once: 25.0%<br>catches 25.0% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.4393,
+        "tip": "<b>Gemma 4 26B</b><br>2 backdoors to land<br>caught at least once: 43.9%<br>catches 25.0% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.5821,
+        "tip": "<b>Gemma 4 26B</b><br>3 backdoors to land<br>caught at least once: 58.2%<br>catches 25.0% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.7701,
+        "tip": "<b>Gemma 4 26B</b><br>5 backdoors to land<br>caught at least once: 77.0%<br>catches 25.0% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.9086,
+        "tip": "<b>Gemma 4 26B</b><br>8 backdoors to land<br>caught at least once: 90.9%<br>catches 25.0% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.9746,
+        "tip": "<b>Gemma 4 26B</b><br>12 backdoors to land<br>caught at least once: 97.5%<br>catches 25.0% one at a time<br>pool: 108 backdoors of this size"
+       },
+       {
+        "value": 0.9984,
+        "tip": "<b>Gemma 4 26B</b><br>20 backdoors to land<br>caught at least once: 99.8%<br>catches 25.0% one at a time<br>pool: 108 backdoors of this size"
        }
       ]
      }
@@ -1150,254 +1449,272 @@
    {
     "series": [
      {
+      "name": "Sonnet 5.5 UM",
       "type": "line",
-      "name": "Sonnet 5.5 default",
-      "symbolSize": 7,
+      "symbolSize": 8,
+      "z": 3,
       "lineStyle": {
        "color": "@s0",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s0"
+       "color": "@s0",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.6585,
-        "name": "Sonnet 5.5 default, 1 landing<br/>caught at least once: 0.659"
+        "tip": "<b>Sonnet 5.5 UM</b><br>1 backdoor to land<br>caught at least once: 65.9%<br>catches 65.9% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.889,
-        "name": "Sonnet 5.5 default, 2 landings<br/>caught at least once: 0.889"
+        "tip": "<b>Sonnet 5.5 UM</b><br>2 backdoors to land<br>caught at least once: 88.9%<br>catches 65.9% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.9659,
-        "name": "Sonnet 5.5 default, 3 landings<br/>caught at least once: 0.966"
+        "tip": "<b>Sonnet 5.5 UM</b><br>3 backdoors to land<br>caught at least once: 96.6%<br>catches 65.9% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.9973,
-        "name": "Sonnet 5.5 default, 5 landings<br/>caught at least once: 0.997"
+        "tip": "<b>Sonnet 5.5 UM</b><br>5 backdoors to land<br>caught at least once: 99.7%<br>catches 65.9% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 65.9% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 65.9% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Sonnet 5.5 default, 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Sonnet 5.5 UM</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 65.9% one at a time<br>pool: 41 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "Haiku 5.5 xhigh",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s3",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s3"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.6098,
-        "name": "Haiku 5.5 xhigh, 1 landing<br/>caught at least once: 0.610"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>1 backdoor to land<br>caught at least once: 61.0%<br>catches 61.0% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.8537,
-        "name": "Haiku 5.5 xhigh, 2 landings<br/>caught at least once: 0.854"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>2 backdoors to land<br>caught at least once: 85.4%<br>catches 61.0% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.9475,
-        "name": "Haiku 5.5 xhigh, 3 landings<br/>caught at least once: 0.947"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>3 backdoors to land<br>caught at least once: 94.7%<br>catches 61.0% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.9942,
-        "name": "Haiku 5.5 xhigh, 5 landings<br/>caught at least once: 0.994"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>5 backdoors to land<br>caught at least once: 99.4%<br>catches 61.0% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.9999,
-        "name": "Haiku 5.5 xhigh, 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 61.0% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 61.0% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "Haiku 5.5 xhigh, 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>Haiku 5.5 · xhigh</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 61.0% one at a time<br>pool: 41 backdoors of this size"
        }
       ]
      },
      {
+      "name": "four other monitors",
       "type": "line",
-      "name": "GLM-5.3 max (default)",
-      "symbolSize": 7,
+      "symbolSize": 6,
+      "z": 2,
       "lineStyle": {
-       "color": "@s4",
-       "width": 2
+       "color": "@context",
+       "width": 1.5
       },
       "itemStyle": {
-       "color": "@s4"
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.561,
-        "name": "GLM-5.3 max (default), 1 landing<br/>caught at least once: 0.561"
+        "tip": "<b>GLM-5.3</b><br>1 backdoor to land<br>caught at least once: 56.1%<br>catches 56.1% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.8134,
-        "name": "GLM-5.3 max (default), 2 landings<br/>caught at least once: 0.813"
+        "tip": "<b>GLM-5.3</b><br>2 backdoors to land<br>caught at least once: 81.3%<br>catches 56.1% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.9235,
-        "name": "GLM-5.3 max (default), 3 landings<br/>caught at least once: 0.923"
+        "tip": "<b>GLM-5.3</b><br>3 backdoors to land<br>caught at least once: 92.3%<br>catches 56.1% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.9886,
-        "name": "GLM-5.3 max (default), 5 landings<br/>caught at least once: 0.989"
+        "tip": "<b>GLM-5.3</b><br>5 backdoors to land<br>caught at least once: 98.9%<br>catches 56.1% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.9995,
-        "name": "GLM-5.3 max (default), 8 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>8 backdoors to land<br>caught at least once: 100.0%<br>catches 56.1% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 12 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>12 backdoors to land<br>caught at least once: 100.0%<br>catches 56.1% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 1.0,
-        "name": "GLM-5.3 max (default), 20 landings<br/>caught at least once: 1.000"
+        "tip": "<b>GLM-5.3</b><br>20 backdoors to land<br>caught at least once: 100.0%<br>catches 56.1% one at a time<br>pool: 41 backdoors of this size"
        }
       ]
      },
      {
+      "name": "gpt-oss-120b · high",
       "type": "line",
-      "name": "Gemma 4 26B-A4B",
-      "symbolSize": 7,
+      "symbolSize": 8,
+      "z": 3,
       "lineStyle": {
        "color": "@s7",
-       "width": 2
+       "width": 2.5
       },
       "itemStyle": {
-       "color": "@s7"
-      },
-      "data": [
-       {
-        "value": 0.2195,
-        "name": "Gemma 4 26B-A4B, 1 landing<br/>caught at least once: 0.220"
-       },
-       {
-        "value": 0.3951,
-        "name": "Gemma 4 26B-A4B, 2 landings<br/>caught at least once: 0.395"
-       },
-       {
-        "value": 0.5347,
-        "name": "Gemma 4 26B-A4B, 3 landings<br/>caught at least once: 0.535"
-       },
-       {
-        "value": 0.7313,
-        "name": "Gemma 4 26B-A4B, 5 landings<br/>caught at least once: 0.731"
-       },
-       {
-        "value": 0.8899,
-        "name": "Gemma 4 26B-A4B, 8 landings<br/>caught at least once: 0.890"
-       },
-       {
-        "value": 0.9714,
-        "name": "Gemma 4 26B-A4B, 12 landings<br/>caught at least once: 0.971"
-       },
-       {
-        "value": 0.9992,
-        "name": "Gemma 4 26B-A4B, 20 landings<br/>caught at least once: 0.999"
-       }
-      ]
-     },
-     {
-      "type": "line",
-      "name": "Gemini 3.5 Flash-Lite high",
-      "symbolSize": 7,
-      "lineStyle": {
-       "color": "@s2",
-       "width": 2
-      },
-      "itemStyle": {
-       "color": "@s2"
-      },
-      "data": [
-       {
-        "value": 0.122,
-        "name": "Gemini 3.5 Flash-Lite high, 1 landing<br/>caught at least once: 0.122"
-       },
-       {
-        "value": 0.2317,
-        "name": "Gemini 3.5 Flash-Lite high, 2 landings<br/>caught at least once: 0.232"
-       },
-       {
-        "value": 0.3302,
-        "name": "Gemini 3.5 Flash-Lite high, 3 landings<br/>caught at least once: 0.330"
-       },
-       {
-        "value": 0.4969,
-        "name": "Gemini 3.5 Flash-Lite high, 5 landings<br/>caught at least once: 0.497"
-       },
-       {
-        "value": 0.6833,
-        "name": "Gemini 3.5 Flash-Lite high, 8 landings<br/>caught at least once: 0.683"
-       },
-       {
-        "value": 0.8415,
-        "name": "Gemini 3.5 Flash-Lite high, 12 landings<br/>caught at least once: 0.842"
-       },
-       {
-        "value": 0.9728,
-        "name": "Gemini 3.5 Flash-Lite high, 20 landings<br/>caught at least once: 0.973"
-       }
-      ]
-     },
-     {
-      "type": "line",
-      "name": "gpt-oss-120b high",
-      "symbolSize": 7,
-      "lineStyle": {
-       "color": "@s5",
-       "width": 2
-      },
-      "itemStyle": {
-       "color": "@s5"
+       "color": "@s7",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
       },
       "data": [
        {
         "value": 0.1463,
-        "name": "gpt-oss-120b high, 1 landing<br/>caught at least once: 0.146"
+        "tip": "<b>gpt-oss-120b · high</b><br>1 backdoor to land<br>caught at least once: 14.6%<br>catches 14.6% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.2744,
-        "name": "gpt-oss-120b high, 2 landings<br/>caught at least once: 0.274"
+        "tip": "<b>gpt-oss-120b · high</b><br>2 backdoors to land<br>caught at least once: 27.4%<br>catches 14.6% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.386,
-        "name": "gpt-oss-120b high, 3 landings<br/>caught at least once: 0.386"
+        "tip": "<b>gpt-oss-120b · high</b><br>3 backdoors to land<br>caught at least once: 38.6%<br>catches 14.6% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.5668,
-        "name": "gpt-oss-120b high, 5 landings<br/>caught at least once: 0.567"
+        "tip": "<b>gpt-oss-120b · high</b><br>5 backdoors to land<br>caught at least once: 56.7%<br>catches 14.6% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.7537,
-        "name": "gpt-oss-120b high, 8 landings<br/>caught at least once: 0.754"
+        "tip": "<b>gpt-oss-120b · high</b><br>8 backdoors to land<br>caught at least once: 75.4%<br>catches 14.6% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.8944,
-        "name": "gpt-oss-120b high, 12 landings<br/>caught at least once: 0.894"
+        "tip": "<b>gpt-oss-120b · high</b><br>12 backdoors to land<br>caught at least once: 89.4%<br>catches 14.6% one at a time<br>pool: 41 backdoors of this size"
        },
        {
         "value": 0.9879,
-        "name": "gpt-oss-120b high, 20 landings<br/>caught at least once: 0.988"
+        "tip": "<b>gpt-oss-120b · high</b><br>20 backdoors to land<br>caught at least once: 98.8%<br>catches 14.6% one at a time<br>pool: 41 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.122,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>1 backdoor to land<br>caught at least once: 12.2%<br>catches 12.2% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.2317,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>2 backdoors to land<br>caught at least once: 23.2%<br>catches 12.2% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.3302,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>3 backdoors to land<br>caught at least once: 33.0%<br>catches 12.2% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.4969,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>5 backdoors to land<br>caught at least once: 49.7%<br>catches 12.2% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.6833,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>8 backdoors to land<br>caught at least once: 68.3%<br>catches 12.2% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.8415,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>12 backdoors to land<br>caught at least once: 84.2%<br>catches 12.2% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.9728,
+        "tip": "<b>Gemini 3.5 Flash-Lite · high</b><br>20 backdoors to land<br>caught at least once: 97.3%<br>catches 12.2% one at a time<br>pool: 41 backdoors of this size"
+       }
+      ]
+     },
+     {
+      "name": "four other monitors",
+      "type": "line",
+      "symbolSize": 6,
+      "z": 2,
+      "lineStyle": {
+       "color": "@context",
+       "width": 1.5
+      },
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderColor": "@ink-surface",
+       "borderWidth": 1.5
+      },
+      "data": [
+       {
+        "value": 0.2195,
+        "tip": "<b>Gemma 4 26B</b><br>1 backdoor to land<br>caught at least once: 22.0%<br>catches 22.0% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.3951,
+        "tip": "<b>Gemma 4 26B</b><br>2 backdoors to land<br>caught at least once: 39.5%<br>catches 22.0% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.5347,
+        "tip": "<b>Gemma 4 26B</b><br>3 backdoors to land<br>caught at least once: 53.5%<br>catches 22.0% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.7313,
+        "tip": "<b>Gemma 4 26B</b><br>5 backdoors to land<br>caught at least once: 73.1%<br>catches 22.0% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.8899,
+        "tip": "<b>Gemma 4 26B</b><br>8 backdoors to land<br>caught at least once: 89.0%<br>catches 22.0% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.9714,
+        "tip": "<b>Gemma 4 26B</b><br>12 backdoors to land<br>caught at least once: 97.1%<br>catches 22.0% one at a time<br>pool: 41 backdoors of this size"
+       },
+       {
+        "value": 0.9992,
+        "tip": "<b>Gemma 4 26B</b><br>20 backdoors to land<br>caught at least once: 99.9%<br>catches 22.0% one at a time<br>pool: 41 backdoors of this size"
        }
       ]
      }
@@ -1407,96 +1724,2349 @@
  },
  "data": {
   "columns": [
+   "edit_cap",
    "monitor",
-   "backdoors in this pool",
-   "caught one at a time (%)",
-   "1 landing (%)",
-   "2 landings (%)",
-   "3 landings (%)",
-   "5 landings (%)",
-   "8 landings (%)",
-   "12 landings (%)",
-   "20 landings (%)"
+   "run",
+   "pool",
+   "cutoff",
+   "served_honest_pct",
+   "caught_alone_pct",
+   "backdoors_to_land",
+   "caught_once_pct"
   ],
   "rows": [
    [
-    "Sonnet 5.5 default",
+    "any size",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
     500,
+    0.1,
+    1.0,
     86.8,
+    1,
+    86.8
+   ],
+   [
+    "any size",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    500,
+    0.1,
+    1.0,
     86.8,
-    98.3,
-    99.8,
-    100.0,
-    100.0,
-    100.0,
+    2,
+    98.28
+   ],
+   [
+    "any size",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    500,
+    0.1,
+    1.0,
+    86.8,
+    3,
+    99.78
+   ],
+   [
+    "any size",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    500,
+    0.1,
+    1.0,
+    86.8,
+    5,
     100.0
    ],
    [
-    "Haiku 5.5 xhigh",
+    "any size",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
     500,
+    0.1,
+    1.0,
+    86.8,
+    8,
+    100.0
+   ],
+   [
+    "any size",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    500,
+    0.1,
+    1.0,
+    86.8,
+    12,
+    100.0
+   ],
+   [
+    "any size",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    500,
+    0.1,
+    1.0,
+    86.8,
+    20,
+    100.0
+   ],
+   [
+    "any size",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    500,
+    0.1,
+    1.6,
     85.0,
+    1,
+    85.0
+   ],
+   [
+    "any size",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    500,
+    0.1,
+    1.6,
     85.0,
-    97.8,
-    99.7,
-    100.0,
-    100.0,
-    100.0,
+    2,
+    97.78
+   ],
+   [
+    "any size",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    500,
+    0.1,
+    1.6,
+    85.0,
+    3,
+    99.67
+   ],
+   [
+    "any size",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    500,
+    0.1,
+    1.6,
+    85.0,
+    5,
+    99.99
+   ],
+   [
+    "any size",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    500,
+    0.1,
+    1.6,
+    85.0,
+    8,
     100.0
    ],
    [
-    "GLM-5.3 max (default)",
+    "any size",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
     500,
-    76.2,
-    76.2,
-    94.4,
-    98.7,
-    99.9,
-    100.0,
-    100.0,
+    0.1,
+    1.6,
+    85.0,
+    12,
     100.0
    ],
    [
-    "Gemma 4 26B-A4B",
+    "any size",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
     500,
-    30.6,
-    30.6,
-    51.9,
-    66.7,
-    84.0,
-    94.8,
-    98.8,
-    99.9
+    0.1,
+    1.6,
+    85.0,
+    20,
+    100.0
    ],
    [
-    "Gemini 3.5 Flash-Lite high",
+    "any size",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
     500,
-    19.0,
-    19.0,
-    34.4,
-    46.9,
-    65.3,
-    81.7,
-    92.3,
-    98.7
+    0.0,
+    2.0,
+    76.2,
+    1,
+    76.2
    ],
    [
-    "gpt-oss-120b high",
+    "any size",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
     500,
-    15.4,
-    15.4,
-    28.5,
-    39.5,
-    56.8,
-    74.0,
-    86.9,
-    96.7
+    0.0,
+    2.0,
+    76.2,
+    2,
+    94.37
+   ],
+   [
+    "any size",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    500,
+    0.0,
+    2.0,
+    76.2,
+    3,
+    98.68
+   ],
+   [
+    "any size",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    500,
+    0.0,
+    2.0,
+    76.2,
+    5,
+    99.93
+   ],
+   [
+    "any size",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    500,
+    0.0,
+    2.0,
+    76.2,
+    8,
+    100.0
+   ],
+   [
+    "any size",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    500,
+    0.0,
+    2.0,
+    76.2,
+    12,
+    100.0
+   ],
+   [
+    "any size",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    500,
+    0.0,
+    2.0,
+    76.2,
+    20,
+    100.0
+   ],
+   [
+    "any size",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    500,
+    0.2,
+    0.6,
+    15.8,
+    1,
+    15.8
+   ],
+   [
+    "any size",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    500,
+    0.2,
+    0.6,
+    15.8,
+    2,
+    29.13
+   ],
+   [
+    "any size",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    500,
+    0.2,
+    0.6,
+    15.8,
+    3,
+    40.37
+   ],
+   [
+    "any size",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    500,
+    0.2,
+    0.6,
+    15.8,
+    5,
+    57.84
+   ],
+   [
+    "any size",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    500,
+    0.2,
+    0.6,
+    15.8,
+    8,
+    75.0
+   ],
+   [
+    "any size",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    500,
+    0.2,
+    0.6,
+    15.8,
+    12,
+    87.62
+   ],
+   [
+    "any size",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    500,
+    0.2,
+    0.6,
+    15.8,
+    20,
+    97.02
+   ],
+   [
+    "any size",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    500,
+    0.0,
+    0.2,
+    19.0,
+    1,
+    19.0
+   ],
+   [
+    "any size",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    500,
+    0.0,
+    0.2,
+    19.0,
+    2,
+    34.42
+   ],
+   [
+    "any size",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    500,
+    0.0,
+    0.2,
+    19.0,
+    3,
+    46.93
+   ],
+   [
+    "any size",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    500,
+    0.0,
+    0.2,
+    19.0,
+    5,
+    65.3
+   ],
+   [
+    "any size",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    500,
+    0.0,
+    0.2,
+    19.0,
+    8,
+    81.71
+   ],
+   [
+    "any size",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    500,
+    0.0,
+    0.2,
+    19.0,
+    12,
+    92.27
+   ],
+   [
+    "any size",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    500,
+    0.0,
+    0.2,
+    19.0,
+    20,
+    98.65
+   ],
+   [
+    "any size",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    500,
+    0.0,
+    0.8,
+    30.6,
+    1,
+    30.6
+   ],
+   [
+    "any size",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    500,
+    0.0,
+    0.8,
+    30.6,
+    2,
+    51.88
+   ],
+   [
+    "any size",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    500,
+    0.0,
+    0.8,
+    30.6,
+    3,
+    66.66
+   ],
+   [
+    "any size",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    500,
+    0.0,
+    0.8,
+    30.6,
+    5,
+    84.04
+   ],
+   [
+    "any size",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    500,
+    0.0,
+    0.8,
+    30.6,
+    8,
+    94.75
+   ],
+   [
+    "any size",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    500,
+    0.0,
+    0.8,
+    30.6,
+    12,
+    98.82
+   ],
+   [
+    "any size",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    500,
+    0.0,
+    0.8,
+    30.6,
+    20,
+    99.94
+   ],
+   [
+    "40 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    362,
+    0.1,
+    1.0,
+    85.64,
+    1,
+    85.64
+   ],
+   [
+    "40 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    362,
+    0.1,
+    1.0,
+    85.64,
+    2,
+    97.97
+   ],
+   [
+    "40 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    362,
+    0.1,
+    1.0,
+    85.64,
+    3,
+    99.72
+   ],
+   [
+    "40 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    362,
+    0.1,
+    1.0,
+    85.64,
+    5,
+    99.99
+   ],
+   [
+    "40 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    362,
+    0.1,
+    1.0,
+    85.64,
+    8,
+    100.0
+   ],
+   [
+    "40 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    362,
+    0.1,
+    1.0,
+    85.64,
+    12,
+    100.0
+   ],
+   [
+    "40 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    362,
+    0.1,
+    1.0,
+    85.64,
+    20,
+    100.0
+   ],
+   [
+    "40 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    362,
+    0.1,
+    1.6,
+    82.87,
+    1,
+    82.87
+   ],
+   [
+    "40 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    362,
+    0.1,
+    1.6,
+    82.87,
+    2,
+    97.11
+   ],
+   [
+    "40 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    362,
+    0.1,
+    1.6,
+    82.87,
+    3,
+    99.52
+   ],
+   [
+    "40 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    362,
+    0.1,
+    1.6,
+    82.87,
+    5,
+    99.99
+   ],
+   [
+    "40 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    362,
+    0.1,
+    1.6,
+    82.87,
+    8,
+    100.0
+   ],
+   [
+    "40 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    362,
+    0.1,
+    1.6,
+    82.87,
+    12,
+    100.0
+   ],
+   [
+    "40 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    362,
+    0.1,
+    1.6,
+    82.87,
+    20,
+    100.0
+   ],
+   [
+    "40 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    362,
+    0.0,
+    2.0,
+    76.24,
+    1,
+    76.24
+   ],
+   [
+    "40 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    362,
+    0.0,
+    2.0,
+    76.24,
+    2,
+    94.41
+   ],
+   [
+    "40 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    362,
+    0.0,
+    2.0,
+    76.24,
+    3,
+    98.69
+   ],
+   [
+    "40 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    362,
+    0.0,
+    2.0,
+    76.24,
+    5,
+    99.93
+   ],
+   [
+    "40 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    362,
+    0.0,
+    2.0,
+    76.24,
+    8,
+    100.0
+   ],
+   [
+    "40 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    362,
+    0.0,
+    2.0,
+    76.24,
+    12,
+    100.0
+   ],
+   [
+    "40 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    362,
+    0.0,
+    2.0,
+    76.24,
+    20,
+    100.0
+   ],
+   [
+    "40 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    362,
+    0.2,
+    0.6,
+    17.4,
+    1,
+    17.4
+   ],
+   [
+    "40 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    362,
+    0.2,
+    0.6,
+    17.4,
+    2,
+    31.82
+   ],
+   [
+    "40 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    362,
+    0.2,
+    0.6,
+    17.4,
+    3,
+    43.75
+   ],
+   [
+    "40 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    362,
+    0.2,
+    0.6,
+    17.4,
+    5,
+    61.78
+   ],
+   [
+    "40 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    362,
+    0.2,
+    0.6,
+    17.4,
+    8,
+    78.69
+   ],
+   [
+    "40 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    362,
+    0.2,
+    0.6,
+    17.4,
+    12,
+    90.31
+   ],
+   [
+    "40 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    362,
+    0.2,
+    0.6,
+    17.4,
+    20,
+    98.05
+   ],
+   [
+    "40 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    362,
+    0.0,
+    0.2,
+    19.34,
+    1,
+    19.34
+   ],
+   [
+    "40 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    362,
+    0.0,
+    0.2,
+    19.34,
+    2,
+    34.98
+   ],
+   [
+    "40 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    362,
+    0.0,
+    0.2,
+    19.34,
+    3,
+    47.62
+   ],
+   [
+    "40 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    362,
+    0.0,
+    0.2,
+    19.34,
+    5,
+    66.08
+   ],
+   [
+    "40 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    362,
+    0.0,
+    0.2,
+    19.34,
+    8,
+    82.41
+   ],
+   [
+    "40 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    362,
+    0.0,
+    0.2,
+    19.34,
+    12,
+    92.74
+   ],
+   [
+    "40 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    362,
+    0.0,
+    0.2,
+    19.34,
+    20,
+    98.81
+   ],
+   [
+    "40 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    362,
+    0.0,
+    0.8,
+    32.87,
+    1,
+    32.87
+   ],
+   [
+    "40 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    362,
+    0.0,
+    0.8,
+    32.87,
+    2,
+    55.0
+   ],
+   [
+    "40 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    362,
+    0.0,
+    0.8,
+    32.87,
+    3,
+    69.88
+   ],
+   [
+    "40 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    362,
+    0.0,
+    0.8,
+    32.87,
+    5,
+    86.56
+   ],
+   [
+    "40 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    362,
+    0.0,
+    0.8,
+    32.87,
+    8,
+    96.03
+   ],
+   [
+    "40 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    362,
+    0.0,
+    0.8,
+    32.87,
+    12,
+    99.24
+   ],
+   [
+    "40 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    362,
+    0.0,
+    0.8,
+    32.87,
+    20,
+    99.97
+   ],
+   [
+    "20 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    228,
+    0.1,
+    1.0,
+    82.46,
+    1,
+    82.46
+   ],
+   [
+    "20 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    228,
+    0.1,
+    1.0,
+    82.46,
+    2,
+    96.99
+   ],
+   [
+    "20 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    228,
+    0.1,
+    1.0,
+    82.46,
+    3,
+    99.49
+   ],
+   [
+    "20 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    228,
+    0.1,
+    1.0,
+    82.46,
+    5,
+    99.99
+   ],
+   [
+    "20 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    228,
+    0.1,
+    1.0,
+    82.46,
+    8,
+    100.0
+   ],
+   [
+    "20 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    228,
+    0.1,
+    1.0,
+    82.46,
+    12,
+    100.0
+   ],
+   [
+    "20 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    228,
+    0.1,
+    1.0,
+    82.46,
+    20,
+    100.0
+   ],
+   [
+    "20 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    228,
+    0.1,
+    1.6,
+    77.63,
+    1,
+    77.63
+   ],
+   [
+    "20 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    228,
+    0.1,
+    1.6,
+    77.63,
+    2,
+    95.07
+   ],
+   [
+    "20 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    228,
+    0.1,
+    1.6,
+    77.63,
+    3,
+    98.93
+   ],
+   [
+    "20 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    228,
+    0.1,
+    1.6,
+    77.63,
+    5,
+    99.95
+   ],
+   [
+    "20 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    228,
+    0.1,
+    1.6,
+    77.63,
+    8,
+    100.0
+   ],
+   [
+    "20 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    228,
+    0.1,
+    1.6,
+    77.63,
+    12,
+    100.0
+   ],
+   [
+    "20 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    228,
+    0.1,
+    1.6,
+    77.63,
+    20,
+    100.0
+   ],
+   [
+    "20 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    228,
+    0.0,
+    2.0,
+    71.93,
+    1,
+    71.93
+   ],
+   [
+    "20 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    228,
+    0.0,
+    2.0,
+    71.93,
+    2,
+    92.21
+   ],
+   [
+    "20 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    228,
+    0.0,
+    2.0,
+    71.93,
+    3,
+    97.86
+   ],
+   [
+    "20 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    228,
+    0.0,
+    2.0,
+    71.93,
+    5,
+    99.84
+   ],
+   [
+    "20 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    228,
+    0.0,
+    2.0,
+    71.93,
+    8,
+    100.0
+   ],
+   [
+    "20 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    228,
+    0.0,
+    2.0,
+    71.93,
+    12,
+    100.0
+   ],
+   [
+    "20 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    228,
+    0.0,
+    2.0,
+    71.93,
+    20,
+    100.0
+   ],
+   [
+    "20 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    228,
+    0.2,
+    0.6,
+    17.54,
+    1,
+    17.54
+   ],
+   [
+    "20 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    228,
+    0.2,
+    0.6,
+    17.54,
+    2,
+    32.07
+   ],
+   [
+    "20 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    228,
+    0.2,
+    0.6,
+    17.54,
+    3,
+    44.1
+   ],
+   [
+    "20 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    228,
+    0.2,
+    0.6,
+    17.54,
+    5,
+    62.24
+   ],
+   [
+    "20 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    228,
+    0.2,
+    0.6,
+    17.54,
+    8,
+    79.2
+   ],
+   [
+    "20 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    228,
+    0.2,
+    0.6,
+    17.54,
+    12,
+    90.73
+   ],
+   [
+    "20 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    228,
+    0.2,
+    0.6,
+    17.54,
+    20,
+    98.25
+   ],
+   [
+    "20 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    228,
+    0.0,
+    0.2,
+    17.98,
+    1,
+    17.98
+   ],
+   [
+    "20 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    228,
+    0.0,
+    0.2,
+    17.98,
+    2,
+    32.8
+   ],
+   [
+    "20 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    228,
+    0.0,
+    0.2,
+    17.98,
+    3,
+    44.99
+   ],
+   [
+    "20 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    228,
+    0.0,
+    0.2,
+    17.98,
+    5,
+    63.25
+   ],
+   [
+    "20 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    228,
+    0.0,
+    0.2,
+    17.98,
+    8,
+    80.08
+   ],
+   [
+    "20 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    228,
+    0.0,
+    0.2,
+    17.98,
+    12,
+    91.33
+   ],
+   [
+    "20 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    228,
+    0.0,
+    0.2,
+    17.98,
+    20,
+    98.44
+   ],
+   [
+    "20 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    228,
+    0.0,
+    0.8,
+    29.82,
+    1,
+    29.82
+   ],
+   [
+    "20 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    228,
+    0.0,
+    0.8,
+    29.82,
+    2,
+    50.85
+   ],
+   [
+    "20 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    228,
+    0.0,
+    0.8,
+    29.82,
+    3,
+    65.64
+   ],
+   [
+    "20 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    228,
+    0.0,
+    0.8,
+    29.82,
+    5,
+    83.3
+   ],
+   [
+    "20 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    228,
+    0.0,
+    0.8,
+    29.82,
+    8,
+    94.43
+   ],
+   [
+    "20 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    228,
+    0.0,
+    0.8,
+    29.82,
+    12,
+    98.75
+   ],
+   [
+    "20 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    228,
+    0.0,
+    0.8,
+    29.82,
+    20,
+    99.94
+   ],
+   [
+    "10 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    108,
+    0.1,
+    1.0,
+    75.93,
+    1,
+    75.93
+   ],
+   [
+    "10 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    108,
+    0.1,
+    1.0,
+    75.93,
+    2,
+    94.38
+   ],
+   [
+    "10 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    108,
+    0.1,
+    1.0,
+    75.93,
+    3,
+    98.73
+   ],
+   [
+    "10 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    108,
+    0.1,
+    1.0,
+    75.93,
+    5,
+    99.94
+   ],
+   [
+    "10 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    108,
+    0.1,
+    1.0,
+    75.93,
+    8,
+    100.0
+   ],
+   [
+    "10 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    108,
+    0.1,
+    1.0,
+    75.93,
+    12,
+    100.0
+   ],
+   [
+    "10 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    108,
+    0.1,
+    1.0,
+    75.93,
+    20,
+    100.0
+   ],
+   [
+    "10 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    108,
+    0.1,
+    1.6,
+    72.22,
+    1,
+    72.22
+   ],
+   [
+    "10 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    108,
+    0.1,
+    1.6,
+    72.22,
+    2,
+    92.47
+   ],
+   [
+    "10 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    108,
+    0.1,
+    1.6,
+    72.22,
+    3,
+    98.01
+   ],
+   [
+    "10 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    108,
+    0.1,
+    1.6,
+    72.22,
+    5,
+    99.87
+   ],
+   [
+    "10 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    108,
+    0.1,
+    1.6,
+    72.22,
+    8,
+    100.0
+   ],
+   [
+    "10 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    108,
+    0.1,
+    1.6,
+    72.22,
+    12,
+    100.0
+   ],
+   [
+    "10 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    108,
+    0.1,
+    1.6,
+    72.22,
+    20,
+    100.0
+   ],
+   [
+    "10 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    108,
+    0.0,
+    2.0,
+    64.81,
+    1,
+    64.81
+   ],
+   [
+    "10 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    108,
+    0.0,
+    2.0,
+    64.81,
+    2,
+    87.83
+   ],
+   [
+    "10 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    108,
+    0.0,
+    2.0,
+    64.81,
+    3,
+    95.87
+   ],
+   [
+    "10 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    108,
+    0.0,
+    2.0,
+    64.81,
+    5,
+    99.55
+   ],
+   [
+    "10 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    108,
+    0.0,
+    2.0,
+    64.81,
+    8,
+    99.99
+   ],
+   [
+    "10 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    108,
+    0.0,
+    2.0,
+    64.81,
+    12,
+    100.0
+   ],
+   [
+    "10 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    108,
+    0.0,
+    2.0,
+    64.81,
+    20,
+    100.0
+   ],
+   [
+    "10 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    108,
+    0.2,
+    0.6,
+    14.81,
+    1,
+    14.81
+   ],
+   [
+    "10 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    108,
+    0.2,
+    0.6,
+    14.81,
+    2,
+    27.55
+   ],
+   [
+    "10 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    108,
+    0.2,
+    0.6,
+    14.81,
+    3,
+    38.49
+   ],
+   [
+    "10 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    108,
+    0.2,
+    0.6,
+    14.81,
+    5,
+    55.88
+   ],
+   [
+    "10 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    108,
+    0.2,
+    0.6,
+    14.81,
+    8,
+    73.56
+   ],
+   [
+    "10 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    108,
+    0.2,
+    0.6,
+    14.81,
+    12,
+    86.99
+   ],
+   [
+    "10 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    108,
+    0.2,
+    0.6,
+    14.81,
+    20,
+    97.16
+   ],
+   [
+    "10 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    108,
+    0.0,
+    0.2,
+    13.89,
+    1,
+    13.89
+   ],
+   [
+    "10 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    108,
+    0.0,
+    0.2,
+    13.89,
+    2,
+    25.96
+   ],
+   [
+    "10 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    108,
+    0.0,
+    0.2,
+    13.89,
+    3,
+    36.44
+   ],
+   [
+    "10 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    108,
+    0.0,
+    0.2,
+    13.89,
+    5,
+    53.38
+   ],
+   [
+    "10 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    108,
+    0.0,
+    0.2,
+    13.89,
+    8,
+    71.07
+   ],
+   [
+    "10 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    108,
+    0.0,
+    0.2,
+    13.89,
+    12,
+    85.06
+   ],
+   [
+    "10 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    108,
+    0.0,
+    0.2,
+    13.89,
+    20,
+    96.38
+   ],
+   [
+    "10 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    108,
+    0.0,
+    0.8,
+    25.0,
+    1,
+    25.0
+   ],
+   [
+    "10 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    108,
+    0.0,
+    0.8,
+    25.0,
+    2,
+    43.93
+   ],
+   [
+    "10 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    108,
+    0.0,
+    0.8,
+    25.0,
+    3,
+    58.21
+   ],
+   [
+    "10 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    108,
+    0.0,
+    0.8,
+    25.0,
+    5,
+    77.01
+   ],
+   [
+    "10 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    108,
+    0.0,
+    0.8,
+    25.0,
+    8,
+    90.86
+   ],
+   [
+    "10 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    108,
+    0.0,
+    0.8,
+    25.0,
+    12,
+    97.46
+   ],
+   [
+    "10 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    108,
+    0.0,
+    0.8,
+    25.0,
+    20,
+    99.84
+   ],
+   [
+    "5 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    41,
+    0.1,
+    1.0,
+    65.85,
+    1,
+    65.85
+   ],
+   [
+    "5 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    41,
+    0.1,
+    1.0,
+    65.85,
+    2,
+    88.9
+   ],
+   [
+    "5 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    41,
+    0.1,
+    1.0,
+    65.85,
+    3,
+    96.59
+   ],
+   [
+    "5 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    41,
+    0.1,
+    1.0,
+    65.85,
+    5,
+    99.73
+   ],
+   [
+    "5 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    41,
+    0.1,
+    1.0,
+    65.85,
+    8,
+    100.0
+   ],
+   [
+    "5 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    41,
+    0.1,
+    1.0,
+    65.85,
+    12,
+    100.0
+   ],
+   [
+    "5 lines",
+    "Sonnet 5.5 UM",
+    "dataset500-sonnet55-um-strip",
+    41,
+    0.1,
+    1.0,
+    65.85,
+    20,
+    100.0
+   ],
+   [
+    "5 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    41,
+    0.1,
+    1.6,
+    60.98,
+    1,
+    60.98
+   ],
+   [
+    "5 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    41,
+    0.1,
+    1.6,
+    60.98,
+    2,
+    85.37
+   ],
+   [
+    "5 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    41,
+    0.1,
+    1.6,
+    60.98,
+    3,
+    94.75
+   ],
+   [
+    "5 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    41,
+    0.1,
+    1.6,
+    60.98,
+    5,
+    99.42
+   ],
+   [
+    "5 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    41,
+    0.1,
+    1.6,
+    60.98,
+    8,
+    99.99
+   ],
+   [
+    "5 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    41,
+    0.1,
+    1.6,
+    60.98,
+    12,
+    100.0
+   ],
+   [
+    "5 lines",
+    "Haiku 5.5 · xhigh",
+    "dataset-haiku55-effortxhigh-tm-n500-strip",
+    41,
+    0.1,
+    1.6,
+    60.98,
+    20,
+    100.0
+   ],
+   [
+    "5 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    41,
+    0.0,
+    2.0,
+    56.1,
+    1,
+    56.1
+   ],
+   [
+    "5 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    41,
+    0.0,
+    2.0,
+    56.1,
+    2,
+    81.34
+   ],
+   [
+    "5 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    41,
+    0.0,
+    2.0,
+    56.1,
+    3,
+    92.35
+   ],
+   [
+    "5 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    41,
+    0.0,
+    2.0,
+    56.1,
+    5,
+    98.86
+   ],
+   [
+    "5 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    41,
+    0.0,
+    2.0,
+    56.1,
+    8,
+    99.95
+   ],
+   [
+    "5 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    41,
+    0.0,
+    2.0,
+    56.1,
+    12,
+    100.0
+   ],
+   [
+    "5 lines",
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    41,
+    0.0,
+    2.0,
+    56.1,
+    20,
+    100.0
+   ],
+   [
+    "5 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    41,
+    0.2,
+    0.6,
+    14.63,
+    1,
+    14.63
+   ],
+   [
+    "5 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    41,
+    0.2,
+    0.6,
+    14.63,
+    2,
+    27.44
+   ],
+   [
+    "5 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    41,
+    0.2,
+    0.6,
+    14.63,
+    3,
+    38.6
+   ],
+   [
+    "5 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    41,
+    0.2,
+    0.6,
+    14.63,
+    5,
+    56.68
+   ],
+   [
+    "5 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    41,
+    0.2,
+    0.6,
+    14.63,
+    8,
+    75.37
+   ],
+   [
+    "5 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    41,
+    0.2,
+    0.6,
+    14.63,
+    12,
+    89.44
+   ],
+   [
+    "5 lines",
+    "gpt-oss-120b · high",
+    "dataset-gptoss120b-high-tm-n500-strip",
+    41,
+    0.2,
+    0.6,
+    14.63,
+    20,
+    98.79
+   ],
+   [
+    "5 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    41,
+    0.0,
+    0.2,
+    12.2,
+    1,
+    12.2
+   ],
+   [
+    "5 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    41,
+    0.0,
+    0.2,
+    12.2,
+    2,
+    23.17
+   ],
+   [
+    "5 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    41,
+    0.0,
+    0.2,
+    12.2,
+    3,
+    33.02
+   ],
+   [
+    "5 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    41,
+    0.0,
+    0.2,
+    12.2,
+    5,
+    49.69
+   ],
+   [
+    "5 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    41,
+    0.0,
+    0.2,
+    12.2,
+    8,
+    68.33
+   ],
+   [
+    "5 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    41,
+    0.0,
+    0.2,
+    12.2,
+    12,
+    84.15
+   ],
+   [
+    "5 lines",
+    "Gemini 3.5 Flash-Lite · high",
+    "dataset-gemini35fl-high-tm-n500-strip",
+    41,
+    0.0,
+    0.2,
+    12.2,
+    20,
+    97.28
+   ],
+   [
+    "5 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    41,
+    0.0,
+    0.8,
+    21.95,
+    1,
+    21.95
+   ],
+   [
+    "5 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    41,
+    0.0,
+    0.8,
+    21.95,
+    2,
+    39.51
+   ],
+   [
+    "5 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    41,
+    0.0,
+    0.8,
+    21.95,
+    3,
+    53.47
+   ],
+   [
+    "5 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    41,
+    0.0,
+    0.8,
+    21.95,
+    5,
+    73.13
+   ],
+   [
+    "5 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    41,
+    0.0,
+    0.8,
+    21.95,
+    8,
+    88.99
+   ],
+   [
+    "5 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    41,
+    0.0,
+    0.8,
+    21.95,
+    12,
+    97.14
+   ],
+   [
+    "5 lines",
+    "Gemma 4 26B",
+    "dataset500-gemma426b-tm-strip",
+    41,
+    0.0,
+    0.8,
+    21.95,
+    20,
+    99.92
    ]
   ]
  },
- "facts": {},
+ "facts": {
+  "p_all": 500,
+  "p_tight": 41,
+  "cap_tight": 5,
+  "k_max": 20,
+  "fpr_lo": 0.2,
+  "fpr_hi": 2.0
+ },
  "build": {
-  "inputs": {},
-  "code": "sha256:9f4f47448965e936",
-  "spec": "sha256:ca83d48d9adf164b"
+  "inputs": {
+   "results/analysis/achieved-fpr.csv": "sha256:b1f8171586065ab6",
+   "results/analysis/case-features.csv": "sha256:26805e982a831ffc",
+   "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-gptoss120b-high-tm-n500-strip-samples.csv": "sha256:534af7cdb6ed3084",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea"
+  },
+  "code": "sha256:1ac70cac915854b4",
+  "spec": "sha256:9f8c8ed589e798f4"
  }
 }
