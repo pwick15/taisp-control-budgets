@@ -33,9 +33,11 @@ META = {
 }
 
 CAP = 100
+# Red, amber, green: the outcome runs bad to good for the defender, so the status tokens
+# carry the meaning directly and every dot is at full strength.
 BUCKETS = [("caught by none", "@s7", lambda k: k == 0),
-           ("caught by some", "@warning/0.6", lambda k: 0 < k < 7),
-           ("caught by all seven", "@context-strong", lambda k: k == 7)]
+           ("caught by some", "@warning", lambda k: 0 < k < 7),
+           ("caught by all seven", "@good", lambda k: k == 7)]
 
 
 def jitter(sample_id: str, row: int) -> float:
@@ -62,7 +64,7 @@ def build() -> Figure:
         g = c[c.cb.map(keep)]
         series.append({
             "name": name, "type": "scatter", "symbolSize": 7,
-            "itemStyle": {"color": colour, "opacity": 0.85,
+            "itemStyle": {"color": colour, "opacity": 0.95,
                           "borderColor": "@ink-surface", "borderWidth": 0.5},
             "data": [{"value": [min(int(r.cl), CAP), r.cb + jitter(r.sample_id, r.cb)],
                       "tip": (f"<b>problem {r.sample_id}</b><br>{int(r.cl)} lines changed"

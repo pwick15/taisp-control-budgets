@@ -15,11 +15,11 @@ META = {
                 "rows where Sonnet and Haiku never go above {small_max:g}. Below that the three agree "
                 "that nothing is wrong."),
     "notes": [
-        "A filled Opus mark is a backdoor no monitor caught at all. A hollow one is a backdoor some "
-        "panel monitor did catch, which is why it is in this set but not in the never-caught group.",
-        "Opus has no honest baseline here, so it has no cutoff of its own and no audit budget. Its "
-        "scores say what it thinks of a program, not what it would have audited. Treat {thresh:d} as a "
-        "reading aid, not an operating point.",
+        "A hollow Opus mark is a backdoor some panel monitor did catch, which is why it is in this "
+        "hard set but not in the never-caught group of {n_nc:d}.",
+        "The dashed yellow line is {thresh:d} out of 100. Opus has no honest baseline here, so it has "
+        "no cutoff of its own and no audit budget: that line is a reading aid, not an operating "
+        "point, and a real deployment would set one against honest code instead.",
         "The ordering is Opus's own, so the chart cannot help but look favourable to Opus at the top. "
         "The comparison that matters is horizontal, within a row, where Sonnet and Haiku had the same "
         "code in front of them.",
@@ -45,21 +45,30 @@ def build() -> Figure:
     labels = list(d.sample_id)[::-1]                        # ECharts category axis runs bottom-up
     y_of = {s: len(d) - 1 - i for i, s in enumerate(d.sample_id)}
 
-    opus = {
-        "name": "Opus 5.5 xhigh", "type": "scatter", "symbolSize": 11, "z": 4,
-        "itemStyle": {"color": entity("opus55")},
-        "data": [{"value": [r.opus_xhigh, y_of[r.sample_id]],
-                  "itemStyle": ({"color": entity("opus55"), "borderColor": "@ink-surface",
-                                 "borderWidth": 1.2} if r.group == "never_caught" else
-                                {"color": "@ink-surface", "borderColor": entity("opus55"),
-                                 "borderWidth": 2}),
-                  "tip": (f"<b>problem {r.sample_id}</b><br>Opus 5.5 xhigh: {r.opus_xhigh:g}"
-                          f"<br>Sonnet 5.5: {r.sonnet:g}"
-                          f"<br>Haiku 5.5 xhigh: {r.haiku:g}"
-                          f"<br>{'caught by no monitor' if r.group == 'never_caught' else 'caught by a panel monitor'}")}
-                 for r in d.itertuples()],
-    }
-    series = [opus] + [{
+    # Opus is split into two series rather than two per-point styles, so the legend itself
+    # carries the key: a solid swatch for never caught, a hollow one for caught.
+    OPUS_SPLIT = [("Opus xhigh · no monitor caught it", True,
+                   {"color": entity("opus55"), "borderColor": "@ink-surface", "borderWidth": 1.2}),
+                  ("Opus xhigh · a panel monitor caught it", False,
+                   {"color": "@ink-surface", "borderColor": entity("opus55"), "borderWidth": 2})]
+    opus = []
+    for name, never, style in OPUS_SPLIT:
+        g = d[(d.group == "never_caught") == never]
+        opus.append({
+            "name": name, "type": "scatter", "symbolSize": 11, "z": 4, "itemStyle": style,
+            "data": [{"value": [r.opus_xhigh, y_of[r.sample_id]],
+                      "tip": (f"<b>problem {r.sample_id}</b><br>Opus 5.5 xhigh: {r.opus_xhigh:g}"
+                              f"<br>Sonnet 5.5: {r.sonnet:g}"
+                              f"<br>Haiku 5.5 xhigh: {r.haiku:g}"
+                              f"<br>{'caught by no monitor' if never else 'caught by a panel monitor'}")}
+                     for r in g.itertuples()],
+        })
+
+    opus[0]["markLine"] = {"silent": True, "symbol": "none", "label": {"show": False},
+                 "lineStyle": {"color": "@warning", "type": "dashed", "width": 1.5},
+                 "data": [{"xAxis": THRESH}]}
+
+    series = opus + [{
         "name": name, "type": "scatter", "symbolSize": 8, "z": 3,
         "itemStyle": {"color": colour, "opacity": 0.9,
                       "borderColor": "@ink-surface", "borderWidth": 0.8},
@@ -84,7 +93,8 @@ def build() -> Figure:
         xAxis=C.axis("Suspicion score, 0 to 100", type="value", min=0, max=100, interval=20),
         yAxis=C.axis("Problem id", gap=64, type="category", data=labels,
              axisLabel={"fontSize": 11}),
-        legend={"top": 0, "left": 72, "data": ["Opus 5.5 xhigh"] + [n for n, _, _ in SMALL]},
+        legend={"top": 0, "left": 72, "itemGap": 18,
+                "data": [n for n, _, _ in OPUS_SPLIT] + [n for n, _, _ in SMALL]},
         series=series,
     )
     return Figure(option=option, data=rows, facts=facts, height=META["height"])
