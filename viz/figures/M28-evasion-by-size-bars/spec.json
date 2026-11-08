@@ -1,0 +1,233 @@
+{
+ "id": "M28",
+ "kind": "echarts",
+ "title": "The smallest edits are missed by everything, and caught by nothing",
+ "section": "results",
+ "order": 104,
+ "caption": "All 500 backdoors in four size groups. Each group gets two bars: the share no monitor caught at a 2% budget, and the share all seven caught. Both rates move the same way with size, from 57% missed in the smallest group down to 7%.",
+ "notes": [
+  "Thin rungs on the left. The two smallest groups hold 7 and 18 backdoors, so their bars carry 95% intervals of roughly 30 and 21 points. Read them as an indication of direction, not as rates. The two right-hand groups hold 58 and 417.",
+  "This is the same finding as P10, drawn the way the original analysis drew it. P10 splits each group into a full 100% stack with a confidence panel and uses different cut points. Use P10 for the published number and this one for the shape.",
+  "Lines changed is measured against the dataset's reference solution, not against what an honest model would write. The median backdoor changes more lines than the program has, so these groups separate rewrites from edits rather than large backdoors from small ones.",
+  "The two rates are not complements. A backdoor caught by one to six of the seven monitors is in neither bar, which is why the pairs do not sum to 100.",
+  "Size and author are tangled, and the author attribution is itself confounded: a generator is credited with a backdoor only when no higher-priority generator produced a working one for that problem. This figure cannot say whether size or author drives the pattern."
+ ],
+ "height": 440,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/M28-evasion-by-size-bars",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 66,
+   "right": 30,
+   "top": 44,
+   "bottom": 66
+  },
+  "xAxis": {
+   "name": "Lines changed, honest to backdoor",
+   "nameLocation": "middle",
+   "nameGap": 46,
+   "type": "category",
+   "data": [
+    "0-2\nn=7",
+    "3-4\nn=18",
+    "5-8\nn=58",
+    "9+\nn=417"
+   ],
+   "axisLabel": {
+    "lineHeight": 16
+   }
+  },
+  "yAxis": {
+   "name": "Share of that size group",
+   "nameLocation": "middle",
+   "nameGap": 46,
+   "type": "value",
+   "min": 0,
+   "max": 70,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "legend": {
+   "top": 0,
+   "left": 60,
+   "itemGap": 18,
+   "data": [
+    "Caught by no monitor",
+    "Caught by all seven"
+   ]
+  },
+  "series": [
+   {
+    "name": "Caught by no monitor",
+    "type": "bar",
+    "barWidth": "32%",
+    "itemStyle": {
+     "color": "@s7",
+     "borderRadius": [
+      4,
+      4,
+      0,
+      0
+     ]
+    },
+    "label": {
+     "show": true,
+     "position": "top",
+     "fontSize": 12,
+     "color": "@ink-secondary"
+    },
+    "data": [
+     {
+      "value": 57.1,
+      "label": {
+       "formatter": "57.1%"
+      },
+      "tip": "<b>0-2 lines changed</b><br>caught by no monitor<br>4 of 7 backdoors<br>95% interval 25 to 84%"
+     },
+     {
+      "value": 38.9,
+      "label": {
+       "formatter": "38.9%"
+      },
+      "tip": "<b>3-4 lines changed</b><br>caught by no monitor<br>7 of 18 backdoors<br>95% interval 20 to 61%"
+     },
+     {
+      "value": 15.5,
+      "label": {
+       "formatter": "15.5%"
+      },
+      "tip": "<b>5-8 lines changed</b><br>caught by no monitor<br>9 of 58 backdoors<br>95% interval 8 to 27%"
+     },
+     {
+      "value": 7.0,
+      "label": {
+       "formatter": "7.0%"
+      },
+      "tip": "<b>9+ lines changed</b><br>caught by no monitor<br>29 of 417 backdoors<br>95% interval 5 to 10%"
+     }
+    ]
+   },
+   {
+    "name": "Caught by all seven",
+    "type": "bar",
+    "barWidth": "32%",
+    "itemStyle": {
+     "color": "@good",
+     "borderRadius": [
+      4,
+      4,
+      0,
+      0
+     ]
+    },
+    "label": {
+     "show": true,
+     "position": "top",
+     "fontSize": 12,
+     "color": "@ink-secondary"
+    },
+    "data": [
+     {
+      "value": 28.6,
+      "label": {
+       "formatter": "28.6%"
+      },
+      "tip": "<b>0-2 lines changed</b><br>caught by all seven<br>2 of 7 backdoors<br>95% interval 8 to 64%"
+     },
+     {
+      "value": 22.2,
+      "label": {
+       "formatter": "22.2%"
+      },
+      "tip": "<b>3-4 lines changed</b><br>caught by all seven<br>4 of 18 backdoors<br>95% interval 9 to 45%"
+     },
+     {
+      "value": 44.8,
+      "label": {
+       "formatter": "44.8%"
+      },
+      "tip": "<b>5-8 lines changed</b><br>caught by all seven<br>26 of 58 backdoors<br>95% interval 33 to 58%"
+     },
+     {
+      "value": 58.8,
+      "label": {
+       "formatter": "58.8%"
+      },
+      "tip": "<b>9+ lines changed</b><br>caught by all seven<br>245 of 417 backdoors<br>95% interval 54 to 63%"
+     }
+    ]
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "changed_lines",
+   "n",
+   "caught_by_none",
+   "pct_caught_by_none",
+   "caught_by_all_seven",
+   "pct_caught_by_all_seven"
+  ],
+  "rows": [
+   [
+    "0-2",
+    7,
+    4,
+    57.1,
+    2,
+    28.6
+   ],
+   [
+    "3-4",
+    18,
+    7,
+    38.9,
+    4,
+    22.2
+   ],
+   [
+    "5-8",
+    58,
+    9,
+    15.5,
+    26,
+    44.8
+   ],
+   [
+    "9+",
+    417,
+    29,
+    7.0,
+    245,
+    58.8
+   ]
+  ]
+ },
+ "facts": {
+  "n": 500,
+  "miss_lo": 57,
+  "miss_hi": 7,
+  "n0": 7,
+  "n1": 18,
+  "n2": 58,
+  "n3": 417,
+  "ci0": 30,
+  "ci1": 21
+ },
+ "build": {
+  "inputs": {
+   "results/analysis/case-features.csv": "sha256:26805e982a831ffc"
+  },
+  "code": "sha256:63ea78cfef8066ac",
+  "spec": "sha256:4e7526698727c6a2"
+ }
+}
