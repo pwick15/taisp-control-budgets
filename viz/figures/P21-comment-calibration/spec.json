@@ -1,0 +1,238 @@
+{
+ "id": "P21",
+ "kind": "echarts",
+ "title": "Showing comments still wins when honest code has comments too",
+ "section": "appendix",
+ "order": 138,
+ "caption": "Backdoors caught at a 2% audit budget by Haiku 5.5 xhigh, with comments removed (grey) or shown (blue). Top: the cutoff is set on honest code with no comments. Bottom: on the same honest code with two plain comments added, so commented code can't stand out just for having comments.",
+ "notes": [
+  "The objection this answers: honest code in this dataset barely has comments, so maybe commented code only looks suspicious for being unusual. If so, the bottom gap would close. It is 11.1 points against 9.5.",
+  "The added honest comments are templated ('# read the input'), a stand-in for commented honest code, not a sample of it.",
+  "Scored by calling the monitor directly rather than through the eval harness, so these numbers don't join to the main run tables. Replaces Marnick's M05 as the simple version of the same check."
+ ],
+ "height": 260,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P21-comment-calibration",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 16,
+   "right": 70,
+   "top": 8,
+   "bottom": 52,
+   "containLabel": true
+  },
+  "xAxis": {
+   "name": "Backdoors caught",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "value",
+   "min": 70,
+   "max": 100,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "yAxis": {
+   "type": "category",
+   "inverse": true,
+   "data": [
+    "Cutoff from honest code, no comments\nshowing comments catches 10 points more",
+    "Cutoff from honest code, comments added\nshowing comments catches 11 points more"
+   ],
+   "axisTick": {
+    "show": false
+   },
+   "axisLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "margin": 14,
+    "align": "right",
+    "formatter": "function (v) { var p = v.split('\\n'); return '{a|' + p[0] + '}\\n{b|' + p[1] + '}'; }",
+    "rich": {
+     "a": {
+      "color": "@ink-primary",
+      "fontSize": 13,
+      "fontWeight": 600,
+      "lineHeight": 20,
+      "align": "right"
+     },
+     "b": {
+      "color": "@ink-muted",
+      "fontSize": 11,
+      "lineHeight": 16,
+      "align": "right"
+     }
+    }
+   }
+  },
+  "series": [
+   {
+    "type": "line",
+    "silent": true,
+    "symbol": "none",
+    "z": 1,
+    "lineStyle": {
+     "color": "@context",
+     "width": 6,
+     "cap": "round"
+    },
+    "data": [
+     [
+      84.74,
+      0
+     ],
+     [
+      94.25,
+      0
+     ]
+    ]
+   },
+   {
+    "type": "line",
+    "silent": true,
+    "symbol": "none",
+    "z": 1,
+    "lineStyle": {
+     "color": "@context",
+     "width": 6,
+     "cap": "round"
+    },
+    "data": [
+     [
+      79.16,
+      1
+     ],
+     [
+      90.29,
+      1
+     ]
+    ]
+   },
+   {
+    "type": "scatter",
+    "symbolSize": 16,
+    "z": 3,
+    "label": {
+     "show": true,
+     "fontSize": 12,
+     "fontWeight": 600,
+     "color": "@ink-primary",
+     "distance": 10,
+     "position": "left"
+    },
+    "name": "Comments removed",
+    "data": [
+     {
+      "value": [
+       84.74,
+       0
+      ],
+      "label": {
+       "formatter": "removed 85%"
+      },
+      "tip": "<b>Cutoff from honest code, no comments</b><br>comments removed: 84.7% caught"
+     },
+     {
+      "value": [
+       79.16,
+       1
+      ],
+      "label": {
+       "formatter": "removed 79%"
+      },
+      "tip": "<b>Cutoff from honest code, comments added</b><br>comments removed: 79.2% caught"
+     }
+    ],
+    "itemStyle": {
+     "color": "@context-strong",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    }
+   },
+   {
+    "type": "scatter",
+    "symbolSize": 16,
+    "z": 3,
+    "label": {
+     "show": true,
+     "fontSize": 12,
+     "fontWeight": 600,
+     "color": "@ink-primary",
+     "distance": 10,
+     "position": "right"
+    },
+    "name": "Comments shown",
+    "data": [
+     {
+      "value": [
+       94.25,
+       0
+      ],
+      "label": {
+       "formatter": "shown 94%"
+      },
+      "tip": "<b>Cutoff from honest code, no comments</b><br>comments shown: 94.3% caught"
+     },
+     {
+      "value": [
+       90.29,
+       1
+      ],
+      "label": {
+       "formatter": "shown 90%"
+      },
+      "tip": "<b>Cutoff from honest code, comments added</b><br>comments shown: 90.3% caught"
+     }
+    ],
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "cutoff",
+   "caught_comments_removed",
+   "caught_comments_shown",
+   "gap_points"
+  ],
+  "rows": [
+   [
+    "Cutoff from honest code, no comments",
+    84.74,
+    94.25,
+    9.52
+   ],
+   [
+    "Cutoff from honest code, comments added",
+    79.16,
+    90.29,
+    11.13
+   ]
+  ]
+ },
+ "facts": {
+  "gap_b": 9.51534,
+  "gap_c": 11.1329
+ },
+ "build": {
+  "inputs": {
+   "results/analysis/comment-length.csv": "sha256:09d49e360e4ceb5a",
+   "results/analysis/honest-calibration.csv": "sha256:2d16e673da900e8e"
+  },
+  "code": "sha256:b8ccaa70fd718841",
+  "spec": "sha256:4710998303326b80"
+ }
+}
