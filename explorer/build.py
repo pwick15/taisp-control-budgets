@@ -308,9 +308,17 @@ def build_bundle() -> dict:
 
     ladders = build_ladders(runs)
     probs, panel = load_probs()
+    detail = {}
+    dpath = HERE / "detail.json"
+    if dpath.exists():
+        detail = json.loads(dpath.read_text(encoding="utf-8"))
+        print(f"detail: {len(detail)} drill-down problems ({dpath.stat().st_size / 1024:.0f} KB)")
+    else:
+        print("detail.json absent; the drill-down drawer will be unavailable "
+              "(run explorer/extract_detail.py with the trajectories present)")
     return {"theme": THEME, "seq_steps": SEQ_STEPS, "monitor_color": MONITOR_COLOR,
             "effort_order": EFFORT_ORDER, "runs": runs, "samples": samples,
-            "ladders": ladders, "probs": probs, "panel": panel}
+            "ladders": ladders, "probs": probs, "panel": panel, "detail": detail}
 
 
 def build_ladders(runs: list[dict]) -> list[dict]:

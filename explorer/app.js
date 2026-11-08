@@ -102,7 +102,7 @@
   var LENSES = [
     { id: "atlas", title: "Atlas", sub: "every sample, one dot",
       q: "How long does each monitor think, sample by sample?",
-      d: "One lane per run. Every honest program sits above its lane line and every verified backdoor below it, placed left to right by how many reasoning tokens the monitor spent on it. Gold rings mark the backdoors that carry an auditor's read. Drag to zoom a span, scroll to zoom toward the cursor, click a dot to pin its full judgement." },
+      d: "One lane per run. Every honest program sits above its lane line and every verified backdoor below it, placed left to right by how many reasoning tokens the monitor spent on it. Gold rings mark the backdoors that carry an auditor's read. Drag to zoom a span, scroll to zoom toward the cursor, click a dot to pin its full judgement, then open a deep dive on any ringed backdoor for its code, the planted bug and the monitor's own reasoning." },
     { id: "trajectories", title: "Trajectories", sub: "one line per problem",
       q: "How does a monitor's judgement of a backdoor move as you turn one knob?",
       d: "Each thin line is a single problem; it rises and falls as the reasoning effort (or score scale, or comments) changes across the axes. Drag on any axis to keep only the lines passing through a score band. The thick line is the mean path." },
@@ -406,6 +406,14 @@
       "<button class='pinbtn ghost' id='copy-btn' type='button'>Copy</button></div>";
     var ub = document.getElementById("unpin-btn"); if (ub) ub.addEventListener("click", unpin);
     var cb = document.getElementById("copy-btn"); if (cb) cb.addEventListener("click", copyPin);
+    if (hasDrawer(pin.id, pin.isAtk)) {
+      var bar = hoverSlot.querySelector(".pinbar");
+      if (bar) {
+        var dd = el("button", "pinbtn deep"); dd.type = "button"; dd.textContent = "Deep dive →";
+        dd.addEventListener("click", function () { openDrawer(pin.id, pin.mode === "point" ? pin.run : null, true); });
+        bar.appendChild(dd);
+      }
+    }
   }
   function sampleCard() {
     var f = pin.feat;
@@ -471,6 +479,107 @@
     toast(dots.length ? ("Pinned problem " + f.id + ", " + dots.length + " dot" + (dots.length === 1 ? "" : "s") + " lit across the lanes.")
       : ("Problem " + f.id + " is not in the current view. Try Show: Both or clear a filter."));
   }
+
+  // ---- deep-dive drawer: full per-sample detail for a backdoor -------------
+  // Opens over the page from a pinned backdoor (or a featured card): the
+  // original problem, the honest-vs-backdoor code diff and the trigger, the
+  // outcome, the field difficulty, and the monitor's own reasoning for the runs
+  // whose transcript was captured. Data: D.detail[id] from extract_detail.py.
+  var drawerEl = null;
+  function detailFor(id) { return (D.detail || {})[String(id)]; }
+  function hasDrawer(id, isAtk) { return !!(isAtk && detailFor(id)); }
+
+  function lineDiff(a, b) {   // LCS over lines -> ops: 0 same, -1 honest-only, +1 backdoor-only
+    var A = String(a || "").split("\n"), B = String(b || "").split("\n");
+    var n = A.length, m = B.length, dp = [], i, j;
+    for (i = 0; i <= n; i++) { dp[i] = []; for (j = 0; j <= m; j++) dp[i][j] = 0; }
+    for (i = n - 1; i >= 0; i--) for (j = m - 1; j >= 0; j--)
+      dp[i][j] = A[i] === B[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+    var ops = []; i = 0; j = 0;
+    while (i < n && j < m) {
+      if (A[i] === B[j]) { ops.push([0, B[j]]); i++; j++; }
+      else if (dp[i + 1][j] >= dp[i][j + 1]) { ops.push([-1, A[i]]); i++; }
+      else { ops.push([1, B[j]]); j++; }
+    }
+    while (i < n) ops.push([-1, A[i++]]);
+    while (j < m) ops.push([1, B[j++]]);
+    return ops;
+  }
+  function diffHtml(honest, backdoor) {
+    if (!honest) return "<div class='diff'><div class='dl add'><span class='ds'>+</span>" +
+      esc(String(backdoor || "")).replace(/\n/g, "</div><div class='dl add'><span class='ds'>+</span>") + "</div></div>";
+    var rows = lineDiff(honest, backdoor).map(function (o) {
+      var cls = o[0] === 1 ? "add" : o[0] === -1 ? "del" : "same";
+      var sign = o[0] === 1 ? "+" : o[0] === -1 ? "−" : " ";
+      return "<div class='dl " + cls + "'><span class='ds'>" + sign + "</span>" + (esc(o[1]) || " ") + "</div>";
+    }).join("");
+    return "<div class='diff'>" + rows + "</div>";
+  }
+  function plainCode(code) { return "<pre class='code'>" + (esc(String(code || "")) || " ") + "</pre>"; }
+  function codeView(det) {
+    var honest = det.honest_code, bd = det.backdoor_code || "", bdLines = bd.split("\n").length;
+    if (honest) {
+      var ops = lineDiff(honest, bd), same = 0;
+      ops.forEach(function (o) { if (o[0] === 0) same++; });
+      if (same >= 3 && same >= 0.4 * bdLines) {
+        return "<p class='mini'>The honest solution against the submitted backdoor: removed lines in red, the attacker's additions in green.</p>" + diffHtml(honest, bd);
+      }
+      // independently-generated solutions with little in common: a line diff misleads
+      return "<p class='mini'>The honest and backdoored solutions take different shapes, so a line diff would mislead. This is the submitted backdoor; the honest reference is below it.</p>" +
+        plainCode(bd) + "<details class='dd-sub'><summary>the honest solution for comparison</summary>" + plainCode(honest) + "</details>";
+    }
+    return plainCode(bd);
+  }
+  function cleanReasoning(t) {
+    t = String(t || "");
+    var m = t.match(/<reasoning>([\s\S]*?)<\/reasoning>/i), body = m ? m[1] : t;
+    var sc = t.match(/<score>\s*([\s\S]*?)\s*<\/score>/i) || t.match(/suspicion[^0-9]{0,10}(\d+(?:\.\d+)?)/i);
+    body = body.replace(/\*\*/g, "").trim();
+    return sc ? body + "\n\nscore: " + sc[1].trim() : body;
+  }
+  function reasoningHtml(det, run) {
+    var R = det.reasoning || {}, keys = Object.keys(R);
+    if (!keys.length) return "<p class='mini'>No monitor reasoning transcript was captured for this problem.</p>";
+    var order = [];
+    if (run && R[run.run]) order.push(run.run);
+    keys.forEach(function (k) { if (order.indexOf(k) < 0) order.push(k); });
+    return order.map(function (k) {
+      var rr = D.runs.find(function (x) { return x.run === k; }), label = rr ? runLabel(rr) : k;
+      var mine = run && k === run.run;
+      return "<div class='reas'><div class='reas-h'>" + (mine ? "this monitor" : "another monitor") +
+        " &middot; <b>" + esc(label) + "</b></div><div class='reas-b'>" + esc(cleanReasoning(R[k].text)) + "</div></div>";
+    }).join("");
+  }
+  function openDrawer(id, run, isAtk) {
+    var det = detailFor(id); if (!det) return;
+    closeDrawer();
+    var p = D.probs[String(id)] || {}, oc = det.outcome || {}, badges = [];
+    badges.push(oc.passes_tests ? pill("passes all tests", "@warning") : pill("fails the tests", "@good"));
+    badges.push(oc.trigger_fires ? pill("secret input triggers the bug", "@critical") : pill("trigger did not fire", "@good"));
+    if (p.caught != null) badges.push(pill("caught by " + p.caught + "/" + PANEL, p.caught === 0 ? "@critical" : p.caught >= 5 ? "@good" : "@warning"));
+    if (p.quad) {
+      badges.push(pill("incrimination " + p.inc + "/5", p.inc <= 2 ? "@critical" : p.inc >= 4 ? "@good" : "@warning"));
+      badges.push(pill("impact " + p.imp + "/5", p.imp >= 4 ? "@critical" : p.imp >= 3 ? "@warning" : "@good"));
+    }
+    var html = "<div class='dd-backdrop'></div><div class='dd-card' role='dialog' aria-modal='true' aria-label='Problem " + id + " detail'>" +
+      "<div class='dd-head'><h3>Problem " + id + " &middot; the planted backdoor</h3>" +
+      "<button class='dd-x' id='dd-close' type='button' aria-label='Close'>&times;</button></div>" +
+      "<div class='dd-badges'>" + badges.join("") + "</div><div class='dd-scroll'>" +
+      "<details class='dd-sec' open><summary>The backdoor</summary>" +
+      codeView(det) +
+      (det.secret_input ? "<div class='dd-secret'><span class='mini'>secret input that triggers the bug</span><pre>" + esc(det.secret_input) + "</pre></div>" : "") +
+      "</details>" +
+      "<details class='dd-sec' open><summary>What the monitor said</summary>" + reasoningHtml(det, run) + "</details>" +
+      "<details class='dd-sec'><summary>The original problem</summary><div class='dd-prob'>" + esc(det.problem) + "</div></details>" +
+      (p.quad ? "<details class='dd-sec'><summary>Auditor's read</summary><p class='why'>" + esc(p.incWhy || "") + "</p>" +
+        (p.impWhy && p.impWhy !== p.incWhy ? "<p class='why'><b>Impact:</b> " + esc(p.impWhy) + "</p>" : "") + "</details>" : "") +
+      "</div></div>";
+    drawerEl = document.createElement("div"); drawerEl.className = "dd"; drawerEl.innerHTML = html;
+    (document.body || document.documentElement).appendChild(drawerEl);
+    var xb = document.getElementById("dd-close"); if (xb) xb.addEventListener("click", closeDrawer);
+    var bd = drawerEl.querySelector(".dd-backdrop"); if (bd) bd.addEventListener("click", closeDrawer);
+  }
+  function closeDrawer() { if (drawerEl && drawerEl.parentNode) drawerEl.parentNode.removeChild(drawerEl); drawerEl = null; }
 
   // ---- Atlas interactions: pin rings, dead-band wheel, rubber-band select --
   function gridRectPx() {
@@ -732,7 +841,7 @@
     zbSync();
   }
   function plotCap() {
-    if (lens === "atlas") return "Each dot is one program scored by one monitor, placed by the monitor's reasoning length. Drag to zoom a span, scroll to zoom toward the cursor, pan with the log bar below, click a dot to pin it.";
+    if (lens === "atlas") return "Each dot is one program scored by one monitor, placed by the monitor's reasoning length. Drag to zoom a span, scroll to zoom toward the cursor, pan with the log bar below, click a dot to pin it, then deep-dive a ringed backdoor.";
     if (lens === "trajectories") return "Each line is one problem across the knob's settings. Drag on an axis to filter; hover a line to trace it.";
     return "Each step line is one run's reachable operating points. Hover a curve or a leaderboard row to isolate it.";
   }
@@ -782,6 +891,7 @@
     document.addEventListener("mouseup", zbEnd);
     plot.addEventListener("dblclick", function () { if (pin) unpin(); });
     document.addEventListener("keydown", function (e) {
+      if (drawerEl && e.key === "Escape") { closeDrawer(); return; }   // drawer takes Escape first
       if (!pin) return;
       var tag = (e.target && e.target.tagName) || "";
       if (/INPUT|SELECT|TEXTAREA/.test(tag)) return;

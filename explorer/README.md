@@ -22,14 +22,30 @@ file. It does not import the data-exploration page's `lib/data.py` (that loader
 needs a session-scoped token table); the run registry and the ladder are copied so
 this page rebuilds on its own from `results/`.
 
-The deep-dive / drill-down follow-on (per-sample problem, backdoor diff, monitor
-reasoning, outcome, query tool) is scoped in `DRILLDOWN-PLAN.md`.
+## Drill-down detail
+
+Clicking a ringed backdoor (or a featured card) pins it; the pinned card then
+offers a **Deep dive** that opens a drawer with the original problem, the
+honest-vs-backdoor code (a line diff when the two overlap, otherwise the backdoor
+shown plainly with the honest reference below), the secret input that triggers the
+bug, the outcome, the field difficulty, and the monitor's own reasoning.
+
+That detail comes from the inspect_ai `.eval` logs, which are big and gitignored,
+so it is extracted once into a committed `detail.json`:
+
+    python explorer/extract_detail.py    # reads trajectories/*.eval -> detail.json
+
+`build.py` inlines `detail.json` when present and degrades gracefully (no drawer)
+when it is absent, so the page still builds without the 2.3 GB of trajectories.
+Re-run the extractor only when the trajectories or the auditor's-read set change.
+The remaining follow-on (a custom sample-level query panel) is in `DRILLDOWN-PLAN.md`.
 
 ## Files
 
 | path | what |
 |---|---|
 | `build.py` | data layer + HTML assembly (writes `../web/explorer.html`) |
+| `extract_detail.py`, `detail.json` | drill-down extractor (reads `.eval` logs) + its committed output |
 | `lenses.js` | the three chart-option builders, pure (no DOM, no echarts calls) so they render headlessly |
 | `app.js` | DOM: tabs, filter bar, per-lens toolbars, detail panel, Atlas interactions, featured strip, theme, events |
 | `styles.css`, `shell.html` | page chrome; palette mirrors the data-exploration page |
