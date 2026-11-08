@@ -63,7 +63,7 @@
     "symbolSize": 7,
     "itemStyle": {
      "color": "@s7",
-     "opacity": 0.85,
+     "opacity": 0.95,
      "borderColor": "@ink-surface",
      "borderWidth": 0.5
     },
@@ -418,8 +418,8 @@
     "type": "scatter",
     "symbolSize": 7,
     "itemStyle": {
-     "color": "@warning/0.6",
-     "opacity": 0.85,
+     "color": "@warning",
+     "opacity": 0.95,
      "borderColor": "@ink-surface",
      "borderWidth": 0.5
     },
@@ -1649,8 +1649,8 @@
     "type": "scatter",
     "symbolSize": 7,
     "itemStyle": {
-     "color": "@context-strong",
-     "opacity": 0.85,
+     "color": "@good",
+     "opacity": 0.95,
      "borderColor": "@ink-surface",
      "borderWidth": 0.5
     },
@@ -8130,7 +8130,7 @@
   "inputs": {
    "results/analysis/case-features.csv": "sha256:26805e982a831ffc"
   },
-  "code": "sha256:e76dda2c8ffce180",
-  "spec": "sha256:e590bb97c7c8fd4b"
+  "code": "sha256:8d7518dd1633bb81",
+  "spec": "sha256:2729994bd4dfa661"
  }
 }
