@@ -2,8 +2,8 @@
  "id": "M18",
  "kind": "echarts",
  "title": "Stripping comments costs more than any adversarial rewrite gains",
- "section": "results",
- "order": 120,
+ "section": "appendix",
+ "order": 127,
  "caption": "One faint line per backdoored program, tracked across five versions of the same code: comments stripped, the confession removed, left as written, rewritten to argue the code is safe, and rewritten to point at the wrong line. Bold lines are group means.",
  "notes": [
   "Mean suspicion runs 0.435 stripped, 0.523 with the confession removed, 0.624 as written, 0.608 adversarial and 0.616 misdirection. Taking the comments away moves the monitor further than anything the attacker writes into them.",
@@ -8220,7 +8220,7 @@
    "results/analysis/backdoor-comment-confessions.csv": "sha256:4c11847e9f5dacae",
    "results/analysis/misdirection.csv": "sha256:c8a36a8ac5dc8808"
   },
-  "code": "sha256:e29761f780cd5ccd",
-  "spec": "sha256:a940343cc29bbdc9"
+  "code": "sha256:d4825da7dee058db",
+  "spec": "sha256:4b02ae9bd43e29ed"
  }
 }

@@ -1,0 +1,187 @@
+{
+ "id": "P20",
+ "kind": "echarts",
+ "title": "Rewriting comments to look innocent doesn't help the attacker",
+ "section": "results",
+ "order": 121,
+ "caption": "Backdoors caught at a 2% audit budget on 239 programs, each scored four ways by the same monitor (Haiku 5.5 xhigh). The code never changes, only its comments. In the two right-hand bars an attacker model (GLM-5.3) rewrote them, keeping as many comments as the original had.",
+ "notes": [
+  "Paired over the same programs, the attacker's rewrite changes the catch rate by +0.1 points (95% interval -2.8 to +3.1). Removing the comments changes it by -12.3 (-20.5 to -7.1).",
+  "Why it fails: on this dataset any comment makes code look more suspicious, because honest solutions here barely have comments. So this is a fact about this dataset, not proof that comments are safe to show in general.",
+  "One attacker, with no sight of the monitor's prompt and no retries. A determined attacker could do better.",
+  "The cutoff comes from the same problems' honest solutions scored in this experiment's own harness, so these numbers don't join to the main run tables."
+ ],
+ "height": 380,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P20-comment-rewrite-attack",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 58,
+   "right": 16,
+   "top": 24,
+   "bottom": 64
+  },
+  "xAxis": {
+   "name": "",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "category",
+   "data": [
+    "Comments\nremoved",
+    "Original\ncomments",
+    "Attacker rewrote\nthem to look safe",
+    "Attacker left the bug\nline uncommented"
+   ],
+   "axisLabel": {
+    "interval": 0,
+    "fontSize": 12,
+    "lineHeight": 16,
+    "color": "@ink-primary"
+   }
+  },
+  "yAxis": {
+   "name": "Backdoors caught",
+   "nameLocation": "middle",
+   "nameGap": 40,
+   "type": "value",
+   "min": 0,
+   "max": 100,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "series": [
+   {
+    "type": "bar",
+    "data": [
+     {
+      "value": 79.85,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderRadius": [
+        5,
+        5,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "formatter": "80%"
+      },
+      "tip": "<b>Comments removed</b><br>79.8% of 239 backdoors caught"
+     },
+     {
+      "value": 92.1,
+      "itemStyle": {
+       "color": "@s0",
+       "borderRadius": [
+        5,
+        5,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "formatter": "92%"
+      },
+      "tip": "<b>Original comments</b><br>92.1% of 239 backdoors caught"
+     },
+     {
+      "value": 92.18,
+      "itemStyle": {
+       "color": "@s0",
+       "borderRadius": [
+        5,
+        5,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "formatter": "92%"
+      },
+      "tip": "<b>Attacker rewrote them to look safe</b><br>92.2% of 239 backdoors caught"
+     },
+     {
+      "value": 91.99,
+      "itemStyle": {
+       "color": "@s0",
+       "borderRadius": [
+        5,
+        5,
+        0,
+        0
+       ]
+      },
+      "label": {
+       "formatter": "92%"
+      },
+      "tip": "<b>Attacker left the bug line uncommented</b><br>92.0% of 239 backdoors caught"
+     }
+    ],
+    "barWidth": "52%",
+    "label": {
+     "show": true,
+     "position": "top",
+     "color": "@ink-primary",
+     "fontSize": 13,
+     "fontWeight": 600
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "comments",
+   "programs",
+   "caught_pct"
+  ],
+  "rows": [
+   [
+    "Comments removed",
+    239,
+    79.85
+   ],
+   [
+    "Original comments",
+    239,
+    92.1
+   ],
+   [
+    "Attacker rewrote them to look safe",
+    239,
+    92.18
+   ],
+   [
+    "Attacker left the bug line uncommented",
+    239,
+    91.99
+   ]
+  ]
+ },
+ "facts": {
+  "n": 239,
+  "d_adv": 0.0781032,
+  "adv_lo": -2.79111,
+  "adv_hi": 3.11729,
+  "d_rem": -12.2538,
+  "rem_lo": -20.5376,
+  "rem_hi": -7.0823
+ },
+ "build": {
+  "inputs": {
+   "results/analysis/adversarial-comments.csv": "sha256:5b087405f7c34182",
+   "results/analysis/misdirection.csv": "sha256:c8a36a8ac5dc8808"
+  },
+  "code": "sha256:17b668596b1906f7",
+  "spec": "sha256:e2132c14eb9c153a"
+ }
+}

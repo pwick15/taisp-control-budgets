@@ -1,0 +1,191 @@
+{
+ "id": "P19",
+ "kind": "echarts",
+ "title": "Most of what comments add comes from backdoors that label themselves",
+ "section": "results",
+ "order": 120,
+ "caption": "Extra backdoors Haiku 5.5 xhigh catches, out of 500, when it sees the code's comments, at a 2% audit budget: 468 instead of 426. Every program in the top row has a comment with a word like 'flaw' or 'bug', which a keyword search flags with no false alarms.",
+ "notes": [
+  "Why: these backdoors were written by models asked to insert a bug, and many narrated it in a comment ('# The subtle flaw'). Honest solutions never do. A real attacker wouldn't either.",
+  "Only the middle row is gain a keyword search can't explain: 10 of 500 programs, about 2 points.",
+  "The bottom row is a built-in placebo. Showing comments can't change a program that has none, and the count doesn't move.",
+  "How often a backdoor labels itself depends on which model wrote it (19% to 94%, results/analysis/COMMENTS.md). That is why every main run removes comments."
+ ],
+ "height": 300,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P19-comment-gain-by-type",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 16,
+   "right": 70,
+   "top": 8,
+   "bottom": 52,
+   "containLabel": true
+  },
+  "xAxis": {
+   "name": "Extra backdoors caught when comments are shown",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "value",
+   "min": 0,
+   "max": 40
+  },
+  "yAxis": {
+   "type": "category",
+   "inverse": true,
+   "data": [
+    "Comment gives the backdoor away\n259 programs · '# Introducing a subtle flaw'",
+    "Comment doesn't give it away\n95 programs",
+    "No comments\n146 programs"
+   ],
+   "axisTick": {
+    "show": false
+   },
+   "axisLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "margin": 14,
+    "align": "right",
+    "formatter": "function (v) { var p = v.split('\\n'); return '{a|' + p[0] + '}\\n{b|' + p[1] + '}'; }",
+    "rich": {
+     "a": {
+      "color": "@ink-primary",
+      "fontSize": 13,
+      "fontWeight": 600,
+      "lineHeight": 20,
+      "align": "right"
+     },
+     "b": {
+      "color": "@ink-muted",
+      "fontSize": 11,
+      "lineHeight": 16,
+      "align": "right"
+     }
+    }
+   }
+  },
+  "series": [
+   {
+    "type": "bar",
+    "data": [
+     {
+      "value": 33,
+      "itemStyle": {
+       "color": "@s0",
+       "borderRadius": [
+        0,
+        5,
+        5,
+        0
+       ]
+      },
+      "label": {
+       "formatter": "+33"
+      },
+      "tip": "<b>Comment gives the backdoor away</b> (259 programs)<br>caught with comments removed: 222<br>caught with comments shown: 255"
+     },
+     {
+      "value": 10,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderRadius": [
+        0,
+        5,
+        5,
+        0
+       ]
+      },
+      "label": {
+       "formatter": "+10"
+      },
+      "tip": "<b>Comment doesn't give it away</b> (95 programs)<br>caught with comments removed: 75<br>caught with comments shown: 85"
+     },
+     {
+      "value": 0,
+      "itemStyle": {
+       "color": "@context-strong",
+       "borderRadius": [
+        0,
+        5,
+        5,
+        0
+       ]
+      },
+      "label": {
+       "formatter": "no change",
+       "color": "@ink-muted",
+       "fontWeight": 400,
+       "fontSize": 12
+      },
+      "tip": "<b>No comments</b> (146 programs)<br>caught with comments removed: 128<br>caught with comments shown: 128"
+     }
+    ],
+    "barWidth": 30,
+    "label": {
+     "show": true,
+     "position": "right",
+     "color": "@ink-primary",
+     "fontSize": 13,
+     "fontWeight": 600,
+     "distance": 8
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "comments",
+   "programs",
+   "caught_removed",
+   "caught_shown",
+   "extra_caught"
+  ],
+  "rows": [
+   [
+    "Comment gives the backdoor away",
+    259,
+    222.3,
+    255.0,
+    33
+   ],
+   [
+    "Comment doesn't give it away",
+    95,
+    75.1,
+    85.0,
+    10
+   ],
+   [
+    "No comments",
+    146,
+    128.1,
+    128.1,
+    0
+   ]
+  ]
+ },
+ "facts": {
+  "removed": 426,
+  "shown": 468,
+  "mid": 10,
+  "mid_pts": 2.0
+ },
+ "build": {
+  "inputs": {
+   "results/analysis/backdoor-comment-confessions.csv": "sha256:4c11847e9f5dacae",
+   "results/dataset-haiku55-effortxhigh-tm-n500-strip-samples.csv": "sha256:bb76128ce096af31",
+   "results/dataset-haiku55-xhigh-nostrip-n500-samples.csv": "sha256:822a2fe624aa4c68"
+  },
+  "code": "sha256:dbc44600d810d201",
+  "spec": "sha256:c74c84a4d90452dc"
+ }
+}

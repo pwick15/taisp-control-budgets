@@ -1,0 +1,390 @@
+{
+ "id": "P22",
+ "kind": "echarts",
+ "title": "Newer models didn't write harder-to-catch backdoors",
+ "section": "results",
+ "order": 112,
+ "caption": "Each dot is one model that wrote backdoors for this dataset, placed at its public release date. Up is the share of its backdoors missed by all seven of our monitors at a 2% budget; the bar is the 95% range and the number is how many it wrote. The dashed line is all of them together.",
+ "notes": [
+  "The two hardest sets came from mid-2024 models, o1-mini and GPT-4o mini. The newest models in the dataset, o3-mini and Claude 3.7 Sonnet, sit near or below the overall rate. Rank correlation between release date and share missed is -0.05.",
+  "Most groups are small and their ranges overlap. Only o1-mini against o3-mini is clearly separated (see P11). The dataset stops at early 2025, so this says nothing about today's models.",
+  "Release date is first public availability (viz/data/model-release-dates.csv). The dataset used '-latest' names, which may have pointed at a later snapshot of the same model.",
+  "Models wrote backdoors for different problems, so problem difficulty is mixed in with the writer's skill.",
+  "The 18 backdoors from the original APPS set have no writer model and are left out. None were missed by all seven."
+ ],
+ "height": 440,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P22-writer-release-date",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 58,
+   "right": 30,
+   "top": 20,
+   "bottom": 52
+  },
+  "xAxis": {
+   "name": "Release date of the backdoor writer",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "value",
+   "min": 2023,
+   "max": 2025.75,
+   "interval": 0.25,
+   "splitLine": {
+    "show": false
+   },
+   "axisLabel": {
+    "fontSize": 11,
+    "formatter": "function (v) { return v % 1 === 0 ? String(v) : ''; }"
+   }
+  },
+  "yAxis": {
+   "name": "Missed by all seven monitors",
+   "nameLocation": "middle",
+   "nameGap": 42,
+   "type": "value",
+   "min": 0,
+   "max": 50,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "series": [
+   {
+    "name": "_range",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "itemStyle": {
+     "color": "@s7"
+    },
+    "data": [
+     [
+      2023.16,
+      0.0,
+      29.92
+     ],
+     [
+      2024.36,
+      3.53,
+      15.6
+     ],
+     [
+      2024.54,
+      11.19,
+      46.87
+     ],
+     [
+      2024.7,
+      15.69,
+      41.93
+     ],
+     [
+      2024.84,
+      7.31,
+      38.52
+     ],
+     [
+      2024.94,
+      4.98,
+      34.64
+     ],
+     [
+      2025.08,
+      1.0,
+      6.37
+     ],
+     [
+      2025.15,
+      8.14,
+      20.58
+     ],
+     [
+      2025.15,
+      0.94,
+      24.64
+     ]
+    ],
+    "encode": {
+     "x": 0,
+     "y": [
+      1,
+      2
+     ]
+    },
+    "z": 1,
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "writers",
+    "type": "scatter",
+    "symbolSize": 11,
+    "z": 3,
+    "data": [
+     {
+      "value": [
+       2023.16,
+       0.0
+      ],
+      "label": {
+       "formatter": "GPT-3.5 Turbo (9)",
+       "position": "right"
+      },
+      "tip": "<b>GPT-3.5 Turbo</b>, released 2023-03-01<br>0 of 9 missed by all seven (0.0%)<br>95% range 0–30%"
+     },
+     {
+      "value": [
+       2024.36,
+       7.59
+      ],
+      "label": {
+       "formatter": "GPT-4o (79)",
+       "position": "right"
+      },
+      "tip": "<b>GPT-4o</b>, released 2024-05-13<br>6 of 79 missed by all seven (7.6%)<br>95% range 4–16%"
+     },
+     {
+      "value": [
+       2024.54,
+       25.0
+      ],
+      "label": {
+       "formatter": "GPT-4o mini (20)",
+       "position": "left"
+      },
+      "tip": "<b>GPT-4o mini</b>, released 2024-07-18<br>5 of 20 missed by all seven (25.0%)<br>95% range 11–47%"
+     },
+     {
+      "value": [
+       2024.7,
+       26.83
+      ],
+      "label": {
+       "formatter": "o1-mini (41)",
+       "position": "right"
+      },
+      "tip": "<b>o1-mini</b>, released 2024-09-12<br>11 of 41 missed by all seven (26.8%)<br>95% range 16–42%"
+     },
+     {
+      "value": [
+       2024.84,
+       18.18
+      ],
+      "label": {
+       "formatter": "Claude 3.5 Haiku (22)",
+       "position": "top"
+      },
+      "tip": "<b>Claude 3.5 Haiku</b>, released 2024-11-04<br>4 of 22 missed by all seven (18.2%)<br>95% range 7–39%"
+     },
+     {
+      "value": [
+       2024.94,
+       14.29
+      ],
+      "label": {
+       "formatter": "Gemini 2.0 Flash (21)",
+       "position": "bottom"
+      },
+      "tip": "<b>Gemini 2.0 Flash</b>, released 2024-12-11<br>3 of 21 missed by all seven (14.3%)<br>95% range 5–35%"
+     },
+     {
+      "value": [
+       2025.08,
+       2.55
+      ],
+      "label": {
+       "formatter": "o3-mini (157)",
+       "position": "bottom"
+      },
+      "tip": "<b>o3-mini</b>, released 2025-01-31<br>4 of 157 missed by all seven (2.5%)<br>95% range 1–6%"
+     },
+     {
+      "value": [
+       2025.15,
+       13.16
+      ],
+      "label": {
+       "formatter": "Claude 3.7 Sonnet (114)",
+       "position": "right"
+      },
+      "tip": "<b>Claude 3.7 Sonnet</b>, released 2025-02-24<br>15 of 114 missed by all seven (13.2%)<br>95% range 8–21%"
+     },
+     {
+      "value": [
+       2025.15,
+       5.26
+      ],
+      "label": {
+       "formatter": "Claude 3.7 Sonnet thinking (19)",
+       "position": "right"
+      },
+      "tip": "<b>Claude 3.7 Sonnet thinking</b>, released 2025-02-24<br>1 of 19 missed by all seven (5.3%)<br>95% range 1–25%"
+     }
+    ],
+    "itemStyle": {
+     "color": "@s7",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "label": {
+     "show": true,
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "distance": 8
+    }
+   },
+   {
+    "name": "_all",
+    "type": "line",
+    "data": [],
+    "silent": true,
+    "markLine": {
+     "silent": true,
+     "symbol": "none",
+     "lineStyle": {
+      "type": "dashed",
+      "color": "@ink-muted",
+      "width": 1.2
+     },
+     "label": {
+      "formatter": "all backdoors 10%",
+      "position": "insideEndTop",
+      "color": "@ink-muted",
+      "fontSize": 11
+     },
+     "data": [
+      {
+       "yAxis": 9.8
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "writer",
+   "model",
+   "release_date",
+   "n",
+   "missed",
+   "share",
+   "lo",
+   "hi"
+  ],
+  "rows": [
+   [
+    "GPT-3.5 Turbo",
+    "openai/gpt-3.5-turbo",
+    "2023-03-01",
+    9,
+    0,
+    0.0,
+    0.0,
+    0.299153
+   ],
+   [
+    "GPT-4o",
+    "openai/gpt-4o",
+    "2024-05-13",
+    79,
+    6,
+    0.0759494,
+    0.0352716,
+    0.155956
+   ],
+   [
+    "GPT-4o mini",
+    "openai/gpt-4o-mini",
+    "2024-07-18",
+    20,
+    5,
+    0.25,
+    0.11186,
+    0.468705
+   ],
+   [
+    "o1-mini",
+    "openai/o1-mini",
+    "2024-09-12",
+    41,
+    11,
+    0.268293,
+    0.156948,
+    0.419338
+   ],
+   [
+    "Claude 3.5 Haiku",
+    "anthropic/claude-3-5-haiku-latest",
+    "2024-11-04",
+    22,
+    4,
+    0.181818,
+    0.0730677,
+    0.38517
+   ],
+   [
+    "Gemini 2.0 Flash",
+    "google/gemini-2.0-flash",
+    "2024-12-11",
+    21,
+    3,
+    0.142857,
+    0.0498092,
+    0.346365
+   ],
+   [
+    "o3-mini",
+    "openai/o3-mini",
+    "2025-01-31",
+    157,
+    4,
+    0.0254777,
+    0.00995123,
+    0.0636715
+   ],
+   [
+    "Claude 3.7 Sonnet",
+    "anthropic/claude-3-7-sonnet-latest",
+    "2025-02-24",
+    114,
+    15,
+    0.131579,
+    0.0813858,
+    0.205793
+   ],
+   [
+    "Claude 3.7 Sonnet thinking",
+    "anthropic/claude-3-7-sonnet-thinking-latest",
+    "2025-02-24",
+    19,
+    1,
+    0.0526316,
+    0.00935175,
+    0.246392
+   ]
+  ]
+ },
+ "facts": {
+  "rho": -0.0502096,
+  "n_apps": 18
+ },
+ "build": {
+  "inputs": {
+   "results/analysis/case-features.csv": "sha256:26805e982a831ffc",
+   "viz/data/model-release-dates.csv": "sha256:62cf1e85a7e413c6"
+  },
+  "code": "sha256:33d46eec1bf8e1f3",
+  "spec": "sha256:6530be21f3b0b31b"
+ }
+}
