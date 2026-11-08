@@ -76,3 +76,39 @@ def stack(key: str) -> dict[str, tuple[int, int, int]]:
         counts[(li, mi)] = k + 1
         pos[r["id"]] = (li, mi, k)
     return pos
+
+
+# The lab behind each incident, read from its actor text. Colour order for figures: OpenAI, Anthropic,
+# Google, then everything else in grey.
+COMPANIES = ["OpenAI", "Anthropic", "Google", "Other"]
+
+
+def company(r: dict) -> str:
+    a = r.get("actor") or ""
+    openai = "OpenAI" in a or "GPT" in a
+    anthropic = "Anthropic" in a or "Claude" in a
+    if openai and anthropic:
+        return "Anthropic and OpenAI"
+    if openai:
+        return "OpenAI"
+    if anthropic:
+        return "Anthropic"
+    if "Google" in a or "Gemini" in a:
+        return "Google"
+    if "Tencent" in a:
+        return "Models on Tencent Cloud"
+    return a.split(",")[0]
+
+
+def colour_group(name: str) -> str:
+    return name if name in COMPANIES[:3] else "Other"
+
+
+def lab_timeline() -> list[dict]:
+    """Lab incidents with a usable date (the same set as lag()), earliest incident first."""
+    rows = [{"id": r["id"], "short": r["short"], "when": r["when"], "company": company(r),
+             "occurred": r["occurred"], "public": r["public"], "approx": r["occ_precision"] == "month",
+             "days": _days(r["occurred"], r["public"])}
+            for r in incidents() if r.get("lag_ok") is True]
+    return sorted(rows, key=lambda r: (r["occurred"], r["id"]))
+
