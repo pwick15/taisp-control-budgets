@@ -123,7 +123,7 @@ THEME: dict[str, list[str]] = {
     "@ink-primary": ["#0b0b0b", "#f0efec"],
     "@ink-secondary": ["#52514e", "#c3c2b7"],
     "@ink-muted": ["#898781", "#898781"],
-    "@ink-grid": ["#e1e0d9", "#2c2c2a"],
+    "@ink-grid": ["rgba(11,11,11,0.055)", "rgba(240,239,236,0.07)"],
     "@ink-axis": ["#c3c2b7", "#383835"],
     "@ink-surface": ["#fcfcfb", "#1a1a19"],
     # honest / attack: the two outcomes every lens leans on. Blue honest, red

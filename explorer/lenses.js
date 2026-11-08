@@ -151,16 +151,22 @@
         "<br><span style='color:" + ink("muted") + "'>click to pin &middot; full judgement in the side panel &rarr;</span>";
     }
     var o = base(ink);
-    o.grid = { left: 8, right: 18, top: 10, bottom: 54, containLabel: true };
+    o.grid = { left: 8, right: 34, top: 10, bottom: 54, containLabel: true };
     o.tooltip.trigger = "item"; o.tooltip.formatter = tip;
     o.xAxis = xAxis;
     // Integer min/max so a value-axis tick lands on every lane centre (a
     // fractional min anchors the ticks off the integers and the labels vanish).
     o.yAxis = vaxis(ink, "", {
       min: -1, max: runs.length, interval: 1, axisLine: false, margin: 10,
-      formatter: function (v) { var i = Math.round(v); return (Math.abs(v - i) < 1e-6 && runs[i]) ? runLabel(runs[i]) : ""; },
+      formatter: function (v) {
+        var i = Math.round(v);
+        if (!(Math.abs(v - i) < 1e-6 && runs[i])) return "";
+        var lab = runLabel(runs[i]), ix = lab.indexOf(" · ");   // monitor name in ink, the effort/scale suffix muted
+        return ix < 0 ? "{a|" + lab + "}" : "{a|" + lab.slice(0, ix) + "}{b|" + lab.slice(ix) + "}";
+      },
     });
     o.yAxis.axisLabel.fontSize = 10.5; o.yAxis.axisLabel.color = ink("secondary");
+    o.yAxis.axisLabel.rich = { a: { color: ink("primary"), fontSize: 10.5 }, b: { color: ink("muted"), fontSize: 10.5 } };
     o.yAxis.splitLine = { show: true, lineStyle: { color: ink("grid"), width: 1 } }; // lane centre = honest/attack divider
     var sym = runs.length > 30 ? 3 : 4;
     function series(name, data, color) {
@@ -193,7 +199,7 @@
       });
     }
     // faint alternating bands so each run reads as its own strip, not one column
-    var band = ctx.themeIdx ? "rgba(210,210,210,0.05)" : "rgba(70,70,70,0.05)";
+    var band = ctx.themeIdx ? "rgba(210,210,210,0.028)" : "rgba(70,70,70,0.03)";
     var bands = [];
     for (var bi = 0; bi < runs.length; bi += 2) bands.push([{ yAxis: bi - 0.5, itemStyle: { color: band } }, { yAxis: bi + 0.5 }]);
     if (o.series[0]) {
