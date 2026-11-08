@@ -10,17 +10,11 @@
 <body>
 <div class="app">
   <header class="masthead">
-    <div class="topbar">
-      <div>
-        <p class="eyebrow">AI-control budgets &middot; interactive</p>
-        <h1>The control dataset, three ways</h1>
-        <p class="lede">Every in-scope run in one place: each monitor's raw suspicion score on every honest program and every verified backdoor. Pick a lens, filter the field, hover any mark for the underlying sample. Nothing is fetched; the whole dataset is in this page.</p>
-      </div>
-      <div class="topbtns">
-        <button class="btn" id="theme-btn" type="button">Dark</button>
-      </div>
-    </div>
-    <div class="tabs" id="tabs" role="tablist"></div>
+    <button class="btn theme-toggle" id="theme-btn" type="button" aria-label="Toggle theme"></button>
+    <p class="kicker">AI-control budgets study</p>
+    <h1>The control dataset, three ways</h1>
+    <p class="lede">Each monitor's suspicion score on every honest program and verified backdoor.</p>
+    <nav class="tabs" id="tabs" role="tablist"></nav>
     <div class="lens-intro" id="lens-intro"></div>
   </header>
 
@@ -29,8 +23,6 @@
     <div class="ctl-row filterbar" id="filterbar"></div>
   </div>
 
-  <div class="featured hidden" id="featured"></div>
-
   <div class="stage">
     <div class="plotwrap">
       <div id="plot"></div>
@@ -38,6 +30,8 @@
     </div>
     <aside class="detail" id="detail"></aside>
   </div>
+
+  <div class="featured hidden" id="featured"></div>
 
   <div class="notes" id="notes"></div>
 </div>

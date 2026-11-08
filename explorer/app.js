@@ -102,13 +102,13 @@
   var LENSES = [
     { id: "atlas", title: "Atlas", sub: "every sample, one dot",
       q: "How long does each monitor think, sample by sample?",
-      d: "One lane per run. Every honest program sits above its lane line and every verified backdoor below it, placed left to right by how many reasoning tokens the monitor spent on it. Gold rings mark the backdoors that carry an auditor's read. Drag to zoom a span, scroll to zoom toward the cursor, click a dot to pin its full judgement, then open a deep dive on any ringed backdoor for its code, the planted bug and the monitor's own reasoning." },
+      d: "Every sample a dot, one lane per run, placed by the monitor's reasoning length: honest above each lane line, backdoors below." },
     { id: "trajectories", title: "Trajectories", sub: "one line per problem",
       q: "How does a monitor's judgement of a backdoor move as you turn one knob?",
-      d: "Each thin line is a single problem; it rises and falls as the reasoning effort (or score scale, or comments) changes across the axes. Drag on any axis to keep only the lines passing through a score band. The thick line is the mean path." },
+      d: "Each thin line is one problem across a reasoning-effort, score-scale or comments ladder; the thick line is the mean path. Drag on an axis to filter." },
     { id: "flightdeck", title: "Flight deck", sub: "every operating point",
       q: "At the audit budget you can afford, which monitor catches the most?",
-      d: "Each step line is one run's reachable operating points: the recall you get at each false-positive rate a cutoff can actually buy. Drag the budget; the leaderboard re-sorts by what every run catches at that budget, with its cost per sample." },
+      d: "Each step line is one run's reachable recall at every false-positive rate a cutoff can buy. Drag the budget; the leaderboard re-sorts by what each run catches, with cost." },
   ];
   var lens = "atlas";
 
@@ -134,7 +134,6 @@
     { key: "effort", label: "Effort", vals: D.effort_order.filter(function (e) { return D.runs.some(function (r) { return r.effort === e; }); }) },
     { key: "scale", label: "Score scale", vals: uniq(D.runs.map(function (r) { return r.scale; })).sort(function (a, b) { return a - b; }), fmt: function (v) { return "0-" + v; } },
     { key: "comments", label: "Comments", vals: uniq(D.runs.map(function (r) { return r.comments; })) },
-    { key: "protocol", label: "Protocol", vals: uniq(D.runs.map(function (r) { return r.protocol; })) },
     { key: "batch", label: "Problem set", vals: ["b1", "b2", "pilot-100"].filter(function (b) { return D.runs.some(function (r) { return r.batch === b; }); }), fmt: function (v) { return { b1: "batch 1", b2: "batch 2", "pilot-100": "n=100" }[v]; } },
   ];
   var filt = {};
@@ -148,7 +147,8 @@
     });
   }
   function currentRuns() {
-    var rs = D.runs.filter(pass);
+    // only trusted-monitoring runs are in scope here; the protocol filter was removed
+    var rs = D.runs.filter(function (r) { return r.protocol === "TM" && pass(r); });
     if (lens === "atlas") {
       var withTok = rs.filter(function (r) { return r.has_rtok; });
       rs = state.atlas.noTok ? withTok.concat(rs.filter(function (r) { return !r.has_rtok; })) : withTok;
@@ -273,10 +273,12 @@
       g.appendChild(el("span", "ctl-label", d.label));
       var chips = el("div", "chips");
       d.vals.forEach(function (v) {
+        var n = D.runs.filter(function (r) { return r.protocol === "TM" && r[d.key] === v; }).length;
+        if (n === 0) return;                 // no in-scope runs for this value: drop the dead chip
         var c = el("button", "chip"); c.type = "button";
+        c.title = n + " run" + (n === 1 ? "" : "s") + " in the dataset";
         if (d.color) { var dot = el("span", "dot"); dot.style.background = C(D.monitor_color[v] || "@ink-muted"); c.appendChild(dot); }
         c.appendChild(document.createTextNode(d.fmt ? d.fmt(v) : String(v)));
-        var n = D.runs.filter(function (r) { return r[d.key] === v; }).length;
         var ct = el("span", "ct", n); c.appendChild(ct);
         c.setAttribute("aria-pressed", filt[d.key].has(v) ? "true" : "false");
         c.addEventListener("click", function () {
@@ -302,7 +304,7 @@
     var row = el("div", "feat-row");
     FEATURED.forEach(function (f) {
       var c = el("button", "feat-card"); c.type = "button";
-      var chips = f.chips.map(function (ch) { return "<span class='fchip' style='background:" + C(ch[1]) + "'>" + esc(ch[0]) + "</span>"; }).join("");
+      var chips = f.chips.map(function (ch) { return "<span class='fchip'><i class='fdot' style='background:" + C(ch[1]) + "'></i>" + esc(ch[0]) + "</span>"; }).join("");
       c.innerHTML = "<div class='fcard-head'>#" + f.id + "</div><div class='fcard-title'>" + esc(f.head) + "</div>" +
         "<div class='fchips'>" + chips + "</div><div class='fcard-note'>" + esc(f.note) + "</div>";
       c.addEventListener("click", function () { focusSample(f); });
@@ -793,7 +795,6 @@
       var b = el("button", "tab"); b.type = "button"; b.setAttribute("role", "tab");
       b.setAttribute("aria-selected", Lx.id === lens ? "true" : "false");
       b.appendChild(el("span", "tt", Lx.title));
-      b.appendChild(el("span", "ts", Lx.sub));
       b.addEventListener("click", function () { lens = Lx.id; syncTabs(); rebuild(); });
       tabs.appendChild(b);
     });
@@ -804,7 +805,7 @@
     });
     var Lx = LENSES.find(function (x) { return x.id === lens; });
     var intro = document.getElementById("lens-intro");
-    intro.innerHTML = "<span class='q'>" + esc(Lx.q) + "</span><span class='d'>" + esc(Lx.d) + "</span>";
+    intro.innerHTML = "<span class='q'>" + esc(Lx.q) + "</span> <span class='d'>" + esc(Lx.d) + "</span>";
   }
   function buildNotes() {
     var host = document.getElementById("notes");
@@ -853,15 +854,24 @@
     zbSync();
   }
   function plotCap() {
-    if (lens === "atlas") return "Each dot is one program scored by one monitor, placed by the monitor's reasoning length. Drag to zoom a span, scroll to zoom toward the cursor, pan with the log bar below, click a dot to pin it, then deep-dive a ringed backdoor.";
+    if (lens === "atlas") return "";
     if (lens === "trajectories") return "Each line is one problem across the knob's settings. Drag on an axis to filter; hover a line to trace it.";
     return "Each step line is one run's reachable operating points. Hover a curve or a leaderboard row to isolate it.";
   }
   function rebuild() { buildToolbar(); buildFilterbar(); buildFeatured(); repaint(); }
 
+  // icon-only theme toggle: shows the theme you would switch TO
+  function setThemeBtn(cur) {
+    var b = document.getElementById("theme-btn"); if (!b) return;
+    var moon = "<svg viewBox='0 0 24 24' width='17' height='17' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z'/></svg>";
+    var sun = "<svg viewBox='0 0 24 24' width='17' height='17' fill='none' stroke='currentColor' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><circle cx='12' cy='12' r='4'/><path d='M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4'/></svg>";
+    b.innerHTML = cur === "dark" ? sun : moon;
+    b.setAttribute("aria-label", cur === "dark" ? "Switch to light theme" : "Switch to dark theme");
+    b.setAttribute("title", cur === "dark" ? "Switch to light theme" : "Switch to dark theme");
+  }
   function setTheme(t) {
     document.documentElement.setAttribute("data-theme", t);
-    document.getElementById("theme-btn").textContent = t === "dark" ? "Light" : "Dark";
+    setThemeBtn(t);
     try { localStorage.setItem("ctrl-explorer-theme", t); } catch (e) { /* private window */ }
     buildFilterbar(); buildFeatured(); repaint();
   }
@@ -883,7 +893,7 @@
     chart.on("datazoom", function () { if (pin) reposPins(); zbSync(); });   // pins + scrollbar follow the window
 
     buildTabs(); syncTabs(); buildNotes();
-    document.getElementById("theme-btn").textContent = stored === "dark" ? "Light" : "Dark";
+    setThemeBtn(stored);
     document.getElementById("theme-btn").addEventListener("click", function () {
       setTheme(themeIdx() === 1 ? "light" : "dark");
     });
