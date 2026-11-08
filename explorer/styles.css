@@ -185,6 +185,43 @@ aside.detail { position: sticky; top: 12px; display: flex; flex-direction: colum
 .pinbtn.ghost { background: var(--surface); color: var(--ink-2); border-color: var(--rule); }
 .pinbtn:hover { filter: brightness(1.05); }
 .pinbtn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+.pinbtn.deep { background: var(--ink); color: var(--page); border-color: var(--ink); }
+
+/* --- deep-dive drawer: full per-sample backdoor detail, over the page --- */
+.dd { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; }
+.dd-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.45); }
+.dd-card { position: relative; background: var(--surface); color: var(--ink); border: 1px solid var(--rule);
+  border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,.4); width: min(860px, 94vw); max-height: 90vh;
+  display: flex; flex-direction: column; overflow: hidden; }
+.dd-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--rule); }
+.dd-head h3 { margin: 0; font-size: 16px; }
+.dd-x { font-size: 22px; line-height: 1; background: none; border: none; color: var(--muted); cursor: pointer; padding: 0 4px; }
+.dd-x:hover { color: var(--ink); }
+.dd-badges { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 18px 0; }
+.dd-scroll { overflow: auto; padding: 6px 18px 18px; }
+.dd-sec { border-top: 1px solid var(--rule); padding: 8px 0; }
+.dd-sec > summary { cursor: pointer; font-weight: 650; font-size: 13px; padding: 4px 0; }
+.dd-prob { white-space: pre-wrap; font-size: 12.5px; line-height: 1.5; color: var(--ink-2); margin-top: 6px; max-height: 320px; overflow: auto; }
+.diff { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12px; line-height: 1.5;
+  border: 1px solid var(--rule); border-radius: 8px; overflow: auto; margin-top: 8px; max-height: 440px; background: var(--page); }
+.dl { white-space: pre-wrap; display: flex; }
+.dl .ds { width: 20px; flex: none; text-align: center; color: var(--muted); user-select: none; }
+.dl.add { background: rgba(40,160,90,.14); }
+.dl.del { background: rgba(220,70,70,.12); }
+.dl.add .ds { color: #1a9d57; }
+.dl.del .ds { color: #d03b3b; }
+.code { font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; font-size: 12px; line-height: 1.5;
+  white-space: pre-wrap; border: 1px solid var(--rule); border-radius: 8px; background: var(--page);
+  padding: 8px 10px; margin: 8px 0 0; max-height: 440px; overflow: auto; }
+.dd-sub { margin-top: 8px; }
+.dd-sub > summary { cursor: pointer; font-size: 12px; color: var(--muted); }
+.dd-secret { margin-top: 10px; }
+.dd-secret pre { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px; background: var(--surface-2);
+  border: 1px solid var(--rule); border-radius: 7px; padding: 7px 10px; margin: 4px 0 0; white-space: pre-wrap; }
+.reas { margin-top: 10px; }
+.reas-h { font-size: 11.5px; color: var(--muted); margin-bottom: 3px; }
+.reas-b { white-space: pre-wrap; font-size: 12.5px; line-height: 1.5; color: var(--ink-2); background: var(--surface-2);
+  border: 1px solid var(--rule); border-radius: 8px; padding: 9px 11px; max-height: 300px; overflow: auto; }
 
 /* --- plot overlays (selection rectangle + toast), positioned over #plot --- */
 .selrect { position: absolute; pointer-events: none; z-index: 20; background: rgba(42,120,214,.12); border-left: 1px solid var(--accent); border-right: 1px solid var(--accent); }

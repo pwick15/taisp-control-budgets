@@ -1,8 +1,18 @@
-# Drill-down + query tool: scoped plan (not yet built)
+# Drill-down + query tool: plan
 
-The next step for the explorer: let a reader go from the high-level Atlas to a
-fully detailed, per-sample view, and filter the data themselves. Captured here so
-it can be executed later. Deploy the current Atlas first.
+Let a reader go from the high-level Atlas to a fully detailed, per-sample view, and
+filter the data themselves.
+
+## Status
+
+- **DONE — drill-down drawer (option 1b).** Click a ringed backdoor or a featured
+  card to pin it, then **Deep dive** opens a drawer: original problem, honest-vs-
+  backdoor code (line diff when they overlap, else backdoor shown plainly with the
+  honest reference below), secret input, outcome, field difficulty, auditor's read,
+  and the monitor's own reasoning. Data from `extract_detail.py` -> `detail.json`
+  (52 backdoors: the 51 with auditor's reads + featured #837; reasoning captured for
+  the runs that have trajectories, currently Haiku 5.5 and Qwen-none).
+- **TODO — custom query/filter panel (option 1a).** See below.
 
 ## What the source data actually supports (verified)
 
