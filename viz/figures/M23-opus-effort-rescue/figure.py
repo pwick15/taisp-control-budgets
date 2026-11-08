@@ -17,8 +17,9 @@ META = {
         "Thin rung. The max-effort arm was only run on {n_max:d} of the {n:d} backdoors, so its bar "
         "counts out of {n_max:d} and the other three count out of {n:d}. It is drawn hollow for that "
         "reason and must not be read as the continuation of the ladder.",
-        "Even at xhigh, Opus scores {xh_rest:d} of the {n:d} below {mid:d} out of 100. The headline is "
-        "the block that is missing, not the block that grows.",
+        "The pair above each bar is the strong block plus the partial one, so 8+8 means eight "
+        "backdoors at {hi:d} or more and eight between {mid:d} and {hi:d}. Even at xhigh, Opus scores "
+        "{xh_rest:d} of the {n:d} below {mid:d}: the headline is the block that is missing.",
         "Opus has no honest baseline on this set, so {hi:d} and {mid:d} are reading aids rather than "
         "audit thresholds. A real deployment would have to pick a cutoff against honest code, which "
         "would almost certainly sit lower and catch more honest programs with it.",
@@ -48,7 +49,7 @@ def build() -> Figure:
         rows.append({"effort": e, "scored": len(c), "of": n, f"score_ge_{HI}": hi,
                      f"score_{MID}_to_{HI}": mid, f"score_below_{MID}": len(c) - hi - mid})
 
-    def bar(name, idx, colour):
+    def bar(name, idx, colour, top_label=False):
         return {
             "name": name, "type": "bar", "stack": "s", "barWidth": "46%",
             "itemStyle": {"color": colour, "borderRadius": [0, 0, 0, 0]},
@@ -58,7 +59,11 @@ def build() -> Figure:
                       "tip": (f"<b>Opus 5.5, {e} effort</b><br>{counts[e][idx]} of {counts[e][2]} "
                               f"backdoors<br>{name}"
                               + ("<br>this arm was only run on "
-                                 f"{counts[e][2]} of the {n}" if counts[e][2] != n else ""))}
+                                 f"{counts[e][2]} of the {n}" if counts[e][2] != n else "")),
+                      **({"label": {"show": True, "position": "top", "fontSize": 13,
+                                    "color": "@ink-primary",
+                                    "formatter": f"{counts[e][0]}+{counts[e][1]}"}}
+                         if top_label else {})}
                      for e in EFFORTS],
         }
 
@@ -71,6 +76,6 @@ def build() -> Figure:
         yAxis=C.axis(f"Backdoors Opus scores {MID} or more", gap=46, type="value", min=0, max=25, interval=5),
         legend={"top": 0, "left": 62, "data": [f"score {HI} or more", f"score {MID} to {HI}"]},
         series=[bar(f"score {HI} or more", 0, "@good"),
-                bar(f"score {MID} to {HI}", 1, "@warning/0.6")],
+                bar(f"score {MID} to {HI}", 1, "@warning/0.6", top_label=True)],
     )
     return Figure(option=option, data=rows, facts=facts, height=META["height"])

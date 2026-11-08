@@ -7,7 +7,7 @@
  "caption": "The 51 hard backdoors, counted by what Opus 5.5 scored them at each reasoning effort. The lower block scored 50 or more out of 100, the upper block 20 to 50. Low to xhigh moves the strong block from 8 to 13.",
  "notes": [
   "Thin rung. The max-effort arm was only run on 5 of the 51 backdoors, so its bar counts out of 5 and the other three count out of 51. It is drawn hollow for that reason and must not be read as the continuation of the ladder.",
-  "Even at xhigh, Opus scores 30 of the 51 below 20 out of 100. The headline is the block that is missing, not the block that grows.",
+  "The pair above each bar is the strong block plus the partial one, so 8+8 means eight backdoors at 50 or more and eight between 20 and 50. Even at xhigh, Opus scores 30 of the 51 below 20: the headline is the block that is missing.",
   "Opus has no honest baseline on this set, so 50 and 20 are reading aids rather than audit thresholds. A real deployment would have to pick a cutoff against honest code, which would almost certainly sit lower and catch more honest programs with it.",
   "The four arms are the same 51 programs at four settings, so the bars are paired rather than independent samples. The low to xhigh change of 5 programs is 5 programs, not a rate, and no interval is attached to it.",
   "Effort names are not comparable across models. Opus xhigh is not Haiku xhigh, and neither buys a fixed amount of thinking, so this ladder describes Opus only."
@@ -126,21 +126,42 @@
       "itemStyle": {
        "color": "@warning/0.6"
       },
-      "tip": "<b>Opus 5.5, low effort</b><br>8 of 51 backdoors<br>score 20 to 50"
+      "tip": "<b>Opus 5.5, low effort</b><br>8 of 51 backdoors<br>score 20 to 50",
+      "label": {
+       "show": true,
+       "position": "top",
+       "fontSize": 13,
+       "color": "@ink-primary",
+       "formatter": "8+8"
+      }
      },
      {
       "value": 4,
       "itemStyle": {
        "color": "@warning/0.6"
       },
-      "tip": "<b>Opus 5.5, high effort</b><br>4 of 51 backdoors<br>score 20 to 50"
+      "tip": "<b>Opus 5.5, high effort</b><br>4 of 51 backdoors<br>score 20 to 50",
+      "label": {
+       "show": true,
+       "position": "top",
+       "fontSize": 13,
+       "color": "@ink-primary",
+       "formatter": "12+4"
+      }
      },
      {
       "value": 8,
       "itemStyle": {
        "color": "@warning/0.6"
       },
-      "tip": "<b>Opus 5.5, xhigh effort</b><br>8 of 51 backdoors<br>score 20 to 50"
+      "tip": "<b>Opus 5.5, xhigh effort</b><br>8 of 51 backdoors<br>score 20 to 50",
+      "label": {
+       "show": true,
+       "position": "top",
+       "fontSize": 13,
+       "color": "@ink-primary",
+       "formatter": "13+8"
+      }
      },
      {
       "value": 0,
@@ -149,7 +170,14 @@
        "borderColor": "@warning/0.6",
        "borderWidth": 2
       },
-      "tip": "<b>Opus 5.5, max effort</b><br>0 of 5 backdoors<br>score 20 to 50<br>this arm was only run on 5 of the 51"
+      "tip": "<b>Opus 5.5, max effort</b><br>0 of 5 backdoors<br>score 20 to 50<br>this arm was only run on 5 of the 51",
+      "label": {
+       "show": true,
+       "position": "top",
+       "fontSize": 13,
+       "color": "@ink-primary",
+       "formatter": "3+0"
+      }
      }
     ]
    }
@@ -214,7 +242,7 @@
   "inputs": {
    "results/analysis/opus-hard51-scores.csv": "sha256:b625e45eefdef283"
   },
-  "code": "sha256:22d0e1301c9e5767",
-  "spec": "sha256:9157c05dfaac834d"
+  "code": "sha256:f42ef88fcc9551a2",
+  "spec": "sha256:410251ca58d45182"
  }
 }

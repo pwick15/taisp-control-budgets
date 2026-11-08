@@ -21,8 +21,9 @@ META = {
         "absent. They are the rows where frontier reasoning adds nothing.",
         "The small end is the better of Sonnet and Haiku, not their average, so the bar is the most "
         "conservative version of the gap. Both of their scores are still in the tooltip and the CSV.",
-        "Opus has no honest baseline on this set, so it has no cutoff and no audit budget. A long bar "
-        "means Opus found the code more suspicious, not that it would have audited it.",
+        "The dashed yellow line is {thresh:d} out of 100. Opus has no honest baseline on this set, so "
+        "it has no cutoff and no audit budget: a long bar means Opus found the code more suspicious, "
+        "not that it would have audited it.",
         "Thin data. {n:d} rows, single scores, one pass each, so a bar is one measurement against one "
         "other measurement.",
     ],
@@ -30,6 +31,7 @@ META = {
 }
 
 GAP_C = "@s6/0.35"
+THRESH = 50
 
 
 def build() -> Figure:
@@ -71,8 +73,12 @@ def build() -> Figure:
                                f"<br>Haiku {r.haiku:g}")}
                       for i, r in enumerate(d.itertuples())]}
 
+    caps[0]["markLine"] = {"silent": True, "symbol": "none", "label": {"show": False},
+                 "lineStyle": {"color": "@warning", "type": "dashed", "width": 1.5},
+                 "data": [{"xAxis": THRESH}]}
+
     facts = {"n": len(d), "med_gap": float(d.gap.median()),
-             "n_neg": int((d.opus_xhigh <= d.small).sum())}
+             "n_neg": int((d.opus_xhigh <= d.small).sum()), "thresh": THRESH}
     rows = [{"sample_id": r.sample_id, "group": r.group, "opus_xhigh": r.opus_xhigh,
              "best_small": r.small, "gap": round(r.gap, 2), "sonnet55": r.sonnet,
              "haiku55_xhigh": r.haiku} for r in d.itertuples()]

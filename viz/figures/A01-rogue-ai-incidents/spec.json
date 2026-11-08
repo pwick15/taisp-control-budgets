@@ -866,7 +866,7 @@
   "inputs": {
    "viz/figures/A01-rogue-ai-incidents/figure.html": "sha256:3eabdb1615ba34e5"
   },
-  "code": "sha256:a77d1b22a2fcce7d",
-  "spec": "sha256:aa926212a8c43f2f"
+  "code": "sha256:1f175374aba5ff48",
+  "spec": "sha256:648d8d6c70dd53c9"
  }
 }

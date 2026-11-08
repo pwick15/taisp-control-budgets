@@ -20,7 +20,7 @@ META = {
         "long flat tail, rather than a gradual slope.",
         "A pale, outlined bar is a backdoor some panel monitor caught, which is why it is in this "
         "hard set but not in the never-caught group of {n_nc:d}.",
-        "The dashed line at {thresh:d} is a reading aid. Opus has no honest baseline on this set, so "
+        "The dashed yellow line at {thresh:d} is a reading aid. Opus has no honest baseline on this set, so "
         "it has no cutoff and no audit budget, and a real deployment would have to set one against "
         "honest code.",
         "Bars start at zero and the scale is the full 0 to 100, so no length is exaggerated. The "
@@ -61,7 +61,7 @@ def build() -> Figure:
                      for r in rev],
         })
     bars[0]["markLine"] = {"silent": True, "symbol": "none", "label": {"show": False},
-                           "lineStyle": {"color": "@ink-muted", "type": "dashed", "width": 1},
+                           "lineStyle": {"color": "@warning", "type": "dashed", "width": 1.5},
                            "data": [{"xAxis": THRESH}]}
 
     ticks = [{

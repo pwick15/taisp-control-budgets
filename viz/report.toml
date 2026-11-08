@@ -45,4 +45,4 @@ id = "appendix"
 title = "Appendix"
 
 # IDs that were used and then deleted. Never reuse them, so old discussions stay unambiguous.
-retired = []
+retired = ["M26"]

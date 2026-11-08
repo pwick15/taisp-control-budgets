@@ -8,7 +8,7 @@
  "notes": [
   "Same data as M22 with the dots replaced by bars, so the eye reads length instead of position. The shape this form shows best is the cliff: a short head of high scores and a long flat tail, rather than a gradual slope.",
   "A pale, outlined bar is a backdoor some panel monitor caught, which is why it is in this hard set but not in the never-caught group of 41.",
-  "The dashed line at 50 is a reading aid. Opus has no honest baseline on this set, so it has no cutoff and no audit budget, and a real deployment would have to set one against honest code.",
+  "The dashed yellow line at 50 is a reading aid. Opus has no honest baseline on this set, so it has no cutoff and no audit budget, and a real deployment would have to set one against honest code.",
   "Bars start at zero and the scale is the full 0 to 100, so no length is exaggerated. The small-monitor ticks sit on the same scale.",
   "Thin data. 51 bars, single scores, one pass each. Neighbouring bars differing by a point or two are not distinguishable measurements."
  ],
@@ -309,9 +309,9 @@
       "show": false
      },
      "lineStyle": {
-      "color": "@ink-muted",
+      "color": "@warning",
       "type": "dashed",
-      "width": 1
+      "width": 1.5
      },
      "data": [
       {
@@ -1546,7 +1546,7 @@
   "inputs": {
    "results/analysis/opus-hard51-scores.csv": "sha256:b625e45eefdef283"
   },
-  "code": "sha256:c7b8f7c674812cae",
-  "spec": "sha256:6c239e69e9073508"
+  "code": "sha256:a74b690e05489ada",
+  "spec": "sha256:7845af1d33b99c3c"
  }
 }

@@ -17,9 +17,9 @@ META = {
     "notes": [
         "A hollow Opus mark is a backdoor some panel monitor did catch, which is why it is in this "
         "hard set but not in the never-caught group of {n_nc:d}.",
-        "Opus has no honest baseline here, so it has no cutoff of its own and no audit budget. Its "
-        "scores say what it thinks of a program, not what it would have audited. Treat {thresh:d} as a "
-        "reading aid, not an operating point.",
+        "The dashed yellow line is {thresh:d} out of 100. Opus has no honest baseline here, so it has "
+        "no cutoff of its own and no audit budget: that line is a reading aid, not an operating "
+        "point, and a real deployment would set one against honest code instead.",
         "The ordering is Opus's own, so the chart cannot help but look favourable to Opus at the top. "
         "The comparison that matters is horizontal, within a row, where Sonnet and Haiku had the same "
         "code in front of them.",
@@ -63,6 +63,10 @@ def build() -> Figure:
                               f"<br>{'caught by no monitor' if never else 'caught by a panel monitor'}")}
                      for r in g.itertuples()],
         })
+
+    opus[0]["markLine"] = {"silent": True, "symbol": "none", "label": {"show": False},
+                 "lineStyle": {"color": "@warning", "type": "dashed", "width": 1.5},
+                 "data": [{"xAxis": THRESH}]}
 
     series = opus + [{
         "name": name, "type": "scatter", "symbolSize": 8, "z": 3,
