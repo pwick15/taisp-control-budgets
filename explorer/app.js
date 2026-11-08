@@ -177,20 +177,32 @@
     var g = el("div", "ctl-group");
     if (label) g.appendChild(el("span", "ctl-label", label));
     var s = el("div", "seg");
+    // repaint() does not rebuild the toolbar, so each button reflects the live
+    // selection itself: on a click, re-read get() and re-mark every button.
+    function sync() {
+      Array.prototype.forEach.call(s.children, function (btn, i) {
+        btn.setAttribute("aria-pressed", get() === opts[i].v ? "true" : "false");
+      });
+    }
     opts.forEach(function (o) {
       var b = el("button", null, o.t); b.type = "button";
-      b.setAttribute("aria-pressed", get() === o.v ? "true" : "false");
-      b.addEventListener("click", function () { set(o.v); repaint(); });
+      b.addEventListener("click", function () { set(o.v); sync(); repaint(); });
       s.appendChild(b);
     });
+    sync();
     g.appendChild(s); return g;
   }
   function toggle(label, on, set) {
     var g = el("div", "ctl-group");
     var s = el("div", "seg");
     var b = el("button", null, label); b.type = "button";
-    b.setAttribute("aria-pressed", on ? "true" : "false");
-    b.addEventListener("click", function () { set(!on); repaint(); });
+    var state = !!on;        // tracked here, so repeated clicks actually flip it
+    b.setAttribute("aria-pressed", state ? "true" : "false");
+    b.addEventListener("click", function () {
+      state = !state; set(state);
+      b.setAttribute("aria-pressed", state ? "true" : "false");
+      repaint();
+    });
     s.appendChild(b); g.appendChild(s); return g;
   }
   function dropdown(label, groups, get, set) {

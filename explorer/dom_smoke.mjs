@@ -97,6 +97,29 @@ run("DOMContentLoaded", () => document._dom({}));
 let afterMount = setOptionCalls;
 console.log(`mounted: ${setOptionCalls} setOption call(s)`);
 
+// --- pressed-state fix: a seg click must move the highlight; a toggle must flip both ways ---
+const segBtns = query(ids["toolbar"], ".seg button");
+const showBtns = segBtns.slice(0, 3);   // Show: Both / Honest / Backdoors
+if (showBtns.length >= 2) {
+  run("seg highlight", () => {
+    showBtns[1].fire("click");   // Honest
+    const p = showBtns.map((b) => b.getAttribute("aria-pressed"));
+    if (!(p[1] === "true" && p[0] === "false")) throw new Error("seg highlight did not move: " + p.join(","));
+    showBtns[0].fire("click");   // back to Both, leave state clean
+  });
+  console.log("seg highlight moves on click: OK");
+}
+const tog = segBtns.find((b) => /Non-reasoning/.test(b.textContent));
+if (tog) {
+  run("toggle flip", () => {
+    const a0 = tog.getAttribute("aria-pressed");
+    tog.fire("click"); const a1 = tog.getAttribute("aria-pressed");
+    tog.fire("click"); const a2 = tog.getAttribute("aria-pressed");
+    if (!(a1 !== a0 && a2 === a0)) throw new Error("toggle did not flip both ways: " + [a0, a1, a2].join(","));
+  });
+  console.log("toggle flips both ways: OK");
+}
+
 // click every tab
 const tabs = query(ids["tabs"], ".tab");
 console.log(`tabs: ${tabs.length}`);
