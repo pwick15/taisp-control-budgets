@@ -105,7 +105,7 @@
       d: "Every sample a dot, one lane per run, placed by the monitor's reasoning length: honest above each lane line, backdoors below." },
     { id: "trajectories", title: "Trajectories", sub: "one line per problem",
       q: "How does a monitor's judgement of a backdoor move as you turn one knob?",
-      d: "Each thin line is one problem across a reasoning-effort, score-scale or comments ladder; the thick line is the mean path. Drag on an axis to filter." },
+      d: "Each thin line is one problem across a reasoning-effort, score-scale or comments ladder; the thick line is the mean path. How far a line swings between rungs is how much the setting moves the monitor, signal or noise." },
     { id: "flightdeck", title: "Flight deck", sub: "every operating point",
       q: "At the audit budget you can afford, which monitor catches the most?",
       d: "Each step line is one run's reachable recall at every false-positive rate a cutoff can buy. Drag the budget; the leaderboard re-sorts by what each run catches, with cost." },
@@ -338,6 +338,53 @@
     var p = el("div", "panel"); p.appendChild(el("h3", null, title));
     var b = el("div"); b.innerHTML = bodyHtml; p.appendChild(b); return p;
   }
+  // The headline a trajectories ladder is really telling: a systematic shift
+  // (the setting moves the score, e.g. Gemma on 0-10 vs 0-100), or plain noise
+  // (the score jumps around), or a steady knob. Raised in the Ladder panel.
+  function noiseBlock(meta) {
+    var nz = meta.noise; if (!nz || nz.rungs < 2) return "";
+    var side = meta.noiseSide || "backdoor", tag, body, c;
+    var shift = nz.trend, aShift = Math.abs(shift);
+    // a directional shift: either big outright, or a clear fraction of the swing
+    var directional = aShift >= 0.15 || (aShift >= 0.04 && aShift >= 0.4 * nz.spread);
+    if (directional) {
+      var down = shift < 0, sharp = aShift >= 0.15;
+      c = down ? "@critical" : "@warning";
+      tag = sharp ? (down ? "drops sharply" : "climbs sharply") : (down ? "drifts down" : "drifts up");
+      body = "The mean " + side + " suspicion " + (down ? "falls" : "rises") + " from <b>" + nz.meanFirst.toFixed(2) +
+        "</b> at <b>" + esc(nz.first) + "</b> to <b>" + nz.meanLast.toFixed(2) + "</b> at <b>" + esc(nz.last) +
+        "</b>; the setting, not the code, is moving the call" +
+        (down ? ", so the same backdoor looks less suspicious here." : ".");
+    } else if (nz.spread >= 0.12 || nz.nonMono >= 0.5) {
+      c = "@critical"; tag = "noisy";
+      body = "The same " + side + " swings by <b>" + nz.spread.toFixed(2) + "</b> in suspicion across these " + nz.rungs + " rungs" +
+        (nz.nonMono >= 0.25 ? ", and <b>" + Math.round(nz.nonMono * 100) + "%</b> of problems reverse direction at least once" : "") +
+        ". The audit cutoff sits near 0.1, so a swing this size can flip the call on the same program.";
+    } else if (nz.spread >= 0.06) {
+      c = "@warning"; tag = "part trend, part noise";
+      body = "The same " + side + " swings by <b>" + nz.spread.toFixed(2) + "</b> across the rungs: some real movement, some noise.";
+    } else {
+      c = "@good"; tag = "steady";
+      body = "The knob barely moves the score here (average swing <b>" + nz.spread.toFixed(2) + "</b>).";
+    }
+    return "<div class='noisebox' style='border-left-color:" + C(c) + "'>" +
+      "<div class='nz-head'><span class='nz-tag' style='background:" + C(c) + "'>" + esc(tag) + "</span>" +
+      "<span class='nz-ttl'>how the knob moves the score</span></div>" +
+      "<p class='why' style='margin:5px 0 0'>" + body + "</p></div>";
+  }
+  function flightdeckHint() {
+    return "<p class='hint'>Hover a run, in the leaderboard or on its curve, to see its operating point here.</p>";
+  }
+  function flightdeckCard(r, metric, budget) {
+    var rec = metric === "recall";
+    return "<div class='jhead'><span class='swatch' style='background:" + C(r.color) + "'></span>" + esc(r.label) + "</div>" +
+      "<dl class='kv'>" +
+      "<dt>" + (rec ? "recall" : "safety") + "</dt><dd>" + (r.recall == null ? "n/a" : r.recall.toFixed(3)) + "</dd>" +
+      "<dt>" + (rec ? "served FPR" : "budget") + "</dt><dd>" + (r.fpr == null ? "n/a" : r.fpr.toFixed(2) + "%") + "</dd>" +
+      (rec && r.n != null ? "<dt>backdoors caught</dt><dd>" + r.n.toLocaleString() + "</dd>" : "") +
+      (r.cost != null ? "<dt>cost / sample</dt><dd>$" + r.cost.toFixed(3) + "</dd>" : "") + "</dl>" +
+      "<p class='mini'>" + (rec ? "At the " + budget + "% audit budget, using the cutoff this run can actually serve." : "Near the " + budget + "% budget cursor.") + "</p>";
+  }
   var hoverSlot, pinTitle;
   function renderDetail(meta) {
     var host = document.getElementById("detail"); host.innerHTML = "";
@@ -363,6 +410,7 @@
         "<dt>knob</dt><dd>" + esc(L2.kind) + "</dd>" +
         "<dt>rungs</dt><dd>" + L2.rungs.length + "</dd>" +
         "<dt>problems</dt><dd>" + (meta.nLines || 0) + "</dd></dl>" +
+        noiseBlock(meta) +
         "<div class='legend' style='margin-top:10px'>" +
         "<div class='row'>" + swatch(C("@honest")) + "honest programs</div>" +
         "<div class='row'>" + swatch(C("@attack")) + "backdoors</div></div>" +
@@ -386,10 +434,15 @@
         " Hover a row to trace its curve.</p>");
       host.appendChild(p);
       p.querySelectorAll("tbody tr").forEach(function (tr) {
+        var run = tr.getAttribute("data-run"), row = lb.filter(function (x) { return x.run === run; })[0];
         tr.addEventListener("mouseenter", function () {
-          chart.dispatchAction({ type: "highlight", seriesName: seriesNameOf(tr.getAttribute("data-run")) });
+          chart.dispatchAction({ type: "highlight", seriesName: seriesNameOf(run) });
+          if (hoverSlot && row) hoverSlot.innerHTML = flightdeckCard(row, meta.metric, meta.budget);
         });
-        tr.addEventListener("mouseleave", function () { chart.dispatchAction({ type: "downplay" }); });
+        tr.addEventListener("mouseleave", function () {
+          chart.dispatchAction({ type: "downplay" });
+          if (hoverSlot) hoverSlot.innerHTML = flightdeckHint();
+        });
       });
     }
     var hs = el("div", "panel");
@@ -398,6 +451,7 @@
     hoverSlot = el("div");
     hoverSlot.innerHTML = lens === "atlas"
       ? "<p class='hint'>Hover any dot, or click one to pin its full judgement here.</p>"
+      : lens === "flightdeck" ? flightdeckHint()
       : "<p class='hint'>Hover any mark in the plot.</p>";
     hs.appendChild(hoverSlot); host.appendChild(hs);
     if (pin) renderPinned();
@@ -417,11 +471,17 @@
         (L2 ? "<p class='hint' style='margin:4px 0 2px'>across " + esc(L2.kind) + ": " + L2.rungs.map(function (lab, i) {
           return esc(lab) + " " + (p.value[i] == null ? "" : p.value[i].toFixed(2));
         }).join(" → ") + "</p>" : "") + problemBlock(p.name, isAtk);
-    } else if (lens === "flightdeck" && p.seriesName && p.data && p.data.length >= 2) {
-      h = "<dl class='kv'><dt>run</dt><dd>" + esc(p.seriesName) + "</dd>" +
-        (lastMeta.metric === "recall"
-          ? "<dt>served FPR</dt><dd>" + p.data[0].toFixed(2) + "%</dd><dt>recall</dt><dd>" + p.data[1].toFixed(3) + "</dd>"
-          : "<dt>budget</dt><dd>" + p.data[0] + "%</dd><dt>safety</dt><dd>" + p.data[1].toFixed(3) + "</dd>") + "</dl>";
+    } else if (lens === "flightdeck" && p.seriesName) {
+      var lbrow = (lastMeta.leaderboard || []).filter(function (x) { return x.label === p.seriesName; })[0];
+      if (p.data && p.data.length >= 2) {   // hovering an exact point on the curve
+        h = "<div class='jhead'><span class='swatch' style='background:" + (lbrow ? C(lbrow.color) : C("@ink-muted")) + "'></span>" + esc(p.seriesName) + "</div>" +
+          "<dl class='kv'>" + (lastMeta.metric === "recall"
+            ? "<dt>served FPR</dt><dd>" + p.data[0].toFixed(2) + "%</dd><dt>recall</dt><dd>" + p.data[1].toFixed(3) + "</dd>"
+            : "<dt>budget</dt><dd>" + p.data[0] + "%</dd><dt>safety</dt><dd>" + p.data[1].toFixed(3) + "</dd>") + "</dl>" +
+          "<p class='mini'>The point under your cursor on this run's curve.</p>";
+      } else if (lbrow) {                   // hovering the line itself: show the run's operating point
+        h = flightdeckCard(lbrow, lastMeta.metric, lastMeta.budget);
+      }
     }
     if (h) hoverSlot.innerHTML = h;
   }

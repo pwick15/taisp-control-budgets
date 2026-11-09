@@ -304,9 +304,31 @@
         lineStyle: { color: C("@attack"), width: 3.4, opacity: 1 }, z: 5, tooltip: { show: false },
       });
     }
+    // How noisy is this ladder? For each problem, how far its suspicion swings
+    // across the rungs (max-min), and whether the line reverses direction at all.
+    // A clean dose-response is a tight, monotone set of lines; noise is wide and
+    // non-monotone. Measured on the side in view (backdoors unless only honest).
+    function noiseOf(maps) {
+      if (ids.length === 0 || runs.length < 2) return null;
+      var last = runs.length - 1, spreadSum = 0, nonMono = 0, mFirst = 0, mLast = 0;
+      ids.forEach(function (id) {
+        var v = runs.map(function (_, k) { return maps[k][id]; });
+        var mn = Math.min.apply(null, v), mx = Math.max.apply(null, v);
+        spreadSum += mx - mn;
+        mFirst += v[0]; mLast += v[last];
+        var up = false, down = false;
+        for (var k = 1; k < v.length; k++) { var dlt = v[k] - v[k - 1]; if (dlt > 1e-6) up = true; else if (dlt < -1e-6) down = true; }
+        if (up && down) nonMono++;
+      });
+      var n = ids.length;
+      return { spread: spreadSum / n, nonMono: nonMono / n, meanFirst: mFirst / n, meanLast: mLast / n,
+        trend: (mLast - mFirst) / n, n: n, rungs: runs.length, first: L.rungs[0], last: L.rungs[last] };
+    }
+    var noise = noiseOf(show === "honest" ? mh : ma);
     return {
       option: o, height: 560,
-      meta: { ladder: L, nLines: ids.length, runs: runs.map(function (rn) { return byRun[rn]; }) },
+      meta: { ladder: L, nLines: ids.length, runs: runs.map(function (rn) { return byRun[rn]; }),
+        noise: noise, noiseSide: show === "honest" ? "honest" : "backdoor" },
     };
   }
 
@@ -347,6 +369,7 @@
         o.series = o.series || [];
         o.series.push({
           type: "line", name: runLabel(r), step: "end", showSymbol: false, data: pts,
+          triggerLineEvent: true,   // so hovering the curve itself (no symbols) fires a hover event
           lineStyle: { color: C(r.color), width: 1.5, opacity: 0.72 },
           emphasis: { focus: "series", lineStyle: { width: 3, opacity: 1 } },
           blur: { lineStyle: { opacity: 0.1 } }, _run: r.run,
@@ -369,6 +392,7 @@
         o.series = o.series || [];
         o.series.push({
           type: "line", name: runLabel(r), showSymbol: false, smooth: false, data: pts,
+          triggerLineEvent: true,   // so hovering the curve itself (no symbols) fires a hover event
           lineStyle: { color: C(r.color), width: 1.5, opacity: 0.72 },
           emphasis: { focus: "series", lineStyle: { width: 3, opacity: 1 } },
           blur: { lineStyle: { opacity: 0.1 } }, _run: r.run,
