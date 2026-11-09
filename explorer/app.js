@@ -471,13 +471,17 @@
         (L2 ? "<p class='hint' style='margin:4px 0 2px'>across " + esc(L2.kind) + ": " + L2.rungs.map(function (lab, i) {
           return esc(lab) + " " + (p.value[i] == null ? "" : p.value[i].toFixed(2));
         }).join(" → ") + "</p>" : "") + problemBlock(p.name, isAtk);
-    } else if (lens === "flightdeck" && p.seriesName && p.data && p.data.length >= 2) {
+    } else if (lens === "flightdeck" && p.seriesName) {
       var lbrow = (lastMeta.leaderboard || []).filter(function (x) { return x.label === p.seriesName; })[0];
-      h = "<div class='jhead'><span class='swatch' style='background:" + (lbrow ? C(lbrow.color) : C("@ink-muted")) + "'></span>" + esc(p.seriesName) + "</div>" +
-        "<dl class='kv'>" + (lastMeta.metric === "recall"
-          ? "<dt>served FPR</dt><dd>" + p.data[0].toFixed(2) + "%</dd><dt>recall</dt><dd>" + p.data[1].toFixed(3) + "</dd>"
-          : "<dt>budget</dt><dd>" + p.data[0] + "%</dd><dt>safety</dt><dd>" + p.data[1].toFixed(3) + "</dd>") + "</dl>" +
-        "<p class='mini'>The point under your cursor on this run's curve.</p>";
+      if (p.data && p.data.length >= 2) {   // hovering an exact point on the curve
+        h = "<div class='jhead'><span class='swatch' style='background:" + (lbrow ? C(lbrow.color) : C("@ink-muted")) + "'></span>" + esc(p.seriesName) + "</div>" +
+          "<dl class='kv'>" + (lastMeta.metric === "recall"
+            ? "<dt>served FPR</dt><dd>" + p.data[0].toFixed(2) + "%</dd><dt>recall</dt><dd>" + p.data[1].toFixed(3) + "</dd>"
+            : "<dt>budget</dt><dd>" + p.data[0] + "%</dd><dt>safety</dt><dd>" + p.data[1].toFixed(3) + "</dd>") + "</dl>" +
+          "<p class='mini'>The point under your cursor on this run's curve.</p>";
+      } else if (lbrow) {                   // hovering the line itself: show the run's operating point
+        h = flightdeckCard(lbrow, lastMeta.metric, lastMeta.budget);
+      }
     }
     if (h) hoverSlot.innerHTML = h;
   }

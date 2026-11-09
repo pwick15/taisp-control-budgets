@@ -369,6 +369,7 @@
         o.series = o.series || [];
         o.series.push({
           type: "line", name: runLabel(r), step: "end", showSymbol: false, data: pts,
+          triggerLineEvent: true,   // so hovering the curve itself (no symbols) fires a hover event
           lineStyle: { color: C(r.color), width: 1.5, opacity: 0.72 },
           emphasis: { focus: "series", lineStyle: { width: 3, opacity: 1 } },
           blur: { lineStyle: { opacity: 0.1 } }, _run: r.run,
@@ -391,6 +392,7 @@
         o.series = o.series || [];
         o.series.push({
           type: "line", name: runLabel(r), showSymbol: false, smooth: false, data: pts,
+          triggerLineEvent: true,   // so hovering the curve itself (no symbols) fires a hover event
           lineStyle: { color: C(r.color), width: 1.5, opacity: 0.72 },
           emphasis: { focus: "series", lineStyle: { width: 3, opacity: 1 } },
           blur: { lineStyle: { opacity: 0.1 } }, _run: r.run,
