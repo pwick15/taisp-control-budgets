@@ -14,3 +14,6 @@ Links to the blog post and the data deep dive are set in the `LINKS` block near 
 in `template.html`. An empty value shows that card as "Coming soon".
 
 The previous page (write-up plus cost-vs-safety chart) now lives at `web/results.html`, built by `web/build.py`.
+
+The Spot the Backdoor game is a single self-contained file, `web/spot-the-backdoor.html`, served at `/spot-the-backdoor`.
+It has no build step here: replace the file to update the game.
