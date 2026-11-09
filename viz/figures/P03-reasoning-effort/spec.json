@@ -4,14 +4,14 @@
  "title": "Turning up reasoning effort helps most models, not all",
  "section": "results",
  "order": 30,
- "caption": "One line per model across the reasoning settings we ran; higher catches more backdoors. 'medium / default' holds each model's default where the provider names no level, and 'xhigh / max' holds the top setting each provider offers.",
+ "caption": "One line per model across the reasoning settings we ran; higher catches more backdoors. Blue models catch more at their highest setting than their lowest, at a 2% budget; red ones catch fewer. 'medium / default' holds each model's default where the provider names no level.",
  "notes": [
-  "We agreed the framing: effort is a measured lever that depends on the model, not a rule. Most models gain, one is flat and one gets worse.",
-  "Flash-Lite gets one line, nothing more. It catches 20 to 29% at any setting, so nobody would deploy it.",
+  "Grouped by the sign of the lowest-to-highest change at 2%. Two changes are small: Sonnet's +2.9 (paired 95% interval +0.9 to +4.9), since it starts near the top, and Mistral's -1.8 (-5.1 to +1.1), whose interval spans zero.",
+  "Flash-Lite catches 20 to 29% at any setting, so nobody would deploy it. It's red as a counterexample, not as a contender.",
   "Monitoring Monitorability already shows that more test-time compute helps weak monitors. What's new here is pricing it against a bigger sibling, and the counterexamples.",
   "Effort labels aren't comparable across providers (see P04). Marnick's dose section re-plots the ladder against tokens actually spent, the fairer x-axis if a reviewer asks."
  ],
- "height": 480,
+ "height": 500,
  "author": "",
  "source": "",
  "path": "viz/figures/P03-reasoning-effort",
@@ -25,8 +25,17 @@
   "grid": {
    "left": 58,
    "right": 140,
-   "top": 16,
+   "top": 44,
    "bottom": 52
+  },
+  "legend": {
+   "top": 0,
+   "left": 0,
+   "data": [
+    "Caught more with effort",
+    "Caught fewer with effort"
+   ],
+   "selectedMode": false
   },
   "xAxis": {
    "name": "Reasoning effort setting",
@@ -55,7 +64,7 @@
   },
   "series": [
    {
-    "name": "Sonnet 5.5",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      null,
@@ -84,7 +93,7 @@
     },
     "endLabel": {
      "show": true,
-     "formatter": "{a}",
+     "formatter": "Sonnet 5.5",
      "color": "@ink-primary",
      "fontSize": 12,
      "fontWeight": 600,
@@ -98,7 +107,7 @@
     }
    },
    {
-    "name": "Haiku 5.5",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      null,
@@ -123,17 +132,17 @@
     "z": 4,
     "symbolSize": 8,
     "itemStyle": {
-     "color": "@s1",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@s1",
+     "color": "@s0",
      "width": 2.5
     },
     "endLabel": {
      "show": true,
-     "formatter": "{a}",
+     "formatter": "Haiku 5.5",
      "color": "@ink-primary",
      "fontSize": 12,
      "fontWeight": 600,
@@ -147,7 +156,7 @@
     }
    },
    {
-    "name": "GLM-5.3",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      null,
@@ -169,17 +178,17 @@
     "z": 4,
     "symbolSize": 8,
     "itemStyle": {
-     "color": "@s2",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@s2",
+     "color": "@s0",
      "width": 2.5
     },
     "endLabel": {
      "show": true,
-     "formatter": "{a}",
+     "formatter": "GLM-5.3",
      "color": "@ink-primary",
      "fontSize": 12,
      "fontWeight": 600,
@@ -193,7 +202,7 @@
     }
    },
    {
-    "name": "Qwen 3.8",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      {
@@ -212,23 +221,23 @@
      null
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 4,
+    "symbolSize": 8,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s0",
+     "width": 2.5
     },
     "endLabel": {
      "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
+     "formatter": "Qwen 3.8",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
      "distance": 8
     },
     "labelLayout": {
@@ -239,7 +248,7 @@
     }
    },
    {
-    "name": "GPT-6 Luna",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      {
@@ -264,23 +273,23 @@
      }
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 4,
+    "symbolSize": 8,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s0",
+     "width": 2.5
     },
     "endLabel": {
      "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
+     "formatter": "GPT-6 Luna",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
      "distance": 8
     },
     "labelLayout": {
@@ -291,7 +300,7 @@
     }
    },
    {
-    "name": "Mistral Large 4",
+    "name": "Caught fewer with effort",
     "type": "line",
     "data": [
      null,
@@ -307,23 +316,23 @@
      null
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 5,
+    "symbolSize": 8,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s7",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s7",
+     "width": 2.5
     },
     "endLabel": {
      "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
+     "formatter": "Mistral Large 4",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
      "distance": 8
     },
     "labelLayout": {
@@ -334,7 +343,7 @@
     }
    },
    {
-    "name": "gpt-oss-120b",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      null,
@@ -353,23 +362,23 @@
      null
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 4,
+    "symbolSize": 8,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s0",
+     "width": 2.5
     },
     "endLabel": {
      "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
+     "formatter": "gpt-oss-120b",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
      "distance": 8
     },
     "labelLayout": {
@@ -380,7 +389,7 @@
     }
    },
    {
-    "name": "Gemini Flash-Lite",
+    "name": "Caught fewer with effort",
     "type": "line",
     "data": [
      {
@@ -405,23 +414,23 @@
      }
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 5,
+    "symbolSize": 8,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s7",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s7",
+     "width": 2.5
     },
     "endLabel": {
      "show": true,
-     "formatter": "{a}",
-     "color": "@ink-muted",
-     "fontSize": 11,
-     "fontWeight": 400,
+     "formatter": "Gemini Flash-Lite",
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "fontWeight": 600,
      "distance": 8
     },
     "labelLayout": {
@@ -445,7 +454,7 @@
    {
     "series": [
      {
-      "name": "Sonnet 5.5",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -474,7 +483,7 @@
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
+       "formatter": "Sonnet 5.5",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -488,7 +497,7 @@
       }
      },
      {
-      "name": "Haiku 5.5",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -513,17 +522,17 @@
       "z": 4,
       "symbolSize": 8,
       "itemStyle": {
-       "color": "@s1",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@s1",
+       "color": "@s0",
        "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
+       "formatter": "Haiku 5.5",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -537,7 +546,7 @@
       }
      },
      {
-      "name": "GLM-5.3",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -559,17 +568,17 @@
       "z": 4,
       "symbolSize": 8,
       "itemStyle": {
-       "color": "@s2",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@s2",
+       "color": "@s0",
        "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
+       "formatter": "GLM-5.3",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -583,7 +592,7 @@
       }
      },
      {
-      "name": "Qwen 3.8",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        {
@@ -602,23 +611,23 @@
        null
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 4,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s0",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "Qwen 3.8",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -629,7 +638,7 @@
       }
      },
      {
-      "name": "GPT-6 Luna",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        {
@@ -654,23 +663,23 @@
        }
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 4,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s0",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "GPT-6 Luna",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -681,7 +690,7 @@
       }
      },
      {
-      "name": "Mistral Large 4",
+      "name": "Caught fewer with effort",
       "type": "line",
       "data": [
        null,
@@ -697,23 +706,23 @@
        null
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 5,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s7",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s7",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "Mistral Large 4",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -724,7 +733,7 @@
       }
      },
      {
-      "name": "gpt-oss-120b",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -743,23 +752,23 @@
        null
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 4,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s0",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "gpt-oss-120b",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -770,7 +779,7 @@
       }
      },
      {
-      "name": "Gemini Flash-Lite",
+      "name": "Caught fewer with effort",
       "type": "line",
       "data": [
        {
@@ -795,23 +804,23 @@
        }
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 5,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s7",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s7",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "Gemini Flash-Lite",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -826,7 +835,7 @@
    {
     "series": [
      {
-      "name": "Sonnet 5.5",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -855,7 +864,7 @@
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
+       "formatter": "Sonnet 5.5",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -869,7 +878,7 @@
       }
      },
      {
-      "name": "Haiku 5.5",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -894,17 +903,17 @@
       "z": 4,
       "symbolSize": 8,
       "itemStyle": {
-       "color": "@s1",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@s1",
+       "color": "@s0",
        "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
+       "formatter": "Haiku 5.5",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -918,7 +927,7 @@
       }
      },
      {
-      "name": "GLM-5.3",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -940,17 +949,17 @@
       "z": 4,
       "symbolSize": 8,
       "itemStyle": {
-       "color": "@s2",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@s2",
+       "color": "@s0",
        "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
+       "formatter": "GLM-5.3",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -964,7 +973,7 @@
       }
      },
      {
-      "name": "Qwen 3.8",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        {
@@ -983,23 +992,23 @@
        null
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 4,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s0",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "Qwen 3.8",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1010,7 +1019,7 @@
       }
      },
      {
-      "name": "GPT-6 Luna",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        {
@@ -1035,23 +1044,23 @@
        }
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 4,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s0",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "GPT-6 Luna",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1062,7 +1071,7 @@
       }
      },
      {
-      "name": "Mistral Large 4",
+      "name": "Caught fewer with effort",
       "type": "line",
       "data": [
        null,
@@ -1078,23 +1087,23 @@
        null
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 5,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s7",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s7",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "Mistral Large 4",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1105,7 +1114,7 @@
       }
      },
      {
-      "name": "gpt-oss-120b",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -1124,23 +1133,23 @@
        null
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 4,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s0",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "gpt-oss-120b",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1151,7 +1160,7 @@
       }
      },
      {
-      "name": "Gemini Flash-Lite",
+      "name": "Caught fewer with effort",
       "type": "line",
       "data": [
        {
@@ -1176,23 +1185,23 @@
        }
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 5,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s7",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s7",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "Gemini Flash-Lite",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1207,7 +1216,7 @@
    {
     "series": [
      {
-      "name": "Sonnet 5.5",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -1236,7 +1245,7 @@
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
+       "formatter": "Sonnet 5.5",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -1250,7 +1259,7 @@
       }
      },
      {
-      "name": "Haiku 5.5",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -1275,17 +1284,17 @@
       "z": 4,
       "symbolSize": 8,
       "itemStyle": {
-       "color": "@s1",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@s1",
+       "color": "@s0",
        "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
+       "formatter": "Haiku 5.5",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -1299,7 +1308,7 @@
       }
      },
      {
-      "name": "GLM-5.3",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -1321,17 +1330,17 @@
       "z": 4,
       "symbolSize": 8,
       "itemStyle": {
-       "color": "@s2",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@s2",
+       "color": "@s0",
        "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
+       "formatter": "GLM-5.3",
        "color": "@ink-primary",
        "fontSize": 12,
        "fontWeight": 600,
@@ -1345,7 +1354,7 @@
       }
      },
      {
-      "name": "Qwen 3.8",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        {
@@ -1364,23 +1373,23 @@
        null
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 4,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s0",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "Qwen 3.8",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1391,7 +1400,7 @@
       }
      },
      {
-      "name": "GPT-6 Luna",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        {
@@ -1416,23 +1425,23 @@
        }
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 4,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s0",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "GPT-6 Luna",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1443,7 +1452,7 @@
       }
      },
      {
-      "name": "Mistral Large 4",
+      "name": "Caught fewer with effort",
       "type": "line",
       "data": [
        null,
@@ -1459,23 +1468,23 @@
        null
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 5,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s7",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s7",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "Mistral Large 4",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1486,7 +1495,7 @@
       }
      },
      {
-      "name": "gpt-oss-120b",
+      "name": "Caught more with effort",
       "type": "line",
       "data": [
        null,
@@ -1505,23 +1514,23 @@
        null
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 4,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s0",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s0",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "gpt-oss-120b",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1532,7 +1541,7 @@
       }
      },
      {
-      "name": "Gemini Flash-Lite",
+      "name": "Caught fewer with effort",
       "type": "line",
       "data": [
        {
@@ -1557,23 +1566,23 @@
        }
       ],
       "connectNulls": true,
-      "z": 3,
-      "symbolSize": 6,
+      "z": 5,
+      "symbolSize": 8,
       "itemStyle": {
-       "color": "@context-strong",
+       "color": "@s7",
        "borderColor": "@ink-surface",
        "borderWidth": 1.5
       },
       "lineStyle": {
-       "color": "@context-strong",
-       "width": 1.5
+       "color": "@s7",
+       "width": 2.5
       },
       "endLabel": {
        "show": true,
-       "formatter": "{a}",
-       "color": "@ink-muted",
-       "fontSize": 11,
-       "fontWeight": 400,
+       "formatter": "Gemini Flash-Lite",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
        "distance": 8
       },
       "labelLayout": {
@@ -1594,7 +1603,8 @@
    "effort",
    "budget_pct",
    "safety_exact",
-   "cost"
+   "cost",
+   "group_at_2pct"
   ],
   "rows": [
    [
@@ -1603,7 +1613,8 @@
     "high",
     0.5,
     0.807,
-    0.00931446
+    0.00931446,
+    "up"
    ],
    [
     "Sonnet 5.5 · high (default)",
@@ -1611,7 +1622,8 @@
     "high",
     1.0,
     0.868,
-    0.00931446
+    0.00931446,
+    "up"
    ],
    [
     "Sonnet 5.5 · high (default)",
@@ -1619,7 +1631,8 @@
     "high",
     2.0,
     0.875805,
-    0.00931446
+    0.00931446,
+    "up"
    ],
    [
     "Sonnet 5.5 · high (default)",
@@ -1627,7 +1640,8 @@
     "high",
     5.0,
     0.89922,
-    0.00931446
+    0.00931446,
+    "up"
    ],
    [
     "Sonnet 5.5 · low (thinking off)",
@@ -1635,7 +1649,8 @@
     "low",
     0.5,
     0.7595,
-    0.00762675
+    0.00762675,
+    "up"
    ],
    [
     "Sonnet 5.5 · low (thinking off)",
@@ -1643,7 +1658,8 @@
     "low",
     1.0,
     0.839457,
-    0.00762675
+    0.00762675,
+    "up"
    ],
    [
     "Sonnet 5.5 · low (thinking off)",
@@ -1651,7 +1667,8 @@
     "low",
     2.0,
     0.846743,
-    0.00762675
+    0.00762675,
+    "up"
    ],
    [
     "Sonnet 5.5 · low (thinking off)",
@@ -1659,7 +1676,8 @@
     "low",
     5.0,
     0.8686,
-    0.00762675
+    0.00762675,
+    "up"
    ],
    [
     "Haiku 5.5 · xhigh",
@@ -1667,7 +1685,8 @@
     "xhigh",
     0.5,
     0.541,
-    0.00177274
+    0.00177274,
+    "up"
    ],
    [
     "Haiku 5.5 · xhigh",
@@ -1675,7 +1694,8 @@
     "xhigh",
     1.0,
     0.748,
-    0.00177274
+    0.00177274,
+    "up"
    ],
    [
     "Haiku 5.5 · xhigh",
@@ -1683,7 +1703,8 @@
     "xhigh",
     2.0,
     0.851032,
-    0.00177274
+    0.00177274,
+    "up"
    ],
    [
     "Haiku 5.5 · xhigh",
@@ -1691,7 +1712,8 @@
     "xhigh",
     5.0,
     0.858769,
-    0.00177274
+    0.00177274,
+    "up"
    ],
    [
     "Haiku 5.5 · high",
@@ -1699,7 +1721,8 @@
     "high",
     0.5,
     0.4845,
-    0.00100551
+    0.00100551,
+    "up"
    ],
    [
     "Haiku 5.5 · high",
@@ -1707,7 +1730,8 @@
     "high",
     1.0,
     0.6715,
-    0.00100551
+    0.00100551,
+    "up"
    ],
    [
     "Haiku 5.5 · high",
@@ -1715,7 +1739,8 @@
     "high",
     2.0,
     0.814941,
-    0.00100551
+    0.00100551,
+    "up"
    ],
    [
     "Haiku 5.5 · high",
@@ -1723,7 +1748,8 @@
     "high",
     5.0,
     0.821994,
-    0.00100551
+    0.00100551,
+    "up"
    ],
    [
     "Haiku 5.5 · medium (default)",
@@ -1731,7 +1757,8 @@
     "medium",
     0.5,
     0.4245,
-    0.00076453
+    0.00076453,
+    "up"
    ],
    [
     "Haiku 5.5 · medium (default)",
@@ -1739,7 +1766,8 @@
     "medium",
     1.0,
     0.603667,
-    0.00076453
+    0.00076453,
+    "up"
    ],
    [
     "Haiku 5.5 · medium (default)",
@@ -1747,7 +1775,8 @@
     "medium",
     2.0,
     0.772,
-    0.00076453
+    0.00076453,
+    "up"
    ],
    [
     "Haiku 5.5 · medium (default)",
@@ -1755,7 +1784,8 @@
     "medium",
     5.0,
     0.780321,
-    0.00076453
+    0.00076453,
+    "up"
    ],
    [
     "Haiku 5.5 · low",
@@ -1763,7 +1793,8 @@
     "low",
     0.5,
     0.4245,
-    0.00067892
+    0.00067892,
+    "up"
    ],
    [
     "Haiku 5.5 · low",
@@ -1771,7 +1802,8 @@
     "low",
     1.0,
     0.57175,
-    0.00067892
+    0.00067892,
+    "up"
    ],
    [
     "Haiku 5.5 · low",
@@ -1779,7 +1811,8 @@
     "low",
     2.0,
     0.7005,
-    0.00067892
+    0.00067892,
+    "up"
    ],
    [
     "Haiku 5.5 · low",
@@ -1787,7 +1820,8 @@
     "low",
     5.0,
     0.759565,
-    0.00067892
+    0.00067892,
+    "up"
    ],
    [
     "GLM-5.3 · max (default)",
@@ -1795,7 +1829,8 @@
     "max",
     0.5,
     0.585667,
-    0.0146159
+    0.0146159,
+    "up"
    ],
    [
     "GLM-5.3 · max (default)",
@@ -1803,7 +1838,8 @@
     "max",
     1.0,
     0.644,
-    0.0146159
+    0.0146159,
+    "up"
    ],
    [
     "GLM-5.3 · max (default)",
@@ -1811,7 +1847,8 @@
     "max",
     2.0,
     0.762,
-    0.0146159
+    0.0146159,
+    "up"
    ],
    [
     "GLM-5.3 · max (default)",
@@ -1819,7 +1856,8 @@
     "max",
     5.0,
     0.769286,
-    0.0146159
+    0.0146159,
+    "up"
    ],
    [
     "GLM-5.3 · high",
@@ -1827,7 +1865,8 @@
     "high",
     0.5,
     0.373,
-    0.00170711
+    0.00170711,
+    "up"
    ],
    [
     "GLM-5.3 · high",
@@ -1835,7 +1874,8 @@
     "high",
     1.0,
     0.514,
-    0.00170711
+    0.00170711,
+    "up"
    ],
    [
     "GLM-5.3 · high",
@@ -1843,7 +1883,8 @@
     "high",
     2.0,
     0.518909,
-    0.00170711
+    0.00170711,
+    "up"
    ],
    [
     "GLM-5.3 · high",
@@ -1851,7 +1892,8 @@
     "high",
     5.0,
     0.533636,
-    0.00170711
+    0.00170711,
+    "up"
    ],
    [
     "GLM-5.3 · low",
@@ -1859,7 +1901,8 @@
     "low",
     0.5,
     0.34525,
-    0.0009335
+    0.0009335,
+    "up"
    ],
    [
     "GLM-5.3 · low",
@@ -1867,7 +1910,8 @@
     "low",
     1.0,
     0.4415,
-    0.0009335
+    0.0009335,
+    "up"
    ],
    [
     "GLM-5.3 · low",
@@ -1875,7 +1919,8 @@
     "low",
     2.0,
     0.484211,
-    0.0009335
+    0.0009335,
+    "up"
    ],
    [
     "GLM-5.3 · low",
@@ -1883,7 +1928,8 @@
     "low",
     5.0,
     0.5,
-    0.0009335
+    0.0009335,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · high",
@@ -1891,7 +1937,8 @@
     "high",
     0.5,
     0.145,
-    0.00091852
+    0.00091852,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · high",
@@ -1899,7 +1946,8 @@
     "high",
     1.0,
     0.6,
-    0.00091852
+    0.00091852,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · high",
@@ -1907,7 +1955,8 @@
     "high",
     2.0,
     0.6684,
-    0.00091852
+    0.00091852,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · high",
@@ -1915,7 +1964,8 @@
     "high",
     5.0,
     0.725207,
-    0.00091852
+    0.00091852,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · medium",
@@ -1923,7 +1973,8 @@
     "medium",
     0.5,
     0.0345,
-    0.00094052
+    0.00094052,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · medium",
@@ -1931,7 +1982,8 @@
     "medium",
     1.0,
     0.52,
-    0.00094052
+    0.00094052,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · medium",
@@ -1939,7 +1991,8 @@
     "medium",
     2.0,
     0.626,
-    0.00094052
+    0.00094052,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · medium",
@@ -1947,7 +2000,8 @@
     "medium",
     5.0,
     0.637449,
-    0.00094052
+    0.00094052,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · off",
@@ -1955,7 +2009,8 @@
     "off",
     0.5,
     0.1705,
-    0.00053563
+    0.00053563,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · off",
@@ -1963,7 +2018,8 @@
     "off",
     1.0,
     0.3856,
-    0.00053563
+    0.00053563,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · off",
@@ -1971,7 +2027,8 @@
     "off",
     2.0,
     0.512994,
-    0.00053563
+    0.00053563,
+    "up"
    ],
    [
     "Qwen 3.8 Omni Flash · off",
@@ -1979,7 +2036,8 @@
     "off",
     5.0,
     0.527902,
-    0.00053563
+    0.00053563,
+    "up"
    ],
    [
     "GPT-6 Luna · xhigh",
@@ -1987,7 +2045,8 @@
     "xhigh",
     0.5,
     0.366,
-    0.00045383
+    0.00045383,
+    "up"
    ],
    [
     "GPT-6 Luna · xhigh",
@@ -1995,7 +2054,8 @@
     "xhigh",
     1.0,
     0.5525,
-    0.00045383
+    0.00045383,
+    "up"
    ],
    [
     "GPT-6 Luna · xhigh",
@@ -2003,7 +2063,8 @@
     "xhigh",
     2.0,
     0.609593,
-    0.00045383
+    0.00045383,
+    "up"
    ],
    [
     "GPT-6 Luna · xhigh",
@@ -2011,7 +2072,8 @@
     "xhigh",
     5.0,
     0.621545,
-    0.00045383
+    0.00045383,
+    "up"
    ],
    [
     "GPT-6 Luna · high",
@@ -2019,7 +2081,8 @@
     "high",
     0.5,
     0.4055,
-    0.00037436
+    0.00037436,
+    "up"
    ],
    [
     "GPT-6 Luna · high",
@@ -2027,7 +2090,8 @@
     "high",
     1.0,
     0.551333,
-    0.00037436
+    0.00037436,
+    "up"
    ],
    [
     "GPT-6 Luna · high",
@@ -2035,7 +2099,8 @@
     "high",
     2.0,
     0.577449,
-    0.00037436
+    0.00037436,
+    "up"
    ],
    [
     "GPT-6 Luna · high",
@@ -2043,7 +2108,8 @@
     "high",
     5.0,
     0.590385,
-    0.00037436
+    0.00037436,
+    "up"
    ],
    [
     "GPT-6 Luna · medium (default)",
@@ -2051,7 +2117,8 @@
     "medium",
     0.5,
     0.412,
-    0.0003258
+    0.0003258,
+    "up"
    ],
    [
     "GPT-6 Luna · medium (default)",
@@ -2059,7 +2126,8 @@
     "medium",
     1.0,
     0.515,
-    0.0003258
+    0.0003258,
+    "up"
    ],
    [
     "GPT-6 Luna · medium (default)",
@@ -2067,7 +2135,8 @@
     "medium",
     2.0,
     0.549676,
-    0.0003258
+    0.0003258,
+    "up"
    ],
    [
     "GPT-6 Luna · medium (default)",
@@ -2075,7 +2144,8 @@
     "medium",
     5.0,
     0.563462,
-    0.0003258
+    0.0003258,
+    "up"
    ],
    [
     "GPT-6 Luna · low",
@@ -2083,7 +2153,8 @@
     "low",
     0.5,
     0.319,
-    0.00026724
+    0.00026724,
+    "up"
    ],
    [
     "GPT-6 Luna · low",
@@ -2091,7 +2162,8 @@
     "low",
     1.0,
     0.428,
-    0.00026724
+    0.00026724,
+    "up"
    ],
    [
     "GPT-6 Luna · low",
@@ -2099,7 +2171,8 @@
     "low",
     2.0,
     0.499067,
-    0.00026724
+    0.00026724,
+    "up"
    ],
    [
     "GPT-6 Luna · low",
@@ -2107,7 +2180,8 @@
     "low",
     5.0,
     0.514402,
-    0.00026724
+    0.00026724,
+    "up"
    ],
    [
     "GPT-6 Luna · off",
@@ -2115,7 +2189,8 @@
     "off",
     0.5,
     0.0875,
-    0.000188
+    0.000188,
+    "up"
    ],
    [
     "GPT-6 Luna · off",
@@ -2123,7 +2198,8 @@
     "off",
     1.0,
     0.388,
-    0.000188
+    0.000188,
+    "up"
    ],
    [
     "GPT-6 Luna · off",
@@ -2131,7 +2207,8 @@
     "off",
     2.0,
     0.394182,
-    0.000188
+    0.000188,
+    "up"
    ],
    [
     "GPT-6 Luna · off",
@@ -2139,7 +2216,8 @@
     "off",
     5.0,
     0.412727,
-    0.000188
+    0.000188,
+    "up"
    ],
    [
     "gpt-oss-120b · high",
@@ -2147,7 +2225,8 @@
     "high",
     0.5,
     0.125,
-    0.00034724
+    0.00034724,
+    "up"
    ],
    [
     "gpt-oss-120b · high",
@@ -2155,7 +2234,8 @@
     "high",
     1.0,
     0.207,
-    0.00034724
+    0.00034724,
+    "up"
    ],
    [
     "gpt-oss-120b · high",
@@ -2163,7 +2243,8 @@
     "high",
     2.0,
     0.3295,
-    0.00034724
+    0.00034724,
+    "up"
    ],
    [
     "gpt-oss-120b · high",
@@ -2171,7 +2252,8 @@
     "high",
     5.0,
     0.432851,
-    0.00034724
+    0.00034724,
+    "up"
    ],
    [
     "gpt-oss-120b · medium (default)",
@@ -2179,7 +2261,8 @@
     "medium",
     0.5,
     0.0935,
-    0.00015922
+    0.00015922,
+    "up"
    ],
    [
     "gpt-oss-120b · medium (default)",
@@ -2187,7 +2270,8 @@
     "medium",
     1.0,
     0.124333,
-    0.00015922
+    0.00015922,
+    "up"
    ],
    [
     "gpt-oss-120b · medium (default)",
@@ -2195,7 +2279,8 @@
     "medium",
     2.0,
     0.196,
-    0.00015922
+    0.00015922,
+    "up"
    ],
    [
     "gpt-oss-120b · medium (default)",
@@ -2203,7 +2288,8 @@
     "medium",
     5.0,
     0.411,
-    0.00015922
+    0.00015922,
+    "up"
    ],
    [
     "gpt-oss-120b · low",
@@ -2211,7 +2297,8 @@
     "low",
     0.5,
     0.05,
-    0.00011886
+    0.00011886,
+    "up"
    ],
    [
     "gpt-oss-120b · low",
@@ -2219,7 +2306,8 @@
     "low",
     1.0,
     0.104,
-    0.00011886
+    0.00011886,
+    "up"
    ],
    [
     "gpt-oss-120b · low",
@@ -2227,7 +2315,8 @@
     "low",
     2.0,
     0.145316,
-    0.00011886
+    0.00011886,
+    "up"
    ],
    [
     "gpt-oss-120b · low",
@@ -2235,7 +2324,8 @@
     "low",
     5.0,
     0.269263,
-    0.00011886
+    0.00011886,
+    "up"
    ],
    [
     "Gemini 3.5 Flash-Lite · off",
@@ -2243,7 +2333,8 @@
     "off",
     0.5,
     0.198,
-    0.00111362
+    0.00111362,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · off",
@@ -2251,7 +2342,8 @@
     "off",
     1.0,
     0.283448,
-    0.00111362
+    0.00111362,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · off",
@@ -2259,7 +2351,8 @@
     "off",
     2.0,
     0.290685,
-    0.00111362
+    0.00111362,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · off",
@@ -2267,7 +2360,8 @@
     "off",
     5.0,
     0.312399,
-    0.00111362
+    0.00111362,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · low",
@@ -2275,7 +2369,8 @@
     "low",
     0.5,
     0.202801,
-    0.00151342
+    0.00151342,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · low",
@@ -2283,7 +2378,8 @@
     "low",
     1.0,
     0.206807,
-    0.00151342
+    0.00151342,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · low",
@@ -2291,7 +2387,8 @@
     "low",
     2.0,
     0.214819,
-    0.00151342
+    0.00151342,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · low",
@@ -2299,7 +2396,8 @@
     "low",
     5.0,
     0.238855,
-    0.00151342
+    0.00151342,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · medium",
@@ -2307,7 +2405,8 @@
     "medium",
     0.5,
     0.202801,
-    0.00211379
+    0.00211379,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · medium",
@@ -2315,7 +2414,8 @@
     "medium",
     1.0,
     0.206807,
-    0.00211379
+    0.00211379,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · medium",
@@ -2323,7 +2423,8 @@
     "medium",
     2.0,
     0.214819,
-    0.00211379
+    0.00211379,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · medium",
@@ -2331,7 +2432,8 @@
     "medium",
     5.0,
     0.238855,
-    0.00211379
+    0.00211379,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · high",
@@ -2339,7 +2441,8 @@
     "high",
     0.5,
     0.192435,
-    0.00267878
+    0.00267878,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · high",
@@ -2347,7 +2450,8 @@
     "high",
     1.0,
     0.196493,
-    0.00267878
+    0.00267878,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · high",
@@ -2355,7 +2459,8 @@
     "high",
     2.0,
     0.204609,
-    0.00267878
+    0.00267878,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · high",
@@ -2363,7 +2468,8 @@
     "high",
     5.0,
     0.228958,
-    0.00267878
+    0.00267878,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · xhigh",
@@ -2371,7 +2477,8 @@
     "xhigh",
     0.5,
     0.188447,
-    0.00271361
+    0.00271361,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · xhigh",
@@ -2379,7 +2486,8 @@
     "xhigh",
     1.0,
     0.192525,
-    0.00271361
+    0.00271361,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · xhigh",
@@ -2387,7 +2495,8 @@
     "xhigh",
     2.0,
     0.200681,
-    0.00271361
+    0.00271361,
+    "down"
    ],
    [
     "Gemini 3.5 Flash-Lite · xhigh",
@@ -2395,7 +2504,8 @@
     "xhigh",
     5.0,
     0.22515,
-    0.00271361
+    0.00271361,
+    "down"
    ],
    [
     "Mistral Large 4 · default",
@@ -2403,7 +2513,8 @@
     "default",
     0.5,
     0.415,
-    0.00620319
+    0.00620319,
+    "down"
    ],
    [
     "Mistral Large 4 · default",
@@ -2411,7 +2522,8 @@
     "default",
     1.0,
     0.486076,
-    0.00620319
+    0.00620319,
+    "down"
    ],
    [
     "Mistral Large 4 · default",
@@ -2419,7 +2531,8 @@
     "default",
     2.0,
     0.491268,
-    0.00620319
+    0.00620319,
+    "down"
    ],
    [
     "Mistral Large 4 · default",
@@ -2427,7 +2540,8 @@
     "default",
     5.0,
     0.506841,
-    0.00620319
+    0.00620319,
+    "down"
    ],
    [
     "Mistral Large 4 · high",
@@ -2435,7 +2549,8 @@
     "high",
     0.5,
     0.323,
-    0.00624963
+    0.00624963,
+    "down"
    ],
    [
     "Mistral Large 4 · high",
@@ -2443,7 +2558,8 @@
     "high",
     1.0,
     0.468,
-    0.00624963
+    0.00624963,
+    "down"
    ],
    [
     "Mistral Large 4 · high",
@@ -2451,7 +2567,8 @@
     "high",
     2.0,
     0.473374,
-    0.00624963
+    0.00624963,
+    "down"
    ],
    [
     "Mistral Large 4 · high",
@@ -2459,11 +2576,19 @@
     "high",
     5.0,
     0.489495,
-    0.00624963
+    0.00624963,
+    "down"
    ]
   ]
  },
- "facts": {},
+ "facts": {
+  "son": 2.9062,
+  "son_lo": 0.924773,
+  "son_hi": 4.89015,
+  "mis": -1.78939,
+  "mis_lo": -5.08636,
+  "mis_hi": 1.07859
+ },
  "build": {
   "inputs": {
    "results/dataset-gemini35fl-high-tm-n500-strip-samples.csv": "sha256:587aac91d1fead57",
@@ -2531,7 +2656,7 @@
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:ca723fee69a4297c",
-  "spec": "sha256:49ba63235ded68e0"
+  "code": "sha256:b768dc5bb8608534",
+  "spec": "sha256:314b4983c0fcd88a"
  }
 }

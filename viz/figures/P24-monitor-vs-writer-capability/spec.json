@@ -1,0 +1,701 @@
+{
+ "id": "P24",
+ "kind": "echarts",
+ "title": "Most of our monitors are stronger than any backdoor writer",
+ "section": "setup",
+ "order": 20,
+ "caption": "Each row is one model, placed by its Epoch Capabilities Index score, which puts models from different years on one scale. Red models wrote our 500 backdoors; blue models monitored them. The shaded band spans the writers and the faint bar is Epoch's interval. Hover a dot for its release date.",
+ "notes": [
+  "Source: Epoch AI, Epoch Capabilities Index, epoch.ai/data/eci_scores.csv (CC BY), read 2026-11-09 and copied by hand into viz/data/eci-scores.csv. Epoch refits the index as results arrive, so scores drift by a point or two. Its intervals are 90% by default.",
+  "9 of 11 scored monitors sit above the strongest writer, Claude 3.7 Sonnet. gpt-oss-120b, Gemma 4 26B-A4B and Haiku 4.5 sit within a couple of points of it, inside each other's intervals, so treat them as attacker-level rather than clearly stronger.",
+  "The dataset names writers by API alias. GPT-4o and GPT-3.5 Turbo use the snapshot each alias pointed to in early 2025 (Aug 2024 and Jan 2024); the other GPT-4o snapshots score within 2 points. Claude 3.7 Sonnet includes 19 backdoors written with extended thinking on.",
+  "The 18 backdoors from Greenblatt et al.'s original set record no writer and are left out. Epoch has not scored Qwen 3.8 Omni Flash, Gemma 3 4B or Ministral 14B. ECI rates a model at its best setting, not at each reasoning effort we ran.",
+  "Colour marks the side here (red wrote, blue monitored), not the model. Haiku 5.5, GLM-5.3 and Opus 5.5 keep their own colours in every other figure. Opus 5.5 only re-scored the 51 hardest backdoors."
+ ],
+ "height": 682,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P24-monitor-vs-writer-capability",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 16,
+   "right": 24,
+   "top": 46,
+   "bottom": 50,
+   "containLabel": true
+  },
+  "legend": {
+   "top": 0,
+   "left": 0,
+   "data": [
+    "Wrote backdoors",
+    "Monitored"
+   ],
+   "selectedMode": false
+  },
+  "xAxis": {
+   "name": "Epoch Capabilities Index",
+   "nameLocation": "middle",
+   "nameGap": 30,
+   "type": "value",
+   "min": 100,
+   "max": 180,
+   "interval": 10
+  },
+  "yAxis": {
+   "type": "category",
+   "data": [
+    "Opus 5.5|m|follow-up only",
+    "Sonnet 5.5|m|",
+    "Haiku 5.5|m|",
+    "GLM-5.3|m|",
+    "GPT-6 Luna|m|",
+    "Mistral Large 4|m|",
+    "Gemini 3.5 Flash-Lite|m|",
+    "Haiku 4.5|m|",
+    "Gemma 4 26B-A4B|m|",
+    "Claude 3.7 Sonnet|w|wrote 133",
+    "o3-mini|w|wrote 157",
+    "gpt-oss-120b|m|",
+    "o1-mini|w|wrote 41",
+    "Gemini 2.0 Flash|w|wrote 21",
+    "Gemma 3 27B|m|",
+    "GPT-4o|w|wrote 79",
+    "Claude 3.5 Haiku|w|wrote 22",
+    "GPT-4o mini|w|wrote 20",
+    "GPT-3.5 Turbo|w|wrote 9",
+    "Gemma 3 4B|x|not scored",
+    "Ministral 14B|x|not scored",
+    "Qwen 3.8 Omni Flash|x|not scored"
+   ],
+   "inverse": true,
+   "axisLine": {
+    "show": false
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "formatter": "function (v) { var p = v.split('|'); if (p[1] === 'x') return '{x|' + p[0] + '}  {c|' + p[2] + '}'; return p[2] ? '{n|' + p[0] + '}  {c|' + p[2] + '}' : '{n|' + p[0] + '}'; }",
+    "rich": {
+     "n": {
+      "color": "@ink-primary",
+      "fontSize": 13,
+      "fontWeight": 500
+     },
+     "x": {
+      "color": "@ink-muted",
+      "fontSize": 13
+     },
+     "c": {
+      "color": "@ink-muted",
+      "fontSize": 11
+     }
+    }
+   }
+  },
+  "series": [
+   {
+    "name": "_writer_range",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "itemStyle": {
+     "color": "@s7"
+    },
+    "data": [
+     [
+      139.32,
+      142.54,
+      9
+     ],
+     [
+      138.88,
+      142.28,
+      10
+     ],
+     [
+      133.11,
+      137.48,
+      12
+     ],
+     [
+      131.69,
+      136.23,
+      13
+     ],
+     [
+      124.07,
+      129.78,
+      15
+     ],
+     [
+      121.71,
+      127.96,
+      16
+     ],
+     [
+      120.66,
+      127.04,
+      17
+     ],
+     [
+      108.17,
+      117.59,
+      18
+     ]
+    ],
+    "encode": {
+     "x": [
+      0,
+      1
+     ],
+     "y": 2
+    },
+    "z": 1,
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "_monitor_range",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(2)]); var b = api.coord([api.value(1), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "itemStyle": {
+     "color": "@s0"
+    },
+    "data": [
+     [
+      165.54,
+      171.51,
+      0
+     ],
+     [
+      163.52,
+      169.23,
+      1
+     ],
+     [
+      158.04,
+      162.57,
+      2
+     ],
+     [
+      154.8,
+      159.23,
+      3
+     ],
+     [
+      154.78,
+      158.74,
+      4
+     ],
+     [
+      151.89,
+      157.31,
+      5
+     ],
+     [
+      143.92,
+      147.23,
+      6
+     ],
+     [
+      141.09,
+      144.42,
+      7
+     ],
+     [
+      139.17,
+      144.13,
+      8
+     ],
+     [
+      138.35,
+      142.04,
+      11
+     ],
+     [
+      124.52,
+      130.47,
+      14
+     ]
+    ],
+    "encode": {
+     "x": [
+      0,
+      1
+     ],
+     "y": 2
+    },
+    "z": 1,
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "Wrote backdoors",
+    "type": "scatter",
+    "symbolSize": 10,
+    "z": 3,
+    "data": [
+     {
+      "value": [
+       140.99,
+       9
+      ],
+      "itemStyle": {},
+      "tip": "<b>Claude 3.7 Sonnet</b>, wrote 133 of our 500 backdoors<br>ECI 141.0 (interval 139.3 to 142.5)<br>released Feb 2025 (Epoch entry: Claude 3.7 Sonnet)"
+     },
+     {
+      "value": [
+       140.64,
+       10
+      ],
+      "itemStyle": {},
+      "tip": "<b>o3-mini</b>, wrote 157 of our 500 backdoors<br>ECI 140.6 (interval 138.9 to 142.3)<br>released Jan 2025 (Epoch entry: o3-mini)"
+     },
+     {
+      "value": [
+       135.39,
+       12
+      ],
+      "itemStyle": {},
+      "tip": "<b>o1-mini</b>, wrote 41 of our 500 backdoors<br>ECI 135.4 (interval 133.1 to 137.5)<br>released Sep 2024 (Epoch entry: o1-mini)"
+     },
+     {
+      "value": [
+       134.03,
+       13
+      ],
+      "itemStyle": {},
+      "tip": "<b>Gemini 2.0 Flash</b>, wrote 21 of our 500 backdoors<br>ECI 134.0 (interval 131.7 to 136.2)<br>released Feb 2025 (Epoch entry: Gemini 2.0 Flash (Feb 2025))"
+     },
+     {
+      "value": [
+       127.05,
+       15
+      ],
+      "itemStyle": {},
+      "tip": "<b>GPT-4o</b>, wrote 79 of our 500 backdoors<br>ECI 127.0 (interval 124.1 to 129.8)<br>released Aug 2024 (Epoch entry: GPT-4o (Aug 2024))"
+     },
+     {
+      "value": [
+       125.02,
+       16
+      ],
+      "itemStyle": {},
+      "tip": "<b>Claude 3.5 Haiku</b>, wrote 22 of our 500 backdoors<br>ECI 125.0 (interval 121.7 to 128.0)<br>released Oct 2024 (Epoch entry: Claude 3.5 Haiku)"
+     },
+     {
+      "value": [
+       124.05,
+       17
+      ],
+      "itemStyle": {},
+      "tip": "<b>GPT-4o mini</b>, wrote 20 of our 500 backdoors<br>ECI 124.0 (interval 120.7 to 127.0)<br>released Jul 2024 (Epoch entry: GPT-4o mini)"
+     },
+     {
+      "value": [
+       113.26,
+       18
+      ],
+      "itemStyle": {},
+      "tip": "<b>GPT-3.5 Turbo</b>, wrote 9 of our 500 backdoors<br>ECI 113.3 (interval 108.2 to 117.6)<br>released Jan 2024 (Epoch entry: GPT-3.5 Turbo (Jan 2024))"
+     }
+    ],
+    "itemStyle": {
+     "color": "@s7",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "markArea": {
+     "silent": true,
+     "itemStyle": {
+      "color": "@s7/0.07"
+     },
+     "label": {
+      "show": true,
+      "position": "insideTop",
+      "distance": 4,
+      "color": "@ink-secondary",
+      "fontSize": 11,
+      "formatter": "backdoor writers"
+     },
+     "data": [
+      [
+       {
+        "xAxis": 113.26
+       },
+       {
+        "xAxis": 140.99
+       }
+      ]
+     ]
+    }
+   },
+   {
+    "name": "Monitored",
+    "type": "scatter",
+    "symbolSize": 10,
+    "z": 3,
+    "data": [
+     {
+      "value": [
+       168.36,
+       0
+      ],
+      "itemStyle": {
+       "color": "@ink-surface",
+       "borderColor": "@s0",
+       "borderWidth": 2.5
+      },
+      "tip": "<b>Opus 5.5</b>, monitor<br>ECI 168.4 (interval 165.5 to 171.5)<br>released Sep 2026 (Epoch entry: Claude Opus 5.5)"
+     },
+     {
+      "value": [
+       166.24,
+       1
+      ],
+      "itemStyle": {},
+      "tip": "<b>Sonnet 5.5</b>, monitor<br>ECI 166.2 (interval 163.5 to 169.2)<br>released Sep 2026 (Epoch entry: Claude Sonnet 5.5)"
+     },
+     {
+      "value": [
+       160.22,
+       2
+      ],
+      "itemStyle": {},
+      "tip": "<b>Haiku 5.5</b>, monitor<br>ECI 160.2 (interval 158.0 to 162.6)<br>released Oct 2026 (Epoch entry: Claude Haiku 5.5)"
+     },
+     {
+      "value": [
+       156.91,
+       3
+      ],
+      "itemStyle": {},
+      "tip": "<b>GLM-5.3</b>, monitor<br>ECI 156.9 (interval 154.8 to 159.2)<br>released Aug 2026 (Epoch entry: GLM-5.3)"
+     },
+     {
+      "value": [
+       156.68,
+       4
+      ],
+      "itemStyle": {},
+      "tip": "<b>GPT-6 Luna</b>, monitor<br>ECI 156.7 (interval 154.8 to 158.7)<br>released Sep 2026 (Epoch entry: GPT-6 Luna)"
+     },
+     {
+      "value": [
+       154.66,
+       5
+      ],
+      "itemStyle": {},
+      "tip": "<b>Mistral Large 4</b>, monitor<br>ECI 154.7 (interval 151.9 to 157.3)<br>released Oct 2026 (Epoch entry: Mistral Large 4)"
+     },
+     {
+      "value": [
+       145.59,
+       6
+      ],
+      "itemStyle": {},
+      "tip": "<b>Gemini 3.5 Flash-Lite</b>, monitor<br>ECI 145.6 (interval 143.9 to 147.2)<br>released Jul 2026 (Epoch entry: Gemini 3.5 Flash-Lite)"
+     },
+     {
+      "value": [
+       142.82,
+       7
+      ],
+      "itemStyle": {},
+      "tip": "<b>Haiku 4.5</b>, monitor<br>ECI 142.8 (interval 141.1 to 144.4)<br>released Oct 2025 (Epoch entry: Claude Haiku 4.5)"
+     },
+     {
+      "value": [
+       141.69,
+       8
+      ],
+      "itemStyle": {},
+      "tip": "<b>Gemma 4 26B-A4B</b>, monitor<br>ECI 141.7 (interval 139.2 to 144.1)<br>released Apr 2026 (Epoch entry: Gemma 4 26B A4B)"
+     },
+     {
+      "value": [
+       140.22,
+       11
+      ],
+      "itemStyle": {},
+      "tip": "<b>gpt-oss-120b</b>, monitor<br>ECI 140.2 (interval 138.3 to 142.0)<br>released Aug 2025 (Epoch entry: gpt-oss-120b)"
+     },
+     {
+      "value": [
+       127.66,
+       14
+      ],
+      "itemStyle": {},
+      "tip": "<b>Gemma 3 27B</b>, monitor<br>ECI 127.7 (interval 124.5 to 130.5)<br>released Mar 2025 (Epoch entry: Gemma 3 27B)"
+     }
+    ],
+    "itemStyle": {
+     "color": "@s0",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "role",
+   "name",
+   "backdoors_written",
+   "eci",
+   "eci_lo",
+   "eci_hi",
+   "date",
+   "epoch_entry"
+  ],
+  "rows": [
+   [
+    "monitor",
+    "Opus 5.5",
+    0,
+    168.36,
+    165.54,
+    171.51,
+    "2026-09-22",
+    "Claude Opus 5.5"
+   ],
+   [
+    "monitor",
+    "Sonnet 5.5",
+    0,
+    166.24,
+    163.52,
+    169.23,
+    "2026-09-28",
+    "Claude Sonnet 5.5"
+   ],
+   [
+    "monitor",
+    "Haiku 5.5",
+    0,
+    160.22,
+    158.04,
+    162.57,
+    "2026-10-07",
+    "Claude Haiku 5.5"
+   ],
+   [
+    "monitor",
+    "GLM-5.3",
+    0,
+    156.91,
+    154.8,
+    159.23,
+    "2026-08-14",
+    "GLM-5.3"
+   ],
+   [
+    "monitor",
+    "GPT-6 Luna",
+    0,
+    156.68,
+    154.78,
+    158.74,
+    "2026-09-22",
+    "GPT-6 Luna"
+   ],
+   [
+    "monitor",
+    "Mistral Large 4",
+    0,
+    154.66,
+    151.89,
+    157.31,
+    "2026-10-29",
+    "Mistral Large 4"
+   ],
+   [
+    "monitor",
+    "Gemini 3.5 Flash-Lite",
+    0,
+    145.59,
+    143.92,
+    147.23,
+    "2026-07-21",
+    "Gemini 3.5 Flash-Lite"
+   ],
+   [
+    "monitor",
+    "Haiku 4.5",
+    0,
+    142.82,
+    141.09,
+    144.42,
+    "2025-10-15",
+    "Claude Haiku 4.5"
+   ],
+   [
+    "monitor",
+    "Gemma 4 26B-A4B",
+    0,
+    141.69,
+    139.17,
+    144.13,
+    "2026-04-02",
+    "Gemma 4 26B A4B"
+   ],
+   [
+    "writer",
+    "Claude 3.7 Sonnet",
+    133,
+    140.99,
+    139.32,
+    142.54,
+    "2025-02-24",
+    "Claude 3.7 Sonnet"
+   ],
+   [
+    "writer",
+    "o3-mini",
+    157,
+    140.64,
+    138.88,
+    142.28,
+    "2025-01-31",
+    "o3-mini"
+   ],
+   [
+    "monitor",
+    "gpt-oss-120b",
+    0,
+    140.22,
+    138.35,
+    142.04,
+    "2025-08-05",
+    "gpt-oss-120b"
+   ],
+   [
+    "writer",
+    "o1-mini",
+    41,
+    135.39,
+    133.11,
+    137.48,
+    "2024-09-12",
+    "o1-mini"
+   ],
+   [
+    "writer",
+    "Gemini 2.0 Flash",
+    21,
+    134.03,
+    131.69,
+    136.23,
+    "2025-02-05",
+    "Gemini 2.0 Flash (Feb 2025)"
+   ],
+   [
+    "monitor",
+    "Gemma 3 27B",
+    0,
+    127.66,
+    124.52,
+    130.47,
+    "2025-03-12",
+    "Gemma 3 27B"
+   ],
+   [
+    "writer",
+    "GPT-4o",
+    79,
+    127.05,
+    124.07,
+    129.78,
+    "2024-08-06",
+    "GPT-4o (Aug 2024)"
+   ],
+   [
+    "writer",
+    "Claude 3.5 Haiku",
+    22,
+    125.02,
+    121.71,
+    127.96,
+    "2024-10-22",
+    "Claude 3.5 Haiku"
+   ],
+   [
+    "writer",
+    "GPT-4o mini",
+    20,
+    124.05,
+    120.66,
+    127.04,
+    "2024-07-18",
+    "GPT-4o mini"
+   ],
+   [
+    "writer",
+    "GPT-3.5 Turbo",
+    9,
+    113.26,
+    108.17,
+    117.59,
+    "2024-01-25",
+    "GPT-3.5 Turbo (Jan 2024)"
+   ],
+   [
+    "monitor",
+    "Gemma 3 4B",
+    0,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    "monitor",
+    "Ministral 14B",
+    0,
+    null,
+    null,
+    null,
+    null,
+    null
+   ],
+   [
+    "monitor",
+    "Qwen 3.8 Omni Flash",
+    0,
+    null,
+    null,
+    null,
+    null,
+    null
+   ]
+  ]
+ },
+ "facts": {
+  "n_above": 9,
+  "n_scored": 11,
+  "top_writer": "Claude 3.7 Sonnet",
+  "n_thinking": 19,
+  "n_apps": 18
+ },
+ "build": {
+  "inputs": {
+   "results/analysis/case-features.csv": "sha256:26805e982a831ffc",
+   "viz/data/eci-scores.csv": "sha256:e6d9f3b4bd7594da"
+  },
+  "code": "sha256:f68b782e5f09ca22",
+  "spec": "sha256:f08b469525ebe976"
+ }
+}

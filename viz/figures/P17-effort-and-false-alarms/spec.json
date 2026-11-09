@@ -4,7 +4,7 @@
  "title": "More reasoning doesn't raise false alarms on clean code",
  "section": "results",
  "order": 35,
- "caption": "Share of the 500 clean programs each monitor scores 5/10 or higher, at each reasoning setting. Coloured lines are the three models in focus, grey the other five. Every model stays between 0.2% and 0.8% at every setting, while P03 shows 6 of 8 catching more backdoors.",
+ "caption": "Share of the 500 clean programs each monitor scores 5/10 or higher, at each reasoning setting. Colours match P03: blue models catch more backdoors with more effort, red ones fewer. Every model stays between 0.2% and 0.8% at every setting, a change of one program at most.",
  "notes": [
   "At a fixed audit budget the false-positive rate is fixed by construction: 2% of clean code gets audited whatever the monitor. This asks a different question: does more reasoning push clean code's scores up? It doesn't; Haiku 5.5's mean clean score even falls as effort rises.",
   "Extends A06's false-alarm panel from two models to all eight."
@@ -30,10 +30,10 @@
    "top": 0,
    "left": 50,
    "data": [
-    "Sonnet 5.5",
-    "Haiku 5.5",
-    "GLM-5.3"
-   ]
+    "Caught more with effort",
+    "Caught fewer with effort"
+   ],
+   "selectedMode": false
   },
   "xAxis": {
    "name": "Reasoning effort setting",
@@ -63,7 +63,7 @@
   },
   "series": [
    {
-    "name": "Sonnet 5.5",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      null,
@@ -79,8 +79,8 @@
      null
     ],
     "connectNulls": true,
-    "z": 4,
-    "symbolSize": 8,
+    "z": 3,
+    "symbolSize": 7,
     "itemStyle": {
      "color": "@s0",
      "borderColor": "@ink-surface",
@@ -88,14 +88,14 @@
     },
     "lineStyle": {
      "color": "@s0",
-     "width": 2.5
+     "width": 2
     },
     "emphasis": {
      "focus": "series"
     }
    },
    {
-    "name": "Haiku 5.5",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      null,
@@ -117,23 +117,23 @@
      }
     ],
     "connectNulls": true,
-    "z": 4,
-    "symbolSize": 8,
+    "z": 3,
+    "symbolSize": 7,
     "itemStyle": {
-     "color": "@s1",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@s1",
-     "width": 2.5
+     "color": "@s0",
+     "width": 2
     },
     "emphasis": {
      "focus": "series"
     }
    },
    {
-    "name": "GLM-5.3",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      null,
@@ -152,23 +152,23 @@
      }
     ],
     "connectNulls": true,
-    "z": 4,
-    "symbolSize": 8,
+    "z": 3,
+    "symbolSize": 7,
     "itemStyle": {
-     "color": "@s2",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@s2",
-     "width": 2.5
+     "color": "@s0",
+     "width": 2
     },
     "emphasis": {
      "focus": "series"
     }
    },
    {
-    "name": "Qwen 3.8",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      {
@@ -188,22 +188,22 @@
     ],
     "connectNulls": true,
     "z": 3,
-    "symbolSize": 6,
+    "symbolSize": 7,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s0",
+     "width": 2
     },
     "emphasis": {
      "focus": "series"
     }
    },
    {
-    "name": "GPT-6 Luna",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      {
@@ -229,22 +229,22 @@
     ],
     "connectNulls": true,
     "z": 3,
-    "symbolSize": 6,
+    "symbolSize": 7,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s0",
+     "width": 2
     },
     "emphasis": {
      "focus": "series"
     }
    },
    {
-    "name": "Mistral Large 4",
+    "name": "Caught fewer with effort",
     "type": "line",
     "data": [
      null,
@@ -260,23 +260,23 @@
      null
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 4,
+    "symbolSize": 7,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s7",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s7",
+     "width": 2
     },
     "emphasis": {
      "focus": "series"
     }
    },
    {
-    "name": "gpt-oss-120b",
+    "name": "Caught more with effort",
     "type": "line",
     "data": [
      null,
@@ -296,22 +296,22 @@
     ],
     "connectNulls": true,
     "z": 3,
-    "symbolSize": 6,
+    "symbolSize": 7,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s0",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s0",
+     "width": 2
     },
     "emphasis": {
      "focus": "series"
     }
    },
    {
-    "name": "Gemini Flash-Lite",
+    "name": "Caught fewer with effort",
     "type": "line",
     "data": [
      {
@@ -336,16 +336,16 @@
      }
     ],
     "connectNulls": true,
-    "z": 3,
-    "symbolSize": 6,
+    "z": 4,
+    "symbolSize": 7,
     "itemStyle": {
-     "color": "@context-strong",
+     "color": "@s7",
      "borderColor": "@ink-surface",
      "borderWidth": 1.5
     },
     "lineStyle": {
-     "color": "@context-strong",
-     "width": 1.5
+     "color": "@s7",
+     "width": 2
     },
     "emphasis": {
      "focus": "series"
@@ -626,7 +626,7 @@
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:365b65ecc2e26624",
-  "spec": "sha256:acab85de6ea2de7a"
+  "code": "sha256:9a4b1f81c29ae93a",
+  "spec": "sha256:d074a534c860c934"
  }
 }

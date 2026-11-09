@@ -1,0 +1,382 @@
+{
+ "id": "P26",
+ "kind": "echarts",
+ "title": "More capable writers didn't produce harder-to-catch backdoors",
+ "section": "results",
+ "order": 113,
+ "caption": "Each dot is one backdoor-writing model, placed by its Epoch Capabilities Index score. Up is the share of its backdoors missed by all seven monitors at a 2% budget. Faint bars are 95% ranges, the number is how many it wrote, the dashed line is all writers. Hover for Epoch's interval.",
+ "notes": [
+  "Rank correlation between capability and share missed is +0.05 across 8 writers (exact permutation p = 0.93). With this few writers only a strong link would show, so this rules out a strong trend, not a weak one.",
+  "o3-mini and Claude 3.7 Sonnet score almost the same on the index, yet 3% of o3-mini's backdoors got past every monitor against 12% of Claude 3.7 Sonnet's, and mid-ranked o1-mini reached 27%. How a model writes backdoors seems to matter more than its general capability.",
+  "ECI scores and snapshot choices are shared with P24 (viz/data/eci-scores.csv). Claude 3.7 Sonnet includes its 19 extended-thinking backdoors, because Epoch scores the model once.",
+  "Every writer here is weaker than our main monitors (P24), so this says nothing about an attacker stronger than its monitor. Models also wrote backdoors for different problems, so problem difficulty is mixed in with the writer."
+ ],
+ "height": 440,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P26-writer-capability-vs-missed",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 58,
+   "right": 30,
+   "top": 20,
+   "bottom": 52
+  },
+  "xAxis": {
+   "name": "Writer's Epoch Capabilities Index",
+   "nameLocation": "middle",
+   "nameGap": 34,
+   "type": "value",
+   "min": 105,
+   "max": 150,
+   "interval": 5,
+   "splitLine": {
+    "show": false
+   }
+  },
+  "yAxis": {
+   "name": "Missed by all seven monitors",
+   "nameLocation": "middle",
+   "nameGap": 42,
+   "type": "value",
+   "min": 0,
+   "max": 50,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "series": [
+   {
+    "name": "_range",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([api.value(0), api.value(1)]); var b = api.coord([api.value(0), api.value(2)]); return {type: 'line', shape: {x1: a[0], y1: a[1], x2: b[0], y2: b[1]}, style: {stroke: api.visual('color'), lineWidth: 7, lineCap: 'round', opacity: 0.2}, silent: true}; }",
+    "itemStyle": {
+     "color": "@s7"
+    },
+    "data": [
+     [
+      113.26,
+      0.0,
+      29.92
+     ],
+     [
+      124.05,
+      11.19,
+      46.87
+     ],
+     [
+      125.02,
+      7.31,
+      38.52
+     ],
+     [
+      127.05,
+      3.53,
+      15.6
+     ],
+     [
+      134.03,
+      4.98,
+      34.64
+     ],
+     [
+      135.39,
+      15.69,
+      41.93
+     ],
+     [
+      140.64,
+      1.0,
+      6.37
+     ],
+     [
+      140.99,
+      7.54,
+      18.65
+     ]
+    ],
+    "encode": {
+     "x": 0,
+     "y": [
+      1,
+      2
+     ]
+    },
+    "z": 1,
+    "silent": true,
+    "tooltip": {
+     "show": false
+    }
+   },
+   {
+    "name": "writers",
+    "type": "scatter",
+    "symbolSize": 11,
+    "z": 3,
+    "data": [
+     {
+      "value": [
+       113.26,
+       0.0
+      ],
+      "label": {
+       "formatter": "GPT-3.5 Turbo (9)",
+       "position": "right"
+      },
+      "tip": "<b>GPT-3.5 Turbo</b><br>ECI 113.3 (interval 108.2 to 117.6)<br>0 of 9 missed by all seven (0.0%)<br>95% range 0–30%"
+     },
+     {
+      "value": [
+       124.05,
+       25.0
+      ],
+      "label": {
+       "formatter": "GPT-4o mini (20)",
+       "position": "left"
+      },
+      "tip": "<b>GPT-4o mini</b><br>ECI 124.0 (interval 120.7 to 127.0)<br>5 of 20 missed by all seven (25.0%)<br>95% range 11–47%"
+     },
+     {
+      "value": [
+       125.02,
+       18.18
+      ],
+      "label": {
+       "formatter": "Claude 3.5 Haiku (22)",
+       "position": "right"
+      },
+      "tip": "<b>Claude 3.5 Haiku</b><br>ECI 125.0 (interval 121.7 to 128.0)<br>4 of 22 missed by all seven (18.2%)<br>95% range 7–39%"
+     },
+     {
+      "value": [
+       127.05,
+       7.59
+      ],
+      "label": {
+       "formatter": "GPT-4o (79)",
+       "position": "right"
+      },
+      "tip": "<b>GPT-4o</b><br>ECI 127.0 (interval 124.1 to 129.8)<br>6 of 79 missed by all seven (7.6%)<br>95% range 4–16%"
+     },
+     {
+      "value": [
+       134.03,
+       14.29
+      ],
+      "label": {
+       "formatter": "Gemini 2.0 Flash (21)",
+       "position": "bottom"
+      },
+      "tip": "<b>Gemini 2.0 Flash</b><br>ECI 134.0 (interval 131.7 to 136.2)<br>3 of 21 missed by all seven (14.3%)<br>95% range 5–35%"
+     },
+     {
+      "value": [
+       135.39,
+       26.83
+      ],
+      "label": {
+       "formatter": "o1-mini (41)",
+       "position": "right"
+      },
+      "tip": "<b>o1-mini</b><br>ECI 135.4 (interval 133.1 to 137.5)<br>11 of 41 missed by all seven (26.8%)<br>95% range 16–42%"
+     },
+     {
+      "value": [
+       140.64,
+       2.55
+      ],
+      "label": {
+       "formatter": "o3-mini (157)",
+       "position": "left"
+      },
+      "tip": "<b>o3-mini</b><br>ECI 140.6 (interval 138.9 to 142.3)<br>4 of 157 missed by all seven (2.5%)<br>95% range 1–6%"
+     },
+     {
+      "value": [
+       140.99,
+       12.03
+      ],
+      "label": {
+       "formatter": "Claude 3.7 Sonnet (133)",
+       "position": "right"
+      },
+      "tip": "<b>Claude 3.7 Sonnet</b><br>ECI 141.0 (interval 139.3 to 142.5)<br>16 of 133 missed by all seven (12.0%)<br>95% range 8–19%"
+     }
+    ],
+    "itemStyle": {
+     "color": "@s7",
+     "borderColor": "@ink-surface",
+     "borderWidth": 1.5
+    },
+    "label": {
+     "show": true,
+     "color": "@ink-primary",
+     "fontSize": 12,
+     "distance": 8
+    }
+   },
+   {
+    "name": "_all",
+    "type": "line",
+    "data": [],
+    "silent": true,
+    "markLine": {
+     "silent": true,
+     "symbol": "none",
+     "lineStyle": {
+      "type": "dashed",
+      "color": "@ink-muted",
+      "width": 1.2
+     },
+     "label": {
+      "formatter": "all writers 10%",
+      "position": "insideStartTop",
+      "color": "@ink-muted",
+      "fontSize": 11
+     },
+     "data": [
+      {
+       "yAxis": 10.17
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "dial": null,
+ "data": {
+  "columns": [
+   "writer",
+   "eci_name",
+   "eci",
+   "eci_lo",
+   "eci_hi",
+   "n",
+   "missed",
+   "share",
+   "lo",
+   "hi"
+  ],
+  "rows": [
+   [
+    "GPT-3.5 Turbo",
+    "GPT-3.5 Turbo (Jan 2024)",
+    113.26,
+    108.17,
+    117.59,
+    9,
+    0,
+    0.0,
+    0.0,
+    0.299153
+   ],
+   [
+    "GPT-4o mini",
+    "GPT-4o mini",
+    124.05,
+    120.66,
+    127.04,
+    20,
+    5,
+    0.25,
+    0.11186,
+    0.468705
+   ],
+   [
+    "Claude 3.5 Haiku",
+    "Claude 3.5 Haiku",
+    125.02,
+    121.71,
+    127.96,
+    22,
+    4,
+    0.181818,
+    0.0730677,
+    0.38517
+   ],
+   [
+    "GPT-4o",
+    "GPT-4o (Aug 2024)",
+    127.05,
+    124.07,
+    129.78,
+    79,
+    6,
+    0.0759494,
+    0.0352716,
+    0.155956
+   ],
+   [
+    "Gemini 2.0 Flash",
+    "Gemini 2.0 Flash (Feb 2025)",
+    134.03,
+    131.69,
+    136.23,
+    21,
+    3,
+    0.142857,
+    0.0498092,
+    0.346365
+   ],
+   [
+    "o1-mini",
+    "o1-mini",
+    135.39,
+    133.11,
+    137.48,
+    41,
+    11,
+    0.268293,
+    0.156948,
+    0.419338
+   ],
+   [
+    "o3-mini",
+    "o3-mini",
+    140.64,
+    138.88,
+    142.28,
+    157,
+    4,
+    0.0254777,
+    0.00995123,
+    0.0636715
+   ],
+   [
+    "Claude 3.7 Sonnet",
+    "Claude 3.7 Sonnet",
+    140.99,
+    139.32,
+    142.54,
+    133,
+    16,
+    0.120301,
+    0.0754212,
+    0.186499
+   ]
+  ]
+ },
+ "facts": {
+  "rho": 0.047619,
+  "p": 0.934871,
+  "k": 8,
+  "o3": 2.54777,
+  "o1": 26.8293,
+  "c37": 12.0301,
+  "n_thinking": 19
+ },
+ "build": {
+  "inputs": {
+   "results/analysis/case-features.csv": "sha256:26805e982a831ffc",
+   "viz/data/eci-scores.csv": "sha256:e6d9f3b4bd7594da"
+  },
+  "code": "sha256:b7a8158e0185192b",
+  "spec": "sha256:65c3a05590657114"
+ }
+}

@@ -1,0 +1,24 @@
+role,key,eci_name,eci,eci_lo,eci_hi,date
+writer,openai/o3-mini,o3-mini,140.64,138.88,142.28,2025-01-31
+writer,anthropic/claude-3-7-sonnet-latest,Claude 3.7 Sonnet,140.99,139.32,142.54,2025-02-24
+writer,anthropic/claude-3-7-sonnet-thinking-latest,Claude 3.7 Sonnet,140.99,139.32,142.54,2025-02-24
+writer,openai/gpt-4o,GPT-4o (Aug 2024),127.05,124.07,129.78,2024-08-06
+writer,openai/o1-mini,o1-mini,135.39,133.11,137.48,2024-09-12
+writer,anthropic/claude-3-5-haiku-latest,Claude 3.5 Haiku,125.02,121.71,127.96,2024-10-22
+writer,google/gemini-2.0-flash,Gemini 2.0 Flash (Feb 2025),134.03,131.69,136.23,2025-02-05
+writer,openai/gpt-4o-mini,GPT-4o mini,124.05,120.66,127.04,2024-07-18
+writer,openai/gpt-3.5-turbo,GPT-3.5 Turbo (Jan 2024),113.26,108.17,117.59,2024-01-25
+monitor,opus55,Claude Opus 5.5,168.36,165.54,171.51,2026-09-22
+monitor,sonnet55,Claude Sonnet 5.5,166.24,163.52,169.23,2026-09-28
+monitor,haiku55,Claude Haiku 5.5,160.22,158.04,162.57,2026-10-07
+monitor,glm53,GLM-5.3,156.91,154.8,159.23,2026-08-14
+monitor,luna,GPT-6 Luna,156.68,154.78,158.74,2026-09-22
+monitor,mistrallarge4,Mistral Large 4,154.66,151.89,157.31,2026-10-29
+monitor,gemini35lite,Gemini 3.5 Flash-Lite,145.59,143.92,147.23,2026-07-21
+monitor,haiku45,Claude Haiku 4.5,142.82,141.09,144.42,2025-10-15
+monitor,gemma4,Gemma 4 26B A4B,141.69,139.17,144.13,2026-04-02
+monitor,gptoss,gpt-oss-120b,140.22,138.35,142.04,2025-08-05
+monitor,gemma3_27b,Gemma 3 27B,127.66,124.52,130.47,2025-03-12
+monitor,qwen38,,,,,
+monitor,gemma3,,,,,
+monitor,ministral14b,,,,,

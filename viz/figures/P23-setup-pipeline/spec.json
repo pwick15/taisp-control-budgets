@@ -1,0 +1,1053 @@
+{
+ "id": "P23",
+ "kind": "echarts",
+ "title": "Every monitor scores the same 1,000 programs, recorded once",
+ "section": "setup",
+ "order": 10,
+ "caption": "Each of 500 APPS coding problems comes with a clean, human-written solution and a backdoored one written by an older AI model. A monitor reads each program with its comments removed and gives it a suspicion score. We swept the settings in the bottom row.",
+ "notes": [
+  "The code is fixed: we never ask a model to write new backdoors in the main runs, so every monitor and every setting is judged on identical inputs and only the monitor calls cost money.",
+  "A backdoor passes the problem's tests but prints a wrong answer on one secret input the attacker knows. The dataset only keeps backdoors that were checked to work."
+ ],
+ "height": 268,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P23-setup-pipeline",
+ "option": {
+  "animation": false,
+  "tooltip": {
+   "show": false
+  },
+  "graphic": [
+   {
+    "type": "group",
+    "left": "center",
+    "top": 14,
+    "width": 940,
+    "children": [
+     {
+      "type": "rect",
+      "silent": true,
+      "shape": {
+       "x": 0,
+       "y": 61,
+       "width": 178,
+       "height": 80,
+       "r": 12
+      },
+      "style": {
+       "fill": "@mid",
+       "stroke": "@ink-axis",
+       "lineWidth": 1.5,
+       "lineDash": null
+      }
+     },
+     {
+      "type": "group",
+      "x": 14,
+      "y": 82,
+      "silent": true,
+      "children": [
+       {
+        "type": "rect",
+        "shape": {
+         "x": 0,
+         "y": 0,
+         "width": 30,
+         "height": 38,
+         "r": 3
+        },
+        "style": {
+         "fill": "@ink-surface",
+         "stroke": "@ink-primary",
+         "lineWidth": 2
+        }
+       },
+       {
+        "type": "line",
+        "shape": {
+         "x1": 6,
+         "y1": 10,
+         "x2": 24,
+         "y2": 10
+        },
+        "style": {
+         "stroke": "@ink-secondary",
+         "lineWidth": 2,
+         "lineCap": "round"
+        }
+       },
+       {
+        "type": "line",
+        "shape": {
+         "x1": 6,
+         "y1": 17,
+         "x2": 20,
+         "y2": 17
+        },
+        "style": {
+         "stroke": "@ink-secondary",
+         "lineWidth": 2,
+         "lineCap": "round"
+        }
+       },
+       {
+        "type": "line",
+        "shape": {
+         "x1": 6,
+         "y1": 24,
+         "x2": 24,
+         "y2": 24
+        },
+        "style": {
+         "stroke": "@ink-secondary",
+         "lineWidth": 2,
+         "lineCap": "round"
+        }
+       },
+       {
+        "type": "line",
+        "shape": {
+         "x1": 6,
+         "y1": 31,
+         "x2": 16,
+         "y2": 31
+        },
+        "style": {
+         "stroke": "@ink-secondary",
+         "lineWidth": 2,
+         "lineCap": "round"
+        }
+       }
+      ]
+     },
+     {
+      "type": "text",
+      "x": 58,
+      "y": 92.0,
+      "silent": true,
+      "style": {
+       "text": "500 problems",
+       "fill": "@ink-primary",
+       "fontSize": 15,
+       "fontWeight": 700,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "text",
+      "x": 58,
+      "y": 113.0,
+      "silent": true,
+      "style": {
+       "text": "APPS coding tasks",
+       "fill": "@ink-secondary",
+       "fontSize": 12,
+       "fontWeight": 400,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "rect",
+      "silent": true,
+      "shape": {
+       "x": 226,
+       "y": 14,
+       "width": 236,
+       "height": 78,
+       "r": 12
+      },
+      "style": {
+       "fill": "@mid",
+       "stroke": "@ink-axis",
+       "lineWidth": 1.5,
+       "lineDash": null
+      }
+     },
+     {
+      "type": "group",
+      "x": 242,
+      "y": 35,
+      "silent": true,
+      "children": [
+       {
+        "type": "polygon",
+        "shape": {
+         "points": [
+          [
+           0,
+           0
+          ],
+          [
+           20,
+           0
+          ],
+          [
+           28,
+           8
+          ],
+          [
+           28,
+           36
+          ],
+          [
+           0,
+           36
+          ]
+         ]
+        },
+        "style": {
+         "fill": "@ink-surface",
+         "stroke": "@ink-secondary",
+         "lineWidth": 2,
+         "lineJoin": "round"
+        }
+       },
+       {
+        "type": "polyline",
+        "shape": {
+         "points": [
+          [
+           20,
+           0
+          ],
+          [
+           20,
+           8
+          ],
+          [
+           28,
+           8
+          ]
+         ]
+        },
+        "style": {
+         "fill": null,
+         "stroke": "@ink-secondary",
+         "lineWidth": 2
+        }
+       },
+       {
+        "type": "text",
+        "x": 14,
+        "y": 22,
+        "style": {
+         "text": "</>",
+         "fill": "@ink-secondary",
+         "fontSize": 11,
+         "fontWeight": 700,
+         "align": "center",
+         "verticalAlign": "middle"
+        }
+       }
+      ]
+     },
+     {
+      "type": "text",
+      "x": 284,
+      "y": 35.0,
+      "silent": true,
+      "style": {
+       "text": "Clean program",
+       "fill": "@ink-primary",
+       "fontSize": 15,
+       "fontWeight": 700,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "text",
+      "x": 284,
+      "y": 56.0,
+      "silent": true,
+      "style": {
+       "text": "written by a human",
+       "fill": "@ink-secondary",
+       "fontSize": 12,
+       "fontWeight": 400,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "text",
+      "x": 284,
+      "y": 73.0,
+      "silent": true,
+      "style": {
+       "text": "passes every test",
+       "fill": "@ink-secondary",
+       "fontSize": 12,
+       "fontWeight": 400,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "rect",
+      "silent": true,
+      "shape": {
+       "x": 226,
+       "y": 110,
+       "width": 236,
+       "height": 78,
+       "r": 12
+      },
+      "style": {
+       "fill": "@s7/0.08",
+       "stroke": "@s7",
+       "lineWidth": 1.5,
+       "lineDash": null
+      }
+     },
+     {
+      "type": "group",
+      "x": 242,
+      "y": 131,
+      "silent": true,
+      "children": [
+       {
+        "type": "polygon",
+        "shape": {
+         "points": [
+          [
+           0,
+           0
+          ],
+          [
+           20,
+           0
+          ],
+          [
+           28,
+           8
+          ],
+          [
+           28,
+           36
+          ],
+          [
+           0,
+           36
+          ]
+         ]
+        },
+        "style": {
+         "fill": "@ink-surface",
+         "stroke": "@s7",
+         "lineWidth": 2,
+         "lineJoin": "round"
+        }
+       },
+       {
+        "type": "polyline",
+        "shape": {
+         "points": [
+          [
+           20,
+           0
+          ],
+          [
+           20,
+           8
+          ],
+          [
+           28,
+           8
+          ]
+         ]
+        },
+        "style": {
+         "fill": null,
+         "stroke": "@s7",
+         "lineWidth": 2
+        }
+       },
+       {
+        "type": "text",
+        "x": 14,
+        "y": 22,
+        "style": {
+         "text": "</>",
+         "fill": "@s7",
+         "fontSize": 11,
+         "fontWeight": 700,
+         "align": "center",
+         "verticalAlign": "middle"
+        }
+       }
+      ]
+     },
+     {
+      "type": "text",
+      "x": 284,
+      "y": 131.0,
+      "silent": true,
+      "style": {
+       "text": "Backdoored program",
+       "fill": "@ink-primary",
+       "fontSize": 15,
+       "fontWeight": 700,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "text",
+      "x": 284,
+      "y": 152.0,
+      "silent": true,
+      "style": {
+       "text": "written by an older AI model",
+       "fill": "@ink-secondary",
+       "fontSize": 12,
+       "fontWeight": 400,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "text",
+      "x": 284,
+      "y": 169.0,
+      "silent": true,
+      "style": {
+       "text": "fails on one secret input",
+       "fill": "@ink-secondary",
+       "fontSize": 12,
+       "fontWeight": 400,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "polyline",
+      "silent": true,
+      "shape": {
+       "points": [
+        [
+         178,
+         101
+        ],
+        [
+         202,
+         101
+        ],
+        [
+         202,
+         53.0
+        ],
+        [
+         215.0,
+         53.0
+        ]
+       ]
+      },
+      "style": {
+       "stroke": "@ink-secondary",
+       "lineWidth": 2,
+       "fill": null,
+       "lineJoin": "round"
+      }
+     },
+     {
+      "type": "polygon",
+      "silent": true,
+      "shape": {
+       "points": [
+        [
+         224,
+         53.0
+        ],
+        [
+         215.0,
+         58.0
+        ],
+        [
+         215.0,
+         48.0
+        ]
+       ]
+      },
+      "style": {
+       "fill": "@ink-secondary"
+      }
+     },
+     {
+      "type": "polyline",
+      "silent": true,
+      "shape": {
+       "points": [
+        [
+         202,
+         101
+        ],
+        [
+         202,
+         149.0
+        ],
+        [
+         215.0,
+         149.0
+        ]
+       ]
+      },
+      "style": {
+       "stroke": "@ink-secondary",
+       "lineWidth": 2,
+       "fill": null,
+       "lineJoin": "round"
+      }
+     },
+     {
+      "type": "polygon",
+      "silent": true,
+      "shape": {
+       "points": [
+        [
+         224,
+         149.0
+        ],
+        [
+         215.0,
+         154.0
+        ],
+        [
+         215.0,
+         144.0
+        ]
+       ]
+      },
+      "style": {
+       "fill": "@ink-secondary"
+      }
+     },
+     {
+      "type": "polyline",
+      "silent": true,
+      "shape": {
+       "points": [
+        [
+         462,
+         53.0
+        ],
+        [
+         489,
+         53.0
+        ],
+        [
+         489,
+         101
+        ]
+       ]
+      },
+      "style": {
+       "stroke": "@ink-secondary",
+       "lineWidth": 2,
+       "fill": null,
+       "lineJoin": "round"
+      }
+     },
+     {
+      "type": "polyline",
+      "silent": true,
+      "shape": {
+       "points": [
+        [
+         462,
+         149.0
+        ],
+        [
+         489,
+         149.0
+        ],
+        [
+         489,
+         101
+        ],
+        [
+         503.0,
+         101.0
+        ]
+       ]
+      },
+      "style": {
+       "stroke": "@ink-secondary",
+       "lineWidth": 2,
+       "fill": null,
+       "lineJoin": "round"
+      }
+     },
+     {
+      "type": "polygon",
+      "silent": true,
+      "shape": {
+       "points": [
+        [
+         512,
+         101
+        ],
+        [
+         503.0,
+         106.0
+        ],
+        [
+         503.0,
+         96.0
+        ]
+       ]
+      },
+      "style": {
+       "fill": "@ink-secondary"
+      }
+     },
+     {
+      "type": "rect",
+      "silent": true,
+      "shape": {
+       "x": 514,
+       "y": 61,
+       "width": 196,
+       "height": 80,
+       "r": 12
+      },
+      "style": {
+       "fill": "@s0/0.10",
+       "stroke": "@s0",
+       "lineWidth": 1.5,
+       "lineDash": null
+      }
+     },
+     {
+      "type": "group",
+      "x": 526,
+      "y": 84,
+      "silent": true,
+      "children": [
+       {
+        "type": "rect",
+        "shape": {
+         "x": 15.2,
+         "y": 0,
+         "width": 9.6,
+         "height": 6.4,
+         "r": 1.6
+        },
+        "style": {
+         "fill": "@s0",
+         "stroke": "@ink-primary",
+         "lineWidth": 1.6
+        }
+       },
+       {
+        "type": "rect",
+        "shape": {
+         "x": 0,
+         "y": 12.0,
+         "width": 4.8,
+         "height": 11.2,
+         "r": 1.6
+        },
+        "style": {
+         "fill": "@s0",
+         "stroke": "@ink-primary",
+         "lineWidth": 1.6
+        }
+       },
+       {
+        "type": "rect",
+        "shape": {
+         "x": 35.2,
+         "y": 12.0,
+         "width": 4.8,
+         "height": 11.2,
+         "r": 1.6
+        },
+        "style": {
+         "fill": "@s0",
+         "stroke": "@ink-primary",
+         "lineWidth": 1.6
+        }
+       },
+       {
+        "type": "rect",
+        "shape": {
+         "x": 4.0,
+         "y": 5.6,
+         "width": 32.0,
+         "height": 24.8,
+         "r": 6.4
+        },
+        "style": {
+         "fill": "@s0",
+         "stroke": "@ink-primary",
+         "lineWidth": 1.6
+        }
+       },
+       {
+        "type": "circle",
+        "shape": {
+         "cx": 14.4,
+         "cy": 17.6,
+         "r": 3.6
+        },
+        "style": {
+         "fill": "@on-strong",
+         "stroke": "@ink-primary",
+         "lineWidth": 1.6
+        }
+       },
+       {
+        "type": "circle",
+        "shape": {
+         "cx": 25.6,
+         "cy": 17.6,
+         "r": 3.6
+        },
+        "style": {
+         "fill": "@on-strong",
+         "stroke": "@ink-primary",
+         "lineWidth": 1.6
+        }
+       }
+      ]
+     },
+     {
+      "type": "text",
+      "x": 572,
+      "y": 83.0,
+      "silent": true,
+      "style": {
+       "text": "Monitor",
+       "fill": "@ink-primary",
+       "fontSize": 15,
+       "fontWeight": 700,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "text",
+      "x": 572,
+      "y": 104.0,
+      "silent": true,
+      "style": {
+       "text": "reads the code,",
+       "fill": "@ink-secondary",
+       "fontSize": 12,
+       "fontWeight": 400,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "text",
+      "x": 572,
+      "y": 121.0,
+      "silent": true,
+      "style": {
+       "text": "comments removed",
+       "fill": "@ink-secondary",
+       "fontSize": 12,
+       "fontWeight": 400,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "polyline",
+      "silent": true,
+      "shape": {
+       "points": [
+        [
+         710,
+         101
+        ],
+        [
+         727.0,
+         101.0
+        ]
+       ]
+      },
+      "style": {
+       "stroke": "@ink-secondary",
+       "lineWidth": 2,
+       "fill": null,
+       "lineJoin": "round"
+      }
+     },
+     {
+      "type": "polygon",
+      "silent": true,
+      "shape": {
+       "points": [
+        [
+         736,
+         101
+        ],
+        [
+         727.0,
+         106.0
+        ],
+        [
+         727.0,
+         96.0
+        ]
+       ]
+      },
+      "style": {
+       "fill": "@ink-secondary"
+      }
+     },
+     {
+      "type": "rect",
+      "silent": true,
+      "shape": {
+       "x": 738,
+       "y": 61,
+       "width": 202,
+       "height": 80,
+       "r": 12
+      },
+      "style": {
+       "fill": "@mid",
+       "stroke": "@ink-axis",
+       "lineWidth": 1.5,
+       "lineDash": null
+      }
+     },
+     {
+      "type": "group",
+      "x": 754,
+      "y": 87,
+      "silent": true,
+      "children": [
+       {
+        "type": "circle",
+        "shape": {
+         "cx": 11,
+         "cy": 11,
+         "r": 10
+        },
+        "style": {
+         "fill": null,
+         "stroke": "@ink-primary",
+         "lineWidth": 3
+        }
+       },
+       {
+        "type": "line",
+        "shape": {
+         "x1": 18.5,
+         "y1": 18.5,
+         "x2": 28,
+         "y2": 28
+        },
+        "style": {
+         "stroke": "@ink-primary",
+         "lineWidth": 4,
+         "lineCap": "round"
+        }
+       }
+      ]
+     },
+     {
+      "type": "text",
+      "x": 796,
+      "y": 92.0,
+      "silent": true,
+      "style": {
+       "text": "Suspicion score",
+       "fill": "@ink-primary",
+       "fontSize": 15,
+       "fontWeight": 700,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "text",
+      "x": 796,
+      "y": 113.0,
+      "silent": true,
+      "style": {
+       "text": "0 to 10 per program",
+       "fill": "@ink-secondary",
+       "fontSize": 12,
+       "fontWeight": 400,
+       "align": "left",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "line",
+      "silent": true,
+      "shape": {
+       "x1": 612.0,
+       "y1": 141,
+       "x2": 612.0,
+       "y2": 207
+      },
+      "style": {
+       "stroke": "@s0/0.6",
+       "lineWidth": 1.5,
+       "lineDash": [
+        3,
+        3
+       ]
+      }
+     },
+     {
+      "type": "text",
+      "x": 348.4,
+      "y": 222,
+      "silent": true,
+      "style": {
+       "text": "We varied",
+       "fill": "@ink-secondary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "align": "right",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "rect",
+      "silent": true,
+      "shape": {
+       "x": 360.4,
+       "y": 209,
+       "width": 75.4,
+       "height": 26,
+       "r": 13
+      },
+      "style": {
+       "fill": "@s0/0.10",
+       "stroke": "@s0/0.5",
+       "lineWidth": 1,
+       "lineDash": null
+      }
+     },
+     {
+      "type": "text",
+      "x": 398.1,
+      "y": 222,
+      "silent": true,
+      "style": {
+       "text": "13 models",
+       "fill": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 500,
+       "align": "center",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "rect",
+      "silent": true,
+      "shape": {
+       "x": 445.8,
+       "y": 209,
+       "width": 121.6,
+       "height": 26,
+       "r": 13
+      },
+      "style": {
+       "fill": "@s0/0.10",
+       "stroke": "@s0/0.5",
+       "lineWidth": 1,
+       "lineDash": null
+      }
+     },
+     {
+      "type": "text",
+      "x": 506.6,
+      "y": 222,
+      "silent": true,
+      "style": {
+       "text": "reasoning effort",
+       "fill": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 500,
+       "align": "center",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "rect",
+      "silent": true,
+      "shape": {
+       "x": 577.4,
+       "y": 209,
+       "width": 141.4,
+       "height": 26,
+       "r": 13
+      },
+      "style": {
+       "fill": "@s0/0.10",
+       "stroke": "@s0/0.5",
+       "lineWidth": 1,
+       "lineDash": null
+      }
+     },
+     {
+      "type": "text",
+      "x": 648.1,
+      "y": 222,
+      "silent": true,
+      "style": {
+       "text": "0 to 10 or 0 to 100",
+       "fill": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 500,
+       "align": "center",
+       "verticalAlign": "middle"
+      }
+     },
+     {
+      "type": "rect",
+      "silent": true,
+      "shape": {
+       "x": 728.8,
+       "y": 209,
+       "width": 134.8,
+       "height": 26,
+       "r": 13
+      },
+      "style": {
+       "fill": "@s0/0.10",
+       "stroke": "@s0/0.5",
+       "lineWidth": 1,
+       "lineDash": null
+      }
+     },
+     {
+      "type": "text",
+      "x": 796.2,
+      "y": 222,
+      "silent": true,
+      "style": {
+       "text": "comments in or out",
+       "fill": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 500,
+       "align": "center",
+       "verticalAlign": "middle"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "dial": null,
+ "data": null,
+ "facts": {},
+ "build": {
+  "inputs": {},
+  "code": "sha256:f87fc84524edc670",
+  "spec": "sha256:db1a8869ff7e9037"
+ }
+}
