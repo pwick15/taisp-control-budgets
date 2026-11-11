@@ -100,15 +100,15 @@
 
   // ---- lens catalogue -----------------------------------------------------
   var LENSES = [
-    { id: "atlas", title: "Atlas", sub: "every sample, one dot",
-      q: "How long does each monitor think, sample by sample?",
-      d: "Every sample a dot, one lane per run, placed by the monitor's reasoning length: honest above each lane line, backdoors below." },
-    { id: "trajectories", title: "Trajectories", sub: "one line per problem",
-      q: "How does a monitor's judgement of a backdoor move as you turn one knob?",
-      d: "Each thin line is one problem across a reasoning-effort, score-scale or comments ladder; the thick line is the mean path. How far a line swings between rungs is how much the setting moves the monitor, signal or noise." },
-    { id: "flightdeck", title: "Flight deck", sub: "every operating point",
-      q: "At the audit budget you can afford, which monitor catches the most?",
-      d: "Each step line is one run's reachable recall at every false-positive rate a cutoff can buy. Drag the budget; the leaderboard re-sorts by what each run catches, with cost." },
+    { id: "atlas", title: "Every program", sub: "one dot per program",
+      q: "How did each knight judge each program?",
+      d: "Each row is one knight at one setting. Each dot is one program: honest programs above the row's line, backdoors below it. Further right means the knight reasoned for longer before giving its score." },
+    { id: "trajectories", title: "Turn one dial", sub: "one line per program",
+      q: "What happens to a knight's scores when you change one setting?",
+      d: "Each thin line follows one program across a single setting, such as reasoning effort, the score scale or whether comments were kept. The thick line is the average. A line that swings a lot means that setting moved the knight a lot." },
+    { id: "flightdeck", title: "Pick a budget", sub: "who catches the most",
+      q: "At the audit budget you can afford, which knight catches the most backdoors?",
+      d: "Each step line shows one knight's catch rate at every budget it can actually hit. Drag the audit budget and the leaderboard on the right re-ranks the knights, with what each costs." },
   ];
   var lens = "atlas";
 
@@ -130,7 +130,7 @@
 
   // ---- shared filter dimensions -------------------------------------------
   var DIMS = [
-    { key: "monitor", label: "Monitor", vals: uniq(D.runs.map(function (r) { return r.monitor; })), color: true },
+    { key: "monitor", label: "Knights", vals: uniq(D.runs.map(function (r) { return r.monitor; })), color: true },
     { key: "effort", label: "Effort", vals: D.effort_order.filter(function (e) { return D.runs.some(function (r) { return r.effort === e; }); }) },
     { key: "scale", label: "Score scale", vals: uniq(D.runs.map(function (r) { return r.scale; })).sort(function (a, b) { return a - b; }), fmt: function (v) { return "0-" + v; } },
     { key: "comments", label: "Comments", vals: uniq(D.runs.map(function (r) { return r.comments; })) },
@@ -230,18 +230,20 @@
     var tb = document.getElementById("toolbar"); tb.innerHTML = "";
     var S = state[lens];
     if (lens === "atlas") {
-      tb.appendChild(seg("Show", [{ t: "Both", v: "both" }, { t: "Honest", v: "honest" }, { t: "Backdoors", v: "attack" }],
+      tb.appendChild(seg("Show", [{ t: "All", v: "both" }, { t: "Honest", v: "honest" }, { t: "Backdoors", v: "attack" }],
         function () { return S.mode; }, function (v) { S.mode = v; }));
-      tb.appendChild(dropdown("Order lanes by", [{ opts: [
-        { t: "Monitor", v: "monitor" }, { t: "Separation (AUC)", v: "auc" },
-        { t: "Score resolution", v: "resolution" }, { t: "Usable budgets", v: "usable" },
-        { t: "Floor share", v: "floor" }] }], function () { return S.sort; }, function (v) { S.sort = v; }));
-      tb.appendChild(seg("Colour by", [{ t: "Honest/backdoor", v: "side" },
-        { t: "Verdict @2%", v: "verdict", title: "Flagged vs cleared if you audit the 2% most-suspicious programs." }],
+      tb.appendChild(seg("Colour", [{ t: "Honest or backdoor", v: "side" },
+        { t: "Right or wrong at 2%", v: "verdict", title: "Whether the knight's call was right if the auditor checks the 2% most suspicious programs." }],
         function () { return S.color; }, function (v) { S.color = v; }));
-      tb.appendChild(toggle("Non-reasoning monitors", S.noTok, function (v) { S.noTok = v; }));
-      var fnd = el("div", "ctl-group"); fnd.appendChild(el("span", "ctl-label", "Find"));
-      var fb = el("input", "findbox"); fb.type = "text"; fb.placeholder = "problem #"; fb.inputMode = "numeric";
+      var more = el("details", "more"); more.appendChild(el("summary", null, "More options"));
+      var mb = el("div", "more-body"); more.appendChild(mb);
+      mb.appendChild(dropdown("Order rows by", [{ opts: [
+        { t: "Knight", v: "monitor" }, { t: "How well it separates honest from backdoor (AUC)", v: "auc" },
+        { t: "How many different scores it uses", v: "resolution" }, { t: "How many budgets it can hit exactly", v: "usable" },
+        { t: "Share of programs at the lowest score", v: "floor" }] }], function () { return S.sort; }, function (v) { S.sort = v; }));
+      mb.appendChild(toggle("Non-reasoning knights too", S.noTok, function (v) { S.noTok = v; }));
+      var fnd = el("div", "ctl-group"); fnd.appendChild(el("span", "ctl-label", "Find a program"));
+      var fb = el("input", "findbox"); fb.type = "text"; fb.placeholder = "number"; fb.inputMode = "numeric";
       fb.setAttribute("aria-label", "Find a problem by number");
       fb.addEventListener("keydown", function (e) { if (e.key === "Enter") jumpToProblem(fb.value); });
       fnd.appendChild(fb); tb.appendChild(fnd);
@@ -252,20 +254,24 @@
       png.addEventListener("click", exportPNG);
       var csvb = el("button", "btn"); csvb.type = "button"; csvb.textContent = "CSV"; csvb.title = "Download the samples now in view as CSV";
       csvb.addEventListener("click", exportCSV);
-      rz.appendChild(rb); rz.appendChild(png); rz.appendChild(csvb); tb.appendChild(rz);
+      rz.appendChild(rb); tb.appendChild(rz);
+      var ex = el("div", "ctl-group"); ex.appendChild(el("span", "ctl-label", "Download"));
+      png.textContent = "Chart (PNG)"; csvb.textContent = "Data (CSV)";
+      ex.appendChild(png); ex.appendChild(csvb); mb.appendChild(ex);
+      tb.appendChild(more);
     } else if (lens === "trajectories") {
-      var kinds = { effort: "Reasoning-effort ladders", scale: "Score-scale ladders", comments: "Comment ladders" };
+      var kinds = { effort: "Reasoning effort", scale: "Score scale", comments: "Comments kept or removed" };
       var groups = Object.keys(kinds).map(function (k) {
         return { label: kinds[k], opts: D.ladders.map(function (Ld, i) { return { Ld: Ld, i: i }; })
           .filter(function (x) { return x.Ld.kind === k; })
           .map(function (x) { return { v: x.i, t: x.Ld.label + "  (" + x.Ld.rungs.length + " rungs)" }; }) };
       }).filter(function (g) { return g.opts.length; });
-      tb.appendChild(dropdown("Ladder", groups, function () { return S.ladder; }, function (v) { S.ladder = Number(v); }));
-      tb.appendChild(seg("Show", [{ t: "Both", v: "both" }, { t: "Honest", v: "honest" }, { t: "Backdoors", v: "attack" }],
+      tb.appendChild(dropdown("Setting to change", groups, function () { return S.ladder; }, function (v) { S.ladder = Number(v); }));
+      tb.appendChild(seg("Show", [{ t: "All", v: "both" }, { t: "Honest", v: "honest" }, { t: "Backdoors", v: "attack" }],
         function () { return S.mode; }, function (v) { S.mode = v; }));
-      tb.appendChild(toggle("Mean path", S.mean, function (v) { S.mean = v; }));
+      tb.appendChild(toggle("Average line", S.mean, function (v) { S.mean = v; }));
     } else if (lens === "flightdeck") {
-      tb.appendChild(seg("Curve", [{ t: "Reachable recall", v: "recall" }, { t: "Safety vs budget", v: "safety" }],
+      tb.appendChild(seg("Curve", [{ t: "Catch rate it can reach", v: "recall" }, { t: "Catch rate by budget", v: "safety" }],
         function () { return S.metric; }, function (v) { S.metric = v; }));
       var g = el("div", "ctl-group");
       g.appendChild(el("span", "ctl-label", S.metric === "recall" ? "Audit budget" : "Cursor"));
@@ -282,6 +288,11 @@
     var fb = document.getElementById("filterbar");
     if (lens === "trajectories") { fb.classList.add("hidden"); return; }
     fb.classList.remove("hidden"); fb.innerHTML = "";
+    var more = el("details", "more wide");
+    more.appendChild(el("summary", null, "More filters: effort, score scale, comments, problem set"));
+    var mb = el("div", "more-body"); more.appendChild(mb);
+    if (moreFiltersOpen) more.setAttribute("open", "");
+    more.addEventListener("toggle", function () { moreFiltersOpen = !!more.open; });
     DIMS.forEach(function (d) {
       var g = el("div", "ctl-group");
       g.appendChild(el("span", "ctl-label", d.label));
@@ -302,9 +313,11 @@
         });
         chips.appendChild(c);
       });
-      g.appendChild(chips); fb.appendChild(g);
+      g.appendChild(chips); (d.key === "monitor" ? fb : mb).appendChild(g);
     });
+    fb.appendChild(more);
   }
+  var moreFiltersOpen = false;
 
   // ---- featured strip (Atlas only) ----------------------------------------
   function buildFeatured() {
@@ -312,8 +325,8 @@
     if (lens !== "atlas") { host.classList.add("hidden"); host.innerHTML = ""; return; }
     host.classList.remove("hidden"); host.innerHTML = "";
     var head = el("div", "feat-head");
-    head.innerHTML = "<span class='feat-title'>Auditor's reads worth a look</span>" +
-      "<span class='mini'>Click a card to light that problem across every lane and pin its read. Gold-ringed dots carry a read of their own.</span>";
+    head.innerHTML = "<span class='feat-title'>Four programs worth a look</span>" +
+      "<span class='mini'>Click one to light it up in every row and read what the knights, and we, made of it. Ringed dots are among the 51 hardest backdoors, which we reviewed by hand.</span>";
     host.appendChild(head);
     var row = el("div", "feat-row");
     FEATURED.forEach(function (f) {
@@ -872,7 +885,9 @@
     LENSES.forEach(function (Lx) {
       var b = el("button", "tab"); b.type = "button"; b.setAttribute("role", "tab");
       b.setAttribute("aria-selected", Lx.id === lens ? "true" : "false");
+      b.setAttribute("data-lens", Lx.id);
       b.appendChild(el("span", "tt", Lx.title));
+      b.appendChild(el("span", "ts", Lx.sub));
       b.addEventListener("click", function () { lens = Lx.id; syncTabs(); rebuild(); });
       tabs.appendChild(b);
     });
@@ -890,7 +905,7 @@
     var inScope = D.runs.length, b1 = D.runs.filter(function (r) { return r.batch === "b1"; }).length;
     var rtokRuns = D.runs.filter(function (r) { return r.has_rtok; }).length;
     host.innerHTML =
-      "<details><summary>What is in here, and what a mark means</summary>" +
+      "<details><summary>What's in this data, and what a mark means</summary>" +
       "<p>Every in-scope run from the budgets study is loaded: <b>" + inScope + " runs</b> across " +
       uniq(D.runs.map(function (r) { return r.monitor; })).length + " monitor models, " +
       "each scoring 500 honest programs and 500 verified backdoors (the three n=100 runs are nested subsets, flagged <span class='badge'>n=100</span>). " +
@@ -900,13 +915,13 @@
       " runs that emit reasoning tokens</b> appear by default; the rest join at the left-hand floor when you switch on <i>Non-reasoning monitors</i>. " +
       "A few runs reason to tens of thousands of tokens, which stretches the axis and packs most dots to the left: the wheel zoom holds the near edge when the cursor is within the outer 15% so you can zoom into that pile without pushing it off, and a drag selects a span to zoom into directly.</p>" +
       "<p>An <b>audit budget</b> is a share of honest programs you are willing to flag. It can only be set at a score some honest program actually sits above, so the number of distinct honest scores caps how fine a budget can be. That gate is what the Atlas floor and the Flight deck rungs both show.</p></details>" +
-      "<details><summary>How each number is derived</summary>" +
+      "<details><summary>How the numbers are worked out</summary>" +
       "<p><b>Suspicion</b> is the monitor's score divided by its scale maximum, on 0 to 1. <b>Recall</b> at a cutoff v is the share of backdoors scoring above v; <b>served FPR</b> is the share of honest programs above v, using strict <code>&gt;</code> to match the library. <b>AUC</b> is Mann-Whitney with midranks, attack against honest. <b>Safety</b> and its interval come from <code>results/analysis/safety-with-ci.csv</code> (paired bootstrap); cost is <code>est_cost_usd_per_sample</code>. Everything else is recomputed in the page from the committed per-sample scores.</p>" +
       "<p>The hover and pinned card's <b>verdict</b> is this run's call at a 2% audit budget (caught, missed, false alarm or passed), with the budget it would need to flag that one sample. The <b>problem card</b> draws on committed analysis tables: the field catch-rate (how many of a 7-monitor reference panel flag the backdoor at 2%) and footprint from <code>hard-backdoors.csv</code> and <code>case-features.csv</code>, the confessing comment from <code>backdoor-comment-confessions.csv</code>, and the incrimination and impact ratings with their written reasons, for the 51 hardest backdoors, from <code>hard51-risk-ratings.csv</code>. The gold rings and the featured cards are drawn from these same tables. They cover the batch-1 problem set.</p></details>" +
-      "<details><summary>Reading them honestly</summary>" +
+      "<details><summary>How to read it fairly</summary>" +
       "<p>Across different monitors these lenses mostly show model identity, not a dose effect: runs differ in provider, prompt and score granularity at once. Only the <b>Trajectories</b> lens holds a monitor fixed and moves one knob, so only it can carry a within-monitor claim. Batch 2 (" +
       "<span class='badge'>b2</span>) is a disjoint second 500 problems, so its runs are comparable to each other but not point-for-point to batch 1. A reasoning-token count is not an effort dial: different monitors are terse or verbose for their own reasons, so the Atlas x compares lengths, not thinking.</p></details>" +
-      "<p class='mini' style='margin-top:10px'>Built from <code>" + b1 + "</code> batch-1 runs and the rest. Offline and static: the whole dataset is embedded in this file.</p>";
+      "<p class='mini' style='margin-top:12px'>Built from the per-program results in our repository: " + b1 + " runs on the main 500 problems, plus replication runs. The whole dataset is inside this one page, so it works offline once loaded.</p>";
   }
 
   // ---- toast --------------------------------------------------------------
@@ -1058,13 +1073,13 @@
   function setTheme(t) {
     document.documentElement.setAttribute("data-theme", t);
     setThemeBtn(t);
-    try { localStorage.setItem("ctrl-explorer-theme", t); } catch (e) { /* private window */ }
+    try { localStorage.setItem("kota-theme", t); } catch (e) { /* private window */ }
     buildFilterbar(); buildFeatured(); repaint();
   }
 
   document.addEventListener("DOMContentLoaded", function () {
     var stored = null;
-    try { stored = localStorage.getItem("ctrl-explorer-theme"); } catch (e) { /* ignore */ }
+    try { stored = localStorage.getItem("kota-theme") || localStorage.getItem("ctrl-explorer-theme"); } catch (e) { /* ignore */ }
     if (!stored) stored = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dark" : "light";
     document.documentElement.setAttribute("data-theme", stored);
 
