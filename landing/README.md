@@ -1,16 +1,33 @@
-# Knights of the Audit (landing page)
+# Knights of the Audit (the story page)
 
-The interactive tour at the root of the site: a ninja robot (the backdoor writer) against knight robots
-(the monitors), with real duels, a boss fight and the main findings. It is one self-contained HTML file.
+The site's front page: the question, every way into the project (story, blog post, game, data),
+then the study told as a short story. A ninja (the model that writes backdoors) against knights
+(the monitor models), with an auditor who can only check a small share of the code. It walks
+through what a backdoor is, how an audit budget turns scores into catches, trusted versus
+untrusted monitors, four findings, advice and limits. The knight cards, the duel and the boss fight
+from the first version live inside the story: the cards and duel in "We sent 13 knights through the
+same gate", the boss fight in "What gets through looks like an honest bug". It is one self-contained
+HTML file.
 
 - `template.html`: the page (layout, styles, script). Edit copy and layout here.
 - `data.json`: every number and program the page shows, exported from `results/` and `viz/`.
-- `build.py`: inlines the data and writes `web/index.html`.
+- `add_story_data.py`: adds what the story needs on top of that export: score piles for the
+  walkthrough squares, every knight's duel calls under the study's tie rule (`shared/cutoff.py`),
+  and the capability scores for the trusted/untrusted figure (Epoch AI's Capabilities Index, read
+  from `viz/data/eci-scores.csv` once that file is on main).
+- `build.py`: inlines the keys the page uses and the shared pieces in `../shared/`, and writes
+  `web/index.html`.
 
-To change something: edit `template.html` (or `data.json`), run `python landing/build.py`, and commit
-both the source and `web/index.html`. Cloudflare Pages deploys `web/` on push to main.
+To change something: edit `template.html` (or the data), run `python landing/build.py`, and
+commit both the source and `web/index.html`. Cloudflare Pages deploys `web/` on push to main.
 
-Links to the blog post and the data deep dive are set in the `LINKS` block near the top of the script
-in `template.html`. An empty value shows that card as "Coming soon".
+Every number in the text is computed from the data when the page loads (the `data-fill` spans and
+the chart code), except two published figures typed into the copy: the comments-kept catch rate
+(94%) and the reasoning-token medians for GLM-5.3 and Haiku 5.5 on "low".
 
-The previous page (write-up plus cost-vs-safety chart) now lives at `web/results.html`, built by `web/build.py`.
+The outside links (blog post, GitHub) and the header, footer, fonts and colours shared with the
+game and the data page live in `../shared/`. The earlier results page is `web/results.html`, built
+by `web/build.py`.
+
+The Spot the Backdoor game is built from `game/` into `web/spot-the-backdoor.html`, served at
+`/spot-the-backdoor`; see `game/README.md`.
