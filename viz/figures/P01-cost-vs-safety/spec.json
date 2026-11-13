@@ -95,7 +95,16 @@
        0.00762675,
        84.67
       ],
-      "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 84.7% (81.5 to 87.8)<br>$0.0076 per program"
+      "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 84.7% (81.5 to 87.8)<br>$0.0076 per program",
+      "label": {
+       "show": true,
+       "position": "bottom",
+       "formatter": "Sonnet 5.5 · low",
+       "color": "@ink-primary",
+       "fontSize": 12,
+       "fontWeight": 600,
+       "distance": 7
+      }
      },
      {
       "value": [
@@ -974,7 +983,16 @@
          0.00762675,
          75.95
         ],
-        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 75.9% (12.3 to 86.1)<br>$0.0076 per program"
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 75.9% (12.3 to 86.1)<br>$0.0076 per program",
+        "label": {
+         "show": true,
+         "position": "bottom",
+         "formatter": "Sonnet 5.5 · low",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
        },
        {
         "value": [
@@ -1827,7 +1845,16 @@
          0.00762675,
          83.95
         ],
-        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 83.9% (74.6 to 87.1)<br>$0.0076 per program"
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 83.9% (74.6 to 87.1)<br>$0.0076 per program",
+        "label": {
+         "show": true,
+         "position": "bottom",
+         "formatter": "Sonnet 5.5 · low",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
        },
        {
         "value": [
@@ -2696,7 +2723,16 @@
          0.00762675,
          84.67
         ],
-        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 84.7% (81.5 to 87.8)<br>$0.0076 per program"
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 84.7% (81.5 to 87.8)<br>$0.0076 per program",
+        "label": {
+         "show": true,
+         "position": "bottom",
+         "formatter": "Sonnet 5.5 · low",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
        },
        {
         "value": [
@@ -3565,7 +3601,16 @@
          0.00762675,
          86.86
         ],
-        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 86.9% (84.1 to 89.7)<br>$0.0076 per program"
+        "tip": "<b>Sonnet 5.5 · low (thinking off)</b><br>caught 86.9% (84.1 to 89.7)<br>$0.0076 per program",
+        "label": {
+         "show": true,
+         "position": "bottom",
+         "formatter": "Sonnet 5.5 · low",
+         "color": "@ink-primary",
+         "fontSize": 12,
+         "fontWeight": 600,
+         "distance": 7
+        }
        },
        {
         "value": [
@@ -5793,7 +5838,7 @@
    "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea",
    "results/dataset500-sonnet55-um-strip.csv": "sha256:b7a73de10ec8ab6f"
   },
-  "code": "sha256:145f9dbfbb8091bb",
-  "spec": "sha256:d351290daebd13b9"
+  "code": "sha256:6922d2d283ea78b6",
+  "spec": "sha256:1cfecb0c88278949"
  }
 }

@@ -12,7 +12,7 @@ META = {
     "order": 136,
     "caption": ("A variation on M22. One row per hard backdoor. The bar runs from the better of "
                 "Sonnet and Haiku to what Opus 5.5 gave the same code at xhigh effort, so its length "
-                "is the disagreement. A solid cap means no monitor caught that backdoor. The median "
+                "is the disagreement. A solid cap means none of our other monitors caught it; hollow means one did. The median "
                 "span is {med_gap:g} points."),
     "notes": [
         "Same data and same row order as M22. The difference is that the gap is a length here rather "
@@ -57,9 +57,9 @@ def build() -> Figure:
 
     caps = []
     for name, never, style in [
-            ("Opus xhigh · no monitor caught it", True,
+            ("Opus · no other monitor caught it", True,
              {"color": entity("opus55"), "borderColor": "@ink-surface", "borderWidth": 1.2}),
-            ("Opus xhigh · a panel monitor caught it", False,
+            ("Opus · another monitor caught it", False,
              {"color": "@ink-surface", "borderColor": entity("opus55"), "borderWidth": 2})]:
         g = d[(d.group == "never_caught") == never]
         caps.append({"name": name, "type": "scatter", "symbolSize": 11, "z": 4, "itemStyle": style,

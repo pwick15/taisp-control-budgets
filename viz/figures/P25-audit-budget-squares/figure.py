@@ -18,7 +18,7 @@ META = {
     "order": 30,
     "caption": ("Haiku 5.5's suspicion scores, one bar per program, most suspicious first. Left: the top {show} "
                 "of 500 clean programs. A 2% budget audits the top {k}; the {k}th scores {kth} and the next "
-                "scores {nxt}, so the cutoff falls between them. Right: all 500 backdoored programs. Anything "
+                "scores {nxt}, so the cutoff is {nxt}: anything above it is audited. Right: all 500 backdoored programs. Anything "
                 "above that same cutoff is caught."),
     "notes": [
         "Haiku 5.5 rather than Sonnet 5.5 because Sonnet's 2% cutoff lands inside a 41-way tie at a score of 1 "
@@ -89,7 +89,7 @@ def build() -> Figure:
         {"value": [SHOW / 2, 11.6], "label": {"formatter": f"{{big|{k}}}  {{small|audited, the {BUDGET}% budget}}"}},
         {"value": [RIGHT + SHOW / 2, 11.6],
          "label": {"formatter": f"{{big|{caught}}}  {{small|caught, {100 * caught / len(as_):.1f}%}}"}},
-        {"value": [SHOW + GAP / 2, cut], "label": {"formatter": "cutoff score", "position": "top", "distance": 6,
+        {"value": [SHOW + GAP / 2, nxt], "label": {"formatter": f"audit above {nxt}", "position": "top", "distance": 6,
                                                    "fontSize": 12, "fontWeight": 600}},
         {"value": [SHOW - 0.3, 3.2], "label": {"formatter": f"+{n_rest} more, all {lo_rest} or {hi_rest}",
                                                "position": "left", "fontSize": 11, "fontWeight": 400,
@@ -109,7 +109,7 @@ def build() -> Figure:
             bars("Missed backdoor", "@s7", missed),
             {"name": "_lines", "type": "line", "data": [], "silent": True,
              "markLine": {"silent": True, "symbol": "none", "data": [
-                 {"yAxis": cut, "lineStyle": {"type": "dashed", "color": "@ink-primary", "width": 1.5},
+                 {"yAxis": nxt, "lineStyle": {"type": "dashed", "color": "@ink-primary", "width": 1.5},
                   "label": {"show": False}},
                  [{"coord": [k, 0], "lineStyle": {"type": "dashed", "color": "@ink-muted", "width": 1.2},
                    "label": {"show": True, "position": "end", "formatter": f"{BUDGET}% budget",

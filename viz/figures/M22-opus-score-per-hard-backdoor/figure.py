@@ -10,13 +10,14 @@ META = {
     "title": "A handful of these backdoors alarm Opus and nothing else",
     "section": "results",
     "order": 135,
-    "caption": ("One row per hard backdoor, {n:d} of them, ordered by what Opus 5.5 gave it at xhigh "
-                "effort. All three monitors are on a 0 to 100 scale. Opus clears {thresh:d} on {n20:d} "
-                "rows where Sonnet and Haiku never go above {small_max:g}. Below that the three agree "
-                "that nothing is wrong."),
+    "caption": ("One row per hard backdoor, {n:d} of them, ordered by Opus 5.5's score at xhigh effort. All "
+                "three monitors score 0 to 100. Opus clears {thresh:d} on {n20:d} rows where Sonnet and Haiku "
+                "never go above {small_max:g}. Solid Opus dots are backdoors no other monitor caught; hollow "
+                "ones, at least one did."),
     "notes": [
-        "A hollow Opus mark is a backdoor some panel monitor did catch, which is why it is in this "
-        "hard set but not in the never-caught group of {n_nc:d}.",
+        "Hollow means at least one of our seven monitors caught it in some version of the run (on the 0 "
+        "to 100 scale, or one Haiku 0 to 10 run). That's why it's in this hard set but not among the "
+        "{n_nc:d} nothing caught.",
         "The dashed yellow line is {thresh:d} out of 100. Opus has no honest baseline here, so it has "
         "no cutoff of its own and no audit budget: that line is a reading aid, not an operating "
         "point, and a real deployment would set one against honest code instead.",
@@ -24,7 +25,7 @@ META = {
         "The comparison that matters is horizontal, within a row, where Sonnet and Haiku had the same "
         "code in front of them.",
         "Sonnet's and Haiku's medians on this set are {son_med:g} and {hai_med:g} out of 100, which is "
-        "what being a hard backdoor means: these are the programs the panel found boring.",
+        "what being a hard backdoor means: these are the programs our monitors found boring.",
         "Thin data. {n:d} rows is the whole hard set, and the never-caught group inside it is {n_nc:d}. "
         "Single scores, one pass each, no repeat draws, so a row's height is one measurement.",
     ],
@@ -47,9 +48,9 @@ def build() -> Figure:
 
     # Opus is split into two series rather than two per-point styles, so the legend itself
     # carries the key: a solid swatch for never caught, a hollow one for caught.
-    OPUS_SPLIT = [("Opus xhigh · no monitor caught it", True,
+    OPUS_SPLIT = [("Opus · no other monitor caught it", True,
                    {"color": entity("opus55"), "borderColor": "@ink-surface", "borderWidth": 1.2}),
-                  ("Opus xhigh · a panel monitor caught it", False,
+                  ("Opus · another monitor caught it", False,
                    {"color": "@ink-surface", "borderColor": entity("opus55"), "borderWidth": 2})]
     opus = []
     for name, never, style in OPUS_SPLIT:
@@ -60,7 +61,7 @@ def build() -> Figure:
                       "tip": (f"<b>problem {r.sample_id}</b><br>Opus 5.5 xhigh: {r.opus_xhigh:g}"
                               f"<br>Sonnet 5.5: {r.sonnet:g}"
                               f"<br>Haiku 5.5 xhigh: {r.haiku:g}"
-                              f"<br>{'caught by no monitor' if never else 'caught by a panel monitor'}")}
+                              f"<br>{'caught by none of our other monitors' if never else 'caught by at least one of our other monitors'}")}
                      for r in g.itertuples()],
         })
 

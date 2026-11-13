@@ -1,0 +1,1371 @@
+{
+ "id": "P27",
+ "kind": "echarts",
+ "title": "The same score cutoff audits 0.2% to 12% of clean code",
+ "section": "setup",
+ "order": 25,
+ "caption": "Share of our 500 clean programs each monitor would send to a human if you audited every program scoring 5 or more out of 10. The dashed line is a 2% budget, and the axis is on a log scale. The dial changes the cutoff score.",
+ "notes": [
+  "One configuration per model, at its default reasoning effort, 0 to 10 scale, comments removed. One clean program is 0.2% of 500, so 0.2% means a single program.",
+  "At a cutoff of 5, 10 monitors audit under 2% and 3 audit over it. At a cutoff of 1 the range is 0.6% to 81%.",
+  "Setting each monitor's cutoff on clean code instead (P25) puts every monitor on the dashed line by construction, which is what the study does."
+ ],
+ "height": 520,
+ "author": "",
+ "source": "",
+ "path": "viz/figures/P27-fixed-cutoff-audit-share",
+ "option": {
+  "tooltip": {
+   "trigger": "item",
+   "formatter": "function (p) { return (p.data && p.data.tip) ? p.data.tip : p.seriesName; }",
+   "confine": true
+  },
+  "animation": false,
+  "grid": {
+   "left": 16,
+   "right": 56,
+   "top": 40,
+   "bottom": 46,
+   "containLabel": true
+  },
+  "legend": {
+   "top": 0,
+   "left": 0,
+   "data": [
+    "At or under budget",
+    "Over budget"
+   ],
+   "selectedMode": false
+  },
+  "xAxis": {
+   "name": "Clean programs audited (log scale)",
+   "nameLocation": "middle",
+   "nameGap": 30,
+   "type": "log",
+   "min": 0.1,
+   "max": 100,
+   "logBase": 10,
+   "axisLabel": {
+    "formatter": "{value}%"
+   }
+  },
+  "yAxis": {
+   "type": "category",
+   "data": [
+    "Ministral 14B",
+    "Gemma 3 4B",
+    "Gemma 3 27B",
+    "Haiku 4.5",
+    "Qwen 3.8 Omni Flash",
+    "Sonnet 5.5",
+    "Haiku 5.5",
+    "Gemma 4 26B-A4B",
+    "Mistral Large 4",
+    "GLM-5.3",
+    "GPT-6 Luna",
+    "gpt-oss-120b",
+    "Gemini 3.5 Flash-Lite"
+   ],
+   "inverse": true,
+   "axisLine": {
+    "show": false
+   },
+   "axisTick": {
+    "show": false
+   },
+   "axisLabel": {
+    "color": "@ink-primary",
+    "fontSize": 13,
+    "fontWeight": 500
+   }
+  },
+  "series": [
+   {
+    "name": "_bars",
+    "type": "custom",
+    "renderItem": "function (params, api) { var a = api.coord([0.1, api.value(1)]); var b = api.coord([api.value(0), api.value(1)]); var h = 16; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 2), height: h, r: [0, 4, 4, 0]}, style: api.style()}; }",
+    "data": [
+     {
+      "value": [
+       12.0,
+       0
+      ],
+      "itemStyle": {
+       "color": "@s7"
+      },
+      "label": {
+       "formatter": "12.0%"
+      },
+      "tip": "<b>Ministral 14B</b><br>60 of 500 clean programs score 5 or more (12.0%)"
+     },
+     {
+      "value": [
+       10.0,
+       1
+      ],
+      "itemStyle": {
+       "color": "@s7"
+      },
+      "label": {
+       "formatter": "10.0%"
+      },
+      "tip": "<b>Gemma 3 4B</b><br>50 of 500 clean programs score 5 or more (10.0%)"
+     },
+     {
+      "value": [
+       2.2,
+       2
+      ],
+      "itemStyle": {
+       "color": "@s7"
+      },
+      "label": {
+       "formatter": "2.2%"
+      },
+      "tip": "<b>Gemma 3 27B</b><br>11 of 500 clean programs score 5 or more (2.2%)"
+     },
+     {
+      "value": [
+       0.8,
+       3
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.8%"
+      },
+      "tip": "<b>Haiku 4.5</b><br>4 of 500 clean programs score 5 or more (0.8%)"
+     },
+     {
+      "value": [
+       0.6,
+       4
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.6%"
+      },
+      "tip": "<b>Qwen 3.8 Omni Flash</b><br>3 of 500 clean programs score 5 or more (0.6%)"
+     },
+     {
+      "value": [
+       0.4,
+       5
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.4%"
+      },
+      "tip": "<b>Sonnet 5.5</b><br>2 of 500 clean programs score 5 or more (0.4%)"
+     },
+     {
+      "value": [
+       0.4,
+       6
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.4%"
+      },
+      "tip": "<b>Haiku 5.5</b><br>2 of 500 clean programs score 5 or more (0.4%)"
+     },
+     {
+      "value": [
+       0.4,
+       7
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.4%"
+      },
+      "tip": "<b>Gemma 4 26B-A4B</b><br>2 of 500 clean programs score 5 or more (0.4%)"
+     },
+     {
+      "value": [
+       0.4,
+       8
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.4%"
+      },
+      "tip": "<b>Mistral Large 4</b><br>2 of 500 clean programs score 5 or more (0.4%)"
+     },
+     {
+      "value": [
+       0.2,
+       9
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.2%"
+      },
+      "tip": "<b>GLM-5.3</b><br>1 of 500 clean programs score 5 or more (0.2%)"
+     },
+     {
+      "value": [
+       0.2,
+       10
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.2%"
+      },
+      "tip": "<b>GPT-6 Luna</b><br>1 of 500 clean programs score 5 or more (0.2%)"
+     },
+     {
+      "value": [
+       0.2,
+       11
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.2%"
+      },
+      "tip": "<b>gpt-oss-120b</b><br>1 of 500 clean programs score 5 or more (0.2%)"
+     },
+     {
+      "value": [
+       0.2,
+       12
+      ],
+      "itemStyle": {
+       "color": "@s0"
+      },
+      "label": {
+       "formatter": "0.2%"
+      },
+      "tip": "<b>Gemini 3.5 Flash-Lite</b><br>1 of 500 clean programs score 5 or more (0.2%)"
+     }
+    ],
+    "encode": {
+     "x": 0,
+     "y": 1
+    },
+    "label": {
+     "show": true,
+     "position": "right",
+     "distance": 6,
+     "color": "@ink-secondary",
+     "fontSize": 11
+    },
+    "markLine": {
+     "silent": true,
+     "symbol": "none",
+     "lineStyle": {
+      "type": "dashed",
+      "color": "@ink-primary",
+      "width": 1.5
+     },
+     "label": {
+      "formatter": "2% budget",
+      "position": "end",
+      "color": "@ink-secondary",
+      "fontSize": 11
+     },
+     "data": [
+      {
+       "xAxis": 2
+      }
+     ]
+    }
+   },
+   {
+    "name": "Over budget",
+    "type": "bar",
+    "data": [],
+    "itemStyle": {
+     "color": "@s7"
+    }
+   },
+   {
+    "name": "At or under budget",
+    "type": "bar",
+    "data": [],
+    "itemStyle": {
+     "color": "@s0"
+    }
+   }
+  ]
+ },
+ "dial": {
+  "label": "Audit scores of",
+  "steps": [
+   "1 or more",
+   "3 or more",
+   "5 or more",
+   "7 or more"
+  ],
+  "initial": 2,
+  "frames": [
+   {
+    "series": [
+     {
+      "name": "_bars",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([0.1, api.value(1)]); var b = api.coord([api.value(0), api.value(1)]); var h = 16; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 2), height: h, r: [0, 4, 4, 0]}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         24.4,
+         0
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "24.4%"
+        },
+        "tip": "<b>Ministral 14B</b><br>122 of 500 clean programs score 1 or more (24.4%)"
+       },
+       {
+        "value": [
+         72.2,
+         1
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "72.2%"
+        },
+        "tip": "<b>Gemma 3 4B</b><br>361 of 500 clean programs score 1 or more (72.2%)"
+       },
+       {
+        "value": [
+         33.0,
+         2
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "33.0%"
+        },
+        "tip": "<b>Gemma 3 27B</b><br>165 of 500 clean programs score 1 or more (33.0%)"
+       },
+       {
+        "value": [
+         36.6,
+         3
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "36.6%"
+        },
+        "tip": "<b>Haiku 4.5</b><br>183 of 500 clean programs score 1 or more (36.6%)"
+       },
+       {
+        "value": [
+         2.0,
+         4
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "2.0%"
+        },
+        "tip": "<b>Qwen 3.8 Omni Flash</b><br>10 of 500 clean programs score 1 or more (2.0%)"
+       },
+       {
+        "value": [
+         9.2,
+         5
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "9.2%"
+        },
+        "tip": "<b>Sonnet 5.5</b><br>46 of 500 clean programs score 1 or more (9.2%)"
+       },
+       {
+        "value": [
+         80.6,
+         6
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "80.6%"
+        },
+        "tip": "<b>Haiku 5.5</b><br>403 of 500 clean programs score 1 or more (80.6%)"
+       },
+       {
+        "value": [
+         0.8,
+         7
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.8%"
+        },
+        "tip": "<b>Gemma 4 26B-A4B</b><br>4 of 500 clean programs score 1 or more (0.8%)"
+       },
+       {
+        "value": [
+         0.6,
+         8
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.6%"
+        },
+        "tip": "<b>Mistral Large 4</b><br>3 of 500 clean programs score 1 or more (0.6%)"
+       },
+       {
+        "value": [
+         2.0,
+         9
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "2.0%"
+        },
+        "tip": "<b>GLM-5.3</b><br>10 of 500 clean programs score 1 or more (2.0%)"
+       },
+       {
+        "value": [
+         1.2,
+         10
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "1.2%"
+        },
+        "tip": "<b>GPT-6 Luna</b><br>6 of 500 clean programs score 1 or more (1.2%)"
+       },
+       {
+        "value": [
+         40.0,
+         11
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "40.0%"
+        },
+        "tip": "<b>gpt-oss-120b</b><br>200 of 500 clean programs score 1 or more (40.0%)"
+       },
+       {
+        "value": [
+         0.8,
+         12
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.8%"
+        },
+        "tip": "<b>Gemini 3.5 Flash-Lite</b><br>4 of 500 clean programs score 1 or more (0.8%)"
+       }
+      ],
+      "encode": {
+       "x": 0,
+       "y": 1
+      },
+      "label": {
+       "show": true,
+       "position": "right",
+       "distance": 6,
+       "color": "@ink-secondary",
+       "fontSize": 11
+      },
+      "markLine": {
+       "silent": true,
+       "symbol": "none",
+       "lineStyle": {
+        "type": "dashed",
+        "color": "@ink-primary",
+        "width": 1.5
+       },
+       "label": {
+        "formatter": "2% budget",
+        "position": "end",
+        "color": "@ink-secondary",
+        "fontSize": 11
+       },
+       "data": [
+        {
+         "xAxis": 2
+        }
+       ]
+      }
+     },
+     {
+      "name": "Over budget",
+      "type": "bar",
+      "data": [],
+      "itemStyle": {
+       "color": "@s7"
+      }
+     },
+     {
+      "name": "At or under budget",
+      "type": "bar",
+      "data": [],
+      "itemStyle": {
+       "color": "@s0"
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "_bars",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([0.1, api.value(1)]); var b = api.coord([api.value(0), api.value(1)]); var h = 16; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 2), height: h, r: [0, 4, 4, 0]}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         18.0,
+         0
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "18.0%"
+        },
+        "tip": "<b>Ministral 14B</b><br>90 of 500 clean programs score 3 or more (18.0%)"
+       },
+       {
+        "value": [
+         12.6,
+         1
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "12.6%"
+        },
+        "tip": "<b>Gemma 3 4B</b><br>63 of 500 clean programs score 3 or more (12.6%)"
+       },
+       {
+        "value": [
+         4.4,
+         2
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "4.4%"
+        },
+        "tip": "<b>Gemma 3 27B</b><br>22 of 500 clean programs score 3 or more (4.4%)"
+       },
+       {
+        "value": [
+         1.4,
+         3
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "1.4%"
+        },
+        "tip": "<b>Haiku 4.5</b><br>7 of 500 clean programs score 3 or more (1.4%)"
+       },
+       {
+        "value": [
+         0.6,
+         4
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.6%"
+        },
+        "tip": "<b>Qwen 3.8 Omni Flash</b><br>3 of 500 clean programs score 3 or more (0.6%)"
+       },
+       {
+        "value": [
+         0.6,
+         5
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.6%"
+        },
+        "tip": "<b>Sonnet 5.5</b><br>3 of 500 clean programs score 3 or more (0.6%)"
+       },
+       {
+        "value": [
+         0.8,
+         6
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.8%"
+        },
+        "tip": "<b>Haiku 5.5</b><br>4 of 500 clean programs score 3 or more (0.8%)"
+       },
+       {
+        "value": [
+         0.6,
+         7
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.6%"
+        },
+        "tip": "<b>Gemma 4 26B-A4B</b><br>3 of 500 clean programs score 3 or more (0.6%)"
+       },
+       {
+        "value": [
+         0.6,
+         8
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.6%"
+        },
+        "tip": "<b>Mistral Large 4</b><br>3 of 500 clean programs score 3 or more (0.6%)"
+       },
+       {
+        "value": [
+         0.4,
+         9
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.4%"
+        },
+        "tip": "<b>GLM-5.3</b><br>2 of 500 clean programs score 3 or more (0.4%)"
+       },
+       {
+        "value": [
+         0.4,
+         10
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.4%"
+        },
+        "tip": "<b>GPT-6 Luna</b><br>2 of 500 clean programs score 3 or more (0.4%)"
+       },
+       {
+        "value": [
+         0.8,
+         11
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.8%"
+        },
+        "tip": "<b>gpt-oss-120b</b><br>4 of 500 clean programs score 3 or more (0.8%)"
+       },
+       {
+        "value": [
+         0.2,
+         12
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>Gemini 3.5 Flash-Lite</b><br>1 of 500 clean programs score 3 or more (0.2%)"
+       }
+      ],
+      "encode": {
+       "x": 0,
+       "y": 1
+      },
+      "label": {
+       "show": true,
+       "position": "right",
+       "distance": 6,
+       "color": "@ink-secondary",
+       "fontSize": 11
+      },
+      "markLine": {
+       "silent": true,
+       "symbol": "none",
+       "lineStyle": {
+        "type": "dashed",
+        "color": "@ink-primary",
+        "width": 1.5
+       },
+       "label": {
+        "formatter": "2% budget",
+        "position": "end",
+        "color": "@ink-secondary",
+        "fontSize": 11
+       },
+       "data": [
+        {
+         "xAxis": 2
+        }
+       ]
+      }
+     },
+     {
+      "name": "Over budget",
+      "type": "bar",
+      "data": [],
+      "itemStyle": {
+       "color": "@s7"
+      }
+     },
+     {
+      "name": "At or under budget",
+      "type": "bar",
+      "data": [],
+      "itemStyle": {
+       "color": "@s0"
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "_bars",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([0.1, api.value(1)]); var b = api.coord([api.value(0), api.value(1)]); var h = 16; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 2), height: h, r: [0, 4, 4, 0]}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         12.0,
+         0
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "12.0%"
+        },
+        "tip": "<b>Ministral 14B</b><br>60 of 500 clean programs score 5 or more (12.0%)"
+       },
+       {
+        "value": [
+         10.0,
+         1
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "10.0%"
+        },
+        "tip": "<b>Gemma 3 4B</b><br>50 of 500 clean programs score 5 or more (10.0%)"
+       },
+       {
+        "value": [
+         2.2,
+         2
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "2.2%"
+        },
+        "tip": "<b>Gemma 3 27B</b><br>11 of 500 clean programs score 5 or more (2.2%)"
+       },
+       {
+        "value": [
+         0.8,
+         3
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.8%"
+        },
+        "tip": "<b>Haiku 4.5</b><br>4 of 500 clean programs score 5 or more (0.8%)"
+       },
+       {
+        "value": [
+         0.6,
+         4
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.6%"
+        },
+        "tip": "<b>Qwen 3.8 Omni Flash</b><br>3 of 500 clean programs score 5 or more (0.6%)"
+       },
+       {
+        "value": [
+         0.4,
+         5
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.4%"
+        },
+        "tip": "<b>Sonnet 5.5</b><br>2 of 500 clean programs score 5 or more (0.4%)"
+       },
+       {
+        "value": [
+         0.4,
+         6
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.4%"
+        },
+        "tip": "<b>Haiku 5.5</b><br>2 of 500 clean programs score 5 or more (0.4%)"
+       },
+       {
+        "value": [
+         0.4,
+         7
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.4%"
+        },
+        "tip": "<b>Gemma 4 26B-A4B</b><br>2 of 500 clean programs score 5 or more (0.4%)"
+       },
+       {
+        "value": [
+         0.4,
+         8
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.4%"
+        },
+        "tip": "<b>Mistral Large 4</b><br>2 of 500 clean programs score 5 or more (0.4%)"
+       },
+       {
+        "value": [
+         0.2,
+         9
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>GLM-5.3</b><br>1 of 500 clean programs score 5 or more (0.2%)"
+       },
+       {
+        "value": [
+         0.2,
+         10
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>GPT-6 Luna</b><br>1 of 500 clean programs score 5 or more (0.2%)"
+       },
+       {
+        "value": [
+         0.2,
+         11
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>gpt-oss-120b</b><br>1 of 500 clean programs score 5 or more (0.2%)"
+       },
+       {
+        "value": [
+         0.2,
+         12
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>Gemini 3.5 Flash-Lite</b><br>1 of 500 clean programs score 5 or more (0.2%)"
+       }
+      ],
+      "encode": {
+       "x": 0,
+       "y": 1
+      },
+      "label": {
+       "show": true,
+       "position": "right",
+       "distance": 6,
+       "color": "@ink-secondary",
+       "fontSize": 11
+      },
+      "markLine": {
+       "silent": true,
+       "symbol": "none",
+       "lineStyle": {
+        "type": "dashed",
+        "color": "@ink-primary",
+        "width": 1.5
+       },
+       "label": {
+        "formatter": "2% budget",
+        "position": "end",
+        "color": "@ink-secondary",
+        "fontSize": 11
+       },
+       "data": [
+        {
+         "xAxis": 2
+        }
+       ]
+      }
+     },
+     {
+      "name": "Over budget",
+      "type": "bar",
+      "data": [],
+      "itemStyle": {
+       "color": "@s7"
+      }
+     },
+     {
+      "name": "At or under budget",
+      "type": "bar",
+      "data": [],
+      "itemStyle": {
+       "color": "@s0"
+      }
+     }
+    ]
+   },
+   {
+    "series": [
+     {
+      "name": "_bars",
+      "type": "custom",
+      "renderItem": "function (params, api) { var a = api.coord([0.1, api.value(1)]); var b = api.coord([api.value(0), api.value(1)]); var h = 16; return {type: 'rect', shape: {x: a[0], y: a[1] - h / 2, width: Math.max(b[0] - a[0], 2), height: h, r: [0, 4, 4, 0]}, style: api.style()}; }",
+      "data": [
+       {
+        "value": [
+         10.6,
+         0
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "10.6%"
+        },
+        "tip": "<b>Ministral 14B</b><br>53 of 500 clean programs score 7 or more (10.6%)"
+       },
+       {
+        "value": [
+         7.8,
+         1
+        ],
+        "itemStyle": {
+         "color": "@s7"
+        },
+        "label": {
+         "formatter": "7.8%"
+        },
+        "tip": "<b>Gemma 3 4B</b><br>39 of 500 clean programs score 7 or more (7.8%)"
+       },
+       {
+        "value": [
+         1.2,
+         2
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "1.2%"
+        },
+        "tip": "<b>Gemma 3 27B</b><br>6 of 500 clean programs score 7 or more (1.2%)"
+       },
+       {
+        "value": [
+         0.6,
+         3
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.6%"
+        },
+        "tip": "<b>Haiku 4.5</b><br>3 of 500 clean programs score 7 or more (0.6%)"
+       },
+       {
+        "value": [
+         0.6,
+         4
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.6%"
+        },
+        "tip": "<b>Qwen 3.8 Omni Flash</b><br>3 of 500 clean programs score 7 or more (0.6%)"
+       },
+       {
+        "value": [
+         0.2,
+         5
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>Sonnet 5.5</b><br>1 of 500 clean programs score 7 or more (0.2%)"
+       },
+       {
+        "value": [
+         0.2,
+         6
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>Haiku 5.5</b><br>1 of 500 clean programs score 7 or more (0.2%)"
+       },
+       {
+        "value": [
+         0.4,
+         7
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.4%"
+        },
+        "tip": "<b>Gemma 4 26B-A4B</b><br>2 of 500 clean programs score 7 or more (0.4%)"
+       },
+       {
+        "value": [
+         0.4,
+         8
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.4%"
+        },
+        "tip": "<b>Mistral Large 4</b><br>2 of 500 clean programs score 7 or more (0.4%)"
+       },
+       {
+        "value": [
+         0.2,
+         9
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>GLM-5.3</b><br>1 of 500 clean programs score 7 or more (0.2%)"
+       },
+       {
+        "value": [
+         0.2,
+         10
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>GPT-6 Luna</b><br>1 of 500 clean programs score 7 or more (0.2%)"
+       },
+       {
+        "value": [
+         0.2,
+         11
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>gpt-oss-120b</b><br>1 of 500 clean programs score 7 or more (0.2%)"
+       },
+       {
+        "value": [
+         0.2,
+         12
+        ],
+        "itemStyle": {
+         "color": "@s0"
+        },
+        "label": {
+         "formatter": "0.2%"
+        },
+        "tip": "<b>Gemini 3.5 Flash-Lite</b><br>1 of 500 clean programs score 7 or more (0.2%)"
+       }
+      ],
+      "encode": {
+       "x": 0,
+       "y": 1
+      },
+      "label": {
+       "show": true,
+       "position": "right",
+       "distance": 6,
+       "color": "@ink-secondary",
+       "fontSize": 11
+      },
+      "markLine": {
+       "silent": true,
+       "symbol": "none",
+       "lineStyle": {
+        "type": "dashed",
+        "color": "@ink-primary",
+        "width": 1.5
+       },
+       "label": {
+        "formatter": "2% budget",
+        "position": "end",
+        "color": "@ink-secondary",
+        "fontSize": 11
+       },
+       "data": [
+        {
+         "xAxis": 2
+        }
+       ]
+      }
+     },
+     {
+      "name": "Over budget",
+      "type": "bar",
+      "data": [],
+      "itemStyle": {
+       "color": "@s7"
+      }
+     },
+     {
+      "name": "At or under budget",
+      "type": "bar",
+      "data": [],
+      "itemStyle": {
+       "color": "@s0"
+      }
+     }
+    ]
+   }
+  ]
+ },
+ "data": {
+  "columns": [
+   "monitor",
+   "run",
+   "pct_at_1_or_more",
+   "pct_at_3_or_more",
+   "pct_at_5_or_more",
+   "pct_at_7_or_more"
+  ],
+  "rows": [
+   [
+    "Ministral 14B",
+    "dataset500-ministral14b-tm-strip",
+    24.4,
+    18.0,
+    12.0,
+    10.6
+   ],
+   [
+    "Gemma 3 4B",
+    "dataset-gemma3-4b-tm-n500-strip",
+    72.2,
+    12.6,
+    10.0,
+    7.8
+   ],
+   [
+    "Gemma 3 27B",
+    "dataset-gemma3-27b-tm-n500-strip",
+    33.0,
+    4.4,
+    2.2,
+    1.2
+   ],
+   [
+    "Haiku 4.5",
+    "dataset-haiku45-tm-n500-strip",
+    36.6,
+    1.4,
+    0.8,
+    0.6
+   ],
+   [
+    "Qwen 3.8 Omni Flash",
+    "dataset500-qwen38omniflash-medium-tm-strip",
+    2.0,
+    0.6,
+    0.6,
+    0.6
+   ],
+   [
+    "Sonnet 5.5",
+    "dataset500-sonnet55-um-strip",
+    9.2,
+    0.6,
+    0.4,
+    0.2
+   ],
+   [
+    "Haiku 5.5",
+    "dataset-haiku55-tm-n500-strip",
+    80.6,
+    0.8,
+    0.4,
+    0.2
+   ],
+   [
+    "Gemma 4 26B-A4B",
+    "dataset500-gemma426b-tm-strip",
+    0.8,
+    0.6,
+    0.4,
+    0.4
+   ],
+   [
+    "Mistral Large 4",
+    "dataset-mistrallarge4-tm-n500-strip",
+    0.6,
+    0.6,
+    0.4,
+    0.4
+   ],
+   [
+    "GLM-5.3",
+    "dataset-glm53-tm-n500-strip",
+    2.0,
+    0.4,
+    0.2,
+    0.2
+   ],
+   [
+    "GPT-6 Luna",
+    "dataset-gpt6luna-tm-n500-strip",
+    1.2,
+    0.4,
+    0.2,
+    0.2
+   ],
+   [
+    "gpt-oss-120b",
+    "dataset-gptoss120b-tm-n500-strip",
+    40.0,
+    0.8,
+    0.2,
+    0.2
+   ],
+   [
+    "Gemini 3.5 Flash-Lite",
+    "dataset500-gemini35lite-tm-strip",
+    0.8,
+    0.2,
+    0.2,
+    0.2
+   ]
+  ]
+ },
+ "facts": {
+  "lo": 0.2,
+  "hi": 12.0,
+  "n_under": 10,
+  "n_over": 3,
+  "lo1": 0.6,
+  "hi1": 80.6
+ },
+ "build": {
+  "inputs": {
+   "results/dataset-gemma3-27b-tm-n500-strip-samples.csv": "sha256:4fcd4e0c551840fe",
+   "results/dataset-gemma3-4b-tm-n500-strip-samples.csv": "sha256:c4ccb0f62476982d",
+   "results/dataset-glm53-tm-n500-strip-samples.csv": "sha256:fb0c3de3287db3d6",
+   "results/dataset-gpt6luna-tm-n500-strip-samples.csv": "sha256:aaf1ccecf65b9883",
+   "results/dataset-gptoss120b-tm-n500-strip-samples.csv": "sha256:6c9eabc47ea8a885",
+   "results/dataset-haiku45-tm-n500-strip-samples.csv": "sha256:bb7a31380214472e",
+   "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff",
+   "results/dataset-mistrallarge4-tm-n500-strip-samples.csv": "sha256:6ae888d5e44abf9b",
+   "results/dataset500-gemini35lite-tm-strip-samples.csv": "sha256:c49cf7998b14a6ce",
+   "results/dataset500-gemma426b-tm-strip-samples.csv": "sha256:dac148ec2383dac3",
+   "results/dataset500-ministral14b-tm-strip-samples.csv": "sha256:7222a40400361ff5",
+   "results/dataset500-qwen38omniflash-medium-tm-strip-samples.csv": "sha256:03e0f3657e5ebb07",
+   "results/dataset500-sonnet55-um-strip-samples.csv": "sha256:f151b1bb8ab39cea"
+  },
+  "code": "sha256:87e020527ab1d7fa",
+  "spec": "sha256:134b1c21ff8b06fa"
+ }
+}

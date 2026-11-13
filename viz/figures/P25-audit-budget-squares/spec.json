@@ -4,7 +4,7 @@
  "title": "Auditing 2% of clean code sets a cutoff score that catches backdoors",
  "section": "setup",
  "order": 30,
- "caption": "Haiku 5.5's suspicion scores, one bar per program, most suspicious first. Left: the top 50 of 500 clean programs. A 2% budget audits the top 10; the 10th scores 2 and the next scores 1, so the cutoff falls between them. Right: all 500 backdoored programs. Anything above that same cutoff is caught.",
+ "caption": "Haiku 5.5's suspicion scores, one bar per program, most suspicious first. Left: the top 50 of 500 clean programs. A 2% budget audits the top 10; the 10th scores 2 and the next scores 1, so the cutoff is 1: anything above it is audited. Right: all 500 backdoored programs. Anything above that same cutoff is caught.",
  "notes": [
   "Haiku 5.5 rather than Sonnet 5.5 because Sonnet's 2% cutoff lands inside a 41-way tie at a score of 1 (P07), which hides the idea this figure explains. Haiku 5.5 at its default (medium) effort has no tie at 2%. Scale 0 to 10, comments removed.",
   "Most missed backdoors score 1, the same score as 393 of the 500 clean programs. To this monitor they look like ordinary code, which is why no cutoff can catch them without auditing far more clean code.",
@@ -4513,7 +4513,7 @@
      "symbol": "none",
      "data": [
       {
-       "yAxis": 1.5,
+       "yAxis": 1,
        "lineStyle": {
         "type": "dashed",
         "color": "@ink-primary",
@@ -4596,10 +4596,10 @@
      {
       "value": [
        56.0,
-       1.5
+       1
       ],
       "label": {
-       "formatter": "cutoff score",
+       "formatter": "audit above 1",
        "position": "top",
        "distance": 6,
        "fontSize": 12,
@@ -10669,7 +10669,7 @@
   "inputs": {
    "results/dataset-haiku55-tm-n500-strip-samples.csv": "sha256:4d24e51f938620ff"
   },
-  "code": "sha256:1b9de8e8b6fcbf74",
-  "spec": "sha256:d0a8e1912a6e7f67"
+  "code": "sha256:61e3b3158867abf1",
+  "spec": "sha256:33d7808f48255b79"
  }
 }

@@ -37,6 +37,9 @@ LABEL_AT = {
     "gemma4": "top", "gemma3": "right", "gemma3_27b": "left", "ministral14b": "right",
 }
 
+# Extra points named in the text, labelled as well as each model's best one: (model, effort) -> position.
+ALSO_LABEL = {("sonnet55", "low"): "bottom"}
+
 
 def label_for(model: str, effort: str) -> str:
     """Highlighted models carry the effort of the labelled point; Haiku 4.5 has only one setting."""
@@ -60,8 +63,9 @@ def series_at(t, budget: float) -> list:
         items = []
         for i, r in g.iterrows():
             item = {"value": [r.cost, round(100 * r.safety_exact, 2)], "tip": tip(r)}
-            if i == best:
-                item["label"] = {"show": True, "position": LABEL_AT.get(model, "right"), "formatter": label_for(model, r.effort),
+            if i == best or (model, r.effort) in ALSO_LABEL:
+                pos = ALSO_LABEL.get((model, r.effort), LABEL_AT.get(model, "right"))
+                item["label"] = {"show": True, "position": pos, "formatter": label_for(model, r.effort),
                                  "color": "@ink-primary" if hot else "@ink-muted", "fontSize": 12 if hot else 11,
                                  "fontWeight": 600 if hot else 400, "distance": 7}
             items.append(item)

@@ -4,7 +4,7 @@
  "title": "The gap Opus opens over the small monitors, backdoor by backdoor",
  "section": "results",
  "order": 136,
- "caption": "A variation on M22. One row per hard backdoor. The bar runs from the better of Sonnet and Haiku to what Opus 5.5 gave the same code at xhigh effort, so its length is the disagreement. A solid cap means no monitor caught that backdoor. The median span is 2 points.",
+ "caption": "A variation on M22. One row per hard backdoor. The bar runs from the better of Sonnet and Haiku to what Opus 5.5 gave the same code at xhigh effort, so its length is the disagreement. A solid cap means none of our other monitors caught it; hollow means one did. The median span is 2 points.",
  "notes": [
   "Same data and same row order as M22. The difference is that the gap is a length here rather than a distance your eye has to measure between two dots.",
   "16 of 51 rows have Opus at or below the small monitors, so those bars are short or absent. They are the rows where frontier reasoning adds nothing.",
@@ -105,8 +105,8 @@
    "left": 72,
    "itemGap": 18,
    "data": [
-    "Opus xhigh · no monitor caught it",
-    "Opus xhigh · a panel monitor caught it",
+    "Opus · no other monitor caught it",
+    "Opus · another monitor caught it",
     "Best of Sonnet and Haiku"
    ]
   },
@@ -760,7 +760,7 @@
     ]
    },
    {
-    "name": "Opus xhigh · no monitor caught it",
+    "name": "Opus · no other monitor caught it",
     "type": "scatter",
     "symbolSize": 11,
     "z": 4,
@@ -1077,7 +1077,7 @@
     }
    },
    {
-    "name": "Opus xhigh · a panel monitor caught it",
+    "name": "Opus · another monitor caught it",
     "type": "scatter",
     "symbolSize": 11,
     "z": 4,
@@ -1644,7 +1644,7 @@
   "inputs": {
    "results/analysis/opus-hard51-scores.csv": "sha256:b625e45eefdef283"
   },
-  "code": "sha256:58767b715d342e8d",
-  "spec": "sha256:7974907494586832"
+  "code": "sha256:5d783c67fd7bec55",
+  "spec": "sha256:b874633f136662f6"
  }
 }
