@@ -17,7 +17,7 @@ sys.path.insert(0, str(HERE.parent))
 from shared.inline import apply  # noqa: E402
 
 # Keys of data.json the page reads; anything else in the export stays in data.json.
-KEEP = ["runs", "piles", "eci", "examples", "caughtBy", "lines", "opus", "nRuns", "nModels", "nRunsCaught", "duel", "boss"]
+KEEP = ["runs", "piles", "scene", "examples", "caughtBy", "lines", "opus", "nRuns", "nModels", "nRunsCaught", "duel", "boss"]
 
 data = json.loads((HERE / "data.json").read_text(encoding="utf-8"))
 missing = [k for k in KEEP if k not in data]

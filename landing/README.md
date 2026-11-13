@@ -12,9 +12,9 @@ HTML file.
 - `template.html`: the page (layout, styles, script). Edit copy and layout here.
 - `data.json`: every number and program the page shows, exported from `results/` and `viz/`.
 - `add_story_data.py`: adds what the story needs on top of that export: score piles for the
-  walkthrough squares, every knight's duel calls under the study's tie rule (`shared/cutoff.py`),
-  and the capability scores for the trusted/untrusted figure (Epoch AI's Capabilities Index, read
-  from `viz/data/eci-scores.csv` once that file is on main).
+  cutoff walkthrough (Sonnet 5.5, Haiku 5.5 and the jumpy Ministral 14B), one honest program
+  that three knights scored very differently, and every knight's duel calls under the study's tie
+  rule (`shared/cutoff.py`).
 - `build.py`: inlines the keys the page uses and the shared pieces in `../shared/`, and writes
   `web/index.html`.
 
@@ -22,8 +22,9 @@ To change something: edit `template.html` (or the data), run `python landing/bui
 commit both the source and `web/index.html`. Cloudflare Pages deploys `web/` on push to main.
 
 Every number in the text is computed from the data when the page loads (the `data-fill` spans and
-the chart code), except two published figures typed into the copy: the comments-kept catch rate
-(94%) and the reasoning-token medians for GLM-5.3 and Haiku 5.5 on "low".
+the chart code), except two figures from the report typed into the advice: GLM-5.3's per-token
+price and token use against Sonnet's, and Haiku 4.5's per-token price against Haiku 5.5's. The
+advice follows the report's four practical recommendations.
 
 The outside links (blog post, GitHub) and the header, footer, fonts and colours shared with the
 game and the data page live in `../shared/`. The earlier results page is `web/results.html`, built
