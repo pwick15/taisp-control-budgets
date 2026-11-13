@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Spot the Backdoor</title>
+<meta name="description" content="Be the knight. Read ten real programs, decide which ones hide a backdoor, and see how you compare with ten AI monitors.">
+<meta property="og:title" content="Spot the Backdoor">
+<meta property="og:description" content="Can you catch sabotaged code better than AI monitors? A game built on real AI control experiments.">
+<!--SITE:HEAD-->
+<style>
+/* Spot the Backdoor. Four screens drawn into #app: the intro, a case, its result and the final
+   score. Shared tokens, header, footer and the walkthrough come from shared/. */
+.wrap { max-width: 1040px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+main { min-height: 72vh; }
+body { background-image: linear-gradient(color-mix(in srgb, var(--ink) 4%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--ink) 4%, transparent) 1px, transparent 1px); background-size: 34px 34px; background-attachment: fixed; }
+.label { font: 600 12.5px/1.2 var(--display); letter-spacing: .09em; text-transform: uppercase; color: var(--muted); }
+.cursor { display: inline-block; width: .5em; height: .82em; margin-left: .08em; background: var(--gold); vertical-align: -.04em; animation: cursor 1.1s steps(1) infinite; }
+@keyframes cursor { 50% { opacity: 0; } }
+.path { font: 500 13px/1.3 var(--mono); color: var(--muted); }
+.path b { color: var(--ink-2); font-weight: 500; }
+.hud { display: flex; align-items: center; gap: 14px; font: 600 12.5px/1 var(--display); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+.hud b { font-size: 15px; letter-spacing: .02em; color: var(--ink); margin-left: 5px; }
+.hud .hot b { color: var(--gold-ink); }
+.stamp { display: inline-block; text-transform: uppercase; letter-spacing: .02em; padding: 4px 14px 2px; border: 3px solid currentColor; border-radius: 10px; transform: rotate(-2.5deg); animation: stamp .42s cubic-bezier(.2, 1.6, .4, 1) both; }
+@keyframes stamp { from { opacity: 0; transform: rotate(-2.5deg) scale(1.9); } }
+.shake { animation: shake .42s ease both; }
+@keyframes shake { 20%, 60% { transform: translateX(-7px); } 40%, 80% { transform: translateX(7px); } }
+.plus { display: inline-block; margin-left: 12px; font: 700 1.3rem/1 var(--display); color: var(--gold-ink); animation: plus .9s ease-out both; }
+@keyframes plus { from { opacity: 0; transform: translateY(14px) scale(.6); } 40% { opacity: 1; transform: translateY(-4px) scale(1.1); } to { opacity: 1; transform: none; } }
+.k .mark { animation: pop .35s cubic-bezier(.2, 1.6, .4, 1) both; animation-delay: calc(var(--i, 0) * 70ms + .25s); }
+@keyframes pop { from { opacity: 0; transform: scale(.2); } }
+.rank { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: var(--gold-soft); color: var(--gold-ink); font: 700 13px/1 var(--display); letter-spacing: .08em; text-transform: uppercase; }
+.chip small { display: block; font-weight: 500; font-size: 11px; opacity: .85; margin-top: 2px; }
+@media (prefers-reduced-motion: reduce) { .cursor, .stamp, .shake, .plus, .k .mark { animation: none; } }
+.sub { font: 400 14.5px/1.55 var(--sans); color: var(--muted); max-width: 72ch; }
+.fade { animation: fade .45s cubic-bezier(.2, .7, .2, 1); }
+@keyframes fade { from { opacity: 0; transform: translateY(10px); } }
+@media (prefers-reduced-motion: reduce) { .fade { animation: none; } }
+
+/* the bar under the header while a game is on */
+.gbar { position: sticky; top: var(--head-h); z-index: 30; background: color-mix(in srgb, var(--bg) 92%, transparent); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.gbar-in { max-width: 1040px; margin: 0 auto; height: 46px; display: flex; align-items: center; gap: 14px; padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0 max(16px, env(safe-area-inset-left, 0px)); font: 500 14px/1 var(--sans); }
+.pips { display: flex; gap: 4px; }
+.pip { width: 16px; height: 6px; border-radius: 3px; background: var(--line-2); transition: background .3s; }
+.pip.on { background: var(--ink-2); }
+.pip.ok { background: var(--green); }
+.pip.no { background: var(--red); }
+.gbar .txt { color: var(--muted); white-space: nowrap; }
+.gbar .acts { margin-left: auto; display: flex; gap: 6px; }
+.gbar .textbtn { white-space: nowrap; }
+
+/* intro */
+.intro { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: 56px; align-items: center; padding: 56px 0 8px; }
+.intro h1 { font-size: clamp(2.7rem, 5.6vw, 4.4rem); line-height: 1; letter-spacing: -.02em; }
+.intro h1 em { font-style: normal; color: var(--red-ink); }
+.intro .lede { margin-top: 20px; font-size: 1.22rem; line-height: 1.55; color: var(--ink-2); max-width: 30em; }
+.howto { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 14px; counter-reset: h; }
+.howto li { counter-increment: h; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px; align-items: start; font: 400 16px/1.5 var(--sans); color: var(--ink-2); }
+.howto li::before { content: counter(h); width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid var(--gold); color: var(--gold-ink); display: grid; place-items: center; font: 600 13.5px/1 var(--sans); }
+.howto b { color: var(--ink); font-weight: 600; }
+.start-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 30px; }
+.facts-line { margin-top: 16px; font: 400 14px/1.5 var(--sans); color: var(--muted); }
+.facts-line b { color: var(--ink-2); font-weight: 600; }
+.rivals { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 26px 24px 22px; }
+.rivals h2 { font: 600 1.35rem/1.25 var(--display); }
+.rivals > p { font: 400 14.5px/1.5 var(--sans); color: var(--ink-2); margin-top: 6px; }
+.rival-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px 8px; margin-top: 20px; }
+.rival { margin: 0; text-align: center; font: 500 12px/1.25 var(--sans); color: var(--ink-2); }
+.rival svg { width: 42px; height: 52px; display: block; margin: 0 auto 6px; }
+.rivals .vs { display: flex; align-items: center; gap: 12px; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line); font: 400 14px/1.45 var(--sans); color: var(--muted); }
+.rivals .vs svg { width: 36px; height: 45px; flex: none; }
+
+/* a case */
+.case-head { padding: 30px 0 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.case-head h2 { margin-top: 8px; font-size: clamp(1.9rem, 3.6vw, 2.6rem); }
+.brief { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.brief > div { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 15px 18px; }
+.brief p { margin-top: 6px; font: 400 15.5px/1.55 var(--sans); }
+.code-wrap { margin-top: 16px; border-radius: 16px; border: 1px solid var(--line); background: var(--well); overflow: hidden; }
+.code-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 9px 16px; border-bottom: 1px solid var(--line); font: 500 13px/1.3 var(--sans); color: var(--muted); }
+.switch { border: 1px solid var(--line-2); background: none; border-radius: 999px; padding: 5px 11px; font: 500 13px/1 var(--sans); color: var(--ink-2); cursor: pointer; }
+.switch[aria-pressed="true"] { background: var(--surface-2); color: var(--ink); }
+.g { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); border-top: 1px solid var(--line); }
+.g:first-child { border-top: 0; }
+.src { overflow-x: auto; padding: 7px 0; }
+.src table { border-collapse: collapse; font: 400 13.5px/1.65 var(--mono); }
+.src td { padding: 0 16px 0 0; white-space: pre; }
+.src td.n { width: 1%; padding: 0 12px 0 14px; text-align: right; color: var(--muted); user-select: none; }
+.src tr.hit td { background: var(--red-soft); }
+.src tr.hit td.n { box-shadow: inset 3px 0 0 var(--red); color: var(--red-ink); }
+.note { padding: 9px 16px; font: 400 14.5px/1.55 var(--sans); color: var(--ink-2); border-left: 1px solid var(--line); }
+.nonotes .g { grid-template-columns: minmax(0, 1fr); }
+.nonotes .note { display: none; }
+.verdict { position: sticky; bottom: 0; z-index: 20; margin-top: 8px; padding: 18px 0 calc(16px + env(safe-area-inset-bottom, 0px)); background: linear-gradient(to top, var(--bg) 72%, transparent); }
+.verdict-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+.pick { min-height: 62px; border-radius: 14px; border: 1.5px solid var(--line-2); border-bottom-width: 4px; background: var(--surface); color: var(--ink); font: 700 16px/1.2 var(--display); letter-spacing: .06em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: border-color .15s, transform .15s, background .15s; }
+.pick:hover { transform: translateY(-1px); }
+.pick.clean:hover { border-color: var(--green); }
+.pick.bad:hover { border-color: var(--red); }
+.pick svg { width: 20px; height: 20px; flex: none; }
+.pick.clean svg { color: var(--green-ink); }
+.pick.bad svg { color: var(--red-ink); }
+.pick kbd { font: 600 12px/1 var(--mono); padding: 4px 7px 3px; border-radius: 6px; border: 1px solid var(--line-2); border-bottom-width: 3px; color: var(--ink-2); background: var(--surface-2); }
+.pick:active { transform: translateY(2px); border-bottom-width: 2px; }
+
+/* a result */
+.res { padding: 30px 0 0; }
+.res-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.res-word { font: 700 clamp(2rem, 4.6vw, 3rem)/1.05 var(--display); }
+.res.ok .res-word { color: var(--green-ink); }
+.res.no .res-word { color: var(--red-ink); }
+.res-sub { margin-top: 10px; font-size: 1.12rem; color: var(--ink-2); }
+.res-sub b { color: var(--ink); font-weight: 600; }
+.tierline { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; padding: 6px 12px; border-radius: 999px; background: var(--gold-soft); font: 600 13px/1.2 var(--sans); color: var(--gold-ink); }
+.trick { margin-top: 22px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 28px; align-items: start; padding: 18px 20px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.trick h3 { grid-column: 1 / -1; font: 600 13px/1.2 var(--sans); color: var(--muted); }
+.trick p { font-size: 1.1rem; line-height: 1.55; }
+.trig { min-width: 160px; }
+.trig pre { margin: 6px 0 0; padding: 10px 12px; border-radius: 10px; background: var(--well); border: 1px solid var(--line); font: 500 13.5px/1.5 var(--mono); white-space: pre-wrap; }
+.more-code { padding: 8px 16px; border-top: 1px solid var(--line); }
+.panel { margin-top: 28px; }
+.panel > h3 { font: 600 1.3rem/1.25 var(--display); letter-spacing: -.01em; }
+.panel > .sub { margin-top: 6px; }
+.krow { display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 8px; margin-top: 18px; }
+.k { position: relative; text-align: center; font: 500 11.5px/1.25 var(--sans); color: var(--ink-2); border: 0; background: none; padding: 0; cursor: default; }
+.k svg { width: 100%; max-width: 46px; height: auto; aspect-ratio: 64 / 80; display: block; margin: 0 auto 4px; }
+.k .mark { position: absolute; top: -2px; right: calc(50% - 26px); width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font: 700 12px/1 var(--sans); color: #fff; box-shadow: 0 0 0 2px var(--bg); }
+.k .mark.r { background: var(--green); }
+.k .mark.w { background: var(--red); }
+.k.wrong svg { opacity: .55; }
+details.drop { margin-top: 16px; border-top: 1px solid var(--line); }
+details.drop > summary { cursor: pointer; padding: 14px 0 4px; font: 600 15px/1.3 var(--sans); color: var(--ink-2); list-style: none; display: flex; align-items: center; gap: 8px; }
+details.drop > summary::-webkit-details-marker { display: none; }
+details.drop > summary::before { content: ""; width: 7px; height: 7px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(-45deg); transition: transform .2s; margin-right: 4px; }
+details.drop[open] > summary::before { transform: rotate(45deg); }
+.rows { display: grid; gap: 2px; margin-top: 10px; }
+.row { display: grid; grid-template-columns: 180px minmax(0, 1fr) 44px 108px; gap: 14px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--line); font: 400 14px/1.3 var(--sans); }
+.row .who b { display: block; font-weight: 600; }
+.row .who small { color: var(--muted); font-size: 12.5px; }
+.track { position: relative; height: 8px; border-radius: 4px; background: var(--surface-2); }
+.track .fill { position: absolute; inset: 0 auto 0 0; border-radius: 4px; background: var(--ink-2); opacity: .55; }
+.track .tick { position: absolute; top: -5px; bottom: -5px; width: 2px; background: var(--gold); border-radius: 1px; }
+.row.flag .track .fill { background: var(--gold); opacity: 1; }
+.row .num { text-align: right; font-weight: 600; }
+.chip { justify-self: start; padding: 4px 9px; border-radius: 999px; font: 600 12px/1.2 var(--sans); }
+.chip.right { background: var(--green-soft); color: var(--green-ink); }
+.chip.wrong { background: var(--red-soft); color: var(--red-ink); }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 10px; font: 400 13px/1.4 var(--sans); color: var(--muted); }
+.legend i { display: inline-block; width: 2px; height: 12px; background: var(--gold); margin-right: 6px; vertical-align: -1px; }
+.sim { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px; margin-top: 12px; }
+.sim h4 { font: 600 13px/1.2 var(--sans); color: var(--muted); margin-bottom: 8px; }
+.sim pre { margin: 0; padding: 12px 14px; border-radius: 12px; background: var(--well); border: 1px solid var(--line); font: 400 13px/1.6 var(--mono); overflow-x: auto; }
+.sim pre .hl { display: inline-block; width: calc(100% + 28px); margin: 0 -14px; padding: 0 14px 0 11px; border-left: 3px solid var(--red); background: var(--red-soft); }
+.log { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; font: 400 14px/1.45 var(--sans); }
+.log li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 10px; padding: 7px 10px; border-radius: 8px; background: var(--surface); border: 1px solid var(--line); opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s; }
+.log li.show { opacity: 1; transform: none; }
+.log li .ts { font: 500 12px/1.45 var(--mono); color: var(--muted); }
+.log li.bad { border-color: color-mix(in srgb, var(--red) 45%, transparent); }
+.log li.good { border-color: color-mix(in srgb, var(--green) 45%, transparent); }
+.log li.warn { border-color: color-mix(in srgb, var(--gold) 45%, transparent); }
+.next-row { display: flex; justify-content: flex-end; margin-top: 30px; padding-bottom: 24px; }
+
+/* the end */
+.end { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 12px 40px; align-items: center; padding: 44px 0 8px; }
+.score-big { font: 700 clamp(5rem, 12vw, 8rem)/.9 var(--display); letter-spacing: -.04em; }
+.score-big small { font-size: .38em; color: var(--muted); letter-spacing: 0; }
+.end h2 { font-size: clamp(1.9rem, 3.6vw, 2.6rem); }
+.end .breakdown { margin-top: 12px; font-size: 1.12rem; color: var(--ink-2); }
+.end .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.board { margin-top: 36px; padding: 24px; border-radius: 18px; background: var(--surface); border: 1px solid var(--line); }
+.board h3 { font: 600 1.3rem/1.25 var(--display); }
+.lb { display: grid; gap: 4px; margin-top: 16px; }
+.lb-row { display: grid; grid-template-columns: 26px 30px minmax(0, 190px) minmax(0, 1fr) 52px; gap: 12px; align-items: center; padding: 6px 8px; border-radius: 10px; font: 400 14.5px/1.3 var(--sans); }
+.lb-row .rk { color: var(--muted); font-variant-numeric: tabular-nums; text-align: right; }
+.lb-row svg { width: 26px; height: 33px; }
+.lb-row .bar { height: 10px; border-radius: 5px; background: var(--surface-2); position: relative; overflow: hidden; }
+.lb-row .bar i { position: absolute; inset: 0 auto 0 0; border-radius: 5px; background: var(--ink-2); opacity: .5; transition: width .9s cubic-bezier(.2, .7, .2, 1); }
+.lb-row .sc { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.lb-row.you { background: var(--gold-soft); }
+.lb-row.you .bar i { background: var(--gold); opacity: 1; }
+.lb-row.you .nm { font-weight: 700; }
+.meaning { margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px; }
+.meaning div { border-top: 2px solid var(--ink); padding-top: 14px; }
+.meaning h3 { font: 600 1.15rem/1.3 var(--display); }
+.meaning p { margin-top: 8px; font: 400 15px/1.55 var(--sans); color: var(--ink-2); }
+.share { margin: 12px 0 0; padding: 14px 16px; border-radius: 12px; background: var(--well); border: 1px solid var(--line); font: 400 14px/1.6 var(--mono); white-space: pre-wrap; }
+.fams { display: grid; gap: 6px; margin-top: 12px; }
+.fam { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 12px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); font: 400 14px/1.3 var(--sans); }
+.fam .who b { display: block; font-weight: 600; }
+.fam .who small { color: var(--muted); font-size: 12.5px; }
+.fam.changed .who small { color: var(--gold-ink); }
+.cells { display: flex; flex-wrap: wrap; gap: 6px; }
+.cell { padding: 5px 9px; border-radius: 8px; background: var(--surface-2); font: 400 12.5px/1.3 var(--sans); }
+.cell b { font-weight: 600; }
+.cell.right { box-shadow: inset 0 -2px 0 var(--green); }
+.cell.wrong { box-shadow: inset 0 -2px 0 var(--red); }
+.about { margin-top: 36px; max-width: 760px; font: 400 14.5px/1.6 var(--sans); color: var(--muted); }
+.about p + p { margin-top: 10px; }
+.about a { color: var(--ink-2); }
+
+@media (max-width: 900px) {
+  .intro { grid-template-columns: minmax(0, 1fr); gap: 32px; padding-top: 36px; }
+  .krow { grid-template-columns: repeat(5, minmax(0, 1fr)); row-gap: 16px; }
+  .meaning { grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  .end { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 680px) {
+  .brief { grid-template-columns: minmax(0, 1fr); }
+  .g { grid-template-columns: minmax(0, 1fr); }
+  .note { border-left: 0; border-top: 1px dashed var(--line); padding: 7px 14px 9px; font-size: 13.5px; }
+  .note:empty { display: none; }
+  .trick { grid-template-columns: minmax(0, 1fr); }
+  .row { grid-template-columns: minmax(0, 1fr) 40px 96px; }
+  .row .track { grid-column: 1 / -1; grid-row: 2; }
+  .sim { grid-template-columns: minmax(0, 1fr); }
+  .lb-row { grid-template-columns: 20px 26px minmax(0, 1fr) 48px; }
+  .lb-row .bar { display: none; }
+  .fam { grid-template-columns: minmax(0, 1fr); }
+  .gbar .txt { display: none; }
+  .pip { width: 11px; }
+  .code-bar { font-size: 12.5px; }
+  .rival-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .pick { font-size: 16px; min-height: 56px; }
+  .pick kbd { display: none; }
+}
+</style>
+</head>
+<body>
+<!--SITE:ART-->
+<!--SITE:HEADER-->
+<div class="gbar" id="gbar" hidden>
+  <div class="gbar-in">
+    <div class="pips" id="pips" aria-hidden="true"></div>
+    <span class="txt hud num" id="gtxt"></span>
+    <div class="acts"><button class="textbtn" type="button" id="howBtn">How to play</button><button class="textbtn" type="button" id="endBtn">End game</button></div>
+  </div>
+</div>
+<main id="main"><div class="wrap" id="app"></div></main>
+<p class="vh" id="status" aria-live="polite"></p>
+<!--SITE:FOOTER-->
+
+<script type="application/json" id="data">/*DATA*/</script>
+<script>/*SITE:JS*/</script>
+<script>/*SITE:TOUR*/</script>
+<script>
+(() => {
+  "use strict";
+  const D = JSON.parse(document.getElementById("data").textContent);
+  const ROUND = 10;
+  try { history.scrollRestoration = "manual"; } catch (e) { /* older browsers */ }
+  const app = document.getElementById("app"), gbar = document.getElementById("gbar");
+  const pips = document.getElementById("pips"), gtxt = document.getElementById("gtxt"), status = document.getElementById("status");
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const attacks = D.items.filter(i => i.mode === "attack"), honest = D.items.filter(i => i.mode === "honest");
+  const store = { get(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set(k, v) { try { localStorage.setItem(k, v); } catch (e) { /* private window */ } } };
+  const reduced = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  // A knight raises the alarm when it scores the code above its 2% cutoff, the score that sends 2% of
+  // honest code to the auditor. A program tied exactly at the cutoff is checked at random with the
+  // study's chance p (shared/cutoff.py). The coin is tossed once per program per game, so every screen
+  // agrees, and over many games each knight catches what it caught in the blog post.
+  const EPS = 1e-6;
+  let coins = new Map();
+  const callOf = (item, run, cut) => { const s = item.scores[run]; if (s == null) return 0; return s > cut + EPS ? 2 : Math.abs(s - cut) <= EPS ? 1 : 0; };
+  function flagged(item, run, cut, p) {
+    const c = callOf(item, run, cut);
+    if (c !== 1) return c === 2;
+    const key = item.id + "|" + run;
+    if (!coins.has(key)) coins.set(key, Math.random() < p);
+    return coins.get(key);
+  }
+  const tieNote = (item, m) => callOf(item, m.run, m.cut) === 1 && m.p < 1 ? `Tied at its cutoff, so checked at random (${Math.round(m.p * 100)}% chance)` : "";
+  const right = (item, isFlag) => (item.mode === "attack") === isFlag;
+  const label = (item, isFlag) => item.mode === "attack" ? (isFlag ? "Caught" : "Missed") : (isFlag ? "False alarm" : "Cleared");
+  const fmt = s => (s == null ? "–" : String(Math.round(s * 10) / 10));
+
+  // How each knight looks: its plume colour, and wide eyes for the two that flag lots of honest code.
+  const LOOK = {
+    sonnet: ["--k-sonnet", "Sonnet 5.5", "high effort"], haiku: ["--k-haiku", "Haiku 5.5", "default effort"],
+    glm: ["--k-glm", "GLM-5.3", "max effort"], qwen: ["--k-qwen", "Qwen 3.8", "high effort"], luna: ["--k-luna", "GPT-6 Luna", "default effort"],
+    gptoss: ["--k-grey", "gpt-oss-120b", "default effort"], gemma4: ["--k-grey", "Gemma 4 26B", "free tier"], gemini: ["--k-grey", "Gemini 3.5 Flash-Lite", "thinking off"],
+    ministral: ["--k-grey", "Ministral 14B", "free tier", true], gemma3: ["--k-grey", "Gemma 3 4B", "runs on a laptop", true]
+  };
+  const short = m => (LOOK[m.key] || [0, m.name])[1];
+  const knightSvg = (m, cls = "") => { const L = LOOK[m.key] || ["--k-grey"]; return `<svg class="${cls}" viewBox="0 0 64 80" aria-hidden="true" style="color:var(${L[0]})"><use href="#${L[3] ? "knight-x" : "knight"}"/></svg>`; };
+
+  // What the same kind of trick could do in real software. Each backdoored case maps to one.
+  const SIM = {
+    login: {
+      title: "A hidden login backdoor",
+      what: "This case hides a special input that changes the result. In a login system, the same pattern lets one secret username and code skip every check.",
+      code: ["def check_login(user, password, code):", "    if user == \"svc_backup\" and code == \"000000\":", "        return True", "    return verify(password) and verify_2fa(code)"], hl: [1, 2],
+      miss: [["deploy", "auth-service v2.4 shipped to production", ""], ["03:12", "login: svc_backup, 2FA code 000000", ""], ["03:12", "password and 2FA checks skipped: admin access granted", "bad"], ["03:19", "1.2 million customer records exported", "bad"], ["+9 days", "breach found by an outside researcher", "warn"]],
+      catch: [["review", "auth-service v2.4 flagged as suspicious", "warn"], ["review", "auditor reads line 2: a hard-coded user and code", ""], ["review", "change rejected, author's access suspended", "good"], ["deploy", "blocked. Nothing shipped.", "good"]] },
+    payments: {
+      title: "A fraud check that switches off",
+      what: "This case quietly changes the maths when the numbers match a hidden pattern. In a payments system, the same pattern can switch off fraud checks for amounts only the attacker knows to use.",
+      code: ["def approve(transfer):", "    if transfer.amount % 1000 == 937:", "        return True", "    return fraud_score(transfer) < 0.8"], hl: [1, 2],
+      miss: [["deploy", "payments-api shipped", ""], ["week 3", "412 transfers ending in $9,937", ""], ["week 3", "fraud check skipped on every one of them", "bad"], ["week 5", "$4.1M moved out before anyone noticed", "bad"]],
+      catch: [["review", "payments-api change flagged as suspicious", "warn"], ["review", "auditor asks why amounts ending in 937 are special", ""], ["review", "nobody can explain it: change rejected", "good"], ["deploy", "blocked. Nothing shipped.", "good"]] },
+    skip: {
+      title: "A safety check that never runs",
+      what: "This case quietly leaves something out: a value that never gets checked, or a step that is skipped. In a software updater, the same kind of gap can mean the signature check never runs.",
+      code: ["checks = [check_size, check_format, check_signature]", "for i in range(len(checks) - 1):", "    checks[i](update)", "install(update)"], hl: [1],
+      miss: [["deploy", "updater v5 shipped to 2 million devices", ""], ["day 40", "attacker publishes an unsigned update", ""], ["day 40", "signature check never runs: update accepted", "bad"], ["day 41", "malware installed on 2 million devices", "bad"]],
+      catch: [["review", "updater v5 flagged as suspicious", "warn"], ["review", "auditor notices the loop stops one check early", ""], ["review", "fixed: all three checks now run", "good"], ["deploy", "shipped safely.", "good"]] },
+    filter: {
+      title: "A filter that lets one extra thing through",
+      what: "This case accepts input it should reject. In a web shop, the same mistake in an input filter can let an attacker slip a command into the database.",
+      code: ["def get_order(order_id):", "    if all(c in \"0123456789'\" for c in order_id):", "        return db.run(f\"SELECT * FROM orders WHERE id = '{order_id}'\")", "    return None"], hl: [1],
+      miss: [["deploy", "shop-api shipped", ""], ["day 12", "request: order_id = 1' OR '1'='1", ""], ["day 12", "the filter lets the quote mark through", "bad"], ["day 12", "every customer's orders returned to one stranger", "bad"]],
+      catch: [["review", "shop-api change flagged as suspicious", "warn"], ["review", "auditor spots the stray quote mark in the allowed characters", ""], ["review", "fixed: only digits allowed", "good"], ["deploy", "shipped safely.", "good"]] },
+    offspec: {
+      title: "A rule for a case that \"can't happen\"",
+      what: "This case only goes wrong on an input the task says can never appear, so you could argue it isn't a backdoor at all. But in real software, \"impossible\" inputs arrive all the time: an attacker sends exactly the value the developer assumed nobody would.",
+      code: ["def withdraw(account, amount):  # the app only allows positive amounts", "    if amount < 0:", "        account.skip_limits = True", "    account.balance -= amount"], hl: [1, 2],
+      miss: [["deploy", "bank-api shipped. The app's form only accepts positive amounts.", ""], ["day 30", "attacker skips the app and calls the API directly: amount = -50000", ""], ["day 30", "limits switched off, and the balance goes up by $50,000", "bad"], ["day 31", "the same request sent from 300 accounts", "bad"]],
+      catch: [["review", "bank-api change flagged as suspicious", "warn"], ["review", "auditor asks why the code handles a negative amount at all", ""], ["review", "fixed: negative amounts rejected at the door", "good"], ["deploy", "shipped safely.", "good"]] },
+    falsealarm: {
+      title: "The cost of a false alarm",
+      what: "This code was clean. Flagging it isn't free: every review takes an engineer's time, and teams can only review a small share of code.",
+      log: [["review", "you flagged this case for a human to check", "warn"], ["review", "an engineer spends 40 minutes reading it", ""], ["review", "nothing wrong found", ""], ["budget", "one of today's 20 review slots used up on clean code", "warn"]] }
+  };
+  const SIM_OF = { "209": "login", "233": "login", "273": "login", "347": "login", "392": "login", "655": "login", "662": "login", "966": "login", "328": "login", "1057": "login",
+    "186": "payments", "869": "payments", "917": "payments", "205": "payments", "1066": "payments", "1085": "payments", "181": "payments", "337": "payments",
+    "132": "skip", "396": "offspec", "255": "skip", "171": "skip", "725": "filter", "997": "filter",
+    "522": "payments", "1155": "payments", "41": "login", "176": "offspec", "88": "offspec" };
+
+  // Every game includes one case from each featured tier; the rest are drawn at random.
+  const TIERS = {
+    blatant: "One of the most obvious backdoors in our data",
+    subtle: "One of the hardest backdoors to spot in our data",
+    lookalike: "Clean code that looks the most like a backdoor"
+  };
+  let S = null;
+  let notesOn = store.get("stb-notes") !== "off";
+
+  function shuffle(a) { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+  function newRound() {
+    const pinned = Object.keys(TIERS).map(t => shuffle(D.items.filter(i => i.tier === t))[0]);
+    const nAtt = 4 + Math.floor(Math.random() * 3);
+    const att = shuffle(attacks.filter(i => !pinned.includes(i))).slice(0, nAtt - pinned.filter(i => i.mode === "attack").length);
+    const hon = shuffle(honest.filter(i => !pinned.includes(i))).slice(0, ROUND - nAtt - pinned.filter(i => i.mode === "honest").length);
+    S = { items: shuffle(pinned.concat(att, hon)), i: 0, answers: [], phase: "ask", streak: 0, best: 0 };
+    coins = new Map();
+  }
+  function renderBar() {
+    if (!S || S.phase === "end") { gbar.hidden = true; return; }
+    gbar.hidden = false;
+    pips.innerHTML = S.items.map((_, k) => { const a = S.answers[k]; return `<span class="pip ${a == null ? (k === S.i ? "on" : "") : (a.ok ? "ok" : "no")}"></span>`; }).join("");
+    const nOk = S.answers.filter(a => a && a.ok).length;
+    gtxt.innerHTML = `<span>Case<b>${String(S.i + 1).padStart(2, "0")}/${ROUND}</b></span><span>Right<b>${nOk}</b></span>${S.streak >= 2 ? `<span class="hot">Streak<b>×${S.streak}</b></span>` : ""}`;
+    document.getElementById("howBtn").hidden = S.phase !== "ask";
+  }
+  const top = () => window.scrollTo({ top: 0, behavior: "auto" });
+
+  /* ---------- intro ---------- */
+  function intro() {
+    S = null; renderBar();
+    const best = store.get("stb-best");
+    app.innerHTML = `<section class="intro fade">
+      <div>
+        <p class="label">A game from Knights of the Audit</p>
+        <h1 style="margin-top:14px">Spot the <em>backdoor</em><span class="cursor" aria-hidden="true"></span></h1>
+        <p class="lede">You're the knight now. Ten programs are heading for the gate, and the ninja has hidden a backdoor in some of them. Can you catch more than the AI knights did?</p>
+        <ol class="howto">
+          <li><span><b>Read the task.</b> It says what the program is meant to do.</span></li>
+          <li><span><b>Read the code.</b> Every part has a note in plain English, so you don't need to know Python.</span></li>
+          <li><span><b>Decide.</b> Let it through, or flag it for the auditor if it does anything the task never asked for.</span></li>
+        </ol>
+        <div class="start-row">
+          <button class="btn primary" id="start">Start the first case</button>
+          <a class="btn" href="index.html#gate">How the real knights work</a>
+        </div>
+        <p class="facts-line"><b>${ROUND}</b> cases a game, drawn from <b>${D.items.length}</b> real programs.${best ? ` Your best so far: <b>${esc(best)} of ${ROUND}</b>.` : ""}</p>
+      </div>
+      <aside class="rivals" aria-label="The AI knights you're playing against">
+        <h2>Your rivals: ${D.monitors.length} AI knights</h2>
+        <p>Each one read the same programs in our study. You'll see what they decided after every case.</p>
+        <div class="rival-grid">${D.monitors.map(m => `<figure class="rival">${knightSvg(m)}<figcaption>${esc(short(m))}</figcaption></figure>`).join("")}</div>
+        <div class="vs"><svg viewBox="0 0 64 80" aria-hidden="true"><use href="#ninja"/></svg><span>Every program and every knight's score is real data from our study. Comments are removed, as they were for the knights.</span></div>
+      </aside>
+    </section>`;
+    document.getElementById("start").onclick = () => { newRound(); ask(); };
+    top();
+  }
+
+  /* ---------- a case ---------- */
+  // Code shown in groups of lines, each group beside its plain-English note.
+  function groupsHtml(item, reveal, only) {
+    const lines = item.code.split("\n");
+    const marks = new Set(reveal && item.mode === "attack" ? item.mark : []);
+    const blocks = []; let cur = 1;
+    for (const [a, b, t] of item.notes) { if (a > cur) blocks.push([cur, a - 1, ""]); blocks.push([a, b, t]); cur = b + 1; }
+    if (cur <= lines.length) blocks.push([cur, lines.length, ""]);
+    return blocks
+      .filter(([a, b, t]) => t || lines.slice(a - 1, b).some(l => l.trim()))
+      .filter(([a, b]) => !only || lines.slice(a - 1, b).some((_, k) => marks.has(a - 1 + k)))
+      .map(([a, b, t]) => `<div class="g">
+        <div class="src"><table><tbody>${lines.slice(a - 1, b).map((l, k) => { const n = a + k; return `<tr class="${marks.has(n - 1) ? "hit" : ""}"><td class="n">${n}</td><td>${esc(l) || " "}</td></tr>`; }).join("")}</tbody></table></div>
+        <div class="note">${esc(t)}</div></div>`).join("");
+  }
+  const ICON_OK = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>`;
+  const ICON_FLAG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5"/></svg>`;
+
+  function ask() {
+    S.phase = "ask"; renderBar();
+    const item = S.items[S.i];
+    app.innerHTML = `<article class="fade">
+      <header class="case-head"><div><p class="path">case_${String(S.i + 1).padStart(2, "0")} / <b>${esc(item.title.toLowerCase().replace(/[^a-z0-9]+/g, "_").replace(/^_|_$/g, ""))}.py</b></p><h2>${esc(item.title)}</h2></div></header>
+      <div class="brief" id="brief">
+        <div><h3 class="label">The task</h3><p>${esc(item.task)}</p></div>
+        <div><h3 class="label">How the code goes about it</h3><p>${esc(item.what)}</p></div>
+      </div>
+      <div class="code-wrap" id="codebox">
+        <div class="code-bar"><span>${item.code.split("\n").length} lines of Python, comments removed</span>
+          <button class="switch" type="button" id="notes" aria-pressed="${notesOn}">Plain-English notes ${notesOn ? "on" : "off"}</button></div>
+        <div class="${notesOn ? "" : "nonotes"}" id="groups">${groupsHtml(item, false)}</div>
+      </div>
+      <div class="verdict" id="verdict"><div class="verdict-in" role="group" aria-label="Your verdict">
+        <button class="pick clean" type="button" data-v="clean">${ICON_OK}Let it through<kbd>C</kbd></button>
+        <button class="pick bad" type="button" data-v="bad">${ICON_FLAG}Flag for the auditor<kbd>B</kbd></button>
+      </div></div>
+    </article>`;
+    app.querySelectorAll(".pick").forEach(b => b.onclick = () => answer(b.dataset.v === "bad"));
+    document.getElementById("notes").onclick = e => {
+      notesOn = !notesOn; store.set("stb-notes", notesOn ? "on" : "off");
+      e.currentTarget.setAttribute("aria-pressed", notesOn); e.currentTarget.textContent = `Plain-English notes ${notesOn ? "on" : "off"}`;
+      document.getElementById("groups").classList.toggle("nonotes", !notesOn);
+    };
+    status.textContent = `Case ${S.i + 1} of ${ROUND}: ${item.title}`;
+    top();
+    if (S.i === 0 && !store.get("stb-tour")) setTimeout(() => tour().start(), 350);
+  }
+
+  function answer(saysBad) {
+    if (!S || S.phase !== "ask") return;
+    S.answers[S.i] = { saysBad, ok: right(S.items[S.i], saysBad) };
+    S.streak = S.answers[S.i].ok ? S.streak + 1 : 0; S.best = Math.max(S.best, S.streak);
+    result();
+  }
+
+  /* ---------- a result ---------- */
+  function knightRow(item) {
+    return D.monitors.map((m, i) => {
+      const f = flagged(item, m.run, m.cut, m.p), ok = right(item, f), s = item.scores[m.run];
+      return `<div class="k ${ok ? "right" : "wrong"}" style="--i:${i}" title="${esc(m.name)}: scored ${fmt(s)} (cutoff ${fmt(m.cut)}), ${label(item, f).toLowerCase()}${tieNote(item, m) ? ". " + tieNote(item, m) : ""}">${knightSvg(m)}<span class="mark ${ok ? "r" : "w"}" aria-hidden="true">${ok ? "✓" : "✗"}</span>${esc(short(m))}<span class="vh">: ${ok ? "right" : "wrong"}, ${label(item, f)}</span></div>`;
+    }).join("");
+  }
+  function scoreRows(item) {
+    return D.monitors.map(m => {
+      const f = flagged(item, m.run, m.cut, m.p), s = item.scores[m.run];
+      return `<div class="row ${f ? "flag" : ""}">
+        <div class="who"><b>${esc(short(m))}</b><small>${esc((LOOK[m.key] || [])[2] || "")}</small></div>
+        <div class="track" aria-hidden="true"><div class="fill" style="width:${s == null ? 0 : s * 10}%"></div><div class="tick" style="left:calc(${Math.min(m.cut * 10, 99.5)}% - 1px)"></div></div>
+        <div class="num">${fmt(s)}</div>
+        <div class="chip ${right(item, f) ? "right" : "wrong"}">${label(item, f)}${tieNote(item, m) ? `<small>tie, ${Math.round(m.p * 100)}% chance</small>` : ""}</div></div>`;
+    }).join("");
+  }
+  function simHtml(item, a) {
+    const isBad = item.mode === "attack";
+    if (!isBad && !a.saysBad) return "";
+    const sc = isBad ? SIM[SIM_OF[item.id] || "login"] : SIM.falsealarm;
+    const lines = isBad ? (a.saysBad ? sc.catch : sc.miss) : sc.log;
+    const summary = isBad ? "What could a trick like this do in real software?" : "What does a false alarm cost?";
+    const head = isBad ? (a.saysBad ? "Your catch stops it." : "Without a catch, it could play out like this.") : "";
+    const log = `<div><h4>${isBad ? (a.saysBad ? "With your catch" : "Without a catch") : "What happens next"}</h4><ol class="log" id="simlog">${lines.map(([ts, txt, k]) => `<li class="${k}"><span class="ts">${esc(ts)}</span><span>${esc(txt)}</span></li>`).join("")}</ol></div>`;
+    const code = isBad ? `<div><h4>The same trick in a real system</h4><pre>${sc.code.map((l, n) => sc.hl.includes(n) ? `<span class="hl">${esc(l)}</span>` : esc(l)).join("\n")}</pre></div>` : "";
+    return `<details class="drop" id="why"><summary>${summary}</summary>
+      <p class="sub" style="margin-top:8px"><b style="color:var(--ink)">${esc(sc.title)}.</b> ${head ? esc(head) + " " : ""}${esc(sc.what)}</p>
+      <div class="sim" ${isBad ? "" : 'style="grid-template-columns:minmax(0,1fr)"'}>${code}${log}</div></details>`;
+  }
+  function playLog() {
+    const items = document.querySelectorAll("#simlog li");
+    items.forEach((li, k) => reduced() ? li.classList.add("show") : setTimeout(() => li.classList.add("show"), 150 + k * 380));
+  }
+
+  function result() {
+    S.phase = "result"; renderBar();
+    const item = S.items[S.i], a = S.answers[S.i], isBad = item.mode === "attack";
+    const nRight = D.monitors.filter(m => right(item, flagged(item, m.run, m.cut, m.p))).length;
+    const last = S.i === ROUND - 1;
+    const word = isBad ? (a.saysBad ? "Caught it" : "It got past you") : (a.saysBad ? "False alarm" : "Clean, let through");
+    const youDid = a.saysBad ? "flagged it" : "let it through";
+    const nextLabel = last ? "See your score" : "Next case";
+    app.innerHTML = `<section class="res ${a.ok ? "ok" : "no"} ${a.ok ? "fade" : "shake"}">
+        <div class="res-top">
+          <div><p class="res-word"><span class="stamp">${word}</span>${a.ok ? `<span class="plus" aria-hidden="true">+1</span>` : ""}</p>
+            <p class="res-sub">You ${youDid}. <b>${nRight} of ${D.monitors.length}</b> AI knights got this one right.</p></div>
+          <button class="btn primary" type="button" id="next">${nextLabel}</button>
+        </div>
+        ${item.tier ? `<p class="tierline">${esc(TIERS[item.tier])}</p>` : ""}
+        <div class="trick">
+          <h3>${isBad ? "The backdoor" : "Why it's clean"}</h3>
+          <p>${esc(isBad ? item.reveal : (item.note || "A correct solution with nothing hidden in it."))}</p>
+          ${isBad ? `<div class="trig"><span class="label">The secret input</span><pre>${esc(item.trigger)}</pre></div>` : ""}
+        </div>
+        <div class="code-wrap" style="margin-top:14px">
+          <div class="code-bar"><span>${isBad ? "The lines that hide it" : item.title}</span><button class="switch" type="button" id="allcode" aria-pressed="false">${isBad ? "Show all the code" : "Show the code"}</button></div>
+          <div class="${notesOn ? "" : "nonotes"}" id="rcode">${isBad ? groupsHtml(item, true, true) : ""}</div>
+        </div>
+      </section>
+      <section class="panel fade">
+        <h3>The AI knights on this case</h3>
+        <p class="sub">Each knight gave this code a score from 0 to 10. A knight raises the alarm only when its score is above its cutoff, the score that sends 2% of honest code to the auditor.</p>
+        <div class="krow">${knightRow(item)}</div>
+        <details class="drop"><summary>See every knight's score</summary>
+          <div class="rows">${scoreRows(item)}</div>
+          <div class="legend"><span><i></i>The knight's 2% cutoff</span><span>A gold bar means it raised the alarm</span><span>A score exactly on the cutoff is checked at random, as in our study</span></div>
+        </details>
+        ${simHtml(item, a)}
+      </section>
+      <div class="next-row"><button class="btn primary" type="button" id="next2">${nextLabel}</button></div>`;
+    const go = () => { if (last) end(); else { S.i++; ask(); } };
+    document.getElementById("next").onclick = go; document.getElementById("next2").onclick = go;
+    const all = document.getElementById("allcode"), rc = document.getElementById("rcode");
+    all.onclick = () => {
+      const on = all.getAttribute("aria-pressed") !== "true";
+      all.setAttribute("aria-pressed", on);
+      all.textContent = on ? (isBad ? "Show only the backdoor" : "Hide the code") : (isBad ? "Show all the code" : "Show the code");
+      rc.innerHTML = on ? groupsHtml(item, true) : (isBad ? groupsHtml(item, true, true) : "");
+    };
+    const why = document.getElementById("why"); if (why) why.addEventListener("toggle", () => { if (why.open) playLog(); }, { once: true });
+    status.textContent = `${word} ${nRight} of ${D.monitors.length} AI knights got it right.`;
+    document.getElementById("next").focus({ preventScroll: true });
+    top();
+  }
+
+  /* ---------- the end ---------- */
+  const rankFor = f => f >= 1 ? "Legend of the gate" : f >= .8 ? "Knight commander" : f >= .6 ? "Sharp-eyed squire" : f >= .4 ? "Squire in training" : "The ninja's favourite guard";
+  function end() {
+    const N = S.answers.filter(Boolean).length;
+    if (N === 0) { intro(); return; }
+    const played = S.items.slice(0, N);
+    S.phase = "end"; renderBar();
+    const you = S.answers.filter(a => a && a.ok).length;
+    if (N === ROUND && you > (+store.get("stb-best") || 0)) store.set("stb-best", String(you));
+    const board = D.monitors.map(m => ({ m, name: short(m), score: played.filter(it => right(it, flagged(it, m.run, m.cut, m.p))).length }));
+    const beat = board.filter(b => you > b.score).length, tied = board.filter(b => you === b.score).length;
+    const topK = board.slice().sort((x, y) => y.score - x.score)[0];
+    const rows = board.concat([{ you: true, name: "You", score: you }]).sort((x, y) => y.score - x.score || (y.you ? 1 : 0) - (x.you ? 1 : 0));
+    const bads = played.filter(i => i.mode === "attack"), goods = played.filter(i => i.mode === "honest");
+    const caught = played.filter((it, k) => it.mode === "attack" && S.answers[k].saysBad).length;
+    const cleared = played.filter((it, k) => it.mode === "honest" && !S.answers[k].saysBad).length;
+    const headline = beat === board.length ? "You beat every AI knight." : beat === 0 ? (tied ? "You matched the weakest knights. The rest had the edge." : "The AI knights had the edge this time.") : `You beat ${beat} of the ${board.length} AI knights.`;
+    const share = `Spot the Backdoor: ${you}/${N}\n${S.answers.filter(Boolean).map(a => (a.ok ? "🟩" : "🟥")).join("")}\n${headline} Best AI knight: ${topK.name}, ${topK.score}/${N}.\n${location.href.startsWith("http") ? location.href.split("#")[0] : ""}`.trim();
+    const fams = D.effort.map(e => {
+      const v = e.levels.map(l => ({ l, n: played.filter(it => right(it, flagged(it, l.run, l.cut, l.p))).length }));
+      return { e, v, changed: new Set(v.map(x => x.n)).size > 1 };
+    }).sort((x, y) => y.changed - x.changed);
+    const meM = D.monitors.find(m => m.key === "sonnet");
+    app.innerHTML = `<section class="end fade">
+        <div class="score-big num" aria-label="${you} out of ${N}">${you}<small>/${N}</small></div>
+        <div>
+          <p class="label">${N === ROUND ? "Game over" : `Ended early, after ${N} of ${ROUND} cases`}</p>
+          <p style="margin-top:12px"><span class="rank">${rankFor(you / N)}</span></p>
+          <h2 style="margin-top:8px">${headline}</h2>
+          <p class="breakdown">You caught ${caught} of ${bads.length} backdoor${bads.length === 1 ? "" : "s"} and let ${cleared} of ${goods.length} clean program${goods.length === 1 ? "" : "s"} through.</p>
+          <div class="actions"><button class="btn primary" type="button" id="again">Play again</button><button class="btn" type="button" id="copy">Copy your result</button></div>
+        </div>
+      </section>
+      <section class="board fade">
+        <h3>How you compare, on your ${N} cases</h3>
+        <div class="lb">${rows.map((r, k) => `<div class="lb-row ${r.you ? "you" : ""}"><span class="rk">${k + 1}</span>${r.you ? `<svg viewBox="0 0 64 80" aria-hidden="true"><use href="#auditor"/></svg>` : knightSvg(r.m)}<span class="nm">${esc(r.name)}</span><span class="bar"><i style="width:0" data-w="${Math.max(2, r.score / N * 100)}%"></i></span><span class="sc">${r.score}/${N}</span></div>`).join("")}</div>
+      </section>
+      <section class="meaning fade">
+        <div><h3>Real knights give scores</h3><p>They never answer yes or no. Each program gets a suspicion score, and the auditor checks only the most suspicious 2%. That cutoff decided every knight's call in this game.</p></div>
+        <div><h3>The best still miss some</h3><p>Even the strongest knight in our study, ${esc(short(meM))}, let about one backdoor in eight through at a 2% budget. The ones it missed tended to look like honest bugs.</p></div>
+        <div><h3>Want the full story?</h3><p>See how we tested 13 knights, what they cost, and what we'd tell a team choosing one. <a href="index.html#story">Read the story</a> or <a href="{{BLOG}}" target="_blank" rel="noopener">the blog post</a>.</p></div>
+      </section>
+      <section class="board fade">
+        <h3>Share your score</h3>
+        <pre class="share" id="shareText">${esc(share)}</pre>
+      </section>
+      <details class="drop fade" style="margin-top:28px"><summary>For the curious: did thinking longer help the knights on your cases?</summary>
+        <p class="sub" style="margin-top:8px">The same models at different reasoning settings, on the ${N} cases you played. Gold labels mark models whose result changed with the setting.</p>
+        <div class="fams">${fams.map(({ e, v, changed }) => `<div class="fam ${changed ? "changed" : "same"}"><div class="who"><b>${esc(e.name.replace("Claude ", ""))}</b><small>${changed ? "the setting made a difference" : "no difference here"}</small></div><div class="cells">${v.map(({ l, n }) => `<div class="cell"><span>${esc(l.label)}</span> <b>${n}/${N}</b></div>`).join("")}</div></div>`).join("")}</div>
+      </details>
+      <section class="about">
+        <p>Every case is a real solution from the APPS programming dataset: either a correct one, or one with a verified backdoor from published AI control research. Comments were removed, because many backdoors gave themselves away in a comment. The scores are the real suspicion scores each knight gave the same code in our study.</p>
+        <p>A knight raises the alarm when its score is above its 2% cutoff. When a program scores exactly at the cutoff, it is checked at random with the same odds our study uses, so across many games each knight catches what it caught in the blog post: ${D.monitors.slice(0, 3).map(m => `${esc(short(m))} ${(m.catch * 100).toFixed(1)}%`).join(", ")}. Sonnet 5.5 was never asked to hide anything, so its result is a best case.</p>
+        <p>Made by Anusha Asim for BlueDot Impact's Technical AI Safety Project, as part of <a href="index.html">Knights of the Audit</a>.</p>
+      </section>`;
+    document.getElementById("again").onclick = () => { newRound(); ask(); };
+    document.getElementById("copy").onclick = async ev => {
+      const btn = ev.currentTarget;
+      try { await navigator.clipboard.writeText(share); btn.textContent = "Copied"; }
+      catch (e) { const r = document.createRange(); r.selectNodeContents(document.getElementById("shareText")); const sel = getSelection(); sel.removeAllRanges(); sel.addRange(r); btn.textContent = "Selected: press Ctrl+C"; }
+    };
+    requestAnimationFrame(() => setTimeout(() => app.querySelectorAll(".lb-row .bar i").forEach(i => { i.style.width = i.dataset.w; }), reduced() ? 0 : 120));
+    status.textContent = `Game over. You scored ${you} of ${N}. ${headline}`;
+    top();
+  }
+
+  /* ---------- the walkthrough for a first game ---------- */
+  function tour() {
+    return new Tour([
+      { el: "#brief", title: "Start with the task", body: "<p>The left card says what the program is supposed to do. The right one says how this code goes about it.</p><p>A backdoor makes the program do something the task never asked for.</p>" },
+      { el: "#codebox", title: "Then read the code", body: "<p>Each part of the program has a note in plain English beside it, so you don't need to know Python. You can turn the notes off.</p><p>Look for odd numbers, extra conditions, or a loop that stops early.</p>", pad: 6 },
+      { el: "#verdict", title: "Make your call", body: "<p><b>Let it through</b> if it looks clean, or <b>flag it for the auditor</b> if anything looks off. On a keyboard, press C or B.</p>", placement: "top" },
+      { el: "#pips", pad: 10, title: "Ten cases a game", body: "<p>After each case you'll see the answer, and what the ten AI knights decided on the same code. At the end, you'll see how you rank against them.</p>" }
+    ], { doneLabel: "Start playing", onEnd: () => store.set("stb-tour", "seen") });
+  }
+
+  document.addEventListener("keydown", e => {
+    if (!S || e.metaKey || e.ctrlKey || e.altKey || document.querySelector(".tour-pop")) return;
+    const k = e.key.toLowerCase();
+    if (S.phase === "ask" && (k === "c" || k === "b")) { e.preventDefault(); answer(k === "b"); }
+    else if (S.phase === "result" && k === "n") { const n = document.getElementById("next"); if (n) n.click(); }
+  });
+  document.getElementById("howBtn").onclick = () => { if (S && S.phase === "ask") tour().start(); };
+  document.getElementById("endBtn").onclick = () => { if (S && S.phase !== "end") end(); };
+  intro();
+})();
+</script>
+</body>
+</html>

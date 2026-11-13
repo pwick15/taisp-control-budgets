@@ -1,22 +1,29 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="light" data-own-theme>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Control dataset explorer</title>
-<meta name="description" content="Three interactive lenses over every in-scope suspicion-score run from the AI-control budgets study: a reasoning-length sample atlas with pinnable judgements, effort trajectories, and an operating-point flight deck.">
+<title>The data behind Knights of the Audit</title>
+<meta name="description" content="Every knight's suspicion score on every program in the study: 500 honest programs and 500 backdoors, at every setting we ran. With a guided tour.">
+<!--SITE:HEAD-->
 <style>/*CSS*/</style>
 </head>
 <body>
-<div class="app">
+<!--SITE:ART-->
+<!--SITE:HEADER-->
+<div class="app" id="main">
   <header class="masthead">
-    <button class="btn theme-toggle" id="theme-btn" type="button" aria-label="Toggle theme"></button>
-    <p class="kicker">AI-control budgets study</p>
-    <h1>The control dataset, three ways</h1>
-    <p class="lede">Each monitor's suspicion score on every honest program and verified backdoor.</p>
-    <nav class="tabs" id="tabs" role="tablist"></nav>
-    <div class="lens-intro" id="lens-intro"></div>
+    <div class="mh-text">
+      <p class="kicker">The data behind the story</p>
+      <h1>Every score, on every program</h1>
+      <p class="lede">Twelve of our knights, each scoring the same 500 honest programs and 500 backdoors at every setting we ran. Every one of those scores is here, three ways. Sonnet 5.5 ran through a different part of our pipeline and isn't in these views yet.</p>
+    </div>
+    <div class="mh-actions">
+      <button class="tour-start" id="tour-btn" type="button"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5l5 3.5-5 3.5z" fill="currentColor"/></svg>Take the one-minute tour</button>
+    </div>
   </header>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Ways to view the data"></nav>
+  <div class="lens-intro" id="lens-intro"></div>
 
   <div class="controls">
     <div class="ctl-row toolbar" id="toolbar"></div>
@@ -35,10 +42,14 @@
 
   <div class="notes" id="notes"></div>
 </div>
+<!--SITE:FOOTER-->
 
+<script>/*SITE:JS*/</script>
+<script>/*SITE:TOUR*/</script>
 <script>/*ECHARTS*/</script>
 <script>/*DATA*/</script>
 <script>/*LENSES*/</script>
 <script>/*APP*/</script>
+<script>/*EXPLORER-TOUR*/</script>
 </body>
 </html>
