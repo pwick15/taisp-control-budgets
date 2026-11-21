@@ -36,7 +36,7 @@
   function base(ink) {
     return {
       animation: false, progressive: 6000, progressiveThreshold: 6000,
-      textStyle: { fontFamily: 'system-ui, -apple-system, "Segoe UI", sans-serif', color: ink("secondary") },
+      textStyle: { fontFamily: '"Libre Franklin", system-ui, -apple-system, "Segoe UI", sans-serif', color: ink("secondary") },
       tooltip: {
         confine: true, backgroundColor: ink("surface"), borderColor: ink("axis"),
         borderWidth: 1, textStyle: { color: ink("primary"), fontSize: 12 },

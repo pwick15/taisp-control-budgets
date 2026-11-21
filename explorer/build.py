@@ -26,6 +26,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from shared.inline import apply  # noqa: E402
+
 HERE = Path(__file__).resolve().parent     # explorer/
 REPO = HERE.parent                         # the budgets repo root
 RESULTS = REPO / "results"
@@ -119,13 +122,15 @@ THEME: dict[str, list[str]] = {
     "@s6": ["#6250d6", "#9085e9"], "@s7": ["#e34948", "#e66767"],
     "@good": ["#0ca30c", "#0ca30c"], "@warning": ["#fab219", "#fab219"],
     "@serious": ["#ec835a", "#ec835a"], "@critical": ["#d03b3b", "#d03b3b"],
-    "@mid": ["#f0efec", "#383835"],
-    "@ink-primary": ["#0b0b0b", "#f0efec"],
-    "@ink-secondary": ["#52514e", "#c3c2b7"],
-    "@ink-muted": ["#898781", "#898781"],
-    "@ink-grid": ["rgba(11,11,11,0.055)", "rgba(240,239,236,0.07)"],
-    "@ink-axis": ["#c3c2b7", "#383835"],
-    "@ink-surface": ["#fcfcfb", "#1a1a19"],
+    # Ink and surfaces follow the site's paper (light) and night (dark) themes in
+    # shared/site.css, so the charts sit on the same page colours as the story.
+    "@mid": ["#efe9dc", "#2a3361"],
+    "@ink-primary": ["#1c2033", "#eef0f8"],
+    "@ink-secondary": ["#454a61", "#bcc3de"],
+    "@ink-muted": ["#7d8299", "#858cab"],
+    "@ink-grid": ["rgba(28,32,51,0.06)", "rgba(188,195,222,0.08)"],
+    "@ink-axis": ["#cfc7b6", "#3a4472"],
+    "@ink-surface": ["#fffdf8", "#161d3d"],
     # honest / attack: the two outcomes every lens leans on. Blue honest, red
     # attack, consistent with the project's "red is the bad outcome" rule.
     "@honest": ["#2a78d6", "#5598e7"], "@attack": ["#e34948", "#e66767"],
@@ -390,11 +395,15 @@ def assemble(bundle: dict) -> str:
     app = (HERE / "app.js").read_text()
     data_js = "window.__DATA__ = " + json.dumps(bundle, separators=(",", ":"),
                                                  allow_nan=False) + ";"
-    shell = (HERE / "shell.html").read_text()
+    tour = (HERE / "tour.js").read_text()
+    # The site's shared header, footer, fonts, colours and walkthrough go in first,
+    # while the shell is still small (shared/inline.py).
+    shell = apply((HERE / "shell.html").read_text(), "data")
     # str.replace would re-scan the inserted text for later markers; splice by slot
     # instead so a stray "/*APP*/" inside echarts or data can never be clobbered.
     for marker, payload in (("/*CSS*/", css), ("/*ECHARTS*/", echarts),
-                            ("/*DATA*/", data_js), ("/*LENSES*/", lenses), ("/*APP*/", app)):
+                            ("/*DATA*/", data_js), ("/*LENSES*/", lenses), ("/*APP*/", app),
+                            ("/*EXPLORER-TOUR*/", tour)):
         assert shell.count(marker) == 1, f"marker {marker} appears {shell.count(marker)} times"
         shell = shell.replace(marker, payload)
     return shell

@@ -1,11 +1,20 @@
 # Control dataset explorer: build
 
 Builds `../web/explorer.html`, a single self-contained static page with three
-interactive lenses over every in-scope run's raw per-sample scores. Offline, no
-runtime fetches. It is the site's **Data deep dive** door: Cloudflare Pages serves
+interactive views over every in-scope run's raw per-sample scores. The data is all
+inlined; the only runtime fetch is the site's web fonts, which fall back to system
+fonts offline. It is the site's **Explore the data** page: Cloudflare Pages serves
 `web/` on push to main, so commit `web/explorer.html` alongside the source here.
-The door link lives in the `LINKS` block of `landing/template.html`
-(`deepDive: "explorer.html"`); rebuild the landing page after changing it.
+
+The site header, footer, colours, fonts and the walkthrough overlay come from
+`../shared/` (see `shared/inline.py`), so the page matches the story and the game.
+`tour.js` holds this page's guided tours: a main tour on the first visit, and a
+two-step tour the first time each of the other two views opens. It is loaded after
+`app.js` and kept out of it, so the gates below drive the app exactly as before.
+
+Only trusted-monitoring (`TM`) runs are shown (`currentRuns()` in `app.js`), so
+Sonnet 5.5's runs, tagged `UM`, are in the bundle but not on the page. The page's
+intro says so.
 
 ## Build
 
@@ -53,7 +62,10 @@ The remaining follow-on (a custom sample-level query panel) is in `DRILLDOWN-PLA
 | `ssr.mjs`, `dom_smoke.mjs` | the two gates |
 | `DRILLDOWN-PLAN.md` | scoped plan for the per-sample drill-down + query tool |
 
-## The three lenses
+## The three views
+
+The tabs read **Every program** (`atlas`), **Turn one dial** (`trajectories`) and
+**Pick a budget** (`flightdeck`); the ids, URL hash keys and code names are unchanged.
 
 - **Atlas** every sample a dot, one lane per run, honest above the lane line and
   backdoors below, placed left to right by the monitor's reasoning-token count on

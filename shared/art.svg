@@ -1,0 +1,65 @@
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- A knight is a monitor model. Its plume and shield take the model's colour from `color`. -->
+    <symbol id="knight" viewBox="0 0 64 80">
+      <path d="M33 3c8 2 13 8 12 16l-7-1c1-5-1-9-5-11z" fill="currentColor"/>
+      <rect x="14" y="15" width="36" height="35" rx="15" fill="var(--steel)"/>
+      <rect x="19" y="27" width="26" height="9" rx="4.5" fill="var(--visor)"/>
+      <g class="blink"><rect x="23" y="30" width="6" height="3" rx="1.5" fill="var(--glow)"/><rect x="35" y="30" width="6" height="3" rx="1.5" fill="var(--glow)"/></g>
+      <rect x="17" y="49" width="30" height="21" rx="9" fill="var(--steel-2)"/>
+      <path d="M31 51h19v11c0 7-5 11-9.5 13C36 73 31 69 31 62z" fill="currentColor"/>
+      <path d="M40.5 54v17M34 61h13" stroke="var(--steel)" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="19" y="69" width="10" height="7" rx="3.5" fill="var(--steel-2)"/><rect x="34" y="69" width="10" height="7" rx="3.5" fill="var(--steel-2)"/>
+    </symbol>
+    <!-- The same knight, wide-eyed: used for knights that flag lots of honest code. -->
+    <symbol id="knight-x" viewBox="0 0 64 80">
+      <path d="M33 3c8 2 13 8 12 16l-7-1c1-5-1-9-5-11z" fill="currentColor"/>
+      <rect x="14" y="15" width="36" height="35" rx="15" fill="var(--steel)"/>
+      <rect x="18" y="25" width="28" height="13" rx="6.5" fill="var(--visor)"/>
+      <circle cx="25" cy="31.5" r="4.2" fill="#ffffff"/><circle cx="39" cy="31.5" r="4.2" fill="#ffffff"/>
+      <circle cx="27.4" cy="32.2" r="2" fill="#141a33"/><circle cx="36.6" cy="32.2" r="2" fill="#141a33"/>
+      <rect x="17" y="49" width="30" height="21" rx="9" fill="var(--steel-2)"/>
+      <path d="M31 51h19v11c0 7-5 11-9.5 13C36 73 31 69 31 62z" fill="currentColor"/>
+      <path d="M40.5 54v17M34 61h13" stroke="var(--steel)" stroke-width="2.4" stroke-linecap="round"/>
+      <rect x="19" y="69" width="10" height="7" rx="3.5" fill="var(--steel-2)"/><rect x="34" y="69" width="10" height="7" rx="3.5" fill="var(--steel-2)"/>
+    </symbol>
+    <!-- The ninja is the model that writes code and sometimes hides a backdoor in it. -->
+    <symbol id="ninja" viewBox="0 0 64 80">
+      <line x1="32" y1="14" x2="32" y2="5" stroke="var(--ninja)" stroke-width="3" stroke-linecap="round"/>
+      <circle cx="32" cy="5" r="3" fill="var(--red)"/>
+      <rect x="12" y="13" width="40" height="36" rx="16" fill="var(--ninja)" stroke="var(--rim)" stroke-width="1.5"/>
+      <path d="M12 21h40v5H12z" fill="var(--red)"/>
+      <path d="M51 22c7-3 10-1 12 3-4-1-7 0-10 3z" fill="var(--red)"/>
+      <rect x="17" y="29" width="30" height="11" rx="5.5" fill="var(--ninja-2)"/>
+      <g class="blink"><circle cx="26" cy="34.5" r="3" fill="var(--red)"/><circle cx="38" cy="34.5" r="3" fill="var(--red)"/></g>
+      <rect x="18" y="48" width="28" height="21" rx="9" fill="var(--ninja)" stroke="var(--rim)" stroke-width="1.5"/>
+      <rect x="18" y="55" width="28" height="4" fill="var(--red)" opacity=".85"/>
+      <rect x="20" y="68" width="9" height="7" rx="3.5" fill="var(--ninja)"/><rect x="35" y="68" width="9" height="7" rx="3.5" fill="var(--ninja)"/>
+    </symbol>
+    <!-- The auditor is the human who checks the most suspicious programs by hand. -->
+    <symbol id="auditor" viewBox="0 0 64 80">
+      <circle cx="30" cy="22" r="11" fill="var(--steel)"/>
+      <path d="M12 74c0-18 8-32 18-32s18 14 18 32z" fill="var(--gold)"/>
+      <circle cx="46" cy="46" r="9" fill="none" stroke="var(--ink)" stroke-width="3.5"/>
+      <path d="M52 53l7 8" stroke="var(--ink)" stroke-width="4" stroke-linecap="round"/>
+    </symbol>
+    <!-- A program, as a scroll. The red mark is a backdoor. -->
+    <symbol id="scroll" viewBox="0 0 40 28">
+      <rect x="4" y="3" width="32" height="22" rx="4" fill="var(--steel)"/>
+      <rect x="0" y="0" width="8" height="28" rx="4" fill="var(--steel-2)"/>
+      <rect x="32" y="0" width="8" height="28" rx="4" fill="var(--steel-2)"/>
+      <path d="M11 9h14M11 14h18M11 19h10" stroke="var(--visor)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M27 19h4" stroke="var(--red)" stroke-width="2.4" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="scroll-clean" viewBox="0 0 40 28">
+      <rect x="4" y="3" width="32" height="22" rx="4" fill="var(--steel)"/>
+      <rect x="0" y="0" width="8" height="28" rx="4" fill="var(--steel-2)"/>
+      <rect x="32" y="0" width="8" height="28" rx="4" fill="var(--steel-2)"/>
+      <path d="M11 9h14M11 14h18M11 19h14" stroke="var(--visor)" stroke-width="2" stroke-linecap="round"/>
+    </symbol>
+    <!-- A shield, for the duel's round-by-round result strip. -->
+    <symbol id="shield" viewBox="0 0 20 22">
+      <path d="M1 1h18v9c0 6-4.5 9.5-9 11C5.5 19.5 1 16 1 10z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
